@@ -1,6 +1,7 @@
 GremastersWeb::Application.routes.draw do
   
   devise_scope :user do
+    devise_for :users
     root to: "devise/sessions#new"
   end
   
