@@ -1,9 +1,18 @@
 GremastersWeb::Application.routes.draw do
   
+  # Root route.
+  # root :to => "homes#index"
+  
+  # Homes controller routes.
+  get "homes/index"
+
+  # Devise routes.
   devise_scope :user do
     devise_for :users
-    root to: "devise/sessions#new"
+    root :to => "homes#index"
   end
+  
+  #root :to => "homes/index"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
