@@ -12,4 +12,9 @@ class User < ActiveRecord::Base
   has_many :roles_users
   has_many :roles, :through => :roles_users
   
+  def role?(role)
+    # Original:- return !!self.roles.find_by_name(role.to_s.camelize)
+    return self.roles.find_by_name(role.to_s.camelize) == nil 
+  end
+  
 end
