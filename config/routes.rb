@@ -8,7 +8,7 @@ GremastersWeb::Application.routes.draw do
 
   # Devise routes.
   devise_scope :user do
-    devise_for :users
+    devise_for :users,  :controllers => { :registrations => "users/registrations" }
     root :to => "homes#index"
   end
   
