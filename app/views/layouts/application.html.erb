@@ -6,12 +6,52 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body>	
 	
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<!-- Main page header -->
+<header class="container">
+
+	<!-- Main page logo -->
+	<h1><a href="login.html" class="brand">GRE340</a></h1>
+	
+	<div style="float:right">
+		<% if user_signed_in? %>
+	      
+	        <%= link_to 'Edit account', edit_user_registration_url %>
+	      
+	      	 . 
+	      
+	        <%= link_to 'Logout', destroy_user_session_url, :method=>'delete' %>
+	      
+	    <% else %>
+	      
+	        <%= link_to 'Login', new_user_session_url %>
+	      
+	    <% end %>
+    </div>
+	
+	<!-- Main page headline -->
+	<p style="margin-top: 5px;font-size: 14px;margin-left: 12px;margin-bottom: -5px;">Practise tests for a perfect score.</p>
+	
+</header>	
+
+<!-- Body content -->	
+<section class="container" role="main">
+
+<!-- Alert error messages -->
+<% if alert %>
+  <p class = "alert alert-error">
+    <%= alert %>
+  </p>
+<% elsif flash[:error] || flash[:warning] || flash[:notice] %>
+  <div class = "alert alert-error">
+    <%= flash[:error] || flash[:warning] || flash[:notice] %>	
+  </div>
+<% end %>
 
 <%= yield %>
+
+</section>
 
 </body>
 </html>

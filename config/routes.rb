@@ -5,12 +5,18 @@ GremastersWeb::Application.routes.draw do
   
   # Homes controller routes.
   get "homes/index"
+  
+  devise_for :users,  :controllers => { :registrations => "users/registrations" } do
 
-  # Devise routes.
-  devise_scope :user do
-    devise_for :users,  :controllers => { :registrations => "users/registrations" }
-    root :to => "homes#index"
+    get "/", :to => "devise/sessions#new"
+
   end
+
+  root :to => "devise/sessions#new"
+  # Devise routes.
+  # devise_scope :user do
+  #  pending for custom URL like localhost:3000/sign_in  
+  # end
   
   #root :to => "homes/index"
   

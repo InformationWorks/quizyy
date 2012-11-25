@@ -7,6 +7,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Role.delete_all
+User.delete_all
+
 super_admin_role = Role.new
 super_admin_role.name = "SuperAdmin"
 super_admin_role.save!
@@ -18,3 +20,7 @@ admin_role.save!
 publisher_role = Role.new
 publisher_role.name = "Publisher"
 publisher_role.save!
+
+super_admin_user = User.create!(:email => 'harshal.c.bhakta@gmail.com', :password => 'password', :password_confirmation => 'password')
+super_admin_user.roles << super_admin_role
+super_admin_user.save!

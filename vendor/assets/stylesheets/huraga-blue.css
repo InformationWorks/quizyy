@@ -9258,7 +9258,7 @@ body > header .brand {
   display: block;
   width: 114px;
   height: 37px;
-  background-image: url("../img/template_logo.png");
+  background-image: url("logo.png");
 }
 body > header nav {
   position: absolute;
