@@ -9,12 +9,17 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
   
-  has_many :roles_users
-  has_many :roles, :through => :roles_users
+  has_many :role_users
+  has_many :roles, :through => :role_users
   
   def role?(role)
-    # Original:- return !!self.roles.find_by_name(role.to_s.camelize)
-    return self.roles.find_by_name(role.to_s.camelize) == nil 
+    
+    if ( self.roles.find_by_name(role.to_s.camelize) == nil )
+      return false
+    else
+      return true
+    end
+    
   end
   
 end

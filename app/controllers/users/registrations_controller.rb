@@ -5,6 +5,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   skip_before_filter :require_no_authentication
  
   def check_permissions
-    authorize! :create, resource # devise uses resource to refer to the model that can be authenticated. 
+    authorize! :create, resource # devise uses resource to refer to the model that can be authenticated.
+    logger.info("In check_permissions") 
   end
 end

@@ -13,21 +13,21 @@
 
 ActiveRecord::Schema.define(:version => 20121112204547) do
 
-  create_table "roles", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "roles_users", :force => true do |t|
+  create_table "role_users", :force => true do |t|
     t.integer  "role_id"
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "roles_users", ["role_id"], :name => "index_roles_users_on_role_id"
-  add_index "roles_users", ["user_id"], :name => "index_roles_users_on_user_id"
+  add_index "role_users", ["role_id"], :name => "index_role_users_on_role_id"
+  add_index "role_users", ["user_id"], :name => "index_role_users_on_user_id"
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
