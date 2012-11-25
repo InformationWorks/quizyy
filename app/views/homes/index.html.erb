@@ -1,2 +1,8 @@
 <h1>Homes#index</h1>
-<p>Find me in app/views/homes/index.html.erb</p>
+<p>Logged in as <strong><%= current_user.email %> with roles
+
+<% for role in current_user.roles %>
+  <%= label_tag role.name %><br />
+<% end %>
+
+</strong>.</p>	
