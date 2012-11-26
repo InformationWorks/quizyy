@@ -24,22 +24,32 @@
 	        <%= link_to 'Logout', destroy_user_session_url, :method=>'delete' %>
 	      
 	    <% else %>
+	      	
+            <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "navbar-form pull-right sign-in-nav"}) do |f| %>
+			  
+			  <div class="row row-sign-in">
+			  
+			  <%= f.email_field :email, { :class => "span2",:placeholder => "Email" } %>
+			
+			  <%= f.password_field :password, { :class => "span2",:placeholder => "Password" } %>
+			
+			  <%= f.submit "Sign in", { :class => "btn btn-sign-in" } %>
+			  
+			  <div class="row remember-me-holder">
+			  
+			  <% if devise_mapping.rememberable? -%>
+			    <div class="checkbox span2"><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+			  <% end -%>
+			  
+			  <a id="forgot-password" class="span2 forgot-pwd" href="#">Forgot Password?</a>
+			  
+			  	</div>
+			  
+			  </div>
+			  
+			<% end %>
 	      
-	        <form class="navbar-form pull-right sign-in-nav">
-                    <div class="row row-sign-in">
-                      <input class="span2" type="text" placeholder="Email">
-                      <input class="span2" type="password" placeholder="Password">
-                      <button type="submit" class="btn btn-sign-in">Sign in</button>
-                    </div>
-                    <div class="row remember-me-holder">
-                      <label id="remember-me" class="checkbox span2">
-                        <input type="checkbox"> Remember me
-                      </label>
-                      <a id="forgot-password" class="span2 forgot-pwd" href="#">Forgot Password?</a>
-                    </div>
-            </form>
-	      
-	    <% end %>
+	    	<% end %>
     </div>
 	
 	<!-- Main page headline -->
