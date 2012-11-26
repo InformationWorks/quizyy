@@ -9,7 +9,7 @@
 <body>	
 	
 <!-- Main page header -->
-<header class="container">
+<header class="container" style="height: 50px;">
 
 	<!-- Main page logo -->
 	<h1><a href="/homes/index.html" class="brand">GRE340</a></h1>
@@ -25,11 +25,19 @@
 	      
 	    <% else %>
 	      
-	        <%= link_to 'Login', new_user_session_url %>
-	        
-	        .
-	        
-	        <%= link_to 'Sign up', new_user_registration_url %>
+	        <form class="navbar-form pull-right" style="width: 446px;margin-top: -50px;height: 73px;box-shadow: none;border:none">
+                    <div class="row" style="margin-left: 23px;margin-top: 5px;">
+                      <input class="span2" type="text" placeholder="Email">
+                      <input class="span2" type="password" placeholder="Password">
+                      <button type="submit" class="btn" style="margin-top: 4px;">Sign in</button>
+                    </div>
+                    <div class="row" style="margin-left: 5px;">
+                      <label id="remember-me" class="checkbox span2">
+                        <input type="checkbox"> Remember me
+                      </label>
+                      <a id="forgot-password" class="span2" href="#" style="margin-top: 4px;margin-left: 16px;">Forgot Password?</a>
+                    </div>
+            </form>
 	      
 	    <% end %>
     </div>
