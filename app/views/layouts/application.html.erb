@@ -9,12 +9,12 @@
 <body>	
 	
 <!-- Main page header -->
-<header class="container" style="height: 50px;">
+<header class="container header-landing">
 
 	<!-- Main page logo -->
 	<h1><a href="/homes/index.html" class="brand">GRE340</a></h1>
 	
-	<div style="float:right">
+	<div class="banner-right">
 		<% if user_signed_in? %>
 	      
 	        <%= link_to 'Edit account', edit_user_registration_url %>
@@ -25,17 +25,17 @@
 	      
 	    <% else %>
 	      
-	        <form class="navbar-form pull-right" style="width: 446px;margin-top: -45px;height: 73px;box-shadow: none;border:none">
-                    <div class="row" style="margin-left: 20px;margin-top: 5px;">
+	        <form class="navbar-form pull-right sign-in-nav">
+                    <div class="row row-sign-in">
                       <input class="span2" type="text" placeholder="Email">
                       <input class="span2" type="password" placeholder="Password">
-                      <button type="submit" class="btn" style="margin-top: 4px;">Sign in</button>
+                      <button type="submit" class="btn btn-sign-in">Sign in</button>
                     </div>
-                    <div class="row" style="margin-left: 1px;">
+                    <div class="row remember-me-holder">
                       <label id="remember-me" class="checkbox span2">
                         <input type="checkbox"> Remember me
                       </label>
-                      <a id="forgot-password" class="span2" href="#" style="margin-top: 4px;margin-left: 16px;">Forgot Password?</a>
+                      <a id="forgot-password" class="span2 forgot-pwd" href="#">Forgot Password?</a>
                     </div>
             </form>
 	      
@@ -43,7 +43,7 @@
     </div>
 	
 	<!-- Main page headline -->
-	<p style="margin-top: 5px;font-size: 14px;margin-left: 12px;margin-bottom: -5px;"><span class="awe-check" style="margin-right: 5px;"></span>To help you get the perfect score.</p>
+	<p class="landing_sub_logo_text"><span class="awe-check landing_sub_logo_image"></span>To help you get the perfect score.</p>
 	
 </header>	
 
