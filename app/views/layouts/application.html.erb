@@ -23,7 +23,7 @@
 	      
 	        <%= link_to 'Logout', destroy_user_session_url, :method=>'delete' %>
 	      
-	    <% else %>
+	    <% elsif controller.controller_name == "landings" %>
 	      	
             <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "navbar-form pull-right sign-in-nav"}) do |f| %>
 			  
