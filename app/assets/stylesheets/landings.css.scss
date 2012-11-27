@@ -137,3 +137,45 @@ header#sign_in_header {
 section.container.login.signin {
   margin-top: 50px;
 }
+
+div.landing_remember_me {
+  margin-left: 0px;
+}
+
+input.landing-sign-up-btn {
+  margin-left: -15px;
+}
+#error_explanation {
+  border: 2px solid #EED3D7;
+  background-color: #F2DEDE;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+#error_explanation h2 {
+  background-color: #F2DEDE;
+  color: #B94A48;
+  padding-left: 9px;
+  padding-top: 7px;
+  margin-bottom: 2px;
+  font-size: 17px;
+  font-weight: normal;
+}
+
+#error_explanation p {
+  color: #B94A48;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+  color: #6B5F5B;
+}
+
+form.sign-in-form {
+  padding-top: 30px;
+}
