@@ -1,37 +1,35 @@
-
-<section class="container" role="main" style="width: 490px; margin-top: 60px;">
+<%= devise_error_messages! %>
+<section class="container container-sign-up" role="main">
 <article class="span4 data-block todo-block">
-	<div class="data-container" id="landing_sign_up_container">
-		<header id="sign_up_header">
-		<h2><span class="awe-edit"></span> Sign in</h2>
-		</header>
-		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal sign-in-form" } ) do |f| %>
-		  <%= devise_error_messages! %>
-		
-          <div class="control-group landing_sign_up_control">
-            <%= f.label :email, { :class => 'control-label landing_sign_up_label' } %>
-            <div class="controls landing_sign_up_textbox">
-              <%= f.email_field :email, { :id => "icon", :placeholder => "Email", :class => "landing_sign_up_tb" } %>
-            </div>
-          </div>
-		
-		  <div class="control-group landing_sign_up_control">
-            <%= f.label :password, { :class => 'control-label landing_sign_up_label' } %>
-            <div class="controls landing_sign_up_textbox">
-              <%= f.password_field :password, { :id => "icon", :placeholder => "Password", :class => "landing_sign_up_tb" } %>
-            </div>
-          </div>
-          
-          <div class="control-group landing_sign_up_control_last">
-            <div class="controls landing_sign_up_textbox">
-              <%= f.submit "Sign up", { :class => "btn landing-sign-up-btn" } %>
-            </div>
-          </div>
-		<% end %>
-	</div>
-	<p style="margin-left: 15px;margin-top: 8px;"><%= render "devise/shared/links" %></p>
-	</article>
-	</section>
+<div class="data-container" id="landing_sign_up_container">
+	<header id="sign_up_header">
+	<h2><span class="awe-edit"></span> Sign in</h2>
+	</header>
+	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal sign-in-form" } ) do |f| %>
+      <div class="control-group landing_sign_up_control">
+        <%= f.label :email, { :class => 'control-label landing_sign_up_label' } %>
+        <div class="controls landing_sign_up_textbox">
+          <%= f.email_field :email, { :id => "icon", :placeholder => "Email", :class => "landing_sign_up_tb" } %>
+        </div>
+      </div>
+	
+	  <div class="control-group landing_sign_up_control">
+        <%= f.label :password, { :class => 'control-label landing_sign_up_label' } %>
+        <div class="controls landing_sign_up_textbox">
+          <%= f.password_field :password, { :id => "icon", :placeholder => "Password", :class => "landing_sign_up_tb" } %>
+        </div>
+      </div>
+      
+      <div class="control-group landing_sign_up_control_last">
+        <div class="controls landing_sign_up_textbox">
+          <%= f.submit "Sign in", { :class => "btn landing-sign-up-btn" } %>
+        </div>
+      </div>
+	<% end %>
+</div>
+<p class="sign-up-links"><%= render "devise/shared/links" %></p>
+</article>
+</section>
 
 	
 
