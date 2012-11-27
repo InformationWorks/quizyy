@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20121112204547) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.string   "full_name",              :default => "", :null => false
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
   end

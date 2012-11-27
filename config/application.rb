@@ -64,5 +64,12 @@ module GremastersWeb
     # On config/application.rb forcing your application to not access the DB
     # or load models when precompiling your assets.
     config.assets.initialize_on_precompile = false
+    
+    # Overriding the default error tag behavior.
+    # @@field_error_proc = Proc.new{ |html_tag, instance| 
+    # "<div class=\"field_with_errors\">#{html_tag}</div>".html_safe
+    # }
+    # http://goo.gl/uq91w
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| "#{html_tag}".html_safe }
   end
 end
