@@ -1,64 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>GRE340</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <%= stylesheet_link_tag    "application", :media => "all",:debug => true  %>
+  <%= javascript_include_tag "application", :debug => true  %>
+  <script type="text/javascript" src="//use.typekit.net/bgq7csq.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   <%= csrf_meta_tags %>
 </head>
-<body>	
-	
-<!-- Main page header -->
-<header class="container header-landing">
+<body>
 
-	<!-- Main page logo -->
-	<h1><a href="/" class="brand">GRE340</a></h1>
-	
-	<div class="banner-right">
-		<% if user_signed_in? %>
-	      
-	        <%= link_to 'Edit account', edit_user_registration_url %>
-	      
-	      	 . 
-	      
-	        <%= link_to 'Logout', destroy_user_session_url, :method=>'delete' %>
-	      
-	    <% elsif controller.controller_name == "landings" %>
-	      	
+<!-- Navigation bar -->
+<div class="container navbar-wrapper">
+
+  <div class="navbar">
+    <div class="navbar-inner">
+      <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="#">GREMASTERS</a>
+      <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+      <div class="banner-right">
+        <% if user_signed_in? %>
+
+            <%= link_to 'Edit account', edit_user_registration_url %>
+
+            .
+
+            <%= link_to 'Logout', destroy_user_session_url, :method=>'delete' %>
+
+        <% elsif controller.controller_name == "landings" %>
+
             <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "navbar-form pull-right sign-in-nav"}) do |f| %>
-			  
-			  <div class="row row-sign-in">
-			  
-			  <%= f.email_field :email, { :class => "span2",:placeholder => "Email" } %>
-			
-			  <%= f.password_field :password, { :class => "span2",:placeholder => "Password" } %>
-			
-			  <%= f.submit "Sign in", { :class => "btn btn-sign-in" } %>
-			  
-			  <div class="row remember-me-holder">
-			  
-			  <% if devise_mapping.rememberable? -%>
-			    <div class="checkbox span2 landing_remember_me"><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-			  <% end -%>
-			  
-			  <a id="forgot-password" class="span2 forgot-pwd" href="#">Forgot Password?</a>
-			  
-			  	</div>
-			  
-			  </div>
-			  
-			<% end %>
-	      
-	    	<% end %>
-    </div>
-	
-	<!-- Main page headline -->
-	<p class="landing_sub_logo_text"><span class="awe-check landing_sub_logo_image"></span>TODO: Help you get a perfect score</p>
-	
-</header>	
 
-<!-- Body content -->	
-<section class="container" role="main">
+                <div class="row row-sign-in">
+
+                  <%= f.email_field :email, { :class => "span2",:placeholder => "Email" } %>
+
+                  <%= f.password_field :password, { :class => "span2",:placeholder => "Password" } %>
+
+                  <%= f.submit "Sign in", { :class => "btn btn-sign-in" } %>
+
+                  <div class="row remember-me-holder">
+
+                    <% if devise_mapping.rememberable? -%>
+                        <div class="checkbox span2 landing_remember_me"><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+                    <% end -%>
+
+                    <a id="forgot-password" class="span2 forgot-pwd" href="#">Forgot Password?</a>
+
+                  </div>
+
+                </div>
+
+            <% end %>
+
+        <% end %>
+      </div>
+
+      <div class="nav-collapse collapse">
+
+      </div><!--/.nav-collapse -->
+    </div><!-- /.navbar-inner -->
+  </div><!-- /.navbar -->
+
+</div>
+
+<section role="main">
+<!-- Body content -->
 
 <!-- Alert error messages -->
 <% if alert %>
@@ -72,8 +90,6 @@
 <% end %>
 
 <%= yield %>
-
 </section>
-
 </body>
 </html>

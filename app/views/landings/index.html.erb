@@ -1,102 +1,127 @@
-<div id="landing_bottom_wrapper">
-<div id="landing_bottom_left_wrapper">
-<img id="landing_banner" src="assets/banner.jpg"/>
-</div>
-<div id="landing_bottom_right_wrapper">
-<article class="span4 data-block todo-block">
-		<div class="data-container" id="landing_free_btn_container">
-			<button class="btn btn-primary" id="landing_free_btn" type="submit">Free mock</button>
-		</div>
-		<div class="data-container" id="landing_sign_up_container">
-		<header id="sign_up_header">
-		<h2><span class="awe-edit"></span> Sign up</h2>
-		</header>
-		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal" } ) do |f| %>
-		  <%= devise_error_messages! %>
-		
-		  <div class="control-group landing_sign_up_control">
-            <%= f.label :full_name, { :class => 'control-label landing_sign_up_label' } %>
-            <div class="controls landing_sign_up_textbox">
-              <%= f.text_field :email, { :id => "icon", :placeholder => "Full name", :class => "landing_sign_up_tb" } %>
-            </div>
+<div class="main-unit">
+  <div class="container">
+    <div class="row">
+      <div class="span6">
+        <div class="row video">
+          <img height="600" width="540" src="assets/banner.jpg"/>
+        </div>
+        <div class="row misc">
+          <blockquote><p class="lead">It is not that I'm so smart. But I stay with the questions much longer</p>
+            <small>Albert Einstein</small></blockquote>
+          <blockquote class="pull-right"><p class="lead">Almost everything you do will seem insignificant, but it is important that you do it</p>
+          <small>Mahatma Gandhi</small></blockquote>
+        </div>
+      </div>
+      <div class="span5">
+        <div class="row">
+          <a id="take-a-mock-btn" class="btn span6 green"><h3>Test Ride !!</h3></a>
+          <div id="sign-up" class="span6 light-grey">
+
+            <h2>Sign Up </h2>
+            <p>We bet you won't regret.<br/> A couple of free full length tests are waiting to be taken.<br/></p>
+            <hr/>
+            <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal" } ) do |f| %>
+                <%= devise_error_messages! %>
+
+                <div class="control-group">
+                  <%= f.label :full_name, { :class => 'control-label' } %>
+                  <div class="controls">
+                    <%= f.text_field :email, { :id => "icon", :placeholder => "Full name", :class => "span3"} %>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <%= f.label :email, { :class => 'control-label' } %>
+                  <div class="controls landing_sign_up_textbox">
+                    <%= f.email_field :email, { :id => "icon", :placeholder => "Email", :class => "span3" } %>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <%= f.label :password, { :class => 'control-label' } %>
+                  <div class="controls">
+                    <%= f.password_field :password, { :id => "icon", :placeholder => "Password", :class => "span3"} %>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <%= f.label :confirm_password, { :class => 'control-label' } %>
+                  <div class="controls">
+                    <%= f.password_field :password_confirmation, { :id => "icon", :placeholder => "Re-enter password",  :class => "span3"} %>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <div class="controls">
+                    <%= f.submit "Sign up", { :class => "btn" } %>
+                  </div>
+                </div>
+            <% end %>
           </div>
-          
-          <div class="control-group landing_sign_up_control">
-            <%= f.label :email, { :class => 'control-label landing_sign_up_label' } %>
-            <div class="controls landing_sign_up_textbox">
-              <%= f.email_field :email, { :id => "icon", :placeholder => "Email", :class => "landing_sign_up_tb" } %>
-            </div>
-          </div>
-		
-		  <div class="control-group landing_sign_up_control">
-            <%= f.label :password, { :class => 'control-label landing_sign_up_label' } %>
-            <div class="controls landing_sign_up_textbox">
-              <%= f.password_field :password, { :id => "icon", :placeholder => "Password", :class => "landing_sign_up_tb" } %>
-            </div>
-          </div>
-          
-          <div class="control-group landing_sign_up_control">
-            <%= f.label :confirm_password, { :class => 'control-label landing_sign_up_label' } %>
-            <div class="controls landing_sign_up_textbox">
-              <%= f.password_field :password_confirmation, { :id => "icon", :placeholder => "Re-enter password", :class => "landing_sign_up_tb" } %>
-            </div>
-          </div>
-          
-          <div class="control-group landing_sign_up_control_last">
-            <div class="controls landing_sign_up_textbox">
-              <%= f.submit "Sign up", { :class => "btn landing-sign-up-btn" } %>
-            </div>
-          </div>
-		<% end %>
-		</div>
-	</article>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="row">
-	<!-- Data block -->
-	<article class="span4 data-block decent landing_article">
-		<div class="data-container">
-			<header>
-				<h2><div class="landing_sub_banner">10</div></h2>
-			</header>
-			<section>
-				<p><div class="landing_sub_sub_banner">	Full length mock tests</div></p>	
-			</section>
-		</div>
-	</article>
-	<!-- /Data block -->
-	<article class="span4 data-block decent landing_article">
-		<div class="data-container">
-			<header>
-				<h2><div class="landing_sub_banner">1500</div></h2>
-			</header>
-			<section>
-				<p><div class="landing_sub_sub_banner">	Questions</div></p>	
-			</section>
-		</div>
-	</article>
-	<!-- /Data block -->
-	<article class="span4 data-block decent landing_article">
-		<div class="data-container">
-			<header>
-				<h2><div class="landing_sub_banner">40</div></h2>
-			</header>
-			<section>
-				<p><div class="landing_sub_sub_banner"> Category tests</div></p>	
-			</section>
-		</div>
-	</article>
-	<!-- /Data block -->
-	<article class="span4 data-block decent landing_article">
-		<div class="data-container">
-			<header>
-				<h2><div class="landing_sub_banner">500</div></h2>
-			</header>
-			<section>
-				<p><div class="landing_sub_sub_banner"> Questions</div></p>	
-			</section>
-		</div>
-	</article>
-	
+<div id="main-container" class="container">
+  <div class="row">
+    <div class="box light-grey span3">
+      <h3>1,000,000</h3>
+      <p>test taken already</p>
+    </div>
+
+    <div class="box light-grey span3">
+      <h3>2,000,000</h3>
+      <p>people practicing everyday</p>
+    </div>
+
+    <div class="box light-grey span3">
+      <h3>50,000</h3>
+      <p>tests sold</p>
+    </div>
+
+    <div class="box light-grey span3">
+      <h3>1,000,000</h3>
+      <p>test taken already</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="box thumbnail span3" >
+      <img src="http://placehold.it/300x200" alt="">
+      <div class="caption">
+        <h3>feature title</h3>
+        <p>feature desription goes here</p>
+      </div>
+    </div>
+    <div class="box thumbnail span3" >
+      <img src="http://placehold.it/300x200" alt="">
+      <div class="caption">
+        <h3>feature title</h3>
+        <p>feature desription goes here</p>
+      </div>
+    </div>
+    <div class="box thumbnail span3" >
+      <img src="http://placehold.it/300x200" alt="">
+      <div class="caption">
+        <h3>feature title</h3>
+        <p>feature desription goes here</p>
+      </div>
+    </div>
+    <div class="box thumbnail span3" >
+      <img src="http://placehold.it/300x200" alt="">
+      <div class="caption">
+        <h3>feature title</h3>
+        <p>feature desription goes here</p>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
+
+<hr>
+
+<footer>
+  <p>&copy; Company 2012</p>
+</footer>
+
+</div> <!-- /container -->
