@@ -69,40 +69,12 @@
       z-index: 10;
       margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
   }
-  .main-unit {     
-    background-image: url(image_path('noisy-texture.png'));
-    background-color: #4398F2;
-    background-position: 50% 50%;
-    background-repeat: repeat repeat;
-    margin-top: -20px;
-    margin-bottom: 60px;
-    border-top-left-radius:0px;
-    border-top-right-radius:0px;
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    .container{
-      margin-top: 90px;
-      padding:40px;
-    }
-    .video{
-    margin-left: 20px;
-    margin-bottom: 20px;
-    }
-    
-    .misc {
-        margin-left: 20px;
-        color: #ffffff;
-        small{
-          color: $light-grey;
-        }
-    }
-  }
 
-
-  #main-container{
-  }
-
+ .content {
+   .container{
+     margin-top: 50px;
+   }
+ }
   #remember-me{
     padding-left:3px;
     margin-left: 0px;

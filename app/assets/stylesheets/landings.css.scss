@@ -2,3 +2,33 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$light-grey:#f7f7f7;
+.main-unit {
+  background-image: url(image_path('noisy-texture.png'));
+  background-color: #4398F2;
+  background-position: 50% 50%;
+  background-repeat: repeat repeat;
+  margin-top: -20px;
+  margin-bottom: 60px;
+  border-top-left-radius:0px;
+  border-top-right-radius:0px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  .container{
+    margin-top: 90px;
+    padding:40px;
+  }
+  .video{
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+
+  .misc {
+    margin-left: 20px;
+    color: #ffffff;
+    small{
+      color: $light-grey;
+    }
+  }
+}

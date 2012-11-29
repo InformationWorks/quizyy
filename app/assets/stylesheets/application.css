@@ -12,6 +12,5 @@
  *= require bootstrap
  *= require bootstrap-responsive
  *= require style
- *= require_tree .
  */
 
