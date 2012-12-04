@@ -21,6 +21,10 @@ publisher_role = Role.new
 publisher_role.name = "Publisher"
 publisher_role.save!
 
+student_role = Role.new
+student_role.name = "Student"
+student_role.save!
+
 super_admin_user = User.create!(:full_name => 'Harshal Bhakta', :email => 'harshal.c.bhakta@gmail.com', :password => 'password', :password_confirmation => 'password')
 super_admin_user.roles << super_admin_role
 super_admin_user.save!

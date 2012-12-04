@@ -14,6 +14,9 @@ class Ability
     elsif user.role? :publisher
       # Roles for publishers to create & publish a quiz.
       # http://www.tonyamoyal.com/2010/07/28/rails-authentication-with-devise-and-cancan-customizing-devise-controllers/
+    elsif user.role? :student
+      # Roles for Renaissance students.
+      # Don't need to pay for buying Full-length tests.
     end
   end
 end
