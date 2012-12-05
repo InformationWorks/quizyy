@@ -1,5 +1,7 @@
 GremastersWeb::Application.routes.draw do
   
+  resources :categories
+
   get "landings/index"
 
   # Root route.
