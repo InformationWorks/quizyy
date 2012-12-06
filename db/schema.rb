@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121206013744) do
+ActiveRecord::Schema.define(:version => 20121206091147) do
 
   create_table "categories", :force => true do |t|
     t.string   "code"
@@ -25,6 +25,20 @@ ActiveRecord::Schema.define(:version => 20121206013744) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "quizzes", :force => true do |t|
+    t.string   "name"
+    t.boolean  "random"
+    t.integer  "quiz_type_id"
+    t.integer  "category_id"
+    t.integer  "topic_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "quizzes", ["category_id"], :name => "index_quizzes_on_category_id"
+  add_index "quizzes", ["quiz_type_id"], :name => "index_quizzes_on_quiz_type_id"
+  add_index "quizzes", ["topic_id"], :name => "index_quizzes_on_topic_id"
 
   create_table "role_users", :force => true do |t|
     t.integer  "role_id"

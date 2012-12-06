@@ -13,6 +13,7 @@ Topic.delete_all
 Type.delete_all
 QuizType.delete_all
 SectionType.delete_all
+Quiz.delete_all
 
 super_admin_role = Role.new
 super_admin_role.name = "SuperAdmin"
@@ -91,12 +92,14 @@ end
   { :code => "Q-DI-NE-1",  :name => "Quant - DI + NE1", :category => Category.find_by_code("DI-NE") },
   { :code => "Q-DI-NE-2",  :name => "Quant - DI + NE2", :category => Category.find_by_code("DI-NE") }].each do |type_hash|
   
-  type = Type.find_by_code(type_hash[:code]) 
+    type = Type.find_by_code(type_hash[:code]) 
+    
+    if(!type)
+      type = Type.create(:code => type_hash[:code],:name => type_hash[:name])
+      type.category = type_hash[:category]
+      type.save!
+    end
   
-  if(!type)
-    type = Type.create(:code => type_hash[:code],:name => type_hash[:name])
-    type.category = type_hash[:category]
-    type.save!
   end
   
   ["FullQuiz", "CategoryQuiz", "TopicQuiz"].each do | quiz_type_name |
@@ -106,8 +109,30 @@ end
   ["Verbal", "Quant"].each do | section_type_name |
     SectionType.find_or_create_by_name_and_instruction(section_type_name,"Total Questions: 20 & Total Time: 30 minutes")
   end
-
-end
+  
+  # Seed data for quiz.
+  # 1. FullQuiz
+  full_quiz_1 = Quiz.new
+  full_quiz_1.name = "Full Length 101"
+  full_quiz_1.random = false
+  full_quiz_1.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_1.save!
+  
+  # 2. CategoryQuiz
+  cat_quiz_1 = Quiz.new
+  cat_quiz_1.name = "RC 101"
+  cat_quiz_1.random = false
+  cat_quiz_1.quiz_type = QuizType.find_by_name("CategoryQuiz")
+  cat_quiz_1.category = Category.find_by_code("RC")
+  cat_quiz_1.save!
+  
+  # 3. Topic-test
+  topic_quiz_1 = Quiz.new
+  topic_quiz_1.name = "Fractions 101"
+  topic_quiz_1.random = false
+  topic_quiz_1.quiz_type = QuizType.find_by_name("TopicQuiz")
+  topic_quiz_1.topic = Topic.find_by_name("Fractions")
+  topic_quiz_1.save!
 
 
 
