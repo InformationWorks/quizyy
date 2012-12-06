@@ -1,5 +1,7 @@
 GremastersWeb::Application.routes.draw do
   
+  resources :types
+
   resources :topics
 
   resources :categories
