@@ -1,8 +1,8 @@
 GremastersWeb::Application.routes.draw do
   
-  resources :sections
-
-  resources :quizzes
+  resources :quizzes do
+    resources :sections  
+  end
 
   resources :section_types
 

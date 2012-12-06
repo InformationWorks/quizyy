@@ -12,14 +12,14 @@
 
 <p>
   <b>Quiz:</b>
-  <%= @section.quiz %>
+  <%= @section.quiz.name %>
 </p>
 
 <p>
   <b>Section type:</b>
-  <%= @section.section_type %>
+  <%= @section.section_type.name %>
 </p>
 
 
-<%= link_to 'Edit', edit_section_path(@section) %> |
-<%= link_to 'Back', sections_path %>
+<%= link_to 'Edit', edit_quiz_section_path(@section) %> |
+<%= link_to 'Back', quiz_sections_path %>

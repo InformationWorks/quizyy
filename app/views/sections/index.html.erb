@@ -1,4 +1,7 @@
-<h1>Listing sections</h1>
+
+<h1>Quiz name: <%= @quiz.name %> </h1>
+
+<h2>Listing sections</h2>
 
 <table>
   <tr>
@@ -15,15 +18,15 @@
   <tr>
     <td><%= section.name %></td>
     <td><%= section.sequence_no %></td>
-    <td><%= section.quiz %></td>
-    <td><%= section.section_type %></td>
-    <td><%= link_to 'Show', section %></td>
-    <td><%= link_to 'Edit', edit_section_path(section) %></td>
-    <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= section.quiz.name %></td>
+    <td><%= section.section_type.name %></td>
+    <td><%= link_to 'Show', quiz_section_path(section.quiz,section) %></td>
+    <td><%= link_to 'Edit', edit_quiz_section_path(section.quiz,section) %></td>
+    <td><%= link_to 'Destroy', quiz_section_path(section.quiz,section), method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Section', new_section_path %>
+<%= link_to 'New Section', new_quiz_section_path %>

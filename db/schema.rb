@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121206091147) do
+ActiveRecord::Schema.define(:version => 20121206112152) do
 
   create_table "categories", :force => true do |t|
     t.string   "code"
@@ -62,6 +62,18 @@ ActiveRecord::Schema.define(:version => 20121206091147) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "sections", :force => true do |t|
+    t.string   "name"
+    t.integer  "sequence_no"
+    t.integer  "quiz_id"
+    t.integer  "section_type_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "sections", ["quiz_id"], :name => "index_sections_on_quiz_id"
+  add_index "sections", ["section_type_id"], :name => "index_sections_on_section_type_id"
 
   create_table "topics", :force => true do |t|
     t.string   "name"
