@@ -9,6 +9,7 @@
 Role.delete_all
 User.delete_all
 Category.delete_all
+Topic.delete_all
 
 super_admin_role = Role.new
 super_admin_role.name = "SuperAdmin"
@@ -39,6 +40,35 @@ super_admin_user.save!
   { :code => "DI-MCQ", :name => "Data Interpretation-Multiple choice"},
   { :code => "DI-NE", :name => "Data Interpretation-Numeric Entry"},].each do |category|
   Category.find_or_create_by_code_and_name(category[:code],category[:name])
+end
+
+["Integers",
+"Fractions",
+"Decimals",
+"Exponents and Square Roots",
+"Ordering and the Real Number Line",
+"Percent",
+"Ratio and Proportion",
+"Absolute Value",
+"Averages & Weighted Averages",
+"Time and Work",
+"Time, Speed and Distance",
+"Algebraic Expressions",
+"Rules of Exponents",
+"Linear and Quadratic Equations",
+"Graphs",
+"Inequalities",
+"Co-ordinate Geometry",
+"Functions",
+"Geometry",
+"Probability",
+"Permutation and Combination",
+"Measures of Central Location",
+"Data Representation and Interpretation",
+"Measures of Dispersion",
+"Frequency Distribution",
+"Advanced Statistics"].each do |topic_name|
+  Topic.find_or_create_by_name topic_name
 end
 
 

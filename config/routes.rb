@@ -1,5 +1,7 @@
 GremastersWeb::Application.routes.draw do
   
+  resources :topics
+
   resources :categories
 
   get "landings/index"
