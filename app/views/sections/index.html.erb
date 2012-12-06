@@ -1,0 +1,29 @@
+<h1>Listing sections</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Sequence no</th>
+    <th>Quiz</th>
+    <th>Section type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sections.each do |section| %>
+  <tr>
+    <td><%= section.name %></td>
+    <td><%= section.sequence_no %></td>
+    <td><%= section.quiz %></td>
+    <td><%= section.section_type %></td>
+    <td><%= link_to 'Show', section %></td>
+    <td><%= link_to 'Edit', edit_section_path(section) %></td>
+    <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Section', new_section_path %>
