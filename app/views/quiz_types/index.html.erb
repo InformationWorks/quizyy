@@ -1,0 +1,23 @@
+<h1>Listing quiz_types</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @quiz_types.each do |quiz_type| %>
+  <tr>
+    <td><%= quiz_type.name %></td>
+    <td><%= link_to 'Show', quiz_type %></td>
+    <td><%= link_to 'Edit', edit_quiz_type_path(quiz_type) %></td>
+    <td><%= link_to 'Destroy', quiz_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Quiz type', new_quiz_type_path %>

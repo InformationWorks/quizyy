@@ -1,5 +1,7 @@
 GremastersWeb::Application.routes.draw do
   
+  resources :quiz_types
+
   resources :types
 
   resources :topics

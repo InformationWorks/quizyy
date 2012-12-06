@@ -11,6 +11,7 @@ User.delete_all
 Category.delete_all
 Topic.delete_all
 Type.delete_all
+QuizType.delete_all
 
 super_admin_role = Role.new
 super_admin_role.name = "SuperAdmin"
@@ -95,6 +96,10 @@ end
     type = Type.create(:code => type_hash[:code],:name => type_hash[:name])
     type.category = type_hash[:category]
     type.save!
+  end
+  
+  ["FullQuiz", "CategoryQuiz", "TopicQuiz"].each do | quiz_type_name |
+    QuizType.find_or_create_by_name(quiz_type_name)
   end
 
 end
