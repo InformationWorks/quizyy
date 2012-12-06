@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @section_type.name %>
+</p>
+
+<p>
+  <b>Instruction:</b>
+  <%= @section_type.instruction %>
+</p>
+
+
+<%= link_to 'Edit', edit_section_type_path(@section_type) %> |
+<%= link_to 'Back', section_types_path %>

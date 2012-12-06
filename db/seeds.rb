@@ -12,6 +12,7 @@ Category.delete_all
 Topic.delete_all
 Type.delete_all
 QuizType.delete_all
+SectionType.delete_all
 
 super_admin_role = Role.new
 super_admin_role.name = "SuperAdmin"
@@ -100,6 +101,10 @@ end
   
   ["FullQuiz", "CategoryQuiz", "TopicQuiz"].each do | quiz_type_name |
     QuizType.find_or_create_by_name(quiz_type_name)
+  end
+  
+  ["Verbal", "Quant"].each do | section_type_name |
+    SectionType.find_or_create_by_name_and_instruction(section_type_name,"Total Questions: 20 & Total Time: 30 minutes")
   end
 
 end

@@ -1,0 +1,25 @@
+<h1>Listing section_types</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Instruction</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @section_types.each do |section_type| %>
+  <tr>
+    <td><%= section_type.name %></td>
+    <td><%= section_type.instruction %></td>
+    <td><%= link_to 'Show', section_type %></td>
+    <td><%= link_to 'Edit', edit_section_type_path(section_type) %></td>
+    <td><%= link_to 'Destroy', section_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Section type', new_section_type_path %>
