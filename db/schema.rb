@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121206112152) do
+ActiveRecord::Schema.define(:version => 20121207232627) do
 
   create_table "categories", :force => true do |t|
     t.string   "code"
@@ -19,6 +19,30 @@ ActiveRecord::Schema.define(:version => 20121206112152) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "questions", :force => true do |t|
+    t.integer  "sequence_no"
+    t.text     "header"
+    t.text     "instruction"
+    t.text     "passage"
+    t.text     "que_text"
+    t.text     "sol_text"
+    t.integer  "option_set_count"
+    t.text     "que_image"
+    t.text     "sol_image"
+    t.string   "di_location"
+    t.text     "quantity_a"
+    t.text     "quantity_b"
+    t.integer  "type_id"
+    t.integer  "topic_id"
+    t.integer  "section_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "questions", ["section_id"], :name => "index_questions_on_section_id"
+  add_index "questions", ["topic_id"], :name => "index_questions_on_topic_id"
+  add_index "questions", ["type_id"], :name => "index_questions_on_type_id"
 
   create_table "quiz_types", :force => true do |t|
     t.string   "name"

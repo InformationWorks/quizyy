@@ -1,0 +1,51 @@
+<h1>Listing questions</h1>
+
+<table>
+  <tr>
+    <th>Sequence no</th>
+    <th>Header</th>
+    <th>Instruction</th>
+    <th>Passage</th>
+    <th>Que text</th>
+    <th>Sol text</th>
+    <th>Option set count</th>
+    <th>Que image</th>
+    <th>Sol image</th>
+    <th>Di location</th>
+    <th>Quantity a</th>
+    <th>Quantity b</th>
+    <th>Type</th>
+    <th>Topic</th>
+    <th>Section</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @questions.each do |question| %>
+  <tr>
+    <td><%= question.sequence_no %></td>
+    <td><%= question.header %></td>
+    <td><%= question.instruction %></td>
+    <td><%= question.passage %></td>
+    <td><%= question.que_text %></td>
+    <td><%= question.sol_text %></td>
+    <td><%= question.option_set_count %></td>
+    <td><%= question.que_image %></td>
+    <td><%= question.sol_image %></td>
+    <td><%= question.di_location %></td>
+    <td><%= question.quantity_a %></td>
+    <td><%= question.quantity_b %></td>
+    <td><%= question.type %></td>
+    <td><%= question.topic %></td>
+    <td><%= question.section %></td>
+    <td><%= link_to 'Show', quiz_section_question_path(question.section.quiz,question.section,question) %></td>
+    <td><%= link_to 'Edit', edit_quiz_section_question_path(question.section.quiz,question.section,question) %></td>
+    <td><%= link_to 'Destroy', quiz_section_question_path(question.section.quiz,question.section,question), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Question', new_quiz_section_question_path %>

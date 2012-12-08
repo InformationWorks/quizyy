@@ -1,0 +1,73 @@
+<%= form_for([@quiz,@section,@question]) do |f| %>
+  <% if @question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+      <ul>
+      <% @question.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :sequence_no %><br />
+    <%= f.number_field :sequence_no %>
+  </div>
+  <div class="field">
+    <%= f.label :header %><br />
+    <%= f.text_area :header %>
+  </div>
+  <div class="field">
+    <%= f.label :instruction %><br />
+    <%= f.text_area :instruction %>
+  </div>
+  <div class="field">
+    <%= f.label :passage %><br />
+    <%= f.text_area :passage %>
+  </div>
+  <div class="field">
+    <%= f.label :que_text %><br />
+    <%= f.text_area :que_text %>
+  </div>
+  <div class="field">
+    <%= f.label :sol_text %><br />
+    <%= f.text_area :sol_text %>
+  </div>
+  <div class="field">
+    <%= f.label :option_set_count %><br />
+    <%= f.number_field :option_set_count %>
+  </div>
+  <div class="field">
+    <%= f.label :que_image %><br />
+    <%= f.text_area :que_image %>
+  </div>
+  <div class="field">
+    <%= f.label :sol_image %><br />
+    <%= f.text_area :sol_image %>
+  </div>
+  <div class="field">
+    <%= f.label :di_location %><br />
+    <%= f.text_field :di_location %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity_a %><br />
+    <%= f.text_area :quantity_a %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity_b %><br />
+    <%= f.text_area :quantity_b %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br />
+    <%= f.collection_select :type_id, Type.all, :id, :name %>
+  </div>
+  <div class="field">
+    <%= f.label :topic %><br />
+    <%= f.collection_select :topic_id, Topic.all, :id, :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

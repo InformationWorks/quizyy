@@ -1,0 +1,80 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Sequence no:</b>
+  <%= @question.sequence_no %>
+</p>
+
+<p>
+  <b>Header:</b>
+  <%= @question.header %>
+</p>
+
+<p>
+  <b>Instruction:</b>
+  <%= @question.instruction %>
+</p>
+
+<p>
+  <b>Passage:</b>
+  <%= @question.passage %>
+</p>
+
+<p>
+  <b>Que text:</b>
+  <%= @question.que_text %>
+</p>
+
+<p>
+  <b>Sol text:</b>
+  <%= @question.sol_text %>
+</p>
+
+<p>
+  <b>Option set count:</b>
+  <%= @question.option_set_count %>
+</p>
+
+<p>
+  <b>Que image:</b>
+  <%= @question.que_image %>
+</p>
+
+<p>
+  <b>Sol image:</b>
+  <%= @question.sol_image %>
+</p>
+
+<p>
+  <b>Di location:</b>
+  <%= @question.di_location %>
+</p>
+
+<p>
+  <b>Quantity a:</b>
+  <%= @question.quantity_a %>
+</p>
+
+<p>
+  <b>Quantity b:</b>
+  <%= @question.quantity_b %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @question.type %>
+</p>
+
+<p>
+  <b>Topic:</b>
+  <%= @question.topic %>
+</p>
+
+<p>
+  <b>Section:</b>
+  <%= @question.section %>
+</p>
+
+
+<%= link_to 'Edit', edit_quiz_section_question_path(@quiz,@section,@question) %> |
+<%= link_to 'Back', quiz_section_questions_path(@quiz,@section) %>
