@@ -1,0 +1,27 @@
+<h1>Listing options</h1>
+
+<table>
+  <tr>
+    <th>Content</th>
+    <th>Correct</th>
+    <th>Question</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @options.each do |option| %>
+  <tr>
+    <td><%= option.content %></td>
+    <td><%= option.correct %></td>
+    <td><%= option.question %></td>
+    <td><%= link_to 'Show', quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option) %></td>
+    <td><%= link_to 'Edit', edit_quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option) %></td>
+    <td><%= link_to 'Destroy', quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Option', new_quiz_section_question_option_path %>

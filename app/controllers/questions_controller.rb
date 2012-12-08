@@ -27,9 +27,9 @@ class QuestionsController < ApplicationController
   # GET /questions/new
   # GET /questions/new.json
   def new
-    @question = Question.new
     
     load_quiz_and_section
+    @question = Question.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -51,8 +51,8 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to [@quiz,@section,@question], notice: 'Question was successfully created.' }
-        format.json { render json: [@quiz,@section,@question], status: :created, location: @question }
+        format.html { redirect_to [@question.section.quiz,@question.section,@question], notice: 'Question was successfully created.' }
+        format.json { render json: [@question.section.quiz,@question.section,@question], status: :created, location: @question }
       else
         format.html { render action: "new" }
         format.json { render json: @question.errors, status: :unprocessable_entity }
@@ -68,7 +68,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.update_attributes(params[:question])
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
+        format.html { redirect_to [@question.section.quiz,@question.section,@question], notice: 'Question was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -2,7 +2,9 @@ GremastersWeb::Application.routes.draw do
   
   resources :quizzes do
     resources :sections do
-      resources :questions    
+      resources :questions do
+        resources :options
+      end    
     end  
   end
 
