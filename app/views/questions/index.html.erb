@@ -36,9 +36,9 @@
     <td><%= question.di_location %></td>
     <td><%= question.quantity_a %></td>
     <td><%= question.quantity_b %></td>
-    <td><%= question.type %></td>
-    <td><%= question.topic %></td>
-    <td><%= question.section %></td>
+    <td><%= question.type ? question.type.name : "N/A" %></td>
+    <td><%= question.topic ? question.topic.name : "N/A" %></td>
+    <td><%= question.section ? question.section.name : "N/A" %></td>
     <td><%= link_to 'Show', quiz_section_question_path(question.section.quiz,question.section,question) %></td>
     <td><%= link_to 'Edit', edit_quiz_section_question_path(question.section.quiz,question.section,question) %></td>
     <td><%= link_to 'Destroy', quiz_section_question_path(question.section.quiz,question.section,question), method: :delete, data: { confirm: 'Are you sure?' } %></td>

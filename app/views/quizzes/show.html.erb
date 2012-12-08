@@ -12,17 +12,17 @@
 
 <p>
   <b>Quiz type:</b>
-  <%= @quiz.quiz_type %>
+  <%= @quiz.quiz_type.name %>
 </p>
 
 <p>
   <b>Category:</b>
-  <%= @quiz.category %>
+  <%= @quiz.category ? @quiz.category.name : "N/A" %>
 </p>
 
 <p>
   <b>Topic:</b>
-  <%= @quiz.topic %>
+  <%= @quiz.topic ? @quiz.topic.name : "N/A" %>
 </p>
 
 

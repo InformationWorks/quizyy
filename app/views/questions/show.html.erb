@@ -62,17 +62,17 @@
 
 <p>
   <b>Type:</b>
-  <%= @question.type %>
+  <%= @question.type ? @question.type.name : "N/A" %>
 </p>
 
 <p>
   <b>Topic:</b>
-  <%= @question.topic %>
+  <%= @question.topic ? @question.topic.name : "N/A" %>
 </p>
 
 <p>
   <b>Section:</b>
-  <%= @question.section %>
+  <%= @question.section ? @question.section.name : "N/A" %>
 </p>
 
 

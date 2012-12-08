@@ -12,7 +12,7 @@
 
 <p>
   <b>Question:</b>
-  <%= @option.question %>
+  <%= @option.question ? @option.question.sequence_no : "N/A" %>
 </p>
 
 

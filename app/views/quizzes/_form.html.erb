@@ -21,15 +21,15 @@
   </div>
   <div class="field">
     <%= f.label :quiz_type %><br />
-    <%= f.text_field :quiz_type %>
+	<%= f.collection_select :quiz_type_id, QuizType.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :category %><br />
-    <%= f.text_field :category %>
+    <%= f.collection_select :category_id, Category.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :topic %><br />
-    <%= f.text_field :topic %>
+    <%= f.collection_select :topic_id, Topic.all, :id, :name %>
   </div>
   <div class="actions">
     <%= f.submit %>
