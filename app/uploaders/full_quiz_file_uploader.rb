@@ -20,7 +20,7 @@ class FullQuizFileUploader < CarrierWave::Uploader::Base
 
 
   def store_dir
-    Rails.root.join('tmp/uploads').join("full_quiz_excels/#{quiz_id}")
+    Rails.root.join("tmp/uploads/full_quiz_excels/#{quiz_id}")
   end
   
   def delete_file
