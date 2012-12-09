@@ -1,4 +1,7 @@
 class QuizzesController < ApplicationController
+  
+  include UploadExcel
+  
   # GET /quizzes
   # GET /quizzes.json
   def index
@@ -80,4 +83,32 @@ class QuizzesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # Upload full legth test excel
+  def upload_full_excel
+    
+    full_quiz_uploader = FullQuizUploader.new(getWorkbookFromParams(params))
+    
+    if full_quiz_uploader.validate_excel_workbook
+      render :json => { :message => "Valid" }
+    else
+      render :json => { :message => "InValid",:error => full_quiz_uploader.error_messages.to_s }
+    end
+    
+  end
+  
+  private
+  
+    # Return the workbook object from the uploaded file and
+    # remove the file once the object is retrived.
+    def getWorkbookFromParams(_params)
+      quiz_file = _params[:quiz][:full_quiz_excel]
+      file = FullQuizFileUploader.new
+      file.quiz_id = _params[:id]
+      file.store!(quiz_file)
+      book = Spreadsheet.open Rails.root.join('tmp/uploads').join"#{file.store_path}"
+      file.delete_file
+      return book
+    end
+  
 end

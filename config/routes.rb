@@ -1,11 +1,17 @@
 GremastersWeb::Application.routes.draw do
   
   resources :quizzes do
+    
+    member do
+       post 'upload_full_excel'
+    end
+    
     resources :sections do
       resources :questions do
         resources :options
       end    
-    end  
+    end
+      
   end
 
   resources :section_types

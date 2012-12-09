@@ -10,6 +10,10 @@ gem 'devise'
 gem 'cancan'
 gem 'execjs'
 gem 'therubyracer'
+gem 'spreadsheet'
+gem 'carrierwave'
+gem "mini_magick"
+gem 'rmagick'
 
 # Gems used only for assets and not required
 # in production environments by default.
