@@ -5,14 +5,22 @@ module UploadExcel
     def initialize(workbook)
       
       # Fetch worksheets.
-      @sheet1 = workbook.worksheet 0
-      @sheet2 = workbook.worksheet 1
-      @sheet3 = workbook.worksheet 2
-      @sheet4 = workbook.worksheet 3
-      @sheet5 = workbook.worksheet 4
+      @sheets = []
+      @sheets << (workbook.worksheet 0)
+      @sheets << (workbook.worksheet 1)
+      @sheets << (workbook.worksheet 2)
+      @sheets << (workbook.worksheet 3)
+      @sheets << (workbook.worksheet 4)
       
+      # Hold messages to display.
       @success_messages = []
       @error_messages = []
+      
+      # Hold the objects that need to be saved to db.
+      @sections = []
+      @questions = []
+      @options = []
+      
     end
     
     # Check if the excel file has the minimum required format. Further validation 
@@ -62,6 +70,29 @@ module UploadExcel
       
     end
     
+    # Upload the excel file by inserting data into database.
+    # 
+    # return true is everything goes well.
+    # return false if there us any error.
+    def execute_excel_upload
+      
+      # process each sheet.
+      [0..3].each do | sheet_index |
+        
+        # return false if processing fails for a sheet.
+        if !process_sheet sheet_index
+          
+          # TODO: Execute rollback.
+          
+          return false
+        end
+        
+      end
+      
+      return true
+      
+    end
+    
     # Getters
     def error_messages
       @error_messages
@@ -76,7 +107,7 @@ module UploadExcel
     # Criteria 1: There should be minimum 5 sheets
     def workbook_has_5_sheets?
       
-      if ( @sheet1 == nil || @sheet2 == nil || @sheet3 == nil || @sheet4 == nil || @sheet5 == nil )
+      if ( @sheets[0] == nil || @sheets[1] == nil || @sheets[2] == nil || @sheets[3] == nil || @sheets[4] == nil )
         @error_messages << "Minimum 5 sheets required."
         return false 
       end
@@ -87,7 +118,7 @@ module UploadExcel
     
     # Criteria 2: First 4 sheets should contain all of - "VERBAL-1","VERBAL-2","QUANT-1" and "QUANT-1".
     def workbook_has_4_correct_sheets?
-      sheet_names = [] << @sheet1.name << @sheet2.name << @sheet3.name << @sheet4.name
+      sheet_names = [] << @sheets[0].name << @sheets[1].name << @sheets[2].name << @sheets[3].name
       
       if ((sheet_names & [ "VERBAL-1", "VERBAL-2", "QUANT-1", "QUANT-2" ]).count != 4)
         @error_messages << "First 4 sheets should contain all of : VERBAL-1, VERBAL-2, QUANT-1 and QUANT-2."
@@ -99,7 +130,7 @@ module UploadExcel
       
     # Criteria 3: DATA should be the last sheet.
     def workbook_has_5th_data_sheet?
-      if (@sheet5.name != "DATA")
+      if (@sheets[4].name != "DATA")
         @error_messages << "Last data sheet should be DATA."
         return false
       end
@@ -110,7 +141,7 @@ module UploadExcel
     # Criteria 4: Check if correct column names exist for the sheets.
     def are_sheet_colums_valid?
       
-      [@sheet1,@sheet2,@sheet3,@sheet4].each do | sheet |
+      @sheets.each do | sheet |
           
         if ( sheet.name == "VERBAL-1" || sheet.name == "VERBAL-2" )
           
@@ -203,6 +234,11 @@ module UploadExcel
       
       # TODO: Return false if a invalid entry found.
       
+      return true
+    end
+    
+    # Processing sheets.
+    def process_sheet(sheet_index)
       return true
     end
     
