@@ -94,7 +94,7 @@ class QuizzesController < ApplicationController
       
       if full_quiz_uploader.execute_excel_upload
         # Excel upload executed successfullly.
-        render :json => { :message => "Valid" }  
+        render :json => { :message => "Valid and uploaded correctly" }  
       else
         # Excel upload failed.
         render :json => { :message => "InValid",:error => full_quiz_uploader.error_messages.to_s }

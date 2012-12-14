@@ -21,6 +21,9 @@ module UploadExcel
       @questions = []
       @options = []
       
+      # Current sheet variable to keep track of what sheet is currently being handled.
+      @curr_sheet_index = 0  
+      
     end
     
     # Check if the excel file has the minimum required format. Further validation 
@@ -79,13 +82,25 @@ module UploadExcel
       # process each sheet.
       [0..3].each do | sheet_index |
         
-        # return false if processing fails for a sheet.
-        if !process_sheet sheet_index
-          
-          # TODO: Execute rollback.
-          
-          return false
-        end
+        @curr_sheet_index = sheet_index
+        
+        if @sheets[@curr_sheet_index].name == "VERBAL-1" || @sheets[@curr_sheet_index].name  = "VERBAL-2"
+        
+          # return false if processing fails for a sheet.
+          if !process_verbal_sheet
+            # TODO: Execute rollback.
+            return false
+          end
+        
+        elsif @sheets[@curr_sheet_index].name == "QUANT-1" || @sheets[@curr_sheet_index].name  = "QUANT-2"
+        
+          # return false if processing fails for a sheet.
+          if !process_quant_sheet
+            # TODO: Execute rollback.
+            return false
+          end
+        
+        end 
         
       end
       
@@ -237,8 +252,19 @@ module UploadExcel
       return true
     end
     
-    # Processing sheets.
-    def process_sheet(sheet_index)
+    # Process a verbal sheet.
+    # return true is processing is successful.
+    # return false for unexpected results.
+    def process_verbal_sheet
+      # TODO: Implement verbal sections.
+      return true
+    end
+    
+    # Process a quant sheet.
+    # return true is processing is successful.
+    # return false for unexpected results.
+    def process_quant_sheet
+      # TODO: Implement quant sections.
       return true
     end
     
