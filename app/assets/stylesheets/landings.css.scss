@@ -8,27 +8,25 @@ $light-grey:#f7f7f7;
   background-color: #4398F2;
   background-position: 50% 50%;
   background-repeat: repeat repeat;
-  margin-top: -20px;
-  margin-bottom: 60px;
-  border-top-left-radius:0px;
-  border-top-right-radius:0px;
-  position: relative;
-  width: 100%;
-  overflow: hidden;
   .container{
-    margin-top: 90px;
+    margin-top: 20px;
     padding:40px;
   }
-  .video{
+  .tagline{
+    padding: 25px;
     margin-left: 20px;
     margin-bottom: 20px;
+    height: 500px;
+    width: 500px;
+    color: white;
+    text-align: center;
+    h1{text-shadow: 2px 2px 5px #0c58cc;}
   }
 
   .misc {
-    margin-left: 20px;
-    color: #ffffff;
-    small{
-      color: $light-grey;
+    img{
+      margin-left: 40px;
+      width:100%;
     }
   }
 }
