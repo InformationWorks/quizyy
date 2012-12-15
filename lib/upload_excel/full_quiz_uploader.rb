@@ -2,27 +2,33 @@
 module UploadExcel
   class FullQuizUploader
     
-    def initialize(workbook)
+    def initialize(_workbook,_quiz)
       
       # Fetch worksheets.
       @sheets = []
-      @sheets << (workbook.worksheet 0)
-      @sheets << (workbook.worksheet 1)
-      @sheets << (workbook.worksheet 2)
-      @sheets << (workbook.worksheet 3)
-      @sheets << (workbook.worksheet 4)
+      @sheets << (_workbook.worksheet 0)
+      @sheets << (_workbook.worksheet 1)
+      @sheets << (_workbook.worksheet 2)
+      @sheets << (_workbook.worksheet 3)
+      @sheets << (_workbook.worksheet 4)
       
       # Hold messages to display.
       @success_messages = []
       @error_messages = []
       
-      # Hold the objects that need to be saved to db.
+      # Hold the section objects that need to be saved to db.
+      # Question & Option objects will be saved under the section object.
       @sections = []
-      @questions = []
-      @options = []
+      @questions = [[]]
+      @options = [[[]]]
       
       # Current sheet variable to keep track of what sheet is currently being handled.
       @curr_sheet_index = 0  
+      @curr_sheet = @sheets[0]
+      @curr_question_index = 0
+      
+      # Hold the current quiz object
+      @quiz = _quiz
       
     end
     
@@ -83,6 +89,7 @@ module UploadExcel
       (0..3).each do | sheet_index |
         
         @curr_sheet_index = sheet_index
+        @curr_sheet = @sheets[sheet_index]
         
         if (@sheets[@curr_sheet_index].name == "VERBAL-1") || (@sheets[@curr_sheet_index].name  = "VERBAL-2")
         
@@ -103,6 +110,12 @@ module UploadExcel
         end 
         
       end
+      
+      @success_messages << "sections = " << @sections.count.to_s
+      @success_messages << "section 1 Questions = " << @questions[0].count.to_s
+      @success_messages << "section 2 Questions = " << @questions[1].count.to_s
+      #@success_messages << "section 3 Questions = " << @sections[2].questions.count.to_s
+      #@success_messages << "section 4 Questions = " << @sections[3].questions.count.to_s
       
       return true
       
@@ -257,6 +270,20 @@ module UploadExcel
     # return false for unexpected results.
     def process_verbal_sheet
       # TODO: Implement verbal sections.
+      
+        # Create the verbal section
+        verbal_section = Section.new :name => @curr_sheet.name, 
+                                     :sequence_no => @curr_sheet_index, 
+                                     :section_type_id => SectionType.find_by_name("Verbal").id
+        verbal_section.quiz = @quiz
+        
+        @questions[@curr_sheet_index-1] = []
+        
+        # Create questions under the created section
+        create_verbal_questions(verbal_section)
+        
+        @sections << verbal_section
+        
       return true
     end
     
@@ -266,6 +293,159 @@ module UploadExcel
     def process_quant_sheet
       # TODO: Implement quant sections.
       return true
+    end
+    
+    # Create question objects by reading each row of the current sheet.
+    # Add questions to the section object.
+    def create_verbal_questions(section)
+      
+      # Start from row at index 1
+      (1..20).each do |row_index|
+        
+        # Get current question and add it to the section.
+        curr_que = getVerbalQuestionFromRow(row_index)
+        
+        @questions[@curr_sheet_index-1] << curr_que
+        
+      end
+        
+    end
+    
+    # Generate a question object by reading a row from excel.
+    # Also add option objects to the question object.
+    def getVerbalQuestionFromRow(row_index)
+      
+      row = @curr_sheet.row(row_index)
+      
+      question = Question.new
+      
+      begin
+        
+        question.sequence_no = row[0].to_i
+        question.header = row[1].to_s
+        question.passage = row[2].to_s
+        question.que_text = row[3].to_s
+        question.sol_text = row[4].to_s
+        question.option_set_count = row[5].to_i
+        question.que_image = nil
+        question.sol_image = nil
+        question.di_location = nil
+        question.quantity_a = nil
+        question.quantity_b = nil
+        
+        # Question references.
+        question.type = Type.find_by_code(row[1].to_s)
+        question.topic = nil
+        
+        @options[@curr_sheet_index-1][row_index-1] = []
+        
+        build_options_for_question(question,row,row_index)
+        
+      rescue Exception => e
+        Rails.logger.info("ERROR_EXCEL_getQuestionFromRow:" + e.message.to_s)
+        return nil
+      end
+        
+      
+      return question
+      
+      
+    end
+    
+     # Generate a question object by reading a row from excel.
+    # Also add option objects to the question object.
+    def build_options_for_question(question,row,row_index)
+      
+      options = []
+      
+      if question.type == Type.find_by_code("V-MCQ-1")
+        
+        options << (Option.new :content => row[8].to_s,:correct => false) 
+        options << (Option.new :content => row[9].to_s,:correct => false) 
+        options << (Option.new :content => row[10].to_s,:correct => false)
+        options << (Option.new :content => row[11].to_s,:correct => false)
+        options << (Option.new :content => row[12].to_s,:correct => false)
+        
+        # set correct option 
+        options[row[7].to_i].correct = true
+        
+      elsif question.type == Type.find_by_code("V-MCQ-2")
+        
+        options << (Option.new :content => row[8].to_s,:correct => false) 
+        options << (Option.new :content => row[9].to_s,:correct => false) 
+        options << (Option.new :content => row[10].to_s,:correct => false)
+        
+        # set correct options
+        row[7].to_s.split(",").each do |correct_index|
+           options[correct_index.to_i].correct = true
+        end
+        
+      elsif question.type == Type.find_by_code("V-SIP")
+        # No options
+      elsif question.type == Type.find_by_code("V-TC-1")
+        
+        options << (Option.new :content => row[8].to_s,:correct => false) 
+        options << (Option.new :content => row[9].to_s,:correct => false) 
+        options << (Option.new :content => row[10].to_s,:correct => false)
+        options << (Option.new :content => row[11].to_s,:correct => false)
+        options << (Option.new :content => row[12].to_s,:correct => false)
+        
+        # set correct option 
+        options[row[7].to_i].correct = true
+        
+      elsif question.type == Type.find_by_code("V-TC-2")
+        
+        options << (Option.new :content => row[8].to_s,:correct => false) 
+        options << (Option.new :content => row[9].to_s,:correct => false) 
+        options << (Option.new :content => row[10].to_s,:correct => false)
+        options << (Option.new :content => row[11].to_s,:correct => false)
+        options << (Option.new :content => row[12].to_s,:correct => false)
+        options << (Option.new :content => row[13].to_s,:correct => false)
+        
+        # set correct options
+        correct_options = row[7].to_s.split(",")
+        
+        options[correct_options[0].to_i-1].correct = true
+        options[correct_options[1].to_i+2].correct = true
+        
+      elsif question.type == Type.find_by_code("V-TC-3")
+        
+        options << (Option.new :content => row[8].to_s,:correct => false) 
+        options << (Option.new :content => row[9].to_s,:correct => false) 
+        options << (Option.new :content => row[10].to_s,:correct => false)
+        options << (Option.new :content => row[11].to_s,:correct => false)
+        options << (Option.new :content => row[12].to_s,:correct => false)
+        options << (Option.new :content => row[13].to_s,:correct => false)
+        options << (Option.new :content => row[14].to_s,:correct => false)
+        options << (Option.new :content => row[15].to_s,:correct => false)
+        options << (Option.new :content => row[16].to_s,:correct => false)
+        
+        # set correct options
+        correct_options = row[7].to_s.split(",")
+        
+        options[correct_options[0].to_i-1].correct = true
+        options[correct_options[1].to_i+2].correct = true
+        options[correct_options[2].to_i+5].correct = true
+        
+      elsif question.type == Type.find_by_code("V-SE")
+        
+        options << (Option.new :content => row[8].to_s,:correct => false) 
+        options << (Option.new :content => row[9].to_s,:correct => false) 
+        options << (Option.new :content => row[10].to_s,:correct => false)
+        options << (Option.new :content => row[11].to_s,:correct => false)
+        options << (Option.new :content => row[12].to_s,:correct => false)
+        options << (Option.new :content => row[13].to_s,:correct => false)
+        
+        # set correct options
+        correct_options = row[7].to_s.split(",")
+        
+        options[correct_options[0].to_i-1].correct = true
+        options[correct_options[1].to_i+2].correct = true
+        
+      end
+      
+      @options[@curr_sheet_index-1][row_index-1] = options
+      
     end
     
   end
