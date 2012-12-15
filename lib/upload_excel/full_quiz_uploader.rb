@@ -80,11 +80,11 @@ module UploadExcel
     def execute_excel_upload
       
       # process each sheet.
-      [0..3].each do | sheet_index |
+      (0..3).each do | sheet_index |
         
         @curr_sheet_index = sheet_index
         
-        if @sheets[@curr_sheet_index].name == "VERBAL-1" || @sheets[@curr_sheet_index].name  = "VERBAL-2"
+        if (@sheets[@curr_sheet_index].name == "VERBAL-1") || (@sheets[@curr_sheet_index].name  = "VERBAL-2")
         
           # return false if processing fails for a sheet.
           if !process_verbal_sheet
