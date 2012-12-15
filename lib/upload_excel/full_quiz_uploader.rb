@@ -339,11 +339,11 @@ module UploadExcel
       begin
         
         question.sequence_no = row[0].to_i
-        question.header = row[1].to_s
-        question.passage = row[2].to_s
-        question.que_text = row[3].to_s
-        question.sol_text = row[4].to_s
-        question.option_set_count = row[5].to_i
+        question.header = row[2].to_s
+        question.passage = row[3].to_s
+        question.que_text = row[4].to_s
+        question.sol_text = row[5].to_s
+        question.option_set_count = row[6].to_i
         question.que_image = nil
         question.sol_image = nil
         question.di_location = nil
