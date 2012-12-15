@@ -75,6 +75,8 @@ module UploadExcel
       
       ## Enter future validation criterias here ##
       
+      Rails.logger.info("VALIDATION PASSED")
+      
       return true
       
     end
@@ -91,19 +93,23 @@ module UploadExcel
         @curr_sheet_index = sheet_index
         @curr_sheet = @sheets[sheet_index]
         
-        if (@sheets[@curr_sheet_index].name == "VERBAL-1") || (@sheets[@curr_sheet_index].name  = "VERBAL-2")
+        Rails.logger.info("Processing Sheet # = " + sheet_index.to_s + " name = " + @curr_sheet.name)
         
+        if ((@curr_sheet.name == "VERBAL-1") || (@curr_sheet.name  == "VERBAL-2"))
+        
+          Rails.logger.info("Processing Verbal Sheet")
+          
           # return false if processing fails for a sheet.
           if !process_verbal_sheet
-            # TODO: Execute rollback.
             return false
           end
         
-        elsif @sheets[@curr_sheet_index].name == "QUANT-1" || @sheets[@curr_sheet_index].name  = "QUANT-2"
+        elsif ((@curr_sheet.name == "QUANT-1") || (@curr_sheet.name  == "QUANT-2"))
+        
+          Rails.logger.info("Processing Quant Sheet")
         
           # return false if processing fails for a sheet.
-          if !process_quant_sheet
-            # TODO: Execute rollback.
+          if !process_quant_sheet            
             return false
           end
         
@@ -114,8 +120,14 @@ module UploadExcel
       @success_messages << "sections = " << @sections.count.to_s
       @success_messages << "section 1 Questions = " << @questions[0].count.to_s
       @success_messages << "section 2 Questions = " << @questions[1].count.to_s
-      #@success_messages << "section 3 Questions = " << @sections[2].questions.count.to_s
-      #@success_messages << "section 4 Questions = " << @sections[3].questions.count.to_s
+      
+      # Save the objects stored in the array.
+      if !save_objects_to_db
+        @error_messages << "Saving objects to db failed"
+        return false
+      end
+      
+      @success_messages << "All Sections, Questions & Options saved successfully."
       
       return true
       
@@ -277,12 +289,15 @@ module UploadExcel
                                      :section_type_id => SectionType.find_by_name("Verbal").id
         verbal_section.quiz = @quiz
         
-        @questions[@curr_sheet_index-1] = []
+        @questions[@curr_sheet_index] = []
+        @options[@curr_sheet_index] = []
         
         # Create questions under the created section
         create_verbal_questions(verbal_section)
         
         @sections << verbal_section
+        
+        Rails.logger.info("Section added. Section count = " + @sections.to_s)
         
       return true
     end
@@ -305,7 +320,7 @@ module UploadExcel
         # Get current question and add it to the section.
         curr_que = getVerbalQuestionFromRow(row_index)
         
-        @questions[@curr_sheet_index-1] << curr_que
+        @questions[@curr_sheet_index] << curr_que
         
       end
         
@@ -314,6 +329,8 @@ module UploadExcel
     # Generate a question object by reading a row from excel.
     # Also add option objects to the question object.
     def getVerbalQuestionFromRow(row_index)
+      
+      Rails.logger.info("Creating verbal question = " + row_index.to_s)
       
       row = @curr_sheet.row(row_index)
       
@@ -336,8 +353,10 @@ module UploadExcel
         # Question references.
         question.type = Type.find_by_code(row[1].to_s)
         question.topic = nil
+      
+        Rails.logger.info("curr_sheet_index = " + @curr_sheet_index.to_s + " row_index = " + row_index.to_s)
         
-        @options[@curr_sheet_index-1][row_index-1] = []
+        @options[@curr_sheet_index][row_index-1] = []
         
         build_options_for_question(question,row,row_index)
         
@@ -444,8 +463,53 @@ module UploadExcel
         
       end
       
-      @options[@curr_sheet_index-1][row_index-1] = options
+      @options[@curr_sheet_index][row_index-1] = options
       
+    end
+    
+    # Save all the objects to db.
+    # Roll back if any of the object fails to save.
+    def save_objects_to_db
+      
+      @sections.each_with_index do |section,section_index|
+        
+        if !section.save
+          roll_back_created_objects(section_index)
+          return false
+        end
+        
+        @questions[section_index].each_with_index do |question,question_index|
+          
+          question.section_id = section.id
+          
+          if !question.save
+            roll_back_created_objects(section_index)
+            return false
+          end
+        
+          @options[section_index][question_index].each_with_index do |option,option_index|
+            
+            option.question_id = question.id
+            
+            if !option.save
+              roll_back_created_objects(section_index)
+              return false
+            end
+              
+          end
+          
+        end
+        
+      end
+      
+      return true
+    end
+    
+    # Roll-back using the section_index that caused the error.
+    def roll_back_created_objects(section_index)
+      (1..section_index).each do |section|
+        section.destroy
+      end
     end
     
   end
