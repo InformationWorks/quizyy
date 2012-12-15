@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-  <link type="image/x-icon" href="favicon.png" rel="icon" />
+  <link type="image/x-icon" href="/favicon.png" rel="icon" />
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= yield :stylesheets %>
@@ -24,79 +24,39 @@
 <body>
 
 <!-- Navigation bar -->
-<div class="container">
-  <div class="navbar">
-    <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
-    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </a>
-    <a class="brand" href="#"><%= image_tag('gre340-02.png')%></a>
-    <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
-    <div class="banner-right">
-      <% if user_signed_in? %>
-          <ul class="nav nav-pills pull-right">
+<header id="nav-bar" class="container-fluid">
+  <div class="row-fluid">
+    <div class="span8">
+      <div id="header-container">
 
-            <li><a href="#">Home</a></li>
-            <li class="dropdown">
-              <a class="dropdown-toggle"
-                 data-toggle="dropdown"
-                 href="#">
-                <%= current_user.full_name %>
-                <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><%= link_to 'Edit Account', edit_user_registration_url %></li>
-                <li class="divider"></li>
-                <li><%= link_to 'Logout', destroy_user_session_url, :method => 'delete' %></li>
-              </ul>
-            </li>
+        <a class="pull-left" href="#"><%= image_tag("gre340-02.png",:width=> 85, :height => 70)%></a>
+
+        <div id="main-nav-menu" class="dropdown pull-left">
+          <a class="header-dropdown dropdown-toggle accent-color" data-toggle="dropdown" href="#">
+            Test Hub
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Test Hub",homes_index_path %></li>
+
+            <li><a href="./store.html">Store</a></li>
+            <li><a href="#">Admin</a></li>
+            <li class="divider"></li>
+            <li><a href="./index.html">Logout</a></li>
           </ul>
-      <% elsif controller.controller_name == "landings" %>
-
-          <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "navbar-form pull-right sign-in-nav"}) do |f| %>
-
-              <div class="row row-sign-in">
-
-                <%= f.email_field :email, {:class => "span2", :placeholder => "Email"} %>
-
-                <%= f.password_field :password, {:class => "span2", :placeholder => "Password"} %>
-
-                <%= f.submit "Sign in", {:class => "btn btn-sign-in"} %>
-
-                <div class="row">
-
-                  <% if devise_mapping.rememberable? -%>
-                        <%= f.label :remember_me, :class => "checkbox span2" do %>
-                            <%= f.check_box :remember_me%>
-                            <span class="metro-checkbox">Remember me</span>
-                        <%end%>
-                  <% end %>
-
-                  <a id="forgot-password" class="span2" href="#">Forgot Password?</a>
-
-                </div>
-
-              </div>
-
-          <% end %>
-
-      <% end %>
+        </div>
+      </div>
+      <div id="second-nav">
+        <form class="navbar-search pull-left">
+          <input type="text" class="search-query" placeholder="Search">
+        </form>
+      </div>
     </div>
-
-    <div class="nav-collapse collapse">
-
-    </div><!--/.nav-collapse -->
-  </div><!-- /.navbar -->
-
-</div>
+  </div>
+</header>
 
 <section class="content" role="main">
-  <!-- Body content -->
-  <div class="main-unit">
-  <!-- Alert error messages -->
-  <div class="container">
+  <div class="container-fluid">
   <% if alert %>
         <div class="alert">
           <button type="button" class="close" data-dismiss="alert">×</button>
@@ -108,10 +68,9 @@
         <%= flash[:error] || flash[:warning] || flash[:notice] %>
       </div>
   <% end %>
-  <%= yield :main_unit %>
-  </div>
-  </div>
   <%= yield %>
+  </div>
+
 </section>
 </body>
 </html>
