@@ -136,19 +136,4 @@ end
   topic_quiz_1.topic = Topic.find_by_name("Fractions")
   topic_quiz_1.save!
   
-  sec1 = Section.new
-  sec1.name = "VERBAL-1";
-  sec1.sequence_no = 1;
-  sec1.quiz = full_quiz_1
-  sec1.section_type = SectionType.find_by_name("Verbal")
-  
-  que1 = Question.new
-  que1.que_text = "Hello world";
-  que1.type = Type.find_by_code("V-MCQ-1")
-  que1.topic = nil
-  que1.section = sec1
-  
-  que1.save!
-  sec1.save! 
-
 

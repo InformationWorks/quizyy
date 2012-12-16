@@ -281,23 +281,22 @@ module UploadExcel
     # return true is processing is successful.
     # return false for unexpected results.
     def process_verbal_sheet
-      # TODO: Implement verbal sections.
+    
+      # Create the verbal section
+      verbal_section = Section.new :name => @curr_sheet.name, 
+                                   :sequence_no => @curr_sheet_index, 
+                                   :section_type_id => SectionType.find_by_name("Verbal").id
+      verbal_section.quiz = @quiz
       
-        # Create the verbal section
-        verbal_section = Section.new :name => @curr_sheet.name, 
-                                     :sequence_no => @curr_sheet_index, 
-                                     :section_type_id => SectionType.find_by_name("Verbal").id
-        verbal_section.quiz = @quiz
-        
-        @questions[@curr_sheet_index] = []
-        @options[@curr_sheet_index] = []
-        
-        # Create questions under the created section
-        create_verbal_questions(verbal_section)
-        
-        @sections << verbal_section
-        
-        Rails.logger.info("Section added. Section count = " + @sections.to_s)
+      @questions[@curr_sheet_index] = []
+      @options[@curr_sheet_index] = []
+      
+      # Create questions under the created section
+      create_verbal_questions(verbal_section)
+      
+      @sections << verbal_section
+      
+      Rails.logger.info("Section added. Section count = " + @sections.to_s)
         
       return true
     end
@@ -306,7 +305,22 @@ module UploadExcel
     # return true is processing is successful.
     # return false for unexpected results.
     def process_quant_sheet
-      # TODO: Implement quant sections.
+      # Create the quant section
+      quant_section = Section.new :name => @curr_sheet.name, 
+                                   :sequence_no => @curr_sheet_index, 
+                                   :section_type_id => SectionType.find_by_name("Quant").id
+      quant_section.quiz = @quiz
+      
+      @questions[@curr_sheet_index] = []
+      @options[@curr_sheet_index] = []
+      
+      # Create questions under the created section
+      create_quant_questions(quant_section)
+      
+      @sections << quant_section
+      
+      Rails.logger.info("Section added. Section count = " + @sections.to_s)
+        
       return true
     end
     
@@ -386,7 +400,7 @@ module UploadExcel
         options << (Option.new :content => row[12].to_s,:correct => false)
         
         # set correct option 
-        options[row[7].to_i].correct = true
+        options[row[7].to_i-1].correct = true
         
       elsif question.type == Type.find_by_code("V-MCQ-2")
         
@@ -396,7 +410,7 @@ module UploadExcel
         
         # set correct options
         row[7].to_s.split(",").each do |correct_index|
-           options[correct_index.to_i].correct = true
+           options[correct_index.to_i-1].correct = true
         end
         
       elsif question.type == Type.find_by_code("V-SIP")
@@ -410,7 +424,7 @@ module UploadExcel
         options << (Option.new :content => row[12].to_s,:correct => false)
         
         # set correct option 
-        options[row[7].to_i].correct = true
+        options[row[7].to_i-1].correct = true
         
       elsif question.type == Type.find_by_code("V-TC-2")
         
@@ -459,11 +473,112 @@ module UploadExcel
         correct_options = row[7].to_s.split(",")
         
         options[correct_options[0].to_i-1].correct = true
-        options[correct_options[1].to_i+2].correct = true
+        options[correct_options[1].to_i-1].correct = true
         
+      elsif question.type == Type.find_by_code("Q-QC")
+        
+        options << (Option.new :content => row[14].to_s,:correct => false) 
+        options << (Option.new :content => row[15].to_s,:correct => false) 
+        options << (Option.new :content => row[16].to_s,:correct => false)
+        options << (Option.new :content => row[17].to_s,:correct => false)
+        
+        # set correct option 
+        options[row[13].to_i-1].correct = true
+        
+      elsif ((question.type == Type.find_by_code("Q-MCQ-1")) || (question.type == Type.find_by_code("Q-DI-MCQ-1")))
+        
+        options << (Option.new :content => row[14].to_s,:correct => false) 
+        options << (Option.new :content => row[15].to_s,:correct => false) 
+        options << (Option.new :content => row[16].to_s,:correct => false)
+        options << (Option.new :content => row[17].to_s,:correct => false)
+        options << (Option.new :content => row[18].to_s,:correct => false)
+        
+        # set correct option 
+        options[row[13].to_i-1].correct = true
+        
+      elsif ((question.type == Type.find_by_code("Q-MCQ-2")) || (question.type == Type.find_by_code("Q-DI-MCQ-2")))
+        
+        (1..(row[12].to_i)).each do |option_index|
+          options <<  (Option.new :content => row[13+option_index].to_s,:correct => false)
+        end
+        
+        # set correct options
+        row[13].to_s.split(",").each do |correct_index|
+          options[correct_index.to_i-1].correct = true
+        end
+        
+      elsif ((question.type == Type.find_by_code("Q-NE-1")) || (question.type == Type.find_by_code("Q-DI-NE-1"))) 
+        
+        options << (Option.new :content => row[13].to_s,:correct => true) 
+      
+      elsif ((question.type == Type.find_by_code("Q-NE-2")) || (question.type == Type.find_by_code("Q-DI-NE-2")))
+        
+        options << (Option.new :content => row[13].to_s,:correct => true)
+      
       end
       
       @options[@curr_sheet_index][row_index-1] = options
+      
+    end
+    
+    # Create question objects by reading each row of the current sheet.
+    # Add questions to the section object.
+    def create_quant_questions(section)
+      
+      # Start from row at index 1
+      (1..20).each do |row_index|
+        
+        # Get current question and add it to the section.
+        curr_que = getQuantQuestionFromRow(row_index)
+        
+        @questions[@curr_sheet_index] << curr_que
+        
+      end
+        
+    end
+    
+    # Generate a question object by reading a row from excel.
+    # Also add option objects to the question object.
+    def getQuantQuestionFromRow(row_index)
+      
+      Rails.logger.info("Creating quant question = " + row_index.to_s)
+      
+      row = @curr_sheet.row(row_index)
+      
+      question = Question.new
+      
+      begin
+        
+        question.sequence_no = row[0].to_i
+        question.di_location = row[2].to_s
+        question.header = row[4].to_s
+        question.passage = row[5].to_s
+        question.que_text = row[6].to_s
+        question.que_image = (row[7].to_s == "-") ? nil : row[7].to_s
+        question.sol_text = row[8].to_s
+        question.sol_image = (row[9].to_s == "-") ? nil : row[9].to_s
+        question.quantity_a = row[10].to_s
+        question.quantity_b = row[11].to_s
+        question.option_set_count = row[12].to_i
+        
+        # Question references.
+        question.topic_id = Topic.find_by_name(row[3].to_s).id
+        question.type = Type.find_by_code(row[1].to_s)
+      
+        Rails.logger.info("curr_sheet_index = " + @curr_sheet_index.to_s + " row_index = " + row_index.to_s)
+        
+        @options[@curr_sheet_index][row_index-1] = []
+        
+        build_options_for_question(question,row,row_index)
+        
+      rescue Exception => e
+        Rails.logger.info("ERROR_EXCEL_getQuestionFromRow:" + e.message.to_s)
+        return nil
+      end
+        
+      
+      return question
+      
       
     end
     
