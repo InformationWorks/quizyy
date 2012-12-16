@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to (@section.quiz.name) , quiz_path(@section.quiz) %>
+
 <p>
   <b>Name:</b>
   <%= @section.name %>
@@ -48,5 +50,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_quiz_section_path(@section) %> |
-<%= link_to 'Back', quiz_sections_path %>
+<%= link_to 'Edit', edit_quiz_section_path(@section.quiz,@section) %> |
+<%= link_to 'Back', quiz_path(@section.quiz	) %>

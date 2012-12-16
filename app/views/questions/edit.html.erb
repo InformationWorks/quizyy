@@ -1,6 +1,10 @@
+
+<%= link_to (@section.quiz.name) , quiz_path(@section.quiz) %> ->
+<%= link_to (@section.name) , quiz_section_path(@section.quiz,@section) %>
+
 <h1>Editing question</h1>
 
 <%= render 'form' %>
 
 <%= link_to 'Show', [@quiz,@section,@question] %> |
-<%= link_to 'Back', quiz_section_questions_path(@quiz,@section) %>
+<%= link_to 'Back', quiz_section_path(@quiz,@section) %>

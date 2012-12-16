@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to (@section.quiz.name) , quiz_path(@section.quiz) %> ->
+<%= link_to (@section.name) , quiz_section_path(@section.quiz,@section) %>
+
 <p>
   <b>Sequence no:</b>
   <%= @question.sequence_no %>
@@ -100,4 +103,4 @@
 
 
 <%= link_to 'Edit', edit_quiz_section_question_path(@quiz,@section,@question) %> |
-<%= link_to 'Back', quiz_section_questions_path(@quiz,@section) %>
+<%= link_to 'Back', quiz_section_path(@quiz,@section) %>
