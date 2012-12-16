@@ -86,7 +86,7 @@
     <th></th>
   </tr>
 
-  <% @question.options.each do |option| %>
+  <% @question.options.order("sequence_no ASC").each do |option| %>
   <tr>
     <td><%= option.content %></td>
     <td><%= option.correct %></td>

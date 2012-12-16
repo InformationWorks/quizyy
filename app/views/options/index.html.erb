@@ -10,7 +10,7 @@
     <th></th>
   </tr>
 
-<% @options.each do |option| %>
+<% @options.order("sequence_no ASC").each do |option| %>
   <tr>
     <td><%= option.content %></td>
     <td><%= option.correct %></td>

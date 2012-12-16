@@ -395,20 +395,20 @@ module UploadExcel
       
       if question.type == Type.find_by_code("V-MCQ-1")
         
-        options << (Option.new :content => row[8].to_s,:correct => false) 
-        options << (Option.new :content => row[9].to_s,:correct => false) 
-        options << (Option.new :content => row[10].to_s,:correct => false)
-        options << (Option.new :content => row[11].to_s,:correct => false)
-        options << (Option.new :content => row[12].to_s,:correct => false)
+        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1) 
+        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2) 
+        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
+        options << (Option.new :content => row[11].to_s,:correct => false,:sequence_no => 4)
+        options << (Option.new :content => row[12].to_s,:correct => false,:sequence_no => 5)
         
         # set correct option 
         options[row[7].to_i-1].correct = true
         
       elsif question.type == Type.find_by_code("V-MCQ-2")
         
-        options << (Option.new :content => row[8].to_s,:correct => false) 
-        options << (Option.new :content => row[9].to_s,:correct => false) 
-        options << (Option.new :content => row[10].to_s,:correct => false)
+        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1) 
+        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2) 
+        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
         
         # set correct options
         row[7].to_s.split(",").each do |correct_index|
@@ -419,23 +419,23 @@ module UploadExcel
         # No options
       elsif question.type == Type.find_by_code("V-TC-1")
         
-        options << (Option.new :content => row[8].to_s,:correct => false) 
-        options << (Option.new :content => row[9].to_s,:correct => false) 
-        options << (Option.new :content => row[10].to_s,:correct => false)
-        options << (Option.new :content => row[11].to_s,:correct => false)
-        options << (Option.new :content => row[12].to_s,:correct => false)
+        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1)
+        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2)
+        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
+        options << (Option.new :content => row[11].to_s,:correct => false,:sequence_no => 4)
+        options << (Option.new :content => row[12].to_s,:correct => false,:sequence_no => 5)
         
         # set correct option 
         options[row[7].to_i-1].correct = true
         
       elsif question.type == Type.find_by_code("V-TC-2")
         
-        options << (Option.new :content => row[8].to_s,:correct => false) 
-        options << (Option.new :content => row[9].to_s,:correct => false) 
-        options << (Option.new :content => row[10].to_s,:correct => false)
-        options << (Option.new :content => row[11].to_s,:correct => false)
-        options << (Option.new :content => row[12].to_s,:correct => false)
-        options << (Option.new :content => row[13].to_s,:correct => false)
+        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1)
+        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2)
+        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
+        options << (Option.new :content => row[11].to_s,:correct => false,:sequence_no => 4)
+        options << (Option.new :content => row[12].to_s,:correct => false,:sequence_no => 5)
+        options << (Option.new :content => row[13].to_s,:correct => false,:sequence_no => 6)
         
         # set correct options
         correct_options = row[7].to_s.split(",")
@@ -445,15 +445,15 @@ module UploadExcel
         
       elsif question.type == Type.find_by_code("V-TC-3")
         
-        options << (Option.new :content => row[8].to_s,:correct => false) 
-        options << (Option.new :content => row[9].to_s,:correct => false) 
-        options << (Option.new :content => row[10].to_s,:correct => false)
-        options << (Option.new :content => row[11].to_s,:correct => false)
-        options << (Option.new :content => row[12].to_s,:correct => false)
-        options << (Option.new :content => row[13].to_s,:correct => false)
-        options << (Option.new :content => row[14].to_s,:correct => false)
-        options << (Option.new :content => row[15].to_s,:correct => false)
-        options << (Option.new :content => row[16].to_s,:correct => false)
+        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1) 
+        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2)
+        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
+        options << (Option.new :content => row[11].to_s,:correct => false,:sequence_no => 4)
+        options << (Option.new :content => row[12].to_s,:correct => false,:sequence_no => 5)
+        options << (Option.new :content => row[13].to_s,:correct => false,:sequence_no => 6)
+        options << (Option.new :content => row[14].to_s,:correct => false,:sequence_no => 7)
+        options << (Option.new :content => row[15].to_s,:correct => false,:sequence_no => 8)
+        options << (Option.new :content => row[16].to_s,:correct => false,:sequence_no => 9)
         
         # set correct options
         correct_options = row[7].to_s.split(",")
@@ -464,12 +464,12 @@ module UploadExcel
         
       elsif question.type == Type.find_by_code("V-SE")
         
-        options << (Option.new :content => row[8].to_s,:correct => false) 
-        options << (Option.new :content => row[9].to_s,:correct => false) 
-        options << (Option.new :content => row[10].to_s,:correct => false)
-        options << (Option.new :content => row[11].to_s,:correct => false)
-        options << (Option.new :content => row[12].to_s,:correct => false)
-        options << (Option.new :content => row[13].to_s,:correct => false)
+        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1) 
+        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2)
+        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
+        options << (Option.new :content => row[11].to_s,:correct => false,:sequence_no => 4)
+        options << (Option.new :content => row[12].to_s,:correct => false,:sequence_no => 5)
+        options << (Option.new :content => row[13].to_s,:correct => false,:sequence_no => 6)
         
         # set correct options
         correct_options = row[7].to_s.split(",")
@@ -479,21 +479,21 @@ module UploadExcel
         
       elsif question.type == Type.find_by_code("Q-QC")
         
-        options << (Option.new :content => row[14].to_s,:correct => false) 
-        options << (Option.new :content => row[15].to_s,:correct => false) 
-        options << (Option.new :content => row[16].to_s,:correct => false)
-        options << (Option.new :content => row[17].to_s,:correct => false)
+        options << (Option.new :content => row[14].to_s,:correct => false,:sequence_no => 1) 
+        options << (Option.new :content => row[15].to_s,:correct => false,:sequence_no => 2)
+        options << (Option.new :content => row[16].to_s,:correct => false,:sequence_no => 3)
+        options << (Option.new :content => row[17].to_s,:correct => false,:sequence_no => 4)
         
         # set correct option 
         options[row[13].to_i-1].correct = true
         
       elsif ((question.type == Type.find_by_code("Q-MCQ-1")) || (question.type == Type.find_by_code("Q-DI-MCQ-1")))
         
-        options << (Option.new :content => row[14].to_s,:correct => false) 
-        options << (Option.new :content => row[15].to_s,:correct => false) 
-        options << (Option.new :content => row[16].to_s,:correct => false)
-        options << (Option.new :content => row[17].to_s,:correct => false)
-        options << (Option.new :content => row[18].to_s,:correct => false)
+        options << (Option.new :content => row[14].to_s,:correct => false,:sequence_no => 1)
+        options << (Option.new :content => row[15].to_s,:correct => false,:sequence_no => 2)
+        options << (Option.new :content => row[16].to_s,:correct => false,:sequence_no => 3)
+        options << (Option.new :content => row[17].to_s,:correct => false,:sequence_no => 4)
+        options << (Option.new :content => row[18].to_s,:correct => false,:sequence_no => 5)
         
         # set correct option 
         options[row[13].to_i-1].correct = true
@@ -501,7 +501,7 @@ module UploadExcel
       elsif ((question.type == Type.find_by_code("Q-MCQ-2")) || (question.type == Type.find_by_code("Q-DI-MCQ-2")))
         
         (1..(row[12].to_i)).each do |option_index|
-          options <<  (Option.new :content => row[13+option_index].to_s,:correct => false)
+          options <<  (Option.new :content => row[13+option_index].to_s,:correct => false,:sequence_no => option_index)
         end
         
         # set correct options
@@ -511,11 +511,11 @@ module UploadExcel
         
       elsif ((question.type == Type.find_by_code("Q-NE-1")) || (question.type == Type.find_by_code("Q-DI-NE-1"))) 
         
-        options << (Option.new :content => row[13].to_s,:correct => true) 
+        options << (Option.new :content => row[13].to_s,:correct => true,:sequence_no => 1)
       
       elsif ((question.type == Type.find_by_code("Q-NE-2")) || (question.type == Type.find_by_code("Q-DI-NE-2")))
         
-        options << (Option.new :content => row[13].to_s,:correct => true)
+        options << (Option.new :content => row[13].to_s,:correct => true,:sequence_no => 1)
       
       end
       
