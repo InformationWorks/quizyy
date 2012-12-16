@@ -87,6 +87,8 @@ module UploadExcel
     # return false if there us any error.
     def execute_excel_upload
       
+      clear_quiz
+      
       # process each sheet.
       (0..3).each do | sheet_index |
         
@@ -625,6 +627,16 @@ module UploadExcel
       (1..section_index).each do |section|
         section.destroy
       end
+    end
+    
+    # Delete all the sections, questions & options before uploading.
+    def clear_quiz
+      
+      # Section -> Question -> Option [ Dependent destroy ] 
+      @quiz.sections.each do |section|
+        section.destroy
+      end
+      
     end
     
   end
