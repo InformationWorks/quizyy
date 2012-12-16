@@ -286,7 +286,7 @@ module UploadExcel
     
       # Create the verbal section
       verbal_section = Section.new :name => @curr_sheet.name, 
-                                   :sequence_no => @curr_sheet_index, 
+                                   :sequence_no => @curr_sheet_index + 1, 
                                    :section_type_id => SectionType.find_by_name("Verbal").id
       verbal_section.quiz = @quiz
       
@@ -309,7 +309,7 @@ module UploadExcel
     def process_quant_sheet
       # Create the quant section
       quant_section = Section.new :name => @curr_sheet.name, 
-                                   :sequence_no => @curr_sheet_index, 
+                                   :sequence_no => @curr_sheet_index + 1, 
                                    :section_type_id => SectionType.find_by_name("Quant").id
       quant_section.quiz = @quiz
       

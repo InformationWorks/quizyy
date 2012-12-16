@@ -75,6 +75,29 @@
   <%= @question.section ? @question.section.name : "N/A" %>
 </p>
 
+<p>
+  <b>Options:</b>
+  <table>
+  <tr>
+    <th>Content</th>
+    <th>Correct</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @question.options.each do |option| %>
+  <tr>
+    <td><%= option.content %></td>
+    <td><%= option.correct %></td>
+    <td><%= link_to 'Show', quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option) %></td>
+    <td><%= link_to 'Edit', edit_quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option) %></td>
+    <td><%= link_to 'Destroy', quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+  <% end %>
+</table>
+</p>
+
 
 <%= link_to 'Edit', edit_quiz_section_question_path(@quiz,@section,@question) %> |
 <%= link_to 'Back', quiz_section_questions_path(@quiz,@section) %>

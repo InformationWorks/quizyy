@@ -36,6 +36,33 @@
   <%= @quiz.topic ? @quiz.topic.name : "N/A" %>
 </p>
 
+<p>
+  <b>Sections:</b>
+  
+  <table>
+  <tr>
+    <th>Name</th>
+    <th>Sequence no</th>
+    <th>Section type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+	<% @quiz.sections.order("sequence_no ASC").each do |section| %>
+	  <tr>
+	    <td><%= section.name %></td>
+	    <td><%= section.sequence_no %></td>
+	    <td><%= section.section_type.name %></td>
+	    <td><%= link_to 'Show', quiz_section_path(section.quiz,section) %></td>
+	    <td><%= link_to 'Edit', edit_quiz_section_path(section.quiz,section) %></td>
+	    <td><%= link_to 'Destroy', quiz_section_path(section.quiz,section), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	  </tr>
+	<% end %>
+  </table>
+  
+</p>
+
 
 <%= link_to 'Edit', edit_quiz_path(@quiz) %> |
 <%= link_to 'Back', quizzes_path %>
