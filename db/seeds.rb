@@ -37,6 +37,18 @@ super_admin_user = User.create!(:full_name => 'Harshal Bhakta', :email => 'harsh
 super_admin_user.roles << super_admin_role
 super_admin_user.save!
 
+admin_user = User.create!(:full_name => 'Admin', :email => 'admin@gre340.com', :password => 'password', :password_confirmation => 'password')
+admin_user.roles << admin_role
+admin_user.save!
+
+student1_user = User.create!(:full_name => 'Student One', :email => 'student1@gre340.com', :password => 'password', :password_confirmation => 'password')
+student1_user.roles << student_role
+student1_user.save!
+
+student2_user = User.create!(:full_name => 'Student Two', :email => 'student2@gre340.com', :password => 'password', :password_confirmation => 'password')
+student2_user.roles << student_role
+student2_user.save!
+
 [ { :code => "RC", :name => "Reading Comprehension"}, 
   { :code => "TC", :name => "Text Completion"},
   { :code => "SE", :name => "Sentence Equivalence"},
