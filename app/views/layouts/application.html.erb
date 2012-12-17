@@ -42,7 +42,7 @@
             <li><a href="./store.html">Store</a></li>
             <li><a href="#">Admin</a></li>
             <li class="divider"></li>
-            <li><a href="./index.html">Logout</a></li>
+            <li><%= link_to 'Logout', destroy_user_session_url, :method => 'delete' %></li>
           </ul>
         </div>
       </div>
