@@ -11,6 +11,10 @@
  *= require_self
  *= require bootstrap
  *= require bootstrap-responsive
+ *= require bootmetro
+ *= require bootmetro-tiles
+ *= require metro-ui-light
+ *= require icomoon
  *= require style
  *= require_tree .
  */
