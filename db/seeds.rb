@@ -14,6 +14,8 @@ Type.delete_all
 QuizType.delete_all
 SectionType.delete_all
 Quiz.delete_all
+Section.delete_all
+Question.delete_all
 
 super_admin_role = Role.new
 super_admin_role.name = "SuperAdmin"
@@ -133,7 +135,5 @@ end
   topic_quiz_1.quiz_type = QuizType.find_by_name("TopicQuiz")
   topic_quiz_1.topic = Topic.find_by_name("Fractions")
   topic_quiz_1.save!
-
-
-
+  
 

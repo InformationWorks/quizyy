@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to (@section.quiz.name) , quiz_path(@section.quiz) %> ->
+<%= link_to (@section.name) , quiz_section_path(@section.quiz,@section) %>
+
 <p>
   <b>Sequence no:</b>
   <%= @question.sequence_no %>
@@ -75,6 +78,29 @@
   <%= @question.section ? @question.section.name : "N/A" %>
 </p>
 
+<p>
+  <b>Options:</b>
+  <table>
+  <tr>
+    <th>Content</th>
+    <th>Correct</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @question.options.order("sequence_no ASC").each do |option| %>
+  <tr>
+    <td><%= option.content %></td>
+    <td><%= option.correct %></td>
+    <td><%= link_to 'Show', quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option) %></td>
+    <td><%= link_to 'Edit', edit_quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option) %></td>
+    <td><%= link_to 'Destroy', quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+  <% end %>
+</table>
+</p>
+
 
 <%= link_to 'Edit', edit_quiz_section_question_path(@quiz,@section,@question) %> |
-<%= link_to 'Back', quiz_section_questions_path(@quiz,@section) %>
+<%= link_to 'Back', quiz_section_path(@quiz,@section) %>

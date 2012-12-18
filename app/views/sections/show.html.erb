@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to (@section.quiz.name) , quiz_path(@section.quiz) %>
+
 <p>
   <b>Name:</b>
   <%= @section.name %>
@@ -20,6 +22,33 @@
   <%= @section.section_type.name %>
 </p>
 
+	<p>
+	<b>Questions</b>
+	
+	<table>
+  <tr>
+    <th>Sequence no</th>
+    <th>Type</th>
+    <th>Topic</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
 
-<%= link_to 'Edit', edit_quiz_section_path(@section) %> |
-<%= link_to 'Back', quiz_sections_path %>
+	<% @section.questions.order("	sequence_no ASC").each do |question| %>
+  <tr>
+    <td><%= question.sequence_no %></td>
+    <td><%= question.type ? question.type.name : "N/A" %></td>
+    <td><%= question.topic ? question.topic.name : "N/A" %></td>
+    <td><%= link_to 'Show', quiz_section_question_path(question.section.quiz,question.section,question) %></td>
+    <td><%= link_to 'Edit', edit_quiz_section_question_path(question.section.quiz,question.section,question) %></td>
+    <td><%= link_to 'Destroy', quiz_section_question_path(question.section.quiz,question.section,question), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+	<% end %>	
+	</table>
+	
+</p>
+
+
+<%= link_to 'Edit', edit_quiz_section_path(@section.quiz,@section) %> |
+<%= link_to 'Back', quiz_path(@section.quiz	) %>

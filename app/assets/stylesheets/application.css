@@ -16,5 +16,6 @@
  *= require metro-ui-light
  *= require icomoon
  *= require style
+ *= require_tree .
  */
 

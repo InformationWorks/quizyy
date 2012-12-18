@@ -1,5 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to (@option.question.section.quiz.name) , quiz_path(@option.question.section.quiz) %> ->
+<%= link_to (@option.question.section.name) , quiz_section_path(@option.question.section.quiz,@option.question.section) %> ->
+<%= link_to ("Q#"+@option.question.sequence_no.to_s) , quiz_section_question_path(@option.question.section.quiz,@option.question.section,@option.question) %>
+
 <p>
   <b>Content:</b>
   <%= @option.content %>
@@ -17,4 +21,4 @@
 
 
 <%= link_to 'Edit', edit_quiz_section_question_option_path(@option.question.section.quiz,@option.question.section,@option.question,@option) %> |
-<%= link_to 'Back', quiz_section_question_options_path(@quiz,@section,@question) %>
+<%= link_to 'Back', quiz_section_question_path(@quiz,@section,@question) %>

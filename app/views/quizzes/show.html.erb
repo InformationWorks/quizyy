@@ -1,5 +1,16 @@
 <p id="notice"><%= notice %></p>
 
+<div style="float: middle;height:68px;" class="table table-bordered">
+        <%= form_for @quiz, :url => upload_full_excel_quiz_path(@quiz), :method => :post, :html => { :multipart => true } do |fe| %> 
+        <%= fe.file_field :full_quiz_excel,:class => "form_fields" %> <br /> <br />
+        <%= fe.submit "Upload Questions",:confirm => "Are you sure you want to overwrite existing questions?", :method => :post, :data => { :confirm => 'This will delete current questions for this quiz. Are you sure you want to upload new questions?' },
+                        :class => "btn alert-error delete_button",:style => "float:left;margin-left: 20px;margin-top:-5px" %> 
+        <div style="margin-top: 0px;float: left;margin-left: 15px;">
+                This will overwrite the entire test.
+        </div>
+        <% end %>
+</div>
+
 <p>
   <b>Name:</b>
   <%= @quiz.name %>
@@ -23,6 +34,33 @@
 <p>
   <b>Topic:</b>
   <%= @quiz.topic ? @quiz.topic.name : "N/A" %>
+</p>
+
+<p>
+  <b>Sections:</b>
+  
+  <table>
+  <tr>
+    <th>Name</th>
+    <th>Sequence no</th>
+    <th>Section type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+	<% @quiz.sections.order("sequence_no ASC").each do |section| %>
+	  <tr>
+	    <td><%= section.name %></td>
+	    <td><%= section.sequence_no %></td>
+	    <td><%= section.section_type.name %></td>
+	    <td><%= link_to 'Show', quiz_section_path(section.quiz,section) %></td>
+	    <td><%= link_to 'Edit', edit_quiz_section_path(section.quiz,section) %></td>
+	    <td><%= link_to 'Destroy', quiz_section_path(section.quiz,section), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	  </tr>
+	<% end %>
+  </table>
+  
 </p>
 
 
