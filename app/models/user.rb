@@ -28,12 +28,12 @@ class User < ActiveRecord::Base
     
   end
   
-  # Return an array of quizzes available for a user.
-  # Purchased by the user or available because of role.
-  def available_quizzes
+  # Return an array of full quizzes available for a user.
+  # Purchased by the user.
+  def available_full_quizzes
     
     # TODO: Filter the quizzes here based on the rules.
-    return Quiz.all
+    return self.quizzes.where(:quiz_type_id => QuizType.find_by_name("FullQuiz").id)
     
   end
 

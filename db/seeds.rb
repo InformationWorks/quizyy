@@ -257,4 +257,30 @@ end
   topic_quiz_1.quiz_type = QuizType.find_by_name("TopicQuiz")
   topic_quiz_1.topic_id = Topic.find_by_name("Ordering and the Real Number Line").id
   topic_quiz_1.save!
+  
+  # Assign 5 full test to student1.
+  quiz_user1 = QuizUser.new
+  quiz_user1.user_id = student1_user.id
+  quiz_user1.quiz_id = full_quiz_1.id
+  quiz_user1.save!
+  
+  quiz_user2 = QuizUser.new
+  quiz_user2.user_id = student1_user.id
+  quiz_user2.quiz_id = full_quiz_2.id
+  quiz_user2.save!
+
+  quiz_user3 = QuizUser.new
+  quiz_user3.user_id = student1_user.id
+  quiz_user3.quiz_id = full_quiz_7.id
+  quiz_user3.save!
+  
+  quiz_user4 = QuizUser.new
+  quiz_user4.user_id = student1_user.id
+  quiz_user4.quiz_id = full_quiz_8.id
+  quiz_user4.save!
+  
+  quiz_user5 = QuizUser.new
+  quiz_user5.user_id = student1_user.id
+  quiz_user5.quiz_id = full_quiz_9.id
+  quiz_user5.save!
 

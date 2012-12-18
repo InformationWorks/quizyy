@@ -107,172 +107,34 @@
   <div class="tab-content">
     <div class="tab-pane active" id="full-test">
       <ul class="test-list">
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe1bb;</span>
-              <span class="win-label">Start</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem pause">
-          <small>paused</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe1bb;</span>
-              <span class="win-label">Start</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe13b;</span>
-              <span class="win-label">Review</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem pause">
-          <small>paused</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="tab-pane" id="category-test">
-      <ul class="test-list">
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe1bb;</span>
-              <span class="win-label">Start</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem pause">
-          <small>paused</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe1bb;</span>
-              <span class="win-label">Start</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe13b;</span>
-              <span class="win-label">Review</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem pause">
-          <small>paused</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
+      	
+      	<% current_user.available_full_quizzes.each do |full_quiz| %>
+      		
+      		<% status = full_quiz.quiz_users.where(:quiz_id => full_quiz.id,:user_id => current_user.id).first.status %>
+      		
+      		<% if status == :new %>
+      			<% li_class = "mediumListIconTextItem new"  %> 
+      		<% elsif status == :complete %>
+      		    <% li_class = "mediumListIconTextItem complete"  %>
+      		<% elsif status == :paused %>
+      			<% li_class = "mediumListIconTextItem pause"  %>
+      		<% end %>
+      		      		
+      		<li class= "<%= li_class %>">
+	          <small><%= status %></small>
+	          <div class="mediumListIconTextItem-Detail">
+	            <h4><%= full_quiz.name %></h4>
+	            <h6><%= full_quiz.name %></h6>
+	          </div>
+	          <div class="command-btn pull-right">
+	            <button class="win-command">
+	              <span class="win-commandimage win-commandring">&#xe1bb;</span>
+	              <span class="win-label">Start</span>
+	            </button>
+	          </div>
+	        </li>
+      	<% end %>
+      	
       </ul>
     </div>
   </div>
