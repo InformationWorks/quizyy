@@ -28,4 +28,41 @@ class User < ActiveRecord::Base
     
   end
   
+  # Return an array of quizzes available for a user.
+  # Purchased by the user or available because of role.
+  def available_quizzes
+    
+    # TODO: Filter the quizzes here based on the rules.
+    return Quiz.all
+    
+  end
+
+  def verbal_average
+    return 120
+  end
+  
+  def verbal_highest
+    return 130
+  end
+  
+  def quant_highest
+    return 150
+  end
+ 
+  def quant_average
+    return 140
+  end
+  
+  def overall_average
+    return 320
+  end
+  
+  def overall_highest
+    return 340
+  end
+  
+  def areas_of_improvement  
+    return [ Topic.first, Topic.last, Category.first, Category.last ]
+  end
+
 end
