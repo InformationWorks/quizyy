@@ -1,5 +1,7 @@
 GremastersWeb::Application.routes.draw do
   
+  get "test_center/index"
+
   resources :quizzes do
     
     member do
