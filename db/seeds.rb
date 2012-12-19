@@ -230,33 +230,33 @@ end
   topic_quiz_1.topic_id = Topic.find_by_name("Integers").id
   topic_quiz_1.save!
   
-  topic_quiz_1 = Quiz.new
-  topic_quiz_1.name = "Fractions 1"
-  topic_quiz_1.random = false
-  topic_quiz_1.quiz_type = QuizType.find_by_name("TopicQuiz")
-  topic_quiz_1.topic_id = Topic.find_by_name("Fractions").id
-  topic_quiz_1.save!
+  topic_quiz_2 = Quiz.new
+  topic_quiz_2.name = "Fractions 1"
+  topic_quiz_2.random = false
+  topic_quiz_2.quiz_type = QuizType.find_by_name("TopicQuiz")
+  topic_quiz_2.topic_id = Topic.find_by_name("Fractions").id
+  topic_quiz_2.save!
   
-  topic_quiz_1 = Quiz.new
-  topic_quiz_1.name = "Decimals 1"
-  topic_quiz_1.random = false
-  topic_quiz_1.quiz_type = QuizType.find_by_name("TopicQuiz")
-  topic_quiz_1.topic_id = Topic.find_by_name("Decimals").id
-  topic_quiz_1.save!
+  topic_quiz_3 = Quiz.new
+  topic_quiz_3.name = "Decimals 1"
+  topic_quiz_3.random = false
+  topic_quiz_3.quiz_type = QuizType.find_by_name("TopicQuiz")
+  topic_quiz_3.topic_id = Topic.find_by_name("Decimals").id
+  topic_quiz_3.save!
   
-  topic_quiz_1 = Quiz.new
-  topic_quiz_1.name = "Exponents and Square Roots 1"
-  topic_quiz_1.random = false
-  topic_quiz_1.quiz_type = QuizType.find_by_name("TopicQuiz")
-  topic_quiz_1.topic_id = Topic.find_by_name("Exponents and Square Roots").id
-  topic_quiz_1.save!
+  topic_quiz_4 = Quiz.new
+  topic_quiz_4.name = "Exponents and Square Roots 1"
+  topic_quiz_4.random = false
+  topic_quiz_4.quiz_type = QuizType.find_by_name("TopicQuiz")
+  topic_quiz_4.topic_id = Topic.find_by_name("Exponents and Square Roots").id
+  topic_quiz_4.save!
   
-  topic_quiz_1 = Quiz.new
-  topic_quiz_1.name = "Ordering and the Real Number Line 1"
-  topic_quiz_1.random = false
-  topic_quiz_1.quiz_type = QuizType.find_by_name("TopicQuiz")
-  topic_quiz_1.topic_id = Topic.find_by_name("Ordering and the Real Number Line").id
-  topic_quiz_1.save!
+  topic_quiz_5 = Quiz.new
+  topic_quiz_5.name = "Ordering and the Real Number Line 1"
+  topic_quiz_5.random = false
+  topic_quiz_5.quiz_type = QuizType.find_by_name("TopicQuiz")
+  topic_quiz_5.topic_id = Topic.find_by_name("Ordering and the Real Number Line").id
+  topic_quiz_5.save!
   
   # Assign 5 full test to student1.
   quiz_user1 = QuizUser.new
@@ -283,4 +283,35 @@ end
   quiz_user5.user_id = student1_user.id
   quiz_user5.quiz_id = full_quiz_9.id
   quiz_user5.save!
-
+  
+  # Assign 3 Category test to student1.
+  quiz_user6 = QuizUser.new
+  quiz_user6.user_id = student1_user.id
+  quiz_user6.quiz_id = cat_quiz_1.id
+  quiz_user6.save!
+  
+  quiz_user7 = QuizUser.new
+  quiz_user7.user_id = student1_user.id
+  quiz_user7.quiz_id = cat_quiz_2.id
+  quiz_user7.save!
+  
+  quiz_user8 = QuizUser.new
+  quiz_user8.user_id = student1_user.id
+  quiz_user8.quiz_id = cat_quiz_3.id
+  quiz_user8.save!
+  
+  # Assign 3 Topic test to student1.
+  quiz_user9 = QuizUser.new
+  quiz_user9.user_id = student1_user.id
+  quiz_user9.quiz_id = topic_quiz_1.id
+  quiz_user9.save!
+  
+  quiz_user10 = QuizUser.new
+  quiz_user10.user_id = student1_user.id
+  quiz_user10.quiz_id = topic_quiz_2.id
+  quiz_user10.save!
+  
+  quiz_user11 = QuizUser.new
+  quiz_user11.user_id = student1_user.id
+  quiz_user11.quiz_id = topic_quiz_3.id
+  quiz_user11.save!

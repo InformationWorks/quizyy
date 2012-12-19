@@ -30,10 +30,22 @@ class User < ActiveRecord::Base
   
   # Return an array of full quizzes available for a user.
   # Purchased by the user.
-  def available_full_quizzes
+  def purchased_full_quizzes
     
     # TODO: Filter the quizzes here based on the rules.
     return self.quizzes.where(:quiz_type_id => QuizType.find_by_name("FullQuiz").id)
+    
+  end
+  
+  # Return an array of Category+Topic quizzes available for a user.
+  # Purchased by the user.
+  def purchased_category_topic_quizzes
+    
+    category_quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+    topic_quiz_type_id = QuizType.find_by_name("TopicQuiz").id
+    
+    # TODO: Filter the quizzes here based on the rules.
+    return self.quizzes.where("quiz_type_id = #{category_quiz_type_id} OR quiz_type_id = #{topic_quiz_type_id}")
     
   end
 

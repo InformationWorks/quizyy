@@ -13,4 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap/bootstrap-dropdown.js
+//= require bootstrap/bootstrap-tab.js
 //= require_tree .
