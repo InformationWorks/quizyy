@@ -198,28 +198,28 @@ end
   cat_quiz_2.name = "Text Completion 1"
   cat_quiz_2.random = false
   cat_quiz_2.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  cat_quiz_2.category_id = Category.find_by_code("RC").id
+  cat_quiz_2.category_id = Category.find_by_code("TC").id
   cat_quiz_2.save!
   
   cat_quiz_3 = Quiz.new
   cat_quiz_3.name = "Sentence Equivalence 1"
   cat_quiz_3.random = false
   cat_quiz_3.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  cat_quiz_3.category_id = Category.find_by_code("RC").id
+  cat_quiz_3.category_id = Category.find_by_code("SE").id
   cat_quiz_3.save!
   
   cat_quiz_4 = Quiz.new
   cat_quiz_4.name = "Quantitative Comparison 1"
   cat_quiz_4.random = false
   cat_quiz_4.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  cat_quiz_4.category_id = Category.find_by_code("RC").id
+  cat_quiz_4.category_id = Category.find_by_code("QC").id
   cat_quiz_4.save!
   
   cat_quiz_5 = Quiz.new
   cat_quiz_5.name = "Numeric Entry 1"
   cat_quiz_5.random = false
   cat_quiz_5.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  cat_quiz_5.category_id = Category.find_by_code("RC").id
+  cat_quiz_5.category_id = Category.find_by_code("NE").id
   cat_quiz_5.save!
   
   # Create 5 Topic-wise quiz
