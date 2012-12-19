@@ -6,7 +6,7 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
   )
 
   TestCenterRouting.addInitializer ->
-    Gre340.TestCenter = Gre340.module("TestCenter.App");
+    Gre340.TestCenter = Gre340.module("TestCenter");
     Gre340.TestCenter.start()
     TestCenterRouting.router = new TestCenterRouting.Router(
       controller: Gre340.TestCenter
