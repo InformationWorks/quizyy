@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :store_location
+  before_filter :instantiate_controller_and_action_names
   
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
@@ -30,6 +31,11 @@ class ApplicationController < ActionController::Base
   
   def after_sign_in_path_for(resource)
       stored_location_for(resource) || homes_index_path
+  end
+  
+  def instantiate_controller_and_action_names
+      @current_action = action_name
+      @current_controller = controller_name
   end
   
 end

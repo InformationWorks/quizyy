@@ -1,5 +1,9 @@
 GremastersWeb::Application.routes.draw do
   
+  get "stores/full_quizzes"
+
+  get "stores/category_quizzes"
+
   resources :quizzes do
     
     member do

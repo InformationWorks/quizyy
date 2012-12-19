@@ -1,0 +1,17 @@
+<% content_for :store_header_dropdown do %>
+  <ul class="nav nav-pills pull-left">
+  	
+  	<% if @current_action == "full_quizzes" %>
+  		<li class="active"><%= link_to "Full Tests", stores_full_quizzes_path %></li>
+  	<% else %>
+  		<li ><%= link_to "Full Tests", stores_full_quizzes_path %></li>
+  	<% end %>
+  	
+  	<% if @current_action == "category_quizzes" %>
+  		<li class="active"><%= link_to "Category Tests", stores_category_quizzes_path %></li>
+  	<% else %>
+  		<li><%= link_to "Category Tests", stores_category_quizzes_path %></li>
+  	<% end %>
+  
+  </ul>
+<% end %>
