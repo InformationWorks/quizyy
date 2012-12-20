@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20121217231343) do
 
   create_table "quizzes", :force => true do |t|
     t.string   "name"
+    t.text     "desc"
     t.boolean  "random"
     t.integer  "quiz_type_id"
     t.integer  "category_id"
