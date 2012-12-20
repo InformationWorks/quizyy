@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121217231343) do
+ActiveRecord::Schema.define(:version => 20121220222528) do
 
   create_table "categories", :force => true do |t|
     t.string   "code"
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(:version => 20121217231343) do
   end
 
   add_index "options", ["question_id"], :name => "index_options_on_question_id"
+
+  create_table "packages", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.decimal  "price"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "questions", :force => true do |t|
     t.integer  "sequence_no"

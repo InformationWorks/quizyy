@@ -16,6 +16,7 @@ SectionType.delete_all
 Quiz.delete_all
 Section.delete_all
 Question.delete_all
+Package.delete_all
 
 super_admin_role = Role.new
 super_admin_role.name = "SuperAdmin"
@@ -335,3 +336,22 @@ end
   quiz_user11.user_id = student1_user.id
   quiz_user11.quiz_id = topic_quiz_3.id
   quiz_user11.save!
+  
+# Add 3 packages for full-quiz section in store.
+package_one = Package.new
+package_one.name = "able"
+package_one.desc = "5 awesome full-length tests"
+package_one.price = 899.00
+package_one.save!
+
+package_two = Package.new
+package_two.name = "ace"
+package_two.desc = "7 awesome full-length tests"
+package_two.price = 999.00
+package_two.save!
+
+package_three = Package.new
+package_three.name = "ninja"
+package_three.desc = "10 awesome full-length tests"
+package_three.price = 1099.00
+package_three.save!
