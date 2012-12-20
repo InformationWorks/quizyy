@@ -2,52 +2,12 @@
 <%= render 'store_header' %>
 
 <div class="container-fluid">
-<div id="content"> 
-    <div id="full-test">
-      <header class="title">Select Your Pack</header>
-      <div class="span12">
-        <div class="row">
-          <div class="span3 pack-tile light-grey">
-            <h2>able</h2>
-            <hr>
-            <p><strong>5</strong> full length tests</p>
-            <div class="prize">
-              <hr>
-              <p class="lead">&#x20b9; 899</p>
-            </div>
-          </div>
-          <div class="span4 pack-tile light-grey blue-border">
-            <h2>ace</h2>
-            <hr>
-            <p><strong>7</strong> full length tests</p>
-            <div class="prize">
-              <hr>
-              <p class="lead">&#x20b9; 999</p>
-            </div>
-          </div>
-          <div class="span4 pack-tile ">
-            <h2>ninja</h2>
-            <hr class="blue">
-            <p><strong>10</strong> full length tests</p>
-            <div class="prize">
-              <hr class="blue">
-              <p class="lead">&#x20b9; 1099</p>
-            </div>
-          </div>
-          <div class="span2">
-            <div class="metro pull-right">
-              <a class="tile app bg-color-green" href="#">
-                 <div class="image-wrapper">
-                  <span class="icon icon-cart"></span>
-                </div>
-                <div class="app-label">Cart</div>
-                <div class="app-count">1</div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<div id="content">
+	<% if current_user.purchased_full_quizzes.count == 0 %> 
+    	<%= render "full_quiz_pack_selection"%>
+    <% else %>
+    	<%= render "full_quiz_buy_extra"%>
+    <% end %>
 </div>  
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
 <script src="js/vendor/bootstrap.js"></script>
