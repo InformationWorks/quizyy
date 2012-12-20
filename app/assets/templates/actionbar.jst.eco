@@ -1,0 +1,48 @@
+<div class="container">
+    <div id="top-action-bar" class="span12">
+        <div class="row">
+            <div class="span6 align-left">
+                <h4>GRE FULL 101</h4>
+                <h2>Section 2 of 4</h2>
+            </div>
+            <div class="span6 align-right">
+                <button class="win-command">
+                    <span class="win-commandimage win-commandring">&#xe03b;</span>
+                    <span class="win-label">Quit Test</span>
+                </button>
+                <button class="win-command">
+                    <span class="win-commandimage win-commandring">&#xe040;</span>
+                    <span class="win-label">Exit Section</span>
+                </button>
+                <button class="win-command">
+                    <span class="win-commandimage win-commandring">&#xe015;</span>
+                    <span class="win-label">Review</span>
+                </button>
+                <button class="win-command">
+                    <span class="win-commandimage win-commandring">&#xe071;</span>
+                    <span class="win-label">Mark</span>
+                </button>
+                <button class="win-command">
+                    <span class="win-commandimage win-commandring">&#xe128;</span>
+                    <span class="win-label">Help</span>
+                </button>
+                <button class="win-command">
+                    <span class="win-commandimage win-commandring">&#xe05d;</span>
+                    <span class="win-label">Back</span>
+                </button>
+                <button class="win-command">
+                    <span class="win-commandimage win-commandring">&#xe059;</span>
+                    <span class="win-label">Next</span>
+                </button>
+            </div>
+        </div>
+        <hr>
+        <div class="row align-center">
+            <div class="span10">
+                <h2>Question 2 of 10</h2>
+            </div>
+            <div class="span2 align-right"><p class="lead"><button class="btn">Hide Time</button>1:00:00</p></div>
+
+        </div>
+    </div>
+</div>

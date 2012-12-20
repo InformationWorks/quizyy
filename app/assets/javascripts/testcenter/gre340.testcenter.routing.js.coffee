@@ -1,13 +1,16 @@
 Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone, Marionette, $, _) ->
-  TestCenterRouting.Router = Backbone.Marionette.AppRouter.extend(appRoutes:
-    '': 'showIndex'
-    'index': 'showIndex'
-    'questions/:id': 'showIndex'
+
+  Router = Backbone.Router.extend(
+    routes:
+      'test_center': 'showIndex'
+      'test_center/': 'showIndex'
+      'test_center/:id': 'showIndex'
+    before:(route) ->
+      Gre340.TestCenter = Gre340.module("TestCenter");
+      Gre340.TestCenter.start()
+    showIndex: ->
+      Gre340.TestCenter.Question.controller.start()
   )
 
   TestCenterRouting.addInitializer ->
-    Gre340.TestCenter = Gre340.module("TestCenter");
-    Gre340.TestCenter.start()
-    TestCenterRouting.router = new TestCenterRouting.Router(
-      controller: Gre340.TestCenter
-    )
+      router = new Router()

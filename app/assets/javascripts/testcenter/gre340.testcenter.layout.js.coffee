@@ -4,6 +4,9 @@ Gre340.module "TestCenter.Layout",  (TestCenterLayout, Gre340, Backbone, Marione
 
   TestCenterLayout.Layout = Backbone.Marionette.Layout.extend(
     template: 'testcenter-layout'
+    regions:
+      actionbar: '#action-bar'
+      content: '#content'
   )
 
   TestCenterLayout.addInitializer ->

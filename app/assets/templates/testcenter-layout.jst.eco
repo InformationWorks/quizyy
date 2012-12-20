@@ -1,6 +1,6 @@
-<div id="top-action-bar">
+<div id="action-bar">
     <h2>Here goes the action bar</h2>
 </div>
-<div id="question">
+<div id="content">
     <h2>Here goes the content</h2>
 </div>

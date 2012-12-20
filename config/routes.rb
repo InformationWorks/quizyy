@@ -40,6 +40,9 @@ GremastersWeb::Application.routes.draw do
 
   end
 
+  match 'test_center' => 'test_center#index'
+  match 'test_center/*anything' => "test_center#index"
+
   root :to => "landings#index"
   # Devise routes.
   # devise_scope :user do
