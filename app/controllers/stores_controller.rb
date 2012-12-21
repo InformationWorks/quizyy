@@ -1,5 +1,10 @@
 class StoresController < ApplicationController
   def full_quizzes
+    
+    @package_1 = Package.find_by_position(1)
+    @package_2 = Package.find_by_position(2)
+    @package_3 = Package.find_by_position(3)
+    
   end
 
   def category_quizzes
