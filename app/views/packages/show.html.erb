@@ -15,6 +15,30 @@
   <%= @package.price %>
 </p>
 
+<p>
+  <b>Position:</b>
+  <%= @package.position %>
+</p>
+
+<p>
+	<b>Quizzes</b>
+	
+	<table>
+  <tr>
+    <th>Quiz Name</th>
+    <th></th>
+  </tr>
+
+	<% @package.quizzes.each do |quiz| %>
+  <tr>
+    <td><%= link_to quiz.name, quiz_path(quiz) %></td>
+    <td><%= link_to 'Remove', quiz_path(quiz), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+	<% end %>	
+	</table>
+	
+</p>
+
 
 <%= link_to 'Edit', edit_package_path(@package) %> |
 <%= link_to 'Back', packages_path %>

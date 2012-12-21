@@ -7,4 +7,7 @@ class Quiz < ActiveRecord::Base
   
   has_many :quiz_users
   has_many :users, :through => :quiz_users
+  
+  has_many :package_quizzes
+  has_many :packages, :through => :package_quizzes
 end

@@ -4,6 +4,7 @@ class CreatePackages < ActiveRecord::Migration
       t.string :name
       t.text :desc
       t.decimal :price
+      t.integer :position
 
       t.timestamps
     end

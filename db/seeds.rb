@@ -17,6 +17,7 @@ Quiz.delete_all
 Section.delete_all
 Question.delete_all
 Package.delete_all
+PackageQuiz.delete_all
 
 super_admin_role = Role.new
 super_admin_role.name = "SuperAdmin"
@@ -338,20 +339,136 @@ end
   quiz_user11.save!
   
 # Add 3 packages for full-quiz section in store.
-package_one = Package.new
-package_one.name = "able"
-package_one.desc = "5 awesome full-length tests"
-package_one.price = 899.00
-package_one.save!
+package_1 = Package.new
+package_1.name = "able"
+package_1.desc = "5 awesome full-length tests"
+package_1.price = 899.00
+package_1.position = 1
+package_1.save!
 
-package_two = Package.new
-package_two.name = "ace"
-package_two.desc = "7 awesome full-length tests"
-package_two.price = 999.00
-package_two.save!
+package_2 = Package.new
+package_2.name = "ace"
+package_2.desc = "7 awesome full-length tests"
+package_2.price = 999.00
+package_2.position = 2
+package_2.save!
 
-package_three = Package.new
-package_three.name = "ninja"
-package_three.desc = "10 awesome full-length tests"
-package_three.price = 1099.00
-package_three.save!
+package_3 = Package.new
+package_3.name = "ninja"
+package_3.desc = "10 awesome full-length tests"
+package_3.price = 1099.00
+package_3.position = 3
+package_3.save!
+
+# Add first 5 full quizzes to package 1.
+package_quiz_1 = PackageQuiz.new
+package_quiz_1.quiz_id = full_quiz_1.id
+package_quiz_1.package_id = package_1.id
+package_quiz_1.save!
+
+package_quiz_2 = PackageQuiz.new
+package_quiz_2.quiz_id = full_quiz_2.id
+package_quiz_2.package_id = package_1.id
+package_quiz_2.save!
+
+package_quiz_3 = PackageQuiz.new
+package_quiz_3.quiz_id = full_quiz_3.id
+package_quiz_3.package_id = package_1.id
+package_quiz_3.save!
+
+package_quiz_4 = PackageQuiz.new
+package_quiz_4.quiz_id = full_quiz_4.id
+package_quiz_4.package_id = package_1.id
+package_quiz_4.save!
+
+package_quiz_5 = PackageQuiz.new
+package_quiz_5.quiz_id = full_quiz_5.id
+package_quiz_5.package_id = package_1.id
+package_quiz_5.save!
+
+# Add first 7 full quizzes to package 1.
+package_quiz_6 = PackageQuiz.new
+package_quiz_6.quiz_id = full_quiz_1.id
+package_quiz_6.package_id = package_2.id
+package_quiz_6.save!
+
+package_quiz_7 = PackageQuiz.new
+package_quiz_7.quiz_id = full_quiz_2.id
+package_quiz_7.package_id = package_2.id
+package_quiz_7.save!
+
+package_quiz_8 = PackageQuiz.new
+package_quiz_8.quiz_id = full_quiz_3.id
+package_quiz_8.package_id = package_2.id
+package_quiz_8.save!
+
+package_quiz_9 = PackageQuiz.new
+package_quiz_9.quiz_id = full_quiz_4.id
+package_quiz_9.package_id = package_2.id
+package_quiz_9.save!
+
+package_quiz_10 = PackageQuiz.new
+package_quiz_10.quiz_id = full_quiz_5.id
+package_quiz_10.package_id = package_2.id
+package_quiz_10.save!
+
+package_quiz_11 = PackageQuiz.new
+package_quiz_11.quiz_id = full_quiz_6.id
+package_quiz_11.package_id = package_2.id
+package_quiz_11.save!
+
+package_quiz_12 = PackageQuiz.new
+package_quiz_12.quiz_id = full_quiz_7.id
+package_quiz_12.package_id = package_2.id
+package_quiz_12.save!
+
+# Add first 10 full quizzes to package 1.
+package_quiz_13 = PackageQuiz.new
+package_quiz_13.quiz_id = full_quiz_1.id
+package_quiz_13.package_id = package_3.id
+package_quiz_13.save!
+
+package_quiz_14 = PackageQuiz.new
+package_quiz_14.quiz_id = full_quiz_2.id
+package_quiz_14.package_id = package_3.id
+package_quiz_14.save!
+
+package_quiz_15 = PackageQuiz.new
+package_quiz_15.quiz_id = full_quiz_3.id
+package_quiz_15.package_id = package_3.id
+package_quiz_15.save!
+
+package_quiz_16 = PackageQuiz.new
+package_quiz_16.quiz_id = full_quiz_4.id
+package_quiz_16.package_id = package_3.id
+package_quiz_16.save!
+
+package_quiz_17 = PackageQuiz.new
+package_quiz_17.quiz_id = full_quiz_5.id
+package_quiz_17.package_id = package_3.id
+package_quiz_17.save!
+
+package_quiz_18 = PackageQuiz.new
+package_quiz_18.quiz_id = full_quiz_6.id
+package_quiz_18.package_id = package_3.id
+package_quiz_18.save!
+
+package_quiz_19 = PackageQuiz.new
+package_quiz_19.quiz_id = full_quiz_7.id
+package_quiz_19.package_id = package_3.id
+package_quiz_19.save!
+
+package_quiz_20 = PackageQuiz.new
+package_quiz_20.quiz_id = full_quiz_8.id
+package_quiz_20.package_id = package_3.id
+package_quiz_20.save!
+
+package_quiz_21 = PackageQuiz.new
+package_quiz_21.quiz_id = full_quiz_9.id
+package_quiz_21.package_id = package_3.id
+package_quiz_21.save!
+
+package_quiz_22 = PackageQuiz.new
+package_quiz_22.quiz_id = full_quiz_10.id
+package_quiz_22.package_id = package_3.id
+package_quiz_22.save!
