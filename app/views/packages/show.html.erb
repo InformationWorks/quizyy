@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <b>Name:</b>
   <%= @package.name %>
@@ -32,7 +30,7 @@
 	<% @package.quizzes.each do |quiz| %>
   <tr>
     <td><%= link_to quiz.name, quiz_path(quiz) %></td>
-    <td><%= link_to 'Remove', quiz_path(quiz), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Remove', destroy_quiz_package_path(@package,quiz), method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 	<% end %>	
 	</table>

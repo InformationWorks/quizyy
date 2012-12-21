@@ -80,4 +80,21 @@ class PackagesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # /packages/:id/destroy_quiz_package/:quiz_id
+  # DELETE /packages/:id/destroy_quiz_package/:quiz_id.json
+  def destroy_quiz_package
+    
+    @package = Package.find(params[:id])
+    
+    begin
+      PackageQuiz.delete_all(["package_id = ? AND quiz_id = ?",params[:id],params[:quiz_id]])
+      redirect_to @package, notice: 'Quiz was successfully removed from the package.'
+    rescue Exception => ex
+      logger.info("Error 1001: Error removing quiz from package : " + ex.message)
+      redirect_to @package, notice: 'Error 1001: Error removing quiz from the package. '
+    end
+    
+  end
+  
 end
