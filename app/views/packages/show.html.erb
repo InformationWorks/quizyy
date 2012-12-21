@@ -30,11 +30,21 @@
 	<% @package.quizzes.each do |quiz| %>
   <tr>
     <td><%= link_to quiz.name, quiz_path(quiz) %></td>
-    <td><%= link_to 'Remove', destroy_quiz_package_path(@package,quiz), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Remove', destroy_quiz_from_package_path(@package,quiz), method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 	<% end %>	
 	</table>
 	
+</p>
+
+<p>
+	<b>Add a quiz</b>
+	<%= form_for @package, :url => add_quiz_to_package_path(@package) do |f| %>
+	
+	<%= collection_select(:quiz, :id, @quizzes, :id, :name, {:prompt => true}) %>
+	<%= f.submit "Add" %>
+          
+	<% end %>          
 </p>
 
 

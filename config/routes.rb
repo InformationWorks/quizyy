@@ -3,10 +3,12 @@ GremastersWeb::Application.routes.draw do
   resources :packages do
     
     member do
-       match 'destroy_quiz_package/:quiz_id', to: 'packages#destroy_quiz_package', via: [:delete], as: 'destroy_quiz'
+       match 'destroy_quiz_from_package/:quiz_id', to: 'packages#destroy_quiz_from_package', via: [:delete], as: 'destroy_quiz_from'
     end
     
   end
+  
+  match "packages/:id/add_quiz_to_package" => "packages#add_quiz_to_package", via: [:put], :as => "add_quiz_to_package"
 
   get "stores/full_quizzes"
 
