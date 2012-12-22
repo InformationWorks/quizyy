@@ -2,24 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a6af83c-0286-41d8-8a71-66c64c787141" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.question.js.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/templates/actionbar.jst.eco" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/templates/question/single.jst.eco" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/questions.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/backbone/backbone.routefilter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/backbone/marionette/jquery.resolved.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/backbone/jquery.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/assets/javascripts/gre340.testcenter.js.coffee" afterPath="$PROJECT_DIR$/app/assets/javascripts/gre340.testcenter.require.js.coffee" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.app.js.coffee" afterPath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.js.coffee" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.collection.js.coffee" afterPath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.actionbar.js.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/application.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/application.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/gre340.js.coffee" afterPath="$PROJECT_DIR$/app/assets/javascripts/gre340.js.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.layout.js.coffee" afterPath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.layout.js.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.routing.js.coffee" afterPath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.routing.js.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.question.js.coffee" afterPath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.question.js.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/style.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/style.css.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/templates/actionbar.jst.eco" afterPath="$PROJECT_DIR$/app/assets/templates/actionbar.jst.eco" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/templates/testcenter-layout.jst.eco" afterPath="$PROJECT_DIR$/app/assets/templates/testcenter-layout.jst.eco" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/test_center/index.html.erb" afterPath="$PROJECT_DIR$/app/views/test_center/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/testcenter.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/testcenter.html.erb" />
     </list>
     <ignored path="gremasters-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,46 +27,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="gre340.testcenter.routing.js.coffee" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="gre340.testcenter.routing.js.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.routing.js.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="36" selection-start="253" selection-end="253" vertical-scroll-proportion="0.2280285">
+            <state line="11" column="51" selection-start="386" selection-end="432" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gre340.js.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gre340.js.coffee">
+      <file leaf-file-name="style.css.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/style.css.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="35" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0">
+            <state line="247" column="16" selection-start="4841" selection-end="4841" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gre340.testcenter.question.js.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.question.js.coffee">
+      <file leaf-file-name="bootstrap-responsive.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/assets/stylesheets/bootstrap-responsive.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="6" selection-start="509" selection-end="509" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="single.jst.eco" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/templates/question/single.jst.eco">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="10" selection-start="3184" selection-end="3184" vertical-scroll-proportion="-19.2">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="30" selection-start="758" selection-end="758" vertical-scroll-proportion="0.0">
+            <state line="934" column="0" selection-start="18069" selection-end="18094" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -86,7 +57,16 @@
       <file leaf-file-name="gre340.testcenter.layout.js.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.layout.js.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="18" selection-start="313" selection-end="313" vertical-scroll-proportion="0.0">
+            <state line="8" column="29" selection-start="293" selection-end="293" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="actionbar.jst.eco" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/templates/actionbar.jst.eco">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="39" column="35" selection-start="1524" selection-end="1524" vertical-scroll-proportion="-10.2">
               <folding />
             </state>
           </provider>
@@ -101,19 +81,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="routes.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/routes.rb">
+      <file leaf-file-name="gre340.testcenter.question.js.coffee" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.question.js.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="2" selection-start="761" selection-end="761" vertical-scroll-proportion="0.0">
+            <state line="9" column="15" selection-start="299" selection-end="299" vertical-scroll-proportion="0.34204274">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gre340.routing.js.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gre340.routing.js.coffee">
+      <file leaf-file-name="single.jst.eco" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/templates/question/single.jst.eco">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="41" selection-start="41" selection-end="41" vertical-scroll-proportion="0.0">
+            <state line="30" column="10" selection-start="3184" selection-end="3184" vertical-scroll-proportion="-12.0">
               <folding />
             </state>
           </provider>
@@ -122,7 +102,16 @@
       <file leaf-file-name="testcenter-layout.jst.eco" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/templates/testcenter-layout.jst.eco">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="9" selection-start="9" selection-end="19" vertical-scroll-proportion="-0.0">
+            <state line="3" column="9" selection-start="76" selection-end="88" vertical-scroll-proportion="-1.92">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="testcenter.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/layouts/testcenter.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="23" column="18" selection-start="742" selection-end="742" vertical-scroll-proportion="-14.08">
               <folding />
             </state>
           </provider>
@@ -141,22 +130,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/assets/javascripts/gre340.testcenter.js.coffee" />
-        <option value="$PROJECT_DIR$/app/views/test_center/index.html.erb" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/gre340.testcenter.require.js.coffee" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/backbone/marionette/jquery.resolved.js" />
         <option value="$PROJECT_DIR$/public/questions.json" />
         <option value="$PROJECT_DIR$/app/assets/templates/question/question_single.jst.eco" />
         <option value="$PROJECT_DIR$/app/assets/templates/question/question-actionbar.jst.eco" />
-        <option value="$PROJECT_DIR$/app/assets/templates/actionbar.jst.eco" />
-        <option value="$PROJECT_DIR$/app/assets/templates/testcenter-layout.jst.eco" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.question.js.coffee" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.layout.js.coffee" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.js.coffee" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/application.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/gre340.js.coffee" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.routing.js.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/templates/actionbar.jst.eco" />
+        <option value="$PROJECT_DIR$/app/assets/templates/testcenter-layout.jst.eco" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.layout.js.coffee" />
+        <option value="$PROJECT_DIR$/app/views/layouts/testcenter.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/style.css.scss" />
+        <option value="$PROJECT_DIR$/app/assets/templates/question/single.jst.eco" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.question.js.coffee" />
       </list>
     </option>
   </component>
@@ -240,6 +229,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stylesheets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -460,6 +453,10 @@
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stylesheets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -506,6 +503,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="testcenter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gremasters-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gremasters-web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -890,30 +905,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/test_center/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="57" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/backbone/marionette/jquery.resolved.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="6" selection-start="1708" selection-end="1708" vertical-scroll-proportion="2.7002518" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.actionbar.js.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gre340.testcenter.require.js.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="50" selection-start="246" selection-end="246" vertical-scroll-proportion="0.19417475">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/questions.json">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="48" selection-start="158" selection-end="158" vertical-scroll-proportion="0.0">
@@ -921,44 +912,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/templates/actionbar.jst.eco">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="6" selection-start="2092" selection-end="2092" vertical-scroll-proportion="-30.08">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.layout.js.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="18" selection-start="313" selection-end="313" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/templates/question/single.jst.eco">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="10" selection-start="3184" selection-end="3184" vertical-scroll-proportion="-19.2">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.question.js.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="6" selection-start="509" selection-end="509" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="30" selection-start="758" selection-end="758" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/templates/testcenter-layout.jst.eco">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="9" selection-start="9" selection-end="19" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -984,6 +940,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/templates/actionbar.jst.eco">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="35" selection-start="1524" selection-end="1524" vertical-scroll-proportion="-10.2">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/templates/testcenter-layout.jst.eco">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="9" selection-start="76" selection-end="88" vertical-scroll-proportion="-1.92">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/testcenter.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="18" selection-start="742" selection-end="742" vertical-scroll-proportion="-14.08">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/assets/stylesheets/bootstrap-responsive.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="934" column="0" selection-start="18069" selection-end="18094" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/style.css.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="247" column="16" selection-start="4841" selection-end="4841" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.layout.js.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="29" selection-start="293" selection-end="293" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.js.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="2" selection-start="82" selection-end="118" vertical-scroll-proportion="0.0">
@@ -991,9 +989,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/test_center.css.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/templates/question/single.jst.eco">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="10" selection-start="3184" selection-end="3184" vertical-scroll-proportion="-12.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.routing.js.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="36" selection-start="253" selection-end="253" vertical-scroll-proportion="0.2280285">
+        <state line="11" column="51" selection-start="386" selection-end="432" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.question.js.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="15" selection-start="299" selection-end="299" vertical-scroll-proportion="0.34204274">
           <folding />
         </state>
       </provider>

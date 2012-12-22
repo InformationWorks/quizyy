@@ -166,6 +166,116 @@
 #content{
   margin-top: 30px;
 }
+
+#test-content{
+  .single{
+    position: absolute;
+    top:250px;
+    bottom:150px;
+    left:200px;
+    width:60%;
+    overflow-y: auto;
+  }
+  .question{
+    margin-top: 20px;
+    text-align:justify;
+  }
+
+  .instruction{
+    margin-top: 20px;
+    text-align:justify;
+  }
+  .options{
+    width:70%;
+    margin:0px 50px;
+  }
+  .left-pane{
+    position: absolute;
+    top: 250px;
+    width:40%;
+    left: 80px;
+    bottom: 120px;
+
+  }
+  .right-pane{
+    position: absolute;
+    top: 250px;
+    left: 50%;
+    width: 40%;
+    .options{
+      width:100%;
+      margin:0px -100px;
+    }
+  }
+
+  .scroll-x { overflow-x: auto; }
+  .scroll-y { overflow-y: auto; }
+  .full-col { overflow: hidden; position: absolute; }
+}
+
+.fill, .pane { position: absolute; left: 0; top: 0; right: 0; bottom: 0; width: 100%; height: 100%; overflow:hidden;}
+
+
+@media (min-width: 1200px){
+  #test-content {
+    .left-pane,.right-pane,.single{
+      top: 200px;
+    }
+  }
+}
+@media (max-width: 979px) and (min-width: 768px){
+  #test-content {
+    .left-pane,.right-pane,.single{
+      top: 250px;
+    }
+    .left-pane{
+      width:40%;
+      left: 80px;
+    }
+    .right-pane{
+      left: 50%;
+      width: 40%;
+    }
+  }
+}
+
+@media (max-width: 767px){
+  #test-content {
+    .left-pane,.right-pane,.single{
+      top: 250px;
+    }
+    .single{
+      left: 30%;
+    }
+    .left-pane{
+      width:45%;
+    }
+    .right-pane{
+      left: 50%;
+      width: 40%;
+    }
+  }
+}
+
+@media (max-width: 480px){
+  #test-content {
+    .left-pane,.right-pane,.single{
+      top: 250px;
+    }
+    .single{
+      width: 70%;
+      left: 10%;
+    }
+    .left-pane{
+      width:25%;
+    }
+    .right-pane{
+      left: 30%;
+      width: 20%;
+    }
+  }
+}
+
 #product-features{
   ul{
     list-style: none;

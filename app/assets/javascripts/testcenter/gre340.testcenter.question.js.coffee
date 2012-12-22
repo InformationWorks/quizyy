@@ -8,6 +8,8 @@ Gre340.module "TestCenter.Question", (QuestionModule, Gre340, Backbone, Marionet
 
   QuestionSingleView = Marionette.ItemView.extend
     template: 'question/single'
+    tagName: "div"
+    className: "single"
 
   QuestionActionBarView = Marionette.ItemView.extend
     template: 'actionbar'
@@ -30,3 +32,4 @@ Gre340.module "TestCenter.Question", (QuestionModule, Gre340, Backbone, Marionet
 
   QuestionModule.addInitializer ->
     QuestionModule.controller = new QuestionController()
+
