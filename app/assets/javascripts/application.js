@@ -20,6 +20,12 @@
 //= require backbone/marionette/backbone.marionette
 //= require backbone/marionette/jquery.resolved
 //= require gre340
+//= require_tree ../templates
+//= require gre340.routing
+//= require ./testcenter/gre340.testcenter
+//= require ./testcenter/gre340.testcenter.routing
+//= require ./testcenter/gre340.testcenter.layout
+//= require ./testcenter/gre340.testcenter.question 
 Backbone.Marionette.Renderer.render = function(template, data){
     if (!JST[template]) throw "Template '" + template + "' not found!";
     return JST[template](data);
