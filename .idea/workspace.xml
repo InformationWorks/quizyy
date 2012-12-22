@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a6af83c-0286-41d8-8a71-66c64c787141" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/style.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/style.css.scss" />
     </list>
     <ignored path="gremasters-web.iws" />
@@ -34,7 +33,7 @@
       <file leaf-file-name="style.css.scss" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/style.css.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="52" selection-start="690" selection-end="690" vertical-scroll-proportion="0.4050633">
+            <state line="35" column="146" selection-start="784" selection-end="784" vertical-scroll-proportion="0.4050633">
               <folding />
             </state>
           </provider>
@@ -1034,7 +1033,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/style.css.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="52" selection-start="690" selection-end="690" vertical-scroll-proportion="0.4050633">
+        <state line="35" column="146" selection-start="784" selection-end="784" vertical-scroll-proportion="0.4050633">
           <folding />
         </state>
       </provider>
