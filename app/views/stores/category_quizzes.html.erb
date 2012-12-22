@@ -23,7 +23,8 @@
                   <p><%= quiz.desc %></p>
                   <p>&#x20b9; 50</p>
                   <div class="actions hide">
-                      <a href="#" class="btn buy-btn">Buy</a>
+                      <%= button_to( current_user.has_purchased_quiz?(quiz.id) ? "Purchased" : "Buy"  , add_quiz_to_user_path(quiz) ,
+          				:method => "post", :disable_with => 'processing...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
                   </div>
                 </div>
               </div>

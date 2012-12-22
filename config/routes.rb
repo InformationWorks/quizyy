@@ -12,6 +12,7 @@ GremastersWeb::Application.routes.draw do
   get "stores/full_quizzes"
   get "stores/category_quizzes"
   match "stores/add_package_to_user/:package_id" => "stores#add_package_to_user", via: [:put], :as => "add_package_to_user"
+  match "stores/add_quiz_to_user/:quiz_id" => "stores#add_quiz_to_user", via: [:post], :as => "add_quiz_to_user"
 
   # Quiz routes.
   # Sections sub-routes

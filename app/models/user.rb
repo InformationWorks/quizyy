@@ -76,5 +76,16 @@ class User < ActiveRecord::Base
   def areas_of_improvement  
     return [ Topic.first, Topic.last, Category.first, Category.last ]
   end
+  
+  # Return true is user has purchased the quiz.
+  def has_purchased_quiz?(quiz_id)
+    
+    if QuizUser.where(:quiz_id => quiz_id,:user_id => self.id).count == 0
+      return false
+    else
+      return true
+    end
+    
+  end
 
 end

@@ -49,4 +49,27 @@ class StoresController < ApplicationController
     end
     
   end
+  
+  # Once the user has purchased a quiz add the quiz to the 
+  # users available quizzes.
+  def add_quiz_to_user
+    
+    begin
+      
+      quiz_user = QuizUser.new
+      quiz_user.quiz_id = params[:quiz_id]
+      quiz_user.user_id = current_user.id
+      quiz_user.save!
+      
+      redirect_to homes_index_path, notice: "New quiz added to your account."
+      
+    rescue Exception => ex
+      
+      logger.info("Error adding package to account : " + ex.message)
+      redirect_to :action => full_quizzes, notice: 'Error adding quiz to your account.'
+    
+    end
+    
+  end
+  
 end
