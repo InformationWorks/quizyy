@@ -3,6 +3,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     template: 'question/single'
     tagName: "div"
     className: "single"
+    initialize:(options) ->
+
 
   Views.QuestionTwoPaneView = Marionette.ItemView.extend
     template: 'question/twopane'
