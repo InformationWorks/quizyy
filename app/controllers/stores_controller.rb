@@ -61,7 +61,8 @@ class StoresController < ApplicationController
       quiz_user.user_id = current_user.id
       quiz_user.save!
       
-      redirect_to homes_index_path, notice: "New quiz added to your account."
+      flash[:notice] = "New quiz added to your account."
+      redirect_to :controller => :homes , :action => :index, :category_quiz => true
       
     rescue Exception => ex
       

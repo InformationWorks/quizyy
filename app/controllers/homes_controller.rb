@@ -6,6 +6,14 @@ class HomesController < ApplicationController
     split_user_full_name = current_user.full_name.split(' ',2)
     @first_name = split_user_full_name[0]
     @last_name = split_user_full_name[1]
+    
+    # if params[:category] is true activate category
+    if params[:category_quiz] == "true"
+      @active_tab = :category_quiz
+    else
+      @active_tab = :full_quiz
+    end 
+    
   end
   
   # TODO: Remove this before go-live.

@@ -103,15 +103,28 @@
   </div>
 </div>
 <!-- <hr class="soften"> -->
+
+<% if @active_tab == :category_quiz  %>
+	<% fullquiz_li_class = "" %>
+	<% fullquiz_tabpane_class = "tab-pane" %>
+	<% categoryquiz_li_class = "active" %>
+	<% categoryquiz_tabpane_class = "tab-pane active" %>
+<% else %>
+	<% fullquiz_li_class = "active" %>
+	<% fullquiz_tabpane_class = "tab-pane active" %>
+	<% categoryquiz_li_class = "" %>
+	<% categoryquiz_tabpane_class = "tab-pane" %>
+<% end %>
+
 <div id="content">
   <header class="title">Available Tests</header>
   <ul class="nav nav-pills" id="available-test-tabs">
-    <li class="active"><a href="#full-test">Full</a></li>
-    <li><a href="#category-test">Category</a></li>
+    <li class= '<%= fullquiz_li_class %>' ><a href="#full-test">Full</a></li>
+    <li class= '<%= categoryquiz_li_class %>' ><a href="#category-test">Category</a></li>
   </ul>
 
   <div class="tab-content">
-    <div class="tab-pane active" id="full-test">
+    <div class= '<%= fullquiz_tabpane_class %>' id="full-test">
       <ul class="test-list">
       	
       	<% current_user.purchased_full_quizzes.each do |full_quiz| %>
@@ -152,7 +165,7 @@
       <%= link_to "Get more full tests", stores_full_quizzes_path %>
     </div>
   	
-  	<div class="tab-pane" id="category-test">
+  	<div class= '<%= categoryquiz_tabpane_class %>' id="category-test">
                 <ul class="test-list">
                     
             <% current_user.purchased_category_topic_quizzes.each do |category_topic_quiz| %>
