@@ -7,4 +7,14 @@ class HomesController < ApplicationController
     @first_name = split_user_full_name[0]
     @last_name = split_user_full_name[1]
   end
+  
+  # TODO: Remove this before go-live.
+  def reset_user_quizzes
+    
+    QuizUser.destroy_all(:user_id => current_user.id)
+    
+    redirect_to homes_index_path , notice: 'All quizzes are removed from the user account.'
+    
+  end
+  
 end

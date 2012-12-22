@@ -14,8 +14,14 @@ class PackagesController < ApplicationController
   # GET /packages/1.json
   def show
     @package = Package.find(params[:id])
-    @quizzes = Quiz.where(['quiz_type_id = ? and id NOT IN (?)',QuizType.find_by_name("FullQuiz").id,@package.quizzes.pluck(:quiz_id)])
-
+    
+    # NOTE: "NOT IN" does not work when it gets an empty array.
+    if @package.quizzes.count > 0
+      @quizzes = Quiz.where(['quiz_type_id = ? and id NOT IN (?)',QuizType.find_by_name("FullQuiz").id,@package.quizzes.pluck(:quiz_id)])
+    else 
+      @quizzes = Quiz.where(['quiz_type_id = ?',QuizType.find_by_name('FullQuiz').id])
+    end
+   
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @package }

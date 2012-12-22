@@ -1,31 +1,31 @@
 GremastersWeb::Application.routes.draw do
 
+  # Package routes.
   resources :packages do
-    
     member do
        match 'destroy_quiz_from_package/:quiz_id', to: 'packages#destroy_quiz_from_package', via: [:delete], as: 'destroy_quiz_from'
     end
-    
   end
-  
   match "packages/:id/add_quiz_to_package" => "packages#add_quiz_to_package", via: [:put], :as => "add_quiz_to_package"
-
+  
+  # Store routes.
   get "stores/full_quizzes"
-
   get "stores/category_quizzes"
+  match "stores/add_package_to_user/:package_id" => "stores#add_package_to_user", via: [:put], :as => "add_package_to_user"
 
+  # Quiz routes.
+  # Sections sub-routes
+  # Questions sub-routes
+  # Options sub-routes
   resources :quizzes do
-    
     member do
        post 'upload_full_excel'
     end
-    
     resources :sections do
       resources :questions do
         resources :options
       end    
     end
-      
   end
 
   resources :section_types
@@ -45,6 +45,7 @@ GremastersWeb::Application.routes.draw do
   
   # Homes controller routes.
   get "homes/index"
+  match "homes/reset_user_quizzes" => "homes#reset_user_quizzes", via: [:delete], :as => "reset_user_quizzes"
 
   devise_for :users,  :controllers => { :registrations => "users/registrations" } do
 
