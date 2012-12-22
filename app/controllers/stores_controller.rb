@@ -21,4 +21,32 @@ class StoresController < ApplicationController
     @categories_and_topics +=  @topics
     
   end
+  
+  # Once the user has purchased a package add the quizzes from the 
+  # package to the users available quizzes.
+  def add_package_to_user
+    
+    begin
+    
+      package_quizzes_ids = Package.find(params[:package_id]).quizzes.pluck(:quiz_id)
+    
+      package_quizzes_ids.each do |quiz_id|
+      
+        quiz_user = QuizUser.new
+        quiz_user.quiz_id = quiz_id
+        quiz_user.user_id = current_user.id
+        quiz_user.save!
+      
+      end
+      
+      redirect_to homes_index_path, notice: "#{package_quizzes_ids.count} quizzes added to your account."
+      
+    rescue Exception => ex
+      
+      logger.info("Error adding package to account : " + ex.message)
+      redirect_to :action => full_quizzes, notice: 'Error adding package to your account.'
+    
+    end
+    
+  end
 end
