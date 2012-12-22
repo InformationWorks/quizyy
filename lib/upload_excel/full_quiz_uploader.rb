@@ -355,7 +355,7 @@ module UploadExcel
       begin
         
         question.sequence_no = row[0].to_i
-        question.header = row[2].to_s
+        question.instruction = row[2].to_s
         question.passage = row[3].to_s
         question.que_text = row[4].to_s
         question.sol_text = row[5].to_s
@@ -553,7 +553,7 @@ module UploadExcel
         
         question.sequence_no = row[0].to_i
         question.di_location = row[2].to_s
-        question.header = row[4].to_s
+        question.instruction = row[4].to_s
         question.passage = row[5].to_s
         question.que_text = row[6].to_s
         question.que_image = (row[7].to_s == "-") ? nil : row[7].to_s
