@@ -1,0 +1,85 @@
+<div class="left-pane span6 scroll-y">
+    <section class="instruction"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin augue nunc, viverra
+        et sollicitudin sit amet, eleifend eget justo. Nullam fringilla blandit tempor.</p></section>
+    <hr>
+    <section class="left-content"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id fermentum velit.
+        Fusce sodales sollicitudin imperdiet. Nulla facilisi. Sed eget hendrerit ante. Suspendisse erat mauris,
+        vulputate vel faucibus nec, feugiat ac dolor. Etiam ornare molestie nulla, vitae rutrum ligula suscipit non.
+        Pellentesque neque purus, tempor ut condimentum at, fermentum vitae erat. Maecenas vel eros sed quam auctor
+        tempor. In faucibus sem eu dui tempus semper. Morbi eleifend sem sit amet erat facilisis viverra. Integer sed
+        nibh a diam cursus sagittis. Morbi mattis, felis in rhoncus porttitor, velit nulla feugiat metus, id rutrum nisl
+        orci ac nisl. Proin mauris velit, varius sed porta condimentum, interdum eget diam. Praesent et leo tellus, nec
+        posuere lacus. Ut mollis, nulla id aliquam sagittis, ante nisi congue ligula, sit amet dictum libero dolor ac
+        lacus. Integer tristique bibendum nunc non ornare.
+        <br/>
+        Cras a eros lectus. Donec ac nulla sed arcu mollis egestas. Quisque diam eros, vestibulum sed iaculis
+        sollicitudin, imperdiet vitae est. Vivamus ullamcorper tempus purus, at placerat nunc elementum vitae. Aenean
+        blandit placerat nibh, ut elementum justo posuere blandit. Mauris tincidunt arcu id mauris aliquam sed tincidunt
+        ante ultrices. Fusce faucibus, nulla a tempus rhoncus, enim nisi tempor lacus, sed porttitor lorem nibh nec
+        dolor. Integer vitae libero sit amet nisi feugiat tristique. Morbi tincidunt ipsum eu neque pretium ac volutpat
+        quam semper. Mauris dignissim faucibus sem, a rutrum justo scelerisque eget.
+        <br/>
+        Aenean quis lectus eros, eu tristique nisl. Donec pellentesque sapien in purus blandit id tincidunt mauris
+        sodales. Praesent at justo erat, ut sodales lacus. Integer ut odio sed sem ullamcorper commodo. Ut rhoncus
+        tempus elementum. Nunc nec magna mi. Nam nec est eu magna varius pharetra. Phasellus quam dolor, tincidunt eu
+        varius sit amet, vehicula et ligula. Donec aliquet lorem quis tortor tincidunt nec pellentesque enim tincidunt.
+        Curabitur sagittis lobortis sapien, vel porta eros consequat sed. Morbi dictum pharetra lectus, non consectetur
+        elit sodales eu. Integer volutpat, enim nec auctor sodales, magna mi luctus diam, et malesuada arcu orci vitae
+        ante.<br/>
+        Morbi nulla enim, feugiat eu sodales a, eleifend auctor ligula. Maecenas et pellentesque nisi. Proin mattis
+        adipiscing odio eget suscipit. Integer et malesuada libero. Aliquam placerat, nulla sed molestie tempus, leo
+        neque hendrerit urna, id rutrum nibh massa vel lorem. Ut consequat neque facilisis leo commodo adipiscing.
+        Maecenas vitae lectus felis, in bibendum magna. Etiam laoreet risus eget lectus molestie viverra. In hac
+        habitasse platea dictumst. Nunc lacinia odio quis leo faucibus tristique. Praesent tempus sagittis ipsum, eget
+        ullamcorper purus consectetur in. Nulla ultrices arcu ut massa faucibus ut aliquam sem dictum. Ut molestie
+        libero lacus, id viverra massa. Sed et eros nunc, sit amet vestibulum nunc. Mauris luctus justo nec ante dapibus
+        aliquet.
+        <br/>
+        Morbi auctor adipiscing tristique. Quisque posuere, lectus ultrices sodales accumsan, nunc augue eleifend nisi,
+        eget dignissim nulla nisl sit amet quam. Aliquam id euismod justo. Phasellus vel tortor arcu. In sagittis leo
+        nunc, quis aliquet libero. Quisque facilisis pretium dolor, lacinia eleifend felis interdum in. In hac habitasse
+        platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a vehicula augue. Nullam
+        imperdiet purus et nulla tincidunt dictum feugiat augue gravida. Nam eget felis et tellus lacinia accumsan. Nam
+        tempor venenatis lacus eu luctus. Proin sed nunc tempor turpis vestibulum pulvinar. Praesent tristique laoreet
+        nunc, a feugiat sapien condimentum in. Nunc sollicitudin dolor at nisi vulputate ac placerat urna pellentesque.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </p></section>
+</div>
+<div class="right-pane span6 scroll-y">
+<section class="question"><p>Curabitur eget lacus sit amet nibh ultrices euismod. Nunc a nisi tellus, semper ultricies
+    elit. Aliquam erat volutpat. Nulla nisl felis, lobortis scelerisque sollicitudin eu, egestas id lectus. Nulla varius
+    varius ligula, id lacinia risus dictum pulvinar. Fusce erat nisi, sagittis a facilisis ut, scelerisque ac augue.
+    Donec interdum vehicula eros, ac mattis urna iaculis ut. Praesent molestie rutrum adipiscing. Sed nisi quam, sodales
+    id fermentum id, vestibulum nec libero. Nulla facilisi. Phasellus rutrum blandit neque non scelerisque. Praesent
+    volutpat sodales diam nec vehicula. Phasellus blandit lectus eget nibh mollis aliquam. Sed quis ante nisl, sit amet
+    condimentum lorem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+</section>
+<section class="options">
+    <form class="form-horizontal">
+        <div class="control-group">
+            <div class="controls">
+                <label class="checkbox">
+                    <input type="checkbox" name="optionsCheckbox" id="optionsChkBox1" value="option1" checked>
+                    <span class="metro-checkbox">Option one is this and that—be sure to include why it's great</span>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="optionsCheckbox" id="optionsChkBox2" value="option2">
+                    <span class="metro-checkbox">Option two can be something else</span>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="optionsCheckbox" id="optionsChkBox3" value="option3">
+                    <span class="metro-checkbox">Option two can be something else</span>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="optionsCheckbox" id="optionsChkBox4" value="option4">
+                    <span class="metro-checkbox">Option two can be something else</span>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="optionsCheckbox" id="optionsChkBox5" value="option5">
+                    <span class="metro-checkbox">Option two can be something else</span>
+                </label>
+            </div>
+        </div>
+    </form>
+</section>
+</div>

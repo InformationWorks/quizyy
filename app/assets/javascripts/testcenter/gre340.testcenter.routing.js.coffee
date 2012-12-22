@@ -9,7 +9,7 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       Gre340.TestCenter = Gre340.module("TestCenter");
       Gre340.TestCenter.start()
     showIndex: ->
-      Gre340.TestCenter.Question.controller.start()
+      Gre340.TestCenter.Controllers.questionController.start()
   )
 
   TestCenterRouting.addInitializer ->

@@ -1,6 +1,13 @@
-<section class="instruction"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin augue nunc, viverra et sollicitudin sit amet, eleifend eget justo. Nullam fringilla blandit tempor. Proin sed est mi, sit amet consectetur justo. Pellentesque libero est, tincidunt eget vulputate non, luctus eu elit. Phasellus tincidunt nunc ac elit iaculis vehicula. Donec lacus metus, porttitor sed elementum id, consectetur non tortor. Pellentesque porta sapien a erat aliquet vehicula in et tortor. Nullam ultricies nunc a libero dictum euismod. Phasellus massa nisl, condimentum et pharetra id, pellentesque sed quam. Pellentesque dapibus felis a augue pharetra quis feugiat ligula fringilla. Quisque pretium luctus velit, eu elementum orci vestibulum eu. Pellentesque arcu lectus, hendrerit ac tincidunt in, tristique a magna.</p></section>
-<hr>
-<section class="question"><p>Curabitur eget lacus sit amet nibh ultrices euismod. Nunc a nisi tellus, semper ultricies elit. Aliquam erat volutpat. Nulla nisl felis, lobortis scelerisque sollicitudin eu, egestas id lectus. Nulla varius varius ligula, id lacinia risus dictum pulvinar. Fusce erat nisi, sagittis a facilisis ut, scelerisque ac augue. Donec interdum vehicula eros, ac mattis urna iaculis ut. Praesent molestie rutrum adipiscing. Sed nisi quam, sodales id fermentum id, vestibulum nec libero. Nulla facilisi. Phasellus rutrum blandit neque non scelerisque. Praesent volutpat sodales diam nec vehicula. Phasellus blandit lectus eget nibh mollis aliquam. Sed quis ante nisl, sit amet condimentum lorem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p></section>
+<section class="instruction">
+    <p>
+        <%= @instruction %>
+    </p>
+</section>
+<section class="question">
+    <p>
+        <%= @que_text %>
+    </p>
+</section>
 <section class="options">
     <form class="form-horizontal">
         <div class="control-group">
