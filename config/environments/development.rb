@@ -34,9 +34,11 @@ GremastersWeb::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-  
+  #added by Deep Shah - to fix a pre compiling error for backbone templates
+  config.assets.paths << "#{ Rails.root }/app/assets/templates"
   # Congigure mailer.
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
 end
 
 ActionMailer::Base.delivery_method = :smtp

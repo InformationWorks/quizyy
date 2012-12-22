@@ -28,7 +28,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
+gem 'backbone-on-rails'
 # Gems required for testing go here.
 # Guard and Spork setup referenced from http://ruby.railstutorial.org/chapters/static-pages#sec-advanced_setup
 group :development, :test do

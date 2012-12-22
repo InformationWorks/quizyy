@@ -1,5 +1,5 @@
 GremastersWeb::Application.routes.draw do
-  
+
   # Package routes.
   resources :packages do
     member do
@@ -46,12 +46,15 @@ GremastersWeb::Application.routes.draw do
   # Homes controller routes.
   get "homes/index"
   match "homes/reset_user_quizzes" => "homes#reset_user_quizzes", via: [:delete], :as => "reset_user_quizzes"
-  
+
   devise_for :users,  :controllers => { :registrations => "users/registrations" } do
 
     #get "/", :to => "devise/sessions#new"
 
   end
+  get "test_center/index"
+  match 'test_center' => 'test_center#index'
+  match 'test_center/*anything' => "test_center#index"
 
   root :to => "landings#index"
   # Devise routes.

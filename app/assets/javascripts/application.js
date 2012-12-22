@@ -14,4 +14,13 @@
 //= require jquery_ujs
 //= require bootstrap/bootstrap-dropdown.js
 //= require bootstrap/bootstrap-tab.js
-//= require_tree .
+//= require backbone/underscore
+//= require backbone/backbone
+//= require backbone/backbone.routefilter
+//= require backbone/marionette/backbone.marionette
+//= require backbone/marionette/jquery.resolved
+//= require gre340
+Backbone.Marionette.Renderer.render = function(template, data){
+    if (!JST[template]) throw "Template '" + template + "' not found!";
+    return JST[template](data);
+}
