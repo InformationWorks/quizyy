@@ -1,6 +1,18 @@
 GremastersWeb::Application.routes.draw do
+
+  resources :packages do
+    
+    member do
+       match 'destroy_quiz_from_package/:quiz_id', to: 'packages#destroy_quiz_from_package', via: [:delete], as: 'destroy_quiz_from'
+    end
+    
+  end
   
-  get "test_center/index"
+  match "packages/:id/add_quiz_to_package" => "packages#add_quiz_to_package", via: [:put], :as => "add_quiz_to_package"
+
+  get "stores/full_quizzes"
+
+  get "stores/category_quizzes"
 
   resources :quizzes do
     
@@ -33,13 +45,13 @@ GremastersWeb::Application.routes.draw do
   
   # Homes controller routes.
   get "homes/index"
-  
+
   devise_for :users,  :controllers => { :registrations => "users/registrations" } do
 
     #get "/", :to => "devise/sessions#new"
 
   end
-
+  get "test_center/index"
   match 'test_center' => 'test_center#index'
   match 'test_center/*anything' => "test_center#index"
 

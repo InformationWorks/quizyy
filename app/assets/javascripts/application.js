@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap/bootstrap-dropdown.js
+//= require bootstrap/bootstrap-tab.js
 //= require backbone/underscore
 //= require backbone/backbone
 //= require backbone/backbone.routefilter

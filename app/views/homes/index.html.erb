@@ -1,13 +1,4 @@
 
-<h1>Homes#index</h1>
-<p>Logged in as <strong><%= current_user.email %> with roles
-
-<% for role in current_user.roles %>
-  <%= label_tag role.name %><br />
-<% end %>
-
-</strong>.</p>
-
 <div class="row-fluid">
   <div class="metro span12">
     <div id="metrosections" class="metro-sections">
@@ -20,13 +11,24 @@
         <div class="row">
           <div class="span3">
             <a class="tile square image" href="#">
-              <img src="img/avatar-movie-puzzles-2.jpg" alt="">
+              
+              <% if current_user.profile_image %>
+              	<img src="/assets/metro-user.png" alt="">
+              <% else %>
+              	<img src="/assets/metro-user.png" alt="">
+              <% end %>
+              
             </a>
           </div>
           <div class="span3">
             <p>You should work on</p>
-
-            <p>Text Completion</p>
+            <% current_user.areas_of_improvement.first(3).each do |area_of_improvement| %>
+            <p><a href="#"><%= area_of_improvement.name %></a></p>
+            <% end %>
+            
+            <% if current_user.areas_of_improvement.count > 3 %>
+            <p><a href="#">more</a></p>
+            <% end %>
           </div>
           <div class="span3">
 
@@ -34,11 +36,11 @@
               <h2>Verbal</h2>
 
               <div class="span3">
-                <em class="lead">130</em>
+                <em class="lead"><%= current_user.verbal_highest %></em>
                 <small>highest</small>
               </div>
               <div class="span3">
-                <em class="lead">120</em>
+                <em class="lead"><%= current_user.verbal_average %></em>
                 <small>average</small>
               </div>
             </div>
@@ -46,11 +48,11 @@
               <h2>Quant</h2>
 
               <div class="span3">
-                <em class="lead">130</em>
+                <em class="lead"><%= current_user.quant_highest %></em>
                 <small>highest</small>
               </div>
               <div class="span3">
-                <em class="lead">120</em>
+                <em class="lead"><%= current_user.quant_average %></em>
                 <small>average</small>
               </div>
             </div>
@@ -58,11 +60,11 @@
           </div>
           <div class="span2">
             <div class="row-fluid">
-              <h1>320</h1>
+              <h1><%= current_user.overall_highest %></h1>
               <small>highest</small>
             </div>
             <div class="row-fluid">
-              <h1>310</h1>
+              <h1><%= current_user.overall_average %></h1>
               <small>average</small>
             </div>
             <div class="row">
@@ -111,174 +113,105 @@
   <div class="tab-content">
     <div class="tab-pane active" id="full-test">
       <ul class="test-list">
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe1bb;</span>
-              <span class="win-label">Start</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem pause">
-          <small>paused</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe1bb;</span>
-              <span class="win-label">Start</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe13b;</span>
-              <span class="win-label">Review</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem pause">
-          <small>paused</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
+      	
+      	<% current_user.purchased_full_quizzes.each do |full_quiz| %>
+      		
+      		<!%-- Set the css properties based on the status of the quiz --%>
+      		<% status = full_quiz.quiz_users.where(:quiz_id => full_quiz.id,:user_id => current_user.id).first.status %>
+      		
+      		<% if status == :new %>
+      			<% li_class = "mediumListIconTextItem new"  %>
+      			<% command_btn_image = "" %>
+      			<% action_text = "Start" %> 
+      		<% elsif status == :paused %>
+      			<% li_class = "mediumListIconTextItem pause"  %>
+      			<% command_btn_image = "" %>
+      			<% action_text = "Start" %>
+      		<% elsif status == :completed %>
+      		    <% li_class = "mediumListIconTextItem complete"  %>
+      		    <% command_btn_image = "" %>
+      		    <% action_text = "Review" %>
+      		<% end %>
+      		      		
+      		<li class= "<%= li_class %>">
+	          <small><%= status %></small>
+	          <div class="mediumListIconTextItem-Detail">
+	            <h4><%= full_quiz.name %></h4>
+	            <h6><%= full_quiz.desc %></h6>
+	          </div>
+	          <div class="command-btn pull-right">
+	            <button class="win-command">
+	              <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
+	              <span class="win-label"><%= action_text %></span>
+	            </button>
+	          </div>
+	        </li>
+      	<% end %>
+      	
       </ul>
+      <%= link_to "Get more full tests", stores_full_quizzes_path %>
     </div>
-    <div class="tab-pane" id="category-test">
-      <ul class="test-list">
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe1bb;</span>
-              <span class="win-label">Start</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem pause">
-          <small>paused</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe1bb;</span>
-              <span class="win-label">Start</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-          <div class="command-btn pull-right">
-            <button class="win-command">
-              <span class="win-commandimage win-commandring">&#xe13b;</span>
-              <span class="win-label">Review</span>
-            </button>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem complete">
-          <small>complete</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem new">
-          <small>new</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-        <li class="mediumListIconTextItem pause">
-          <small>paused</small>
-          <div class="mediumListIconTextItem-Detail">
-            <h4>Title</h4>
-            <h6>Lorem ipsum sin ut dolorem</h6>
-          </div>
-        </li>
-      </ul>
-    </div>
+  	
+  	<div class="tab-pane" id="category-test">
+                <ul class="test-list">
+                    
+            <% current_user.purchased_category_topic_quizzes.each do |category_topic_quiz| %>
+      		
+      		<!%-- Set the css properties based on the status of the quiz --%>
+      		<% status = category_topic_quiz.quiz_users.where(:quiz_id => category_topic_quiz.id,:user_id => current_user.id).first.status %>
+      		
+      		<% if status == :new %>
+      			<% li_class = "mediumListIconTextItem new"  %>
+      			<% command_btn_image = "" %>
+      			<% action_text = "Start" %> 
+      		<% elsif status == :paused %>
+      			<% li_class = "mediumListIconTextItem pause"  %>
+      			<% command_btn_image = "" %>
+      			<% action_text = "Start" %>
+      		<% elsif status == :completed %>
+      		    <% li_class = "mediumListIconTextItem complete"  %>
+      		    <% command_btn_image = "" %>
+      		    <% action_text = "Review" %>
+      		<% end %>
+      		      		
+      		<li class= "<%= li_class %>">
+	          <small><%= status %></small>
+	          <div class="mediumListIconTextItem-Detail">
+	            <h4><%= category_topic_quiz.name %></h4>
+	            <h6><%= category_topic_quiz.desc %></h6>
+	          </div>
+	          <div class="command-btn pull-right">
+	            <button class="win-command">
+	              <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
+	              <span class="win-label"><%= action_text %></span>
+	            </button>
+	          </div>
+	        </li>
+      		<% end %>
+                    
+                </ul>
+                <%= link_to "Get more category tests", stores_category_quizzes_path %>
+            </div>
+        
+  </div>
+        
+  </div>
+  		
   </div>
 </div>
-<a href="#">Get more tests</a>
+
+<script>	
+        $('#available-test-tabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        $('.test-list li').on({
+            mouseenter:function () {
+                $(this).find('.command-btn').show();
+            },
+            mouseleave:function () {
+                $(this).find('.command-btn').hide();
+            }
+        });
+</script>

@@ -1,0 +1,71 @@
+<%= render 'store_header' %>
+
+<div class="container-fluid">
+        <div id="content" class="span12">
+          <div class="span8">
+          	
+          	<% @categories_and_topics.each_with_index do |category_or_topic,index| %>
+      		<% if index == 0 %>
+      		<section class="category-section first">
+      		<% else %>
+      		<section class="category-section">	
+      		<% end %>
+            <h2><%= category_or_topic.name %></h2>
+            <a href="#" class="pull-right"><h4>more in <%= category_or_topic.name %></h4></a>
+            <hr>
+            <!-- show only three per row -->
+            <div class="row">
+              <% category_or_topic.quizzes.each do |quiz| %>
+              <div class="span2 quiz-tile">
+                <img src="http://placehold.it/150x100"/>
+                <div class="caption">
+                  <h3><a href="#"><%= quiz.name %></a></h3>
+                  <p><%= quiz.desc %></p>
+                  <p>&#x20b9; 50</p>
+                  <div class="actions hide">
+                      <a href="#" class="btn buy-btn">Buy</a>
+                  </div>
+                </div>
+              </div>
+              <% end %>
+            </div>
+            </section>
+            <% end %>
+          </div>
+          <div class="span3">
+            <div class="metro pull-right">
+              <a class="tile app bg-color-green" href="#">
+                 <div class="image-wrapper">
+                  <span class="icon icon-cart"></span>
+                </div>
+                <div class="app-label">Cart</div>
+                <div class="app-count">1</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>  
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
+        <script src="js/vendor/bootstrap.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/jquery.masonry.min.js"></script>
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+          g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+          s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+
+        <script>
+
+            $('.quiz-tile').on({
+                mouseenter:function () {
+                    $(this).find('.actions').show();
+                },
+                mouseleave:function () {
+                    $(this).find('.actions').hide();
+                }
+            });
+        </script>

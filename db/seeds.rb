@@ -16,6 +16,8 @@ SectionType.delete_all
 Quiz.delete_all
 Section.delete_all
 Question.delete_all
+Package.delete_all
+PackageQuiz.delete_all
 
 super_admin_role = Role.new
 super_admin_role.name = "SuperAdmin"
@@ -36,6 +38,18 @@ student_role.save!
 super_admin_user = User.create!(:full_name => 'Harshal Bhakta', :email => 'harshal.c.bhakta@gmail.com', :password => 'password', :password_confirmation => 'password')
 super_admin_user.roles << super_admin_role
 super_admin_user.save!
+
+admin_user = User.create!(:full_name => 'Admin', :email => 'admin@gre340.com', :password => 'password', :password_confirmation => 'password')
+admin_user.roles << admin_role
+admin_user.save!
+
+student1_user = User.create!(:full_name => 'Student One', :email => 'student1@gre340.com', :password => 'password', :password_confirmation => 'password')
+student1_user.roles << student_role
+student1_user.save!
+
+student2_user = User.create!(:full_name => 'Student Two', :email => 'student2@gre340.com', :password => 'password', :password_confirmation => 'password')
+student2_user.roles << student_role
+student2_user.save!
 
 [ { :code => "RC", :name => "Reading Comprehension"}, 
   { :code => "TC", :name => "Text Completion"},
@@ -113,27 +127,348 @@ end
   end
   
   # Seed data for quiz.
-  # 1. FullQuiz
+  # Create 10 FullLengthQuiz
   full_quiz_1 = Quiz.new
-  full_quiz_1.name = "Full Length 101"
+  full_quiz_1.name = "Full Length 1"
+  full_quiz_1.desc = "Full Length 1 desc"
   full_quiz_1.random = false
   full_quiz_1.quiz_type_id = QuizType.find_by_name("FullQuiz").id
   full_quiz_1.save!
   
-  # 2. CategoryQuiz
+  full_quiz_2 = Quiz.new
+  full_quiz_2.name = "Full Length 2"
+  full_quiz_2.desc = "Full Length 2 desc"
+  full_quiz_2.random = false
+  full_quiz_2.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_2.save!
+  
+  full_quiz_3 = Quiz.new
+  full_quiz_3.name = "Full Length 3"
+  full_quiz_3.desc = "Full Length 3 desc"
+  full_quiz_3.random = false
+  full_quiz_3.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_3.save!
+  
+  full_quiz_4 = Quiz.new
+  full_quiz_4.name = "Full Length 4"
+  full_quiz_4.desc = "Full Length 4 desc"
+  full_quiz_4.random = false
+  full_quiz_4.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_4.save!
+  
+  full_quiz_5 = Quiz.new
+  full_quiz_5.name = "Full Length 5"
+  full_quiz_5.desc = "Full Length 5 desc"
+  full_quiz_5.random = false
+  full_quiz_5.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_5.save!
+  
+  full_quiz_6 = Quiz.new
+  full_quiz_6.name = "Full Length 6"
+  full_quiz_6.desc = "Full Length 6 desc"
+  full_quiz_6.random = false
+  full_quiz_6.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_6.save!
+  
+  full_quiz_7 = Quiz.new
+  full_quiz_7.name = "Full Length 7"
+  full_quiz_7.desc = "Full Length 7 desc"
+  full_quiz_7.random = false
+  full_quiz_7.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_7.save!
+  
+  full_quiz_8 = Quiz.new
+  full_quiz_8.name = "Full Length 8"
+  full_quiz_8.desc = "Full Length 8 desc"
+  full_quiz_8.random = false
+  full_quiz_8.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_8.save!
+  
+  full_quiz_9 = Quiz.new
+  full_quiz_9.name = "Full Length 9"
+  full_quiz_9.desc = "Full Length 9 desc"
+  full_quiz_9.random = false
+  full_quiz_9.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_9.save!
+  
+  full_quiz_10 = Quiz.new
+  full_quiz_10.name = "Full Length 10"
+  full_quiz_10.desc = "Full Length 10 desc"
+  full_quiz_10.random = false
+  full_quiz_10.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_10.save!
+  
+  # Create 5 Category-wise quiz
   cat_quiz_1 = Quiz.new
-  cat_quiz_1.name = "RC 101"
+  cat_quiz_1.name = "Reading Comprehension 1"
+  cat_quiz_1.desc = "Reading Comprehension 1 desc"
   cat_quiz_1.random = false
-  cat_quiz_1.quiz_type = QuizType.find_by_name("CategoryQuiz")
-  cat_quiz_1.category = Category.find_by_code("RC")
+  cat_quiz_1.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+  cat_quiz_1.category_id = Category.find_by_code("RC").id
   cat_quiz_1.save!
   
-  # 3. Topic-test
+  cat_quiz_2 = Quiz.new
+  cat_quiz_2.name = "Text Completion 1"
+  cat_quiz_2.desc = "Text Completion 1 desc"
+  cat_quiz_2.random = false
+  cat_quiz_2.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+  cat_quiz_2.category_id = Category.find_by_code("TC").id
+  cat_quiz_2.save!
+  
+  cat_quiz_3 = Quiz.new
+  cat_quiz_3.name = "Sentence Equivalence 1"
+  cat_quiz_3.desc = "Sentence Equivalence 1 desc"
+  cat_quiz_3.random = false
+  cat_quiz_3.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+  cat_quiz_3.category_id = Category.find_by_code("SE").id
+  cat_quiz_3.save!
+  
+  cat_quiz_4 = Quiz.new
+  cat_quiz_4.name = "Quantitative Comparison 1"
+  cat_quiz_4.desc = "Quantitative Comparison 1 desc"
+  cat_quiz_4.random = false
+  cat_quiz_4.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+  cat_quiz_4.category_id = Category.find_by_code("QC").id
+  cat_quiz_4.save!
+  
+  cat_quiz_5 = Quiz.new
+  cat_quiz_5.name = "Numeric Entry 1"
+  cat_quiz_5.desc = "Numeric Entry 1 desc"
+  cat_quiz_5.random = false
+  cat_quiz_5.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+  cat_quiz_5.category_id = Category.find_by_code("NE").id
+  cat_quiz_5.save!
+  
+  # Create 5 Topic-wise quiz
   topic_quiz_1 = Quiz.new
-  topic_quiz_1.name = "Fractions 101"
+  topic_quiz_1.name = "Integers 1"
+  topic_quiz_1.desc = "Integers 1 desc"
   topic_quiz_1.random = false
   topic_quiz_1.quiz_type = QuizType.find_by_name("TopicQuiz")
-  topic_quiz_1.topic = Topic.find_by_name("Fractions")
+  topic_quiz_1.topic_id = Topic.find_by_name("Integers").id
   topic_quiz_1.save!
   
+  topic_quiz_2 = Quiz.new
+  topic_quiz_2.name = "Fractions 1"
+  topic_quiz_2.desc = "Fractions 1 desc"
+  topic_quiz_2.random = false
+  topic_quiz_2.quiz_type = QuizType.find_by_name("TopicQuiz")
+  topic_quiz_2.topic_id = Topic.find_by_name("Fractions").id
+  topic_quiz_2.save!
+  
+  topic_quiz_3 = Quiz.new
+  topic_quiz_3.name = "Decimals 1"
+  topic_quiz_3.desc = "Decimals 1 desc"
+  topic_quiz_3.random = false
+  topic_quiz_3.quiz_type = QuizType.find_by_name("TopicQuiz")
+  topic_quiz_3.topic_id = Topic.find_by_name("Decimals").id
+  topic_quiz_3.save!
+  
+  topic_quiz_4 = Quiz.new
+  topic_quiz_4.name = "Exponents and Square Roots 1"
+  topic_quiz_4.desc = "Exponents and Square Roots 1 desc"
+  topic_quiz_4.random = false
+  topic_quiz_4.quiz_type = QuizType.find_by_name("TopicQuiz")
+  topic_quiz_4.topic_id = Topic.find_by_name("Exponents and Square Roots").id
+  topic_quiz_4.save!
+  
+  topic_quiz_5 = Quiz.new
+  topic_quiz_5.name = "Ordering and the Real Number Line 1"
+  topic_quiz_5.desc = "Ordering and the Real Number Line 1 desc"
+  topic_quiz_5.random = false
+  topic_quiz_5.quiz_type = QuizType.find_by_name("TopicQuiz")
+  topic_quiz_5.topic_id = Topic.find_by_name("Ordering and the Real Number Line").id
+  topic_quiz_5.save!
+  
+  # Assign 5 full test to student1.
+  quiz_user1 = QuizUser.new
+  quiz_user1.user_id = student1_user.id
+  quiz_user1.quiz_id = full_quiz_1.id
+  quiz_user1.save!
+  
+  quiz_user2 = QuizUser.new
+  quiz_user2.user_id = student1_user.id
+  quiz_user2.quiz_id = full_quiz_2.id
+  quiz_user2.save!
 
+  quiz_user3 = QuizUser.new
+  quiz_user3.user_id = student1_user.id
+  quiz_user3.quiz_id = full_quiz_7.id
+  quiz_user3.save!
+  
+  quiz_user4 = QuizUser.new
+  quiz_user4.user_id = student1_user.id
+  quiz_user4.quiz_id = full_quiz_8.id
+  quiz_user4.save!
+  
+  quiz_user5 = QuizUser.new
+  quiz_user5.user_id = student1_user.id
+  quiz_user5.quiz_id = full_quiz_9.id
+  quiz_user5.save!
+  
+  # Assign 3 Category test to student1.
+  quiz_user6 = QuizUser.new
+  quiz_user6.user_id = student1_user.id
+  quiz_user6.quiz_id = cat_quiz_1.id
+  quiz_user6.save!
+  
+  quiz_user7 = QuizUser.new
+  quiz_user7.user_id = student1_user.id
+  quiz_user7.quiz_id = cat_quiz_2.id
+  quiz_user7.save!
+  
+  quiz_user8 = QuizUser.new
+  quiz_user8.user_id = student1_user.id
+  quiz_user8.quiz_id = cat_quiz_3.id
+  quiz_user8.save!
+  
+  # Assign 3 Topic test to student1.
+  quiz_user9 = QuizUser.new
+  quiz_user9.user_id = student1_user.id
+  quiz_user9.quiz_id = topic_quiz_1.id
+  quiz_user9.save!
+  
+  quiz_user10 = QuizUser.new
+  quiz_user10.user_id = student1_user.id
+  quiz_user10.quiz_id = topic_quiz_2.id
+  quiz_user10.save!
+  
+  quiz_user11 = QuizUser.new
+  quiz_user11.user_id = student1_user.id
+  quiz_user11.quiz_id = topic_quiz_3.id
+  quiz_user11.save!
+  
+# Add 3 packages for full-quiz section in store.
+package_1 = Package.new
+package_1.name = "able"
+package_1.desc = "5 awesome full-length tests"
+package_1.price = 899.00
+package_1.position = 1
+package_1.save!
+
+package_2 = Package.new
+package_2.name = "ace"
+package_2.desc = "7 awesome full-length tests"
+package_2.price = 999.00
+package_2.position = 2
+package_2.save!
+
+package_3 = Package.new
+package_3.name = "ninja"
+package_3.desc = "10 awesome full-length tests"
+package_3.price = 1099.00
+package_3.position = 3
+package_3.save!
+
+# Add first 5 full quizzes to package 1.
+package_quiz_1 = PackageQuiz.new
+package_quiz_1.quiz_id = full_quiz_1.id
+package_quiz_1.package_id = package_1.id
+package_quiz_1.save!
+
+package_quiz_2 = PackageQuiz.new
+package_quiz_2.quiz_id = full_quiz_2.id
+package_quiz_2.package_id = package_1.id
+package_quiz_2.save!
+
+package_quiz_3 = PackageQuiz.new
+package_quiz_3.quiz_id = full_quiz_3.id
+package_quiz_3.package_id = package_1.id
+package_quiz_3.save!
+
+package_quiz_4 = PackageQuiz.new
+package_quiz_4.quiz_id = full_quiz_4.id
+package_quiz_4.package_id = package_1.id
+package_quiz_4.save!
+
+package_quiz_5 = PackageQuiz.new
+package_quiz_5.quiz_id = full_quiz_5.id
+package_quiz_5.package_id = package_1.id
+package_quiz_5.save!
+
+# Add first 7 full quizzes to package 1.
+package_quiz_6 = PackageQuiz.new
+package_quiz_6.quiz_id = full_quiz_1.id
+package_quiz_6.package_id = package_2.id
+package_quiz_6.save!
+
+package_quiz_7 = PackageQuiz.new
+package_quiz_7.quiz_id = full_quiz_2.id
+package_quiz_7.package_id = package_2.id
+package_quiz_7.save!
+
+package_quiz_8 = PackageQuiz.new
+package_quiz_8.quiz_id = full_quiz_3.id
+package_quiz_8.package_id = package_2.id
+package_quiz_8.save!
+
+package_quiz_9 = PackageQuiz.new
+package_quiz_9.quiz_id = full_quiz_4.id
+package_quiz_9.package_id = package_2.id
+package_quiz_9.save!
+
+package_quiz_10 = PackageQuiz.new
+package_quiz_10.quiz_id = full_quiz_5.id
+package_quiz_10.package_id = package_2.id
+package_quiz_10.save!
+
+package_quiz_11 = PackageQuiz.new
+package_quiz_11.quiz_id = full_quiz_6.id
+package_quiz_11.package_id = package_2.id
+package_quiz_11.save!
+
+package_quiz_12 = PackageQuiz.new
+package_quiz_12.quiz_id = full_quiz_7.id
+package_quiz_12.package_id = package_2.id
+package_quiz_12.save!
+
+# Add first 10 full quizzes to package 1.
+package_quiz_13 = PackageQuiz.new
+package_quiz_13.quiz_id = full_quiz_1.id
+package_quiz_13.package_id = package_3.id
+package_quiz_13.save!
+
+package_quiz_14 = PackageQuiz.new
+package_quiz_14.quiz_id = full_quiz_2.id
+package_quiz_14.package_id = package_3.id
+package_quiz_14.save!
+
+package_quiz_15 = PackageQuiz.new
+package_quiz_15.quiz_id = full_quiz_3.id
+package_quiz_15.package_id = package_3.id
+package_quiz_15.save!
+
+package_quiz_16 = PackageQuiz.new
+package_quiz_16.quiz_id = full_quiz_4.id
+package_quiz_16.package_id = package_3.id
+package_quiz_16.save!
+
+package_quiz_17 = PackageQuiz.new
+package_quiz_17.quiz_id = full_quiz_5.id
+package_quiz_17.package_id = package_3.id
+package_quiz_17.save!
+
+package_quiz_18 = PackageQuiz.new
+package_quiz_18.quiz_id = full_quiz_6.id
+package_quiz_18.package_id = package_3.id
+package_quiz_18.save!
+
+package_quiz_19 = PackageQuiz.new
+package_quiz_19.quiz_id = full_quiz_7.id
+package_quiz_19.package_id = package_3.id
+package_quiz_19.save!
+
+package_quiz_20 = PackageQuiz.new
+package_quiz_20.quiz_id = full_quiz_8.id
+package_quiz_20.package_id = package_3.id
+package_quiz_20.save!
+
+package_quiz_21 = PackageQuiz.new
+package_quiz_21.quiz_id = full_quiz_9.id
+package_quiz_21.package_id = package_3.id
+package_quiz_21.save!
+
+package_quiz_22 = PackageQuiz.new
+package_quiz_22.quiz_id = full_quiz_10.id
+package_quiz_22.package_id = package_3.id
+package_quiz_22.save!
