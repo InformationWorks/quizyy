@@ -167,27 +167,33 @@
   margin-top: 30px;
 }
 
+#action-bar{
+  position: fixed;
+  top: 0px;
+  z-index: 1999;
+  background-color: white;
+}
+
 #test-content{
   .single{
-    position: absolute;
-    top:250px;
-    bottom:150px;
-    left:200px;
     width:60%;
-    overflow-y: auto;
+    margin: 0px auto;
+    margin-top: 200px;
   }
   .question{
-    margin-top: 20px;
+    padding-bottom: 10px;
     text-align:justify;
   }
 
   .instruction{
-    margin-top: 20px;
     text-align:justify;
   }
   .options{
     width:70%;
     margin:0px 50px;
+    .form-horizontal .controls {
+      margin-left: 10px;
+    }
   }
   .left-pane{
     position: absolute;
@@ -202,6 +208,7 @@
     top: 250px;
     left: 50%;
     width: 40%;
+    bottom: 120px;
     .options{
       width:100%;
       margin:0px -100px;
@@ -218,14 +225,14 @@
 
 @media (min-width: 1200px){
   #test-content {
-    .left-pane,.right-pane,.single{
+    .left-pane,.right-pane{
       top: 200px;
     }
   }
 }
 @media (max-width: 979px) and (min-width: 768px){
   #test-content {
-    .left-pane,.right-pane,.single{
+    .left-pane,.right-pane{
       top: 250px;
     }
     .left-pane{
@@ -241,11 +248,8 @@
 
 @media (max-width: 767px){
   #test-content {
-    .left-pane,.right-pane,.single{
+    .left-pane,.right-pane{
       top: 250px;
-    }
-    .single{
-      left: 30%;
     }
     .left-pane{
       width:45%;
@@ -259,12 +263,12 @@
 
 @media (max-width: 480px){
   #test-content {
-    .left-pane,.right-pane,.single{
+    .left-pane,.right-pane{
       top: 250px;
     }
     .single{
       width: 70%;
-      left: 10%;
+      margin-top: 50%;
     }
     .left-pane{
       width:25%;

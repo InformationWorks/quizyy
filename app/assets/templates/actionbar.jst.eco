@@ -37,10 +37,10 @@
 </div>
 <hr>
 <div class="row align-center">
-    <div class="span10 align-center">
+    <div class="span7 align-right">
         <h2>Question 2 of 10</h2>
     </div>
-    <div class="span2 align-right">
+    <div class="span5 align-right">
         <p class="lead">
             <button class="btn">Hide Time</button>
             1:00:00
