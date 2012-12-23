@@ -25,7 +25,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       else
         diLocation = 'Top'
 
-      if(!questionToDisplayInTwoPane && diLocation == 'Side')
+      if(!questionToDisplayInTwoPane && diLocation == 'Top')
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
       else
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionTwoPaneView(model: question))
