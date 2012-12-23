@@ -29,7 +29,7 @@
             <span class="win-commandimage win-commandring">&#xe05d;</span>
             <span class="win-label">Back</span>
         </button>
-        <button class="win-command">
+        <button id="btn-next" class="win-command">
             <span class="win-commandimage win-commandring">&#xe059;</span>
             <span class="win-label">Next</span>
         </button>

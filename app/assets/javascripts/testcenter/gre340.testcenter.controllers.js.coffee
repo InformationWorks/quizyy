@@ -6,10 +6,15 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @typesToDiplayInTwoPane = ['V-MCQ-1','V-MCQ-2','V-SIP','Q-DI-MCQ-1','Q-DI-MCQ-2','Q-DI-NE-1','Q-DI-NE-2']
 
     start:() ->
+      @questionCollection.fetch()
+    showQuestion:(question_id) ->
       @showActionBar()
-
-    showQuestion:(question) ->
+      #if collection is empty
+      if @questionCollection.length == 0
+        @questionCollection.fetch(async:false)
       #see if the question should be displayed in two pane oTesr single
+      question = @questionCollection.get(question_id)
+      @currentQuestion = question
       questionToDisplayInTwoPane = _.find @typesToDiplayInTwoPane, (code) ->
         if(code==question.get('type').code)
           return true
@@ -30,10 +35,22 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
 
     getQuestionById: (id) ->
       console.log 'this tries to get question'
+    setQuestionCollection: (collection) ->
+       @questionCollection = collection
+
+  Gre340.vent.on "show:next:question", ->
+    controller = Controllers.questionController
+    controller.currentQuestion = controller.questionCollection.next(controller.currentQuestion)
+    Gre340.Routing.showRouteWithTrigger('test_center','question',controller.currentQuestion.get('id'))
+
 
   Controllers.addInitializer ->
     Controllers.questionController = new QuestionController()
-    Gre340.TestCenter.questionList = new Gre340.TestCenter.Models.QuestionCollection()
-    Gre340.TestCenter.questionList.on "reset", (list) ->
-      Controllers.questionController.showQuestion(list.first())
-    Gre340.TestCenter.questionList.fetch()
+    Controllers.questionController.setQuestionCollection(new Gre340.TestCenter.Models.QuestionCollection())
+    Controllers.questionController.questionCollection.on "reset", (list) ->
+      if !Controllers.questionController.currentQuestion
+        Controllers.questionController.currentQuestion = list.first()
+      Controllers.questionController.showQuestion(Controllers.questionController.currentQuestion)
+
+  Controllers.addFinalizer ->
+      console.log 'stopped controller testcenter'

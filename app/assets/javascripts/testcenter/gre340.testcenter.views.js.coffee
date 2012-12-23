@@ -17,3 +17,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
 
   Views.QuestionActionBarView = Marionette.ItemView.extend
     template: 'actionbar'
+    events:
+      'click #btn-next': 'showNextQuestion'
+    showNextQuestion: (event) ->
+      event.preventDefault()
+      Gre340.vent.trigger 'show:next:question'

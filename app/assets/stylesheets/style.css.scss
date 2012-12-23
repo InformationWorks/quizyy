@@ -454,6 +454,14 @@ button[type="submit"]:hover, input[type="submit"]:hover {
   border-color: transparent;
   color: white;
 }
+
+button.win-command {
+  background-color: transparent;
+  border-color: transparent;
+}
+button.win-command:hover{
+  background-color: transparent;
+}
 /* Carousel base class */
 .carousel {
   margin-bottom: 60px;
