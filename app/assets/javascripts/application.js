@@ -17,6 +17,7 @@
 //= require backbone/underscore
 //= require backbone/backbone
 //= require backbone/backbone.routefilter
+//= require backbone/backbone-associations
 //= require backbone/marionette/backbone.marionette
 //= require backbone/marionette/jquery.resolved
 //= require gre340

@@ -12,7 +12,6 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
     before:(route) ->
       Gre340.TestCenter = Gre340.module("TestCenter");
       Gre340.TestCenter.start()
-
     showIndex: ->
       Gre340.Routing.showRoute('/test_center/index')
       Gre340.TestCenter.Controllers.questionController.start()

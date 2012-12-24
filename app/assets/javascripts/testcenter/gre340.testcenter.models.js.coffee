@@ -17,9 +17,29 @@ Gre340.module "TestCenter.Models", (Models, Gre340, Backbone, Marionette, $, _) 
 
   Models.QuestionCollection = Backbone.Collection.extend(
     model:Models.Question,
-    url:'/quizzes/'+getCookie('current_quiz_id')+'/sections/1/questions.json'
     next : (model) -> @at(this.indexOf(model) + 1),
     prev : (model) -> @at(this.indexOf(model) - 1)
   )
 
+  Models.Section = Backbone.AssociatedModel.extend(
+    relations: [
+      type: Backbone.Many,
+      key: 'questions',
+      relatedModel:'Gre340.TestCenter.Models.Question'
+      collectionType:'Gre340.TestCenter.Models.QuestionCollection'
+    ]
+  )
+
+  Models.SectionCollection = Backbone.Collection.extend(
+    model: Models.Section
+  )
+  Models.Quiz = Backbone.AssociatedModel.extend(
+    relations: [
+      type: Backbone.Many,
+      key: 'sections',
+      relatedModel:'Gre340.TestCenter.Models.Section'
+      collectionType:'Gre340.TestCenter.Models.SectionCollection'
+    ],
+    url: '/quizzes/'+getCookie('current_quiz_id')+'.json'
+  )
   Models
