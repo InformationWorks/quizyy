@@ -25,4 +25,22 @@ class HomesController < ApplicationController
     
   end
   
+  # TODO: Remove this before go-live.
+  def change_profile_pic
+        
+  end
+  
+  # TODO: Remove this before go-live.
+  def update_profile_pic
+    respond_to do |format|
+      if current_user.update_attributes(params[:user])
+        format.html { redirect_to :action => :index, :notice => 'Photo uploaded successfully.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "index" }
+        format.json { render json: current_user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
 end
