@@ -55,7 +55,6 @@ GremastersWeb::Application.routes.draw do
   end
 
   get "test_center/index"
-  post "test_center/index"
   match 'test_center' => 'test_center#index'
   match 'test_center/*anything' => "test_center#index"
 

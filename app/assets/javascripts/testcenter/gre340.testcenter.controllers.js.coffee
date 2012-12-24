@@ -38,11 +38,17 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     setQuestionCollection: (collection) ->
        @questionCollection = collection
 
+
+  #listen to all the events that matter to us
   Gre340.vent.on "show:next:question", ->
     controller = Controllers.questionController
     controller.currentQuestion = controller.questionCollection.next(controller.currentQuestion)
     Gre340.Routing.showRouteWithTrigger('test_center','question',controller.currentQuestion.get('id'))
 
+  Gre340.vent.on "show:prev:question", ->
+    controller = Controllers.questionController
+    controller.currentQuestion = controller.questionCollection.prev(controller.currentQuestion)
+    Gre340.Routing.showRouteWithTrigger('test_center','question',controller.currentQuestion.get('id'))
 
   Controllers.addInitializer ->
     Controllers.questionController = new QuestionController()

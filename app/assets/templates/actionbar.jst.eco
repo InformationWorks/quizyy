@@ -25,7 +25,7 @@
             <span class="win-commandimage win-commandring">&#xe128;</span>
             <span class="win-label">Help</span>
         </button>
-        <button class="win-command">
+        <button id="btn-prev" class="win-command">
             <span class="win-commandimage win-commandring">&#xe05d;</span>
             <span class="win-label">Back</span>
         </button>

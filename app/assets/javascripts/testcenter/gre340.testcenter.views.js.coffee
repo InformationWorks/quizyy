@@ -19,6 +19,10 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     template: 'actionbar'
     events:
       'click #btn-next': 'showNextQuestion'
+      'click #btn-prev': 'showPrevQuestion'
     showNextQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:next:question'
+    showPrevQuestion: (event) ->
+      event.preventDefault()
+      Gre340.vent.trigger 'show:prev:question'

@@ -4,6 +4,7 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
     routes:
       'test_center': 'showIndex'
       'test_center/': 'showIndex'
+      'test_center/index?quiz_id=:id': 'showIndex'
       'test_center/index': 'showIndex'
       'test_center/question/:question_id': 'showQuestion'
       '*anyotherpath': 'stopAllModules'
@@ -13,6 +14,7 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       Gre340.TestCenter.start()
 
     showIndex: ->
+      Gre340.Routing.showRoute('/test_center/index')
       Gre340.TestCenter.Controllers.questionController.start()
     showQuestion:(question_id) ->
       console.log 'show question by id '+question_id
