@@ -11,12 +11,25 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @currentQuestionCollection=null
       @currentSectionCollection=null
       @sectionIndex= 1
+      @isStarted = false
     start:() ->
       #@questionCollection.fetch()
       console.log 'i am called'
-      @quiz.fetch()
+      @quiz.fetch(async: false)
     showQuestion:(question_id) ->
       @showActionBar()
+      if @quiz.isNew()
+        @quiz.fetch(
+          silent:true,
+          async: false,
+          success:()=>
+            @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
+            if !@currentSection?
+              _.each @currentSectionCollection.models, (section)=>
+                if section.get('questions').get(question_id)?
+                  @currentSection=section
+            @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
+        )
       question = @currentQuestionCollection.get(question_id)
       @currentQuestion = question
       qTypeCode = question.get('type').code
@@ -25,12 +38,11 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
           return true
 
       #check for Data Interpretation question location top (single pane) or side (two pane)
-      if question.get('di_location') != null
-        diLocation = question.get('di_location')
-      else
-        diLocation = 'Top'
 
-      if(!questionToDisplayInTwoPane && diLocation == 'Top')
+      diLocation =  if question.get('di_location')? then question.get('di_location') else 'Top'
+
+
+      if !questionToDisplayInTwoPane and diLocation == 'Top'
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
       else
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionTwoPaneView(model: question))
@@ -72,7 +84,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
   #listen to all the events that matter to us
   Gre340.vent.on "show:next:question", ->
     controller = Controllers.questionController
-    if controller.currentQuestionCollection
+    if controller.currentQuestionCollection?
       if controller.currentQuestionCollection.length-1 == controller.currentQuestionCollection.indexOf(controller.currentQuestion)
         #just a hack - indexOf was returning -1 instead of 0 for the first model so we first find the model and than restore it
         controller.currentSection = controller.currentSectionCollection.get(controller.currentSection)
@@ -83,7 +95,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
 
   Gre340.vent.on "show:prev:question", ->
     controller = Controllers.questionController
-    if(controller.currentQuestionCollection)
+    if controller.currentQuestionCollection?
       if controller.currentQuestionCollection.indexOf(controller.currentQuestion) == 0
         controller.startPrevSection() if controller.currentSectionCollection.indexOf(controller.currentSection) != 0
       else
@@ -92,8 +104,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
 
 
   Gre340.vent.on "quiz:changed", (quiz) ->
-    if Controllers.questionController.getCurrentSection()
-      if Controllers.questionController.getCurrentQuestion()
+    if Controllers.questionController.getCurrentSection()?
+      if Controllers.questionController.getCurrentQuestion()?
         Controllers.questionController.showQuestion(Controllers.questionController.getCurrentQuestion().get('id'))
       else
         Controllers.questionController.startSection(Controllers.questionController.getCurrentSection(),true)
