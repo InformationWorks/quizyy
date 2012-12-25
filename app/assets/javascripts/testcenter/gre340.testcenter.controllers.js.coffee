@@ -17,8 +17,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       console.log 'i am called'
       @quiz.fetch(async: false)
     showQuestion:(question_id) ->
-      @showActionBar()
-      if @quiz.isNew()
+      if !@quiz.get('sections')?
         @quiz.fetch(
           silent:true,
           async: false,
@@ -29,7 +28,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
                 if section.get('questions').get(question_id)?
                   @currentSection=section
             @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
+            @sectionIndex = @currentSectionCollection.indexOf(@currentSection)+1
         )
+      @showActionBar()
       question = @currentQuestionCollection.get(question_id)
       @currentQuestion = question
       qTypeCode = question.get('type').code
