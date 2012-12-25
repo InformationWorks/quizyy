@@ -2,7 +2,7 @@ class OptionsController < ApplicationController
   # GET /options
   # GET /options.json
   def index
-    
+
     load_options
 
     respond_to do |format|
@@ -14,7 +14,7 @@ class OptionsController < ApplicationController
   # GET /options/1
   # GET /options/1.json
   def show
-    
+
     load_quiz_section_and_question
     load_option
 
@@ -27,7 +27,7 @@ class OptionsController < ApplicationController
   # GET /options/new
   # GET /options/new.json
   def new
-    
+
     load_quiz_section_and_question
     @option = Option.new
 
@@ -63,7 +63,7 @@ class OptionsController < ApplicationController
   # PUT /options/1
   # PUT /options/1.json
   def update
-    
+
     load_option
 
     respond_to do |format|
@@ -80,7 +80,7 @@ class OptionsController < ApplicationController
   # DELETE /options/1
   # DELETE /options/1.json
   def destroy
-    
+
     load_option
 
     @option.destroy
@@ -90,19 +90,19 @@ class OptionsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def load_quiz_section_and_question
     @quiz = Quiz.find params[:quiz_id]
     @section = Section.find params[:section_id]
     @question = Question.find params[:question_id]
   end
-  
+
   def load_options
     @options = Option.where(:question_id => params[:question_id])
   end
-  
+
   def load_option
     @option = Option.find(params[:id])
   end
-  
+
 end

@@ -1,4 +1,6 @@
 Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionette, $, _) ->
+  #TODO Review code for efficiency
+  #TODO Write Tests
   class QuestionController
     constructor: () ->
       @Views = Gre340.TestCenter.Views
@@ -18,7 +20,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @quiz.fetch(async: false)
     showQuestion:(question_id) ->
       if !@quiz.get('sections')?
-        @quiz.fetch(
+        @quiz.fetch
           silent:true,
           async: false,
           success:()=>
@@ -29,7 +31,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
                   @currentSection=section
             @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
             @sectionIndex = @currentSectionCollection.indexOf(@currentSection)+1
-        )
       @showActionBar()
       question = @currentQuestionCollection.get(question_id)
       @currentQuestion = question
@@ -37,12 +38,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       questionToDisplayInTwoPane = _.find @typesToDiplayInTwoPane, (code) ->
         if(code==qTypeCode)
           return true
-
-      #check for Data Interpretation question location top (single pane) or side (two pane)
-
+      #Checking Data Interpretation question location top (single pane) or side (two pane)
       diLocation =  if question.get('di_location')? then question.get('di_location') else 'Top'
-
-
       if !questionToDisplayInTwoPane and diLocation == 'Top'
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
       else
@@ -82,12 +79,14 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @currentSectionCollection = collection
     getCurrentSectionCollection:()->
       @currentSectionCollection
-  #listen to all the events that matter to us
+
+
+  #Events Listening
   Gre340.vent.on "show:next:question", ->
     controller = Controllers.questionController
     if controller.currentQuestionCollection?
       if controller.currentQuestionCollection.length-1 == controller.currentQuestionCollection.indexOf(controller.currentQuestion)
-        #just a hack - indexOf was returning -1 instead of 0 for the first model so we first find the model and than restore it
+        #HACK - indexOf was returning -1 instead of 0 for the first model so we first find the model and than restore it
         controller.currentSection = controller.currentSectionCollection.get(controller.currentSection)
         controller.startNextSection() if controller.currentSectionCollection.indexOf(controller.currentSection) != controller.currentSectionCollection.length-1
       else
