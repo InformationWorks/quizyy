@@ -12,10 +12,10 @@
           <div class="span3" id = '<%= current_user.id %>' >
             <a class="tile square image" href="#">
               
-              <% if current_user.profile_image %>
-              	<img id="profile-image" style="width:150px" src= <%= current_user.profile_image_url %> alt="">
+              <% if current_user.profile_image_url.to_s != "" %>
+              	<img id="profile-image" style="width:150px;height: 150px;" src= <%= current_user.profile_image_url.to_s %> alt="">
               <% else %>
-              	<img id="profile-image" style="width:150px" src="/assets/metro-user.png" alt="">
+              	<img id="profile-image" style="width:150px;height: 150px;" src="/assets/metro-user.png" alt="">
               <% end %>
               
             </a>
@@ -156,11 +156,10 @@
 	            <h6><%= full_quiz.desc %></h6>
 	          </div>
 	          <div class="command-btn pull-right">
-
-                <%= link_to('/test_center/index?quiz_id='+full_quiz.id.to_s, :class=>'btn') do %>
-                    <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
-                    <span class="win-label"><%= action_text %></span>
-                <% end %>
+	            <button class="win-command">
+	              <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
+	              <span class="win-label"><%= action_text %></span>
+	            </button>
 	          </div>
 	        </li>
       	<% end %>
@@ -198,7 +197,7 @@
 	            <h6><%= category_topic_quiz.desc %></h6>
 	          </div>
 	          <div class="command-btn pull-right">
-                <button class="win-command">
+	            <button class="win-command">
 	              <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
 	              <span class="win-label"><%= action_text %></span>
 	            </button>
@@ -257,7 +256,7 @@
           if ( upload_response.status == "true")
           {
           	var profile_img = document.getElementById("profile-image");
-          	profile_img.src = upload_response.image	url;
+          	profile_img.src = upload_response.imageurl;
           } 
           else
           {

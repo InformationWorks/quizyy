@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121224105438) do
+ActiveRecord::Schema.define(:version => 20121222180113) do
 
   create_table "categories", :force => true do |t|
     t.string   "code"
@@ -174,7 +174,6 @@ ActiveRecord::Schema.define(:version => 20121224105438) do
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "profile_image"
-    t.string   "profile_pic"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
