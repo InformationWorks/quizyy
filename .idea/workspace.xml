@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a6af83c-0286-41d8-8a71-66c64c787141" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/homes/index.html.erb" afterPath="$PROJECT_DIR$/app/views/homes/index.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee" afterPath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee" />
     </list>
     <ignored path="gremasters-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -22,19 +21,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="gre340.testcenter.controllers.js.coffee" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="gre340.testcenter.controllers.js.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="23" selection-start="847" selection-end="847" vertical-scroll-proportion="0.0">
+            <state line="19" column="32" selection-start="766" selection-end="766" vertical-scroll-proportion="0.07438017">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/homes/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="159" column="97" selection-start="5748" selection-end="5748" vertical-scroll-proportion="0.7128713">
+            <state line="159" column="97" selection-start="5748" selection-end="5748" vertical-scroll-proportion="-17.28">
               <folding />
             </state>
           </provider>
@@ -130,8 +129,8 @@
         <option value="$PROJECT_DIR$/app/assets/stylesheets/style.css.scss" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.routing.js.coffee" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/gre340.js.coffee" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee" />
         <option value="$PROJECT_DIR$/app/views/homes/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee" />
       </list>
     </option>
   </component>
@@ -1098,13 +1097,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="23" selection-start="847" selection-end="847" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/assets/stylesheets/bootmetro.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="149" column="13" selection-start="2743" selection-end="2750" vertical-scroll-proportion="0.3322314">
@@ -1128,7 +1120,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/homes/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="159" column="97" selection-start="5748" selection-end="5748" vertical-scroll-proportion="0.7128713">
+        <state line="159" column="97" selection-start="5748" selection-end="5748" vertical-scroll-proportion="-17.28">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="32" selection-start="766" selection-end="766" vertical-scroll-proportion="0.07438017">
           <folding />
         </state>
       </provider>
