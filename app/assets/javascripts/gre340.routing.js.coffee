@@ -11,6 +11,10 @@ Gre340.module "Routing", (Routing, Gre340, Backbone, Marionette, $, _) ->
     route = getRoutePath(arguments)
     Backbone.history.navigate route, trigger: false
 
+  Routing.showRouteWithTrigger = ->
+    route = getRoutePath(arguments)
+    Backbone.history.navigate route, trigger: true
+
   # Helper Methods
   # --------------
 

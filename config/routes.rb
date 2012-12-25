@@ -56,6 +56,7 @@ GremastersWeb::Application.routes.draw do
     #get "/", :to => "devise/sessions#new"
 
   end
+
   get "test_center/index"
   match 'test_center' => 'test_center#index'
   match 'test_center/*anything' => "test_center#index"
@@ -63,7 +64,7 @@ GremastersWeb::Application.routes.draw do
   root :to => "landings#index"
   # Devise routes.
   # devise_scope :user do
-  #  pending for custom URL like localhost:3000/sign_in  
+  #  pending for custom URL ike localhost:3000/sign_in
   # end
   
   #root :to => "homes/index"

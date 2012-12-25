@@ -198,8 +198,8 @@
   .left-pane{
     position: absolute;
     top: 250px;
-    width:40%;
-    left: 80px;
+    width:35%;
+    left: 10%;
     bottom: 120px;
 
   }
@@ -207,11 +207,11 @@
     position: absolute;
     top: 250px;
     left: 50%;
-    width: 40%;
+    width: 35%;
     bottom: 120px;
     .options{
       width:100%;
-      margin:0px -100px;
+      margin:0px auto;
     }
   }
 
@@ -227,6 +227,10 @@
   #test-content {
     .left-pane,.right-pane{
       top: 200px;
+      width: 30%;
+    }
+    .left-pane{
+      left: 18%;
     }
   }
 }
@@ -252,7 +256,7 @@
       top: 250px;
     }
     .left-pane{
-      width:45%;
+      width:40%;
     }
     .right-pane{
       left: 50%;
@@ -453,6 +457,14 @@ button[type="submit"]:hover, input[type="submit"]:hover {
   background-color: $other-blue;
   border-color: transparent;
   color: white;
+}
+
+button.win-command {
+  background-color: transparent;
+  border-color: transparent;
+}
+button.win-command:hover{
+  background-color: transparent;
 }
 /* Carousel base class */
 .carousel {

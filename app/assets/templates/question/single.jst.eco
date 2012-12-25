@@ -3,7 +3,14 @@
         <%= @instruction %>
     </p>
 </section>
+<hr>
 <section class="question">
+    <% if @passage && @passage != "-" : %>
+        <p>
+            <%= @passage %>
+        </p>
+    <% end %>
+
     <p>
         <%= @que_text %>
     </p>
