@@ -32,15 +32,26 @@ class HomesController < ApplicationController
   
   # TODO: Remove this before go-live.
   def update_profile_pic
-    respond_to do |format|
-      if current_user.update_attributes(params[:user])
-        format.html { redirect_to :action => :index, :notice => 'Photo uploaded successfully.' }
-        format.json { head :no_content }
+    
+    user = User.find(params[:id])
+    
+    logger.info("User params = " + params.to_s)
+    
+    user.profile_image = params[:Filedata]  
+    
+      if user.save
+        return_text = '{"status":"true","imageurl":"' + user.profile_image_url + '" }';
       else
-        format.html { render action: "index" }
-        format.json { render json: current_user.errors, status: :unprocessable_entity }
+        return_text = "false"  
       end
-    end
+      
+      # Note: This was added because of wrong Content-Type returned.
+      # Without this the respone on Javascript side was as below.
+      # <pre style="word-wrap: break-word; white-space: pre-wrap;">true</pre>
+      # Changed the Content-Type to get result as : true
+      headers['Content-Type'] = 'text/html'
+    
+      render :inline => return_text
   end
   
 end

@@ -28,6 +28,7 @@
 //= require ./testcenter/gre340.testcenter.models
 //= require ./testcenter/gre340.testcenter.views
 //= require ./testcenter/gre340.testcenter.controllers
+//= require upclick	
 
 Backbone.Marionette.Renderer.render = function(template, data){
     if (!JST[template]) throw "Template '" + template + "' not found!";

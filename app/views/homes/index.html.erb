@@ -9,16 +9,19 @@
           <h4><%= @last_name%></h4>
         </div>
         <div class="row">
-          <div class="span3">
+          <div class="span3" id = '<%= current_user.id %>' >
             <a class="tile square image" href="#">
               
               <% if current_user.profile_image %>
-              	<img src="/assets/metro-user.png" alt="">
+              	<img id="profile-image" style="width:150px" src= <%= current_user.profile_image_url %> alt="">
               <% else %>
-              	<img src="/assets/metro-user.png" alt="">
+              	<img id="profile-image" style="width:150px" src="/assets/metro-user.png" alt="">
               <% end %>
               
             </a>
+            
+            <input type="button" id="uploader" value="Upload">
+            
           </div>
           <div class="span3">
             <p>You should work on</p>
@@ -228,4 +231,39 @@
                 $(this).find('.command-btn').hide();
             }
         });
+</script>
+
+<script type="text/javascript">
+
+   var uploader = document.getElementById('uploader');
+
+   upclick(
+     {
+      element: uploader,
+      action: '/homes/update_profile_pic/' + uploader.parentNode.id + ".json" , 
+      onstart:
+        function(filename)
+        {
+          console.log('Staring upload of profile image for user.id = ' + uploader.parentNode.id);
+        },
+      oncomplete:
+        function(response_data) 
+        {
+          console.log('Upload completed with status : ' + response_data	);
+          
+          var upload_response = JSON.parse(response_data);
+          
+          if ( upload_response.status == "true")
+          {
+          	var profile_img = document.getElementById("profile-image");
+          	profile_img.src = upload_response.image	url;
+          } 
+          else
+          {
+          	alert("Sorry couldn't upload file. Try again later");
+          } 
+          
+        }
+     });
+
 </script>
