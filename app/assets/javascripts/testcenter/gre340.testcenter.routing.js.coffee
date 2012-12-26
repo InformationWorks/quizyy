@@ -5,7 +5,7 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       'test_center': 'showIndex'
       'test_center/index?quiz_id=:id': 'showIndex'
       'test_center/index': 'showIndex'
-      'test_center/question/:question_id': 'showQuestion'
+      'test_center/section/:sindex/question/:qindex': 'showQuestion'
       '*anyotherpath': 'stopAllModules'
 
     before:(route) ->
@@ -14,10 +14,9 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
     showIndex: ->
       Gre340.Routing.showRoute('/test_center/index')
       Gre340.TestCenter.Controllers.questionController.start()
-    showQuestion:(question_id) ->
-      console.log 'show question by id '+question_id
+    showQuestion: (sectionNumber,questionNumber) ->
       qController = Gre340.TestCenter.Controllers.questionController
-      qController.showQuestion(question_id)
+      qController.showQuestionByNumber(sectionNumber,questionNumber)
     stopAllModules:()->
       Gre340.TestCenter.stop()
   )

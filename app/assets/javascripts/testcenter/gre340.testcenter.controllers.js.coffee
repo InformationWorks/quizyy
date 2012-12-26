@@ -12,27 +12,14 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @currentQuestion = null
       @currentQuestionCollection=null
       @currentSectionCollection=null
-      @sectionIndex= 1
+      @sectionNumber=1
       @isStarted = false
     start:() ->
       #@questionCollection.fetch()
       console.log 'i am called'
       @quiz.fetch(async: false)
-    showQuestion:(question_id) ->
-      if !@quiz.get('sections')?
-        @quiz.fetch
-          silent:true,
-          async: false,
-          success:()=>
-            @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
-            if !@currentSection?
-              _.each @currentSectionCollection.models, (section)=>
-                if section.get('questions').get(question_id)?
-                  @currentSection=section
-            @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
-            @sectionIndex = @currentSectionCollection.indexOf(@currentSection)+1
+    showQuestion:(question) ->
       @showActionBar()
-      question = @currentQuestionCollection.get(question_id)
       @currentQuestion = question
       qTypeCode = question.get('type').code
       questionToDisplayInTwoPane = _.find @typesToDiplayInTwoPane, (code) ->
@@ -44,23 +31,49 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
       else
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionTwoPaneView(model: question))
-
+    showQuestionById:(questionId)->
+      if !@quiz.get('sections')?
+        @quiz.fetch
+          silent:true,
+          async: false,
+          success:()=>
+            @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
+              if !@currentSection?
+                _.each @currentSectionCollection.models, (section)=>
+                  if section.get('questions').get(questionId)?
+                    @currentSection=section
+              @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
+              @sectionNumber = @currentSectionCollection.indexOf(@currentSection)+1
+      question = @currentQuestionCollection.get(questionId)
+      @showQuestion(question)
+    showQuestionByNumber:(sectionNumber,questionNumber)->
+      if !@quiz.get('sections')?
+        @quiz.fetch
+          silent:true,
+          async: false,
+          success:()=>
+            @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
+            @currentSection=section = @currentSectionCollection.at(sectionNumber-1)
+            @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
+            @sectionNumber = sectionNumber
+      if @sectionNumber != sectionNumber
+        @sectionNumber = sectionNumber
+        @currentSection = @currentSectionCollection.at(sectionNumber-1)
+        @currenQuestionCollection = @currentSection.get('questions')
+      question = if questionNumber <= @currentQuestionCollection.length then @currentQuestionCollection.at(questionNumber-1) else new Gre340.TestCenter.Data.Models.Question instruction: "No Such question Exists"
+      @showQuestion(question)
     showActionBar: () ->
-      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionIndex))
-
-    startSection: (section,fromStart) ->
+      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber))
+    startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
       @currentSection = section
-      @sectionIndex = @currentSectionCollection.indexOf(section)+1 if @currentSectionCollection
+      @sectionNumber = @currentSectionCollection.indexOf(section)+1 if @currentSectionCollection
       @currentQuestionCollection = section.get('questions')
-      if fromStart
-        Gre340.Routing.showRouteWithTrigger('test_center','question',@currentQuestionCollection.first().get('id'))
-      else
-        Gre340.Routing.showRouteWithTrigger('test_center','question',@currentQuestionCollection.last().get('id'))
+      Gre340.Routing.showRouteWithTrigger('test_center','section',@sectionNumber,'question',questionNumber)
     startNextSection: ()->
-      @startSection(@currentSectionCollection.next(@currentSection),true)
+      @startSection(@currentSectionCollection.next(@currentSection),1)
     startPrevSection: ()->
-      @startSection(@currentSectionCollection.prev(@currentSection),false)
+      @startSection(@currentSectionCollection.prev(@currentSection),@currentQuestionCollection.length)
     setQuiz:(model,isSilent) ->
       @quiz.set(model, {silent: isSilent})
     setQuizInProgress: ->
@@ -91,7 +104,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         controller.startNextSection() if controller.currentSectionCollection.indexOf(controller.currentSection) != controller.currentSectionCollection.length-1
       else
         controller.currentQuestion = controller.currentQuestionCollection.next(controller.currentQuestion)
-        Gre340.Routing.showRouteWithTrigger('test_center','question',controller.currentQuestion.get('id'))
+        console.log(controller.currentQuestion.get('id'))
+        Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestionCollection.indexOf(controller.currentQuestion)+1)
 
   Gre340.vent.on "show:prev:question", ->
     controller = Controllers.questionController
@@ -100,18 +114,18 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         controller.startPrevSection() if controller.currentSectionCollection.indexOf(controller.currentSection) != 0
       else
         controller.currentQuestion = controller.currentQuestionCollection.prev(controller.currentQuestion)
-        Gre340.Routing.showRouteWithTrigger('test_center','question',controller.currentQuestion.get('id'))
+        Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestionCollection.indexOf(controller.currentQuestion)+1)
 
 
   Gre340.vent.on "quiz:changed", (quiz) ->
     if Controllers.questionController.getCurrentSection()?
       if Controllers.questionController.getCurrentQuestion()?
-        Controllers.questionController.showQuestion(Controllers.questionController.getCurrentQuestion().get('id'))
+        Controllers.questionController.showQuestionById(Controllers.questionController.getCurrentQuestion().get('id'))
       else
-        Controllers.questionController.startSection(Controllers.questionController.getCurrentSection(),true)
+        Controllers.questionController.startSection(Controllers.questionController.getCurrentSection(),1)
     else
       Controllers.questionController.setCurrentSectionCollection(quiz.get('sections'))
-      Controllers.questionController.startSection(Controllers.questionController.getCurrentSectionCollection().first(),true)
+      Controllers.questionController.startSection(Controllers.questionController.getCurrentSectionCollection().first(),1)
 
   Controllers.addInitializer ->
     Controllers.questionController = new QuestionController()
