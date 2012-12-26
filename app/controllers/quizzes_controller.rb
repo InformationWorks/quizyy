@@ -23,7 +23,7 @@ class QuizzesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       @json = @quiz.to_json(:include => {:sections => {:include => {:questions => {:include => [:type]}}}})
-      format.json { render :json => @json}
+      format.json { render :json => @json }
     end
   end
 

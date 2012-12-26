@@ -1,3 +1,2 @@
-<section class="section-info">
-   <%= @display_text %>
+<section id="section-info">
 </section>

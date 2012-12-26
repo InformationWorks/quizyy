@@ -19,14 +19,19 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     template: 'question/section'
     tagName: "div"
     initialize: (options) ->
-
+    onRender:() ->
+      @$('#section-info').append(@model.get('display_text'))
   Views.QuestionActionBarView = Marionette.ItemView.extend
     template: 'actionbar'
     model: 'Gre340.TestCenter.Data.Models.Quiz'
     initialize: (options) ->
       @section_index = options.section_index
+      @question_number = options.question_number
+      @total_questions = options.total_questions
     templateHelpers: ->
       section_index: @section_index
+      question_number: @question_number
+      total_questions: @total_questions
     events:
       'click #btn-next': 'showNextQuestion'
       'click #btn-prev': 'showPrevQuestion'
@@ -49,3 +54,6 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     startSection:(event) ->
       event.preventDefault()
       Gre340.vent.trigger 'start:section'
+
+  Views.NoQuizInProgress = Marionette.ItemView.extend
+    template: 'quiz404'
