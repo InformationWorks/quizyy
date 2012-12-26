@@ -6,7 +6,11 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @Views = Gre340.TestCenter.Views
       @models = Gre340.TestCenter.Data.Models
       @typesToDiplayInTwoPane = ['V-MCQ-1','V-MCQ-2','V-SIP','Q-DI-MCQ-1','Q-DI-MCQ-2','Q-DI-NE-1','Q-DI-NE-2']
-      @quiz = new @models.Quiz()
+      if @getCookie('current_quiz_id')
+        @quiz = new @models.Quiz()
+        @quiz.url = '/quizzes/'+@getCookie('current_quiz_id')+'.json'
+      else
+        @quiz = null
       @quizInProgress = false
       @currentSection = null
       @currentQuestion = null
@@ -17,7 +21,23 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     start:() ->
       #@questionCollection.fetch()
       console.log 'i am called'
-      @quiz.fetch(async: false)
+      if @quiz?
+        @quiz.fetch(async: false)
+      else
+        @exitQuizCenter()
+    #sorce w2school
+    getCookie: (c_name) ->
+      i = undefined
+      x = undefined
+      y = undefined
+      ARRcookies = document.cookie.split(";")
+      i = 0
+      while i < ARRcookies.length
+        x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="))
+        y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1)
+        x = x.replace(/^\s+|\s+$/g, "")
+        return unescape(y)  if x is c_name
+        i++
     showQuestion:(question) ->
       @showActionBar()
       @currentQuestion = question
@@ -32,36 +52,43 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       else
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionTwoPaneView(model: question))
     showQuestionById:(questionId)->
-      if !@quiz.get('sections')?
-        @quiz.fetch
-          silent:true,
-          async: false,
-          success:()=>
-            @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
-              if !@currentSection?
-                _.each @currentSectionCollection.models, (section)=>
-                  if section.get('questions').get(questionId)?
-                    @currentSection=section
-              @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
-              @sectionNumber = @currentSectionCollection.indexOf(@currentSection)+1
-      question = @currentQuestionCollection.get(questionId)
-      @showQuestion(question)
+      if @quiz?
+        if !@quiz.get('sections')?
+          @quiz.fetch
+            silent:true,
+            async: false,
+            success:()=>
+              @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
+                if !@currentSection?
+                  _.each @currentSectionCollection.models, (section)=>
+                    if section.get('questions').get(questionId)?
+                      @currentSection=section
+                @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
+                @sectionNumber = @currentSectionCollection.indexOf(@currentSection)+1
+          question = @currentQuestionCollection.get(questionId)
+        @showQuestion(question)
+      else
+        @exitQuizCenter()
+
     showQuestionByNumber:(sectionNumber,questionNumber)->
-      if !@quiz.get('sections')?
-        @quiz.fetch
-          silent:true,
-          async: false,
-          success:()=>
-            @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
-            @currentSection=section = @currentSectionCollection.at(sectionNumber-1)
-            @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
-            @sectionNumber = sectionNumber
-      if @sectionNumber != sectionNumber
-        @sectionNumber = sectionNumber
-        @currentSection = @currentSectionCollection.at(sectionNumber-1)
-        @currenQuestionCollection = @currentSection.get('questions')
-      question = if questionNumber <= @currentQuestionCollection.length then @currentQuestionCollection.at(questionNumber-1) else new Gre340.TestCenter.Data.Models.Question instruction: "No Such question Exists"
-      @showQuestion(question)
+      if @quiz?
+        if !@quiz.get('sections')?
+          @quiz.fetch
+            silent:true,
+            async: false,
+            success:()=>
+              @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
+              @currentSection=section = @currentSectionCollection.at(sectionNumber-1)
+              @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
+              @sectionNumber = sectionNumber
+        if @sectionNumber != sectionNumber
+          @sectionNumber = sectionNumber
+          @currentSection = @currentSectionCollection.at(sectionNumber-1)
+          @currentQuestionCollection = @currentSection.get('questions')
+        question = if questionNumber <= @currentQuestionCollection.length then @currentQuestionCollection.at(questionNumber-1) else new Gre340.TestCenter.Data.Models.Question instruction: "No Such question Exists"
+        @showQuestion(question)
+      else
+        @exitQuizCenter()
     showActionBar: () ->
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber))
     showSectionActionBar: () ->
@@ -110,7 +137,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @currentSectionCollection = collection
     getCurrentSectionCollection:()->
       @currentSectionCollection
-
+    exitQuizCenter:()->
+      Gre340.TestCenter.Layout.layout.content.show(new @Views.NoQuizInProgress())
 
   #Events Listening
   Gre340.vent.on "show:next:question", ->

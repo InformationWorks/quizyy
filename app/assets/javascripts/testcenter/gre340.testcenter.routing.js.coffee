@@ -2,11 +2,11 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
 
   Router = Backbone.Router.extend(
     routes:
-      'test_center': 'showIndex'
       'test_center/index?quiz_id=:id': 'showIndex'
-      'test_center/index': 'showIndex'
       'test_center/section/:sindex/question/:qindex': 'showQuestion'
       'test_center/section/:sindex': 'showSection'
+      'test_center': 'showIndex'
+      'test_center/*anything': 'showIndex'
       '*anyotherpath': 'stopAllModules'
 
     before:(route) ->

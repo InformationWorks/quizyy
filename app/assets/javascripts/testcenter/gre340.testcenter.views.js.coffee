@@ -50,3 +50,6 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     startSection:(event) ->
       event.preventDefault()
       Gre340.vent.trigger 'start:section'
+
+  Views.NoQuizInProgress = Marionette.ItemView.extend
+    template: 'quiz404'

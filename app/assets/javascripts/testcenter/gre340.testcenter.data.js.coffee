@@ -1,18 +1,4 @@
 Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
-  #sorce w2school
-  getCookie = (c_name) ->
-    i = undefined
-    x = undefined
-    y = undefined
-    ARRcookies = document.cookie.split(";")
-    i = 0
-    while i < ARRcookies.length
-      x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="))
-      y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1)
-      x = x.replace(/^\s+|\s+$/g, "")
-      return unescape(y)  if x is c_name
-      i++
-
   Data.Models = {}
   Data.Collections = {}
 
@@ -49,7 +35,6 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
       relatedModel:'Gre340.TestCenter.Data.Models.Section'
       collectionType:'Gre340.TestCenter.Data.Collections.SectionCollection'
     ]
-    url: '/quizzes/'+getCookie('current_quiz_id')+'.json'
   )
 
-  Data
+  Data.addFinalizer ->
