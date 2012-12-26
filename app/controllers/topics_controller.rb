@@ -1,4 +1,7 @@
 class TopicsController < ApplicationController
+  
+  before_filter :authenticate_user!
+  
   # GET /topics
   # GET /topics.json
   def index

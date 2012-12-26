@@ -1,4 +1,7 @@
 class PackagesController < ApplicationController
+  
+  before_filter :authenticate_user!
+  
   # GET /packages
   # GET /packages.json
   def index

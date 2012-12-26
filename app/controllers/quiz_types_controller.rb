@@ -1,4 +1,7 @@
 class QuizTypesController < ApplicationController
+  
+  before_filter :authenticate_user!
+  
   # GET /quiz_types
   # GET /quiz_types.json
   def index

@@ -1,6 +1,6 @@
 class HomesController < ApplicationController
   
-  before_filter :authenticate_user!, :only => [:index]
+  before_filter :authenticate_user!
   
   def index
     split_user_full_name = current_user.full_name.split(' ',2)

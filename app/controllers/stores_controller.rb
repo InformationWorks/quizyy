@@ -1,4 +1,7 @@
 class StoresController < ApplicationController
+  
+  before_filter :authenticate_user!
+  
   def full_quizzes
     
     @package_1 = Package.find_by_position(1)

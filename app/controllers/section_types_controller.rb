@@ -1,4 +1,7 @@
 class SectionTypesController < ApplicationController
+  
+  before_filter :authenticate_user!
+  
   # GET /section_types
   # GET /section_types.json
   def index

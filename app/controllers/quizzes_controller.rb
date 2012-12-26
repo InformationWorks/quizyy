@@ -1,5 +1,7 @@
 class QuizzesController < ApplicationController
   
+  before_filter :authenticate_user!
+  
   include UploadExcel
   
   # GET /quizzes

@@ -1,4 +1,7 @@
 class TypesController < ApplicationController
+
+  before_filter :authenticate_user!
+
   # GET /types
   # GET /types.json
   def index
