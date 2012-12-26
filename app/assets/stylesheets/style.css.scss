@@ -172,7 +172,11 @@
     width: 500px;
   }
 }
-
+#section-info{
+  width:60%;
+  margin: 0px auto;
+  margin-top: 100px;
+}
 #test-content{
 
   .single{
@@ -180,6 +184,7 @@
     margin: 0px auto;
     margin-top: 200px;
   }
+
   .question{
     padding-bottom: 10px;
     text-align:justify;
