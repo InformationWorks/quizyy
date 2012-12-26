@@ -1,6 +1,7 @@
 class TypesController < ApplicationController
 
   before_filter :authenticate_user!
+  load_and_authorize_resource
 
   # GET /types
   # GET /types.json

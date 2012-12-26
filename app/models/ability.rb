@@ -10,7 +10,8 @@ class Ability
     elsif user.role? :admin
       # Roles for admins to approve quiz.
       # can :manage, [Product, Asset, Issue]
-      can :manage, :all
+      can :manage, [Category,Topic,Quiz,Section,Question,Option]
+      can :read, [Type]
     elsif user.role? :publisher
       # Roles for publishers to create & publish a quiz.
       # http://www.tonyamoyal.com/2010/07/28/rails-authentication-with-devise-and-cancan-customizing-devise-controllers/
