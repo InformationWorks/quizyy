@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a6af83c-0286-41d8-8a71-66c64c787141" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/templates/question/section.jst.eco" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/templates/section-actionbar.jst.eco" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee" afterPath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.routing.js.coffee" afterPath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.routing.js.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.views.js.coffee" afterPath="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.views.js.coffee" />
     </list>
     <ignored path="gremasters-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,10 +26,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="gre340.testcenter.views.js.coffee" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="gre340.testcenter.views.js.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.views.js.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="18" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0">
+            <state line="45" column="35" selection-start="1476" selection-end="1476" vertical-scroll-proportion="0.7714286">
               <folding />
             </state>
           </provider>
@@ -41,10 +44,46 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gre340.testcenter.controllers.js.coffee" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="gre340.testcenter.controllers.js.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="113" selection-start="3848" selection-end="3848" vertical-scroll-proportion="-0.7226754">
+            <state line="73" column="24" selection-start="3811" selection-end="3811" vertical-scroll-proportion="-15.346154">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="section.jst.eco" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/templates/question/section.jst.eco">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="4" selection-start="35" selection-end="35" vertical-scroll-proportion="-0.64">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="single.jst.eco" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/templates/question/single.jst.eco">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="1797" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="section-actionbar.jst.eco" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/templates/section-actionbar.jst.eco">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="0" selection-start="778" selection-end="778" vertical-scroll-proportion="-14.08">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="actionbar.jst.eco" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/templates/actionbar.jst.eco">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="1781" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -53,7 +92,7 @@
       <file leaf-file-name="gre340.testcenter.routing.js.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.routing.js.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="67" selection-start="814" selection-end="814" vertical-scroll-proportion="0.0">
+            <state line="8" column="49" selection-start="391" selection-end="391" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -77,24 +116,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="quiz_user.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/quiz_user.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="6" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/user.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="4" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -108,8 +129,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/test_center_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/sections_controller.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.models.js.coffee" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/application.js" />
@@ -119,17 +138,19 @@
         <option value="$PROJECT_DIR$/app/assets/stylesheets/style.css.scss" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/gre340.js.coffee" />
         <option value="$PROJECT_DIR$/app/views/homes/index.html.erb" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.views.js.coffee" />
         <option value="$PROJECT_DIR$/app/controllers/options_controller.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20121225224309_add_display_text_to_sections.rb" />
+        <option value="$PROJECT_DIR$/app/assets/templates/question/section.jst.eco" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.routing.js.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/templates/section-actionbar.jst.eco" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.views.js.coffee" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="13" />
-    <option name="y" value="62" />
+    <option name="x" value="36" />
+    <option name="y" value="22" />
     <option name="width" value="1384" />
     <option name="height" value="797" />
   </component>
@@ -159,7 +180,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="RailsProjectView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -617,49 +638,23 @@
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javascripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testcenter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gremasters-web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gremasters-web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="RailsProjectView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../qbundle" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
-    <property name="dynamic.classpath" value="false" />
     <property name="GoToClass.includeJavaFiles" value="false" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -990,14 +985,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="13" y="62" width="1384" height="797" extended-state="0" />
+    <frame x="36" y="22" width="1384" height="797" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32952926" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31286126" sideWeight="0.77198213" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31286126" sideWeight="0.77198213" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22801788" sideWeight="0.99850523" order="7" side_tool="true" content_ui="tabs" />
@@ -1066,34 +1061,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/style.css.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="236" column="16" selection-start="4763" selection-end="4763" vertical-scroll-proportion="0.025039123">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.js.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gre340.routing.js.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/gre340.js.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="25" selection-start="188" selection-end="202" vertical-scroll-proportion="0.14243324">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/questions_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="57" selection-start="249" selection-end="256" vertical-scroll-proportion="0.024205748">
@@ -1115,18 +1082,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/stores_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="6" selection-start="311" selection-end="311" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/section.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/schema.rb">
@@ -1138,21 +1096,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20121225224309_add_display_text_to_sections.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="1" selection-start="124" selection-end="124" vertical-scroll-proportion="0.09815951">
-          <folding />
-        </state>
+        <state line="4" column="1" selection-start="124" selection-end="124" vertical-scroll-proportion="0.09815951" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/homes_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="2" selection-start="693" selection-end="693" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.views.js.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="18" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1164,16 +1113,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/templates/actionbar.jst.eco">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="1781" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/templates/question/single.jst.eco">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="1797" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/templates/question/section.jst.eco">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="4" selection-start="35" selection-end="35" vertical-scroll-proportion="-0.64">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/stores_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="6" selection-start="311" selection-end="311" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.routing.js.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="67" selection-start="814" selection-end="814" vertical-scroll-proportion="0.0">
+        <state line="8" column="49" selection-start="391" selection-end="391" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/templates/section-actionbar.jst.eco">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="0" selection-start="778" selection-end="778" vertical-scroll-proportion="-14.08">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.controllers.js.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="113" selection-start="3848" selection-end="3848" vertical-scroll-proportion="-0.7226754">
+        <state line="73" column="24" selection-start="3811" selection-end="3811" vertical-scroll-proportion="-15.346154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/testcenter/gre340.testcenter.views.js.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="35" selection-start="1476" selection-end="1476" vertical-scroll-proportion="0.7714286">
           <folding />
         </state>
       </provider>

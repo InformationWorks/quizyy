@@ -15,6 +15,11 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     makeFullHeight: ->
       $('body').addClass('fill')
 
+  Views.SectionInfoView = Marionette.ItemView.extend
+    template: 'question/section'
+    tagName: "div"
+    initialize: (options) ->
+
   Views.QuestionActionBarView = Marionette.ItemView.extend
     template: 'actionbar'
     model: 'Gre340.TestCenter.Data.Models.Quiz'
@@ -31,3 +36,16 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     showPrevQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:prev:question'
+
+  Views.SectionActionBarView = Marionette.ItemView.extend
+    template: 'section-actionbar'
+    model:'Gre340.TestCenter.Data.Models.Quiz'
+    initialize: (options) ->
+      @section_index = options.section_index
+    templateHelpers: ->
+      section_index: @section_index
+    events:
+      'click #btn-continue': 'startSection'
+    startSection:(event) ->
+      event.preventDefault()
+      Gre340.vent.trigger 'start:section'

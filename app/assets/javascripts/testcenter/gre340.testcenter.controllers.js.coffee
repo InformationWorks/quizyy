@@ -64,14 +64,32 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @showQuestion(question)
     showActionBar: () ->
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber))
+    showSectionActionBar: () ->
+      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
     startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
+      console.log 'start section called'
       @currentSection = section
       @sectionNumber = @currentSectionCollection.indexOf(section)+1 if @currentSectionCollection
-      @currentQuestionCollection = section.get('questions')
-      Gre340.Routing.showRouteWithTrigger('test_center','section',@sectionNumber,'question',questionNumber)
+      if questionNumber?
+        @currentQuestionCollection = section.get('questions')
+        Gre340.Routing.showRouteWithTrigger('test_center','section',@sectionNumber,'question',questionNumber)
+      else
+        @showSectionActionBar()
+        Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))
+    startSectionByNumber:(sectionNumber,questionNumber) ->
+      if !@quiz.get('sections')?
+        @quiz.fetch
+          silent:true,
+          async: false,
+          success:()=>
+            @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
+            @currentSection=section = @currentSectionCollection.at(sectionNumber-1)
+            @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
+            @sectionNumber = sectionNumber
+      @startSection(@currentSectionCollection.at(sectionNumber-1),questionNumber)
     startNextSection: ()->
-      @startSection(@currentSectionCollection.next(@currentSection),1)
+      @startSection(@currentSectionCollection.next(@currentSection),null)
     startPrevSection: ()->
       @startSection(@currentSectionCollection.prev(@currentSection),@currentQuestionCollection.length)
     setQuiz:(model,isSilent) ->
@@ -116,16 +134,19 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         controller.currentQuestion = controller.currentQuestionCollection.prev(controller.currentQuestion)
         Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestionCollection.indexOf(controller.currentQuestion)+1)
 
+  Gre340.vent.on "start:section", ->
+    controller = Controllers.questionController
+    Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',1)
 
   Gre340.vent.on "quiz:changed", (quiz) ->
     if Controllers.questionController.getCurrentSection()?
       if Controllers.questionController.getCurrentQuestion()?
         Controllers.questionController.showQuestionById(Controllers.questionController.getCurrentQuestion().get('id'))
       else
-        Controllers.questionController.startSection(Controllers.questionController.getCurrentSection(),1)
+        Controllers.questionController.startSection(Controllers.questionController.getCurrentSection(),null)
     else
       Controllers.questionController.setCurrentSectionCollection(quiz.get('sections'))
-      Controllers.questionController.startSection(Controllers.questionController.getCurrentSectionCollection().first(),1)
+      Controllers.questionController.startSection(Controllers.questionController.getCurrentSectionCollection().first(),null)
 
   Controllers.addInitializer ->
     Controllers.questionController = new QuestionController()
