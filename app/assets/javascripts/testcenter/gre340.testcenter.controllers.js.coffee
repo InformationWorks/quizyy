@@ -39,8 +39,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         return unescape(y)  if x is c_name
         i++
     showQuestion:(question) ->
-      @showActionBar()
       @currentQuestion = question
+      @showActionBar()
       qTypeCode = question.get('type').code
       questionToDisplayInTwoPane = _.find @typesToDiplayInTwoPane, (code) ->
         if(code==qTypeCode)
@@ -90,7 +90,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       else
         @exitQuizCenter()
     showActionBar: () ->
-      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber))
+      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber, question_number:@currentQuestion.collection.indexOf(@currentQuestion)+1,total_questions: @currentQuestionCollection.length))
     showSectionActionBar: () ->
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
     startSection: (section,questionNumber) ->

@@ -38,7 +38,7 @@
 <hr>
 <div class="row align-center">
     <div class="span7 align-right">
-        <h2>Question 2 of 10</h2>
+        <h2>Question <%=@question_number%> of <%=@total_questions%></h2>
     </div>
     <div class="span5 align-right">
         <p class="lead">
