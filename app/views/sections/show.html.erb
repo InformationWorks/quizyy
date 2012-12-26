@@ -16,6 +16,12 @@
   <b>Quiz:</b>
   <%= @section.quiz.name %>
 </p>
+<p>
+	<b>Section Text:</b>
+</p>
+<br />
+	<%= text_area_tag :display_text, @section.display_text , :cols => 50, :rows => 40, :class => "tinymce" %>
+    <%= tinymce :read %>
 
 <p>
   <b>Section type:</b>

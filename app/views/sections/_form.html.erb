@@ -20,6 +20,11 @@
     <%= f.number_field :sequence_no %>
   </div>
   <div class="field">
+    <%= f.label :display_text %><br />
+    <%= f.text_area :display_text, :class => "tinymce", :rows => 40, :cols => 160 %>
+    <%= tinymce %>
+  </div>
+  <div class="field">
     <%= f.label :section_type %><br />
     <%= f.collection_select :section_type_id, SectionType.all, :id, :name %>
   </div>

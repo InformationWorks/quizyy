@@ -29,7 +29,8 @@
 //= require ./testcenter/gre340.testcenter.data
 //= require ./testcenter/gre340.testcenter.views
 //= require ./testcenter/gre340.testcenter.controllers
-//= require upclick	
+//= require upclick
+//= require tinymce	
 
 Backbone.Marionette.Renderer.render = function(template, data){
     if (!JST[template]) throw "Template '" + template + "' not found!";
