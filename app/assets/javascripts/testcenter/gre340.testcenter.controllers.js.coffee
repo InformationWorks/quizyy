@@ -6,11 +6,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @Views = Gre340.TestCenter.Views
       @models = Gre340.TestCenter.Data.Models
       @typesToDiplayInTwoPane = ['V-MCQ-1','V-MCQ-2','V-SIP','Q-DI-MCQ-1','Q-DI-MCQ-2','Q-DI-NE-1','Q-DI-NE-2']
-      if @getCookie('current_quiz_id')
-        @quiz = new @models.Quiz()
-        @quiz.url = '/quizzes/'+@getCookie('current_quiz_id')+'.json'
-      else
-        @quiz = null
+      @quiz = new @models.Quiz()
       @quizInProgress = false
       @currentSection = null
       @currentQuestion = null
@@ -19,12 +15,10 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @sectionNumber=1
       @isStarted = false
     start:() ->
-      #@questionCollection.fetch()
-      console.log 'i am called'
-      if @quiz?
-        @quiz.fetch(async: false)
-      else
-        @exitQuizCenter()
+      #have moved quiz fetch to attempt:reset event
+      #so we only load quiz once we find the current attempt
+      #TODO we should show a loading image when starting the controller
+      Gre340.TestCenter.Data.currentAttempt.fetch()
     #sorce w2school
     getCookie: (c_name) ->
       i = undefined
@@ -139,7 +133,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @currentSectionCollection
     exitQuizCenter:()->
       Gre340.TestCenter.Layout.layout.content.show(new @Views.NoQuizInProgress())
-
+    showQuizError:()->
+      Gre340.TestCenter.Layout.layout.content.show(new @Views.QuizFatalError())
   #Events Listening
   Gre340.vent.on "show:next:question", ->
     controller = Controllers.questionController
@@ -173,8 +168,24 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       else
         Controllers.questionController.startSection(Controllers.questionController.getCurrentSection(),null)
     else
-      Controllers.questionController.setCurrentSectionCollection(quiz.get('sections'))
-      Controllers.questionController.startSection(Controllers.questionController.getCurrentSectionCollection().first(),null)
+      if quiz.get('sections').length>0
+        Controllers.questionController.setCurrentSectionCollection(quiz.get('sections'))
+        Controllers.questionController.startSection(Controllers.questionController.getCurrentSectionCollection().first(),null)
+      else
+        Controllers.questionController.showQuizError()
+
+  Gre340.vent.on "attempt:change", (attempt) ->
+    console.log 'attempt changed so load quiz'
+    @quiz = Controllers.questionController.quiz
+    if attempt?
+      if @quiz?
+        console.log attempt
+        @quiz.url = '/quizzes/'+attempt.get('quiz_id')+'.json'
+        @quiz.fetch(async: false)
+      else #if somehow quiz is null then exit the test center
+        Controllers.questionController.exitQuizCenter()
+    else
+      Controllers.questionController.exitQuizCenter()
 
   Controllers.addInitializer ->
     Controllers.questionController = new QuestionController()

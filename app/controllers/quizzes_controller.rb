@@ -109,6 +109,13 @@ class QuizzesController < ApplicationController
     end
     
   end
+
+  def get_current_attempt
+    @attempt = Attempt.where(:user_id => current_user.id, :is_current =>true).first()
+    respond_to do |format|
+        format.json { render :json => @attempt }
+    end
+  end
   
   private
   

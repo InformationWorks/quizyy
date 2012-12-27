@@ -18,6 +18,7 @@ GremastersWeb::Application.routes.draw do
   # Sections sub-routes
   # Questions sub-routes
   # Options sub-routes
+  get "quizzes/get_current_attempt"
   resources :quizzes do
     member do
        post 'upload_full_excel'
@@ -56,7 +57,6 @@ GremastersWeb::Application.routes.draw do
     #get "/", :to => "devise/sessions#new"
 
   end
-
   get "test_center/error"
   get "test_center/index"
   match 'test_center' => 'test_center#index'

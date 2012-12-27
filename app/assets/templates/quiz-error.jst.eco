@@ -1,0 +1,5 @@
+<div id="noquizerror">
+    <!--TODO make a better quiz error page-->
+    <h3>Something is wrong with this Quiz. Please contact Administrator.</h3>
+    <h2>You could start a different quiz from <a href="/homes/index">TestHub</a></h2>
+</div>
