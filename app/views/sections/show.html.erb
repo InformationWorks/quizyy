@@ -20,7 +20,7 @@
 	<b>Section Text:</b>
 </p>
 <br />
-	<%= text_area_tag :display_text, @section.display_text , :cols => 50, :rows => 40, :class => "tinymce" %>
+	<%= text_area_tag :display_text, @section.display_text ,:rows=>40, :cols=>300,:style => "width: 710px;", :class => "tinymce" %>
     <%= tinymce :read %>
 
 <p>
