@@ -99,12 +99,12 @@
     <div class="container">
       <% if alert %>
           <div class="alert">
-            <button type="button" class="close" data-dismiss="alert">×</button>
+            <button type="button" class="close" data-dismiss="alert"></button>
             <%= alert %>
           </div>
       <% elsif flash[:error] || flash[:warning] || flash[:notice] %>
           <div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert">×</button>
+            <button type="button" class="close" data-dismiss="alert"></button>
             <%= flash[:error] || flash[:warning] || flash[:notice] %>
           </div>
       <% end %>

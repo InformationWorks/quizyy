@@ -2,6 +2,7 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
 
   Router = Backbone.Router.extend(
     routes:
+      'test_center/error': 'showError'
       'test_center/index?quiz_id=:id': 'showIndex'
       'test_center/section/:sindex/question/:qindex': 'showQuestion'
       'test_center/section/:sindex': 'showSection'
@@ -23,6 +24,8 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       qController.startSectionByNumber(sectionNumber,null)
     stopAllModules:()->
       Gre340.TestCenter.stop()
+    showError:()->
+
   )
 
   TestCenterRouting.addInitializer ->
