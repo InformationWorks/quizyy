@@ -56,4 +56,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       Gre340.vent.trigger 'start:section'
 
   Views.NoQuizInProgress = Marionette.ItemView.extend
-    template: 'quiz404'
+    template: 'no-attempt-error'
+
+  Views.QuizFatalError = Marionette.ItemView.extend
+    template: 'quiz-error'

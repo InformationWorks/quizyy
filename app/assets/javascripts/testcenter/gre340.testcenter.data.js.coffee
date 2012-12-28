@@ -37,4 +37,12 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
     ]
   )
 
-  Data.addFinalizer ->
+  Data.Models.Attempt = Backbone.Model.extend(
+    url: '/quizzes/get_current_attempt'
+    initialize:->
+      @on 'change',(attempt) ->
+        Gre340.vent.trigger('attempt:change', attempt)
+  )
+
+  Data.addInitializer ->
+    Data.currentAttempt = new Data.Models.Attempt()

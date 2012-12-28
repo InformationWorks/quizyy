@@ -1,0 +1,6 @@
+<div id="noquizerror">
+    <h3>
+        No quiz in progress.
+    </h3>
+    <h2>Please start a quiz from <a href="/homes/index">TestHub</a></h2>
+</div>

@@ -18,6 +18,7 @@ GremastersWeb::Application.routes.draw do
   # Sections sub-routes
   # Questions sub-routes
   # Options sub-routes
+  get "quizzes/get_current_attempt"
   resources :quizzes do
     member do
        post 'upload_full_excel'
@@ -54,11 +55,10 @@ GremastersWeb::Application.routes.draw do
     #get "/", :to => "devise/sessions#new"
 
   end
-  
+  get "test_center/error"
   # Users::Controllers actions
   match "users/profiles/update_profile_pic" => "users/profiles#update_profile_pic", via: [:post], :as => "update_profile_pic"
   match "users/profiles/remove_profile_pic" => "users/profiles#remove_profile_pic", via: [:delete], :as => "remove_profile_pic"
-
   get "test_center/index"
   match 'test_center' => 'test_center#index'
   match 'test_center/*anything' => "test_center#index"
