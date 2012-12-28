@@ -24,34 +24,5 @@ class HomesController < ApplicationController
     redirect_to homes_index_path , notice: 'All quizzes are removed from the user account.'
     
   end
-  
-  # TODO: Remove this before go-live.
-  def change_profile_pic
-        
-  end
-  
-  # TODO: Remove this before go-live.
-  def update_profile_pic
     
-    user = User.find(params[:id])
-    
-    logger.info("User params = " + params.to_s)
-    
-    user.profile_image = params[:Filedata]  
-    
-      if user.save
-        return_text = '{"status":"true","imageurl":"' + user.profile_image_url + '" }';
-      else
-        return_text = "false"  
-      end
-      
-      # Note: This was added because of wrong Content-Type returned.
-      # Without this the respone on Javascript side was as below.
-      # <pre style="word-wrap: break-word; white-space: pre-wrap;">true</pre>
-      # Changed the Content-Type to get result as : true
-      headers['Content-Type'] = 'text/html'
-    
-      render :inline => return_text
-  end
-  
 end

@@ -46,8 +46,6 @@ GremastersWeb::Application.routes.draw do
   
   # Homes controller routes.
   get "homes/index"
-  get "homes/change_profile_pic"
-  match "homes/update_profile_pic/:id" => "homes#update_profile_pic", via: [:post], :as => "update_profile_pic"
   match "homes/reset_user_quizzes" => "homes#reset_user_quizzes", via: [:delete], :as => "reset_user_quizzes"
 
 
@@ -56,6 +54,10 @@ GremastersWeb::Application.routes.draw do
     #get "/", :to => "devise/sessions#new"
 
   end
+  
+  # Users::Controllers actions
+  match "users/profiles/update_profile_pic" => "users/profiles#update_profile_pic", via: [:post], :as => "update_profile_pic"
+  match "users/profiles/remove_profile_pic" => "users/profiles#remove_profile_pic", via: [:delete], :as => "remove_profile_pic"
 
   get "test_center/index"
   match 'test_center' => 'test_center#index'

@@ -10,17 +10,21 @@
         </div>
         <div class="row">
           <div class="span3" id = '<%= current_user.id %>' >
-            <a class="tile square image" href="#">
+            <div class="tile square image">
               
               <% if current_user.profile_image_url.to_s != "" %>
-              	<img id="profile-image" style="width:150px;height: 150px;" src= "<%= current_user.profile_image_url.to_s %>" alt="">
+              	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src= "<%= current_user.profile_image_url.to_s %>" alt="">
               <% else %>
-              	<img id="profile-image" style="width:150px;height: 150px;" src="/assets/metro-user.png" alt="">
+              	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src="/assets/metro-user.png" alt="">
               <% end %>
               
-            </a>
+            </div>
             
-            <input type="button" id="uploader" value="Upload">
+            <input type="button" id="remove-image-btn" value="Remove Image" data-confirm="Are you sure you want to remove the image?">
+            
+            <%= form_tag("/users/profiles/update_profile_pic", :multipart => true) do %>
+			  <input id="profile_pic_uploader" type="file" name="profile_pic_file" style="visibility:hidden" />
+			<% end %>
             
           </div>
           <div class="span3">
@@ -216,54 +220,3 @@
           :confirm => "Are you sure you want to delete all the quizzes ?", :method => :delete %>
   </div>
 </div>
-
-<script>	
-        $('#available-test-tabs a').click(function (e) {
-            e.preventDefault();
-            $(this).tab('show');
-        })
-
-        $('.test-list li').on({
-            mouseenter:function () {
-                $(this).find('.command-btn').show();
-            },
-            mouseleave:function () {
-                $(this).find('.command-btn').hide();
-            }
-        });
-</script>
-
-<script type="text/javascript">
-
-   var uploader = document.getElementById('uploader');
-
-   upclick(
-     {
-      element: uploader,
-      action: '/homes/update_profile_pic/' + uploader.parentNode.id + ".json" , 
-      onstart:
-        function(filename)
-        {
-          console.log('Staring upload of profile image for user.id = ' + uploader.parentNode.id);
-        },
-      oncomplete:
-        function(response_data) 
-        {
-          console.log('Upload completed with status : ' + response_data	);
-          
-          var upload_response = JSON.parse(response_data);
-          
-          if ( upload_response.status == "true")
-          {
-          	var profile_img = document.getElementById("profile-image");
-          	profile_img.src = upload_response.imageurl;
-          } 
-          else
-          {
-          	alert("Sorry couldn't upload file. Try again later");
-          } 
-          
-        }
-     });
-
-</script>
