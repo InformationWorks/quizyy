@@ -9,7 +9,10 @@ $ ->
   $("#profile_pic_uploader").fileupload
     autoUpload: true
     dataType: "json"
+    start: (e) ->
+      console.log "TODO: Start spinner for uploading profile image" 
     done: (e, data) ->
+      console.log "TODO: Stop spinner for uploading profile image"
       if data.result.status is "true"
         profile_image = document.getElementById("profile-image")
         profile_image.src = data.result.imageurl
