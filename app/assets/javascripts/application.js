@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap/bootstrap-alert.js
 //= require bootstrap/bootstrap-dropdown.js
 //= require bootstrap/bootstrap-tab.js
 //= require backbone/underscore
