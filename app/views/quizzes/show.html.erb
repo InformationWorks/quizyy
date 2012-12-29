@@ -1,14 +1,27 @@
-<p id="notice"><%= notice %></p>
-
 <div style="float: middle;height:68px;" class="table table-bordered">
-        <%= form_for @quiz, :url => upload_full_excel_quiz_path(@quiz), :method => :post, :html => { :multipart => true } do |fe| %> 
-        <%= fe.file_field :full_quiz_excel,:class => "form_fields" %> <br /> <br />
-        <%= fe.submit "Upload Questions",:confirm => "Are you sure you want to overwrite existing questions?", :method => :post, :data => { :confirm => 'This will delete current questions for this quiz. Are you sure you want to upload new questions?' },
-                        :class => "btn alert-error delete_button",:style => "float:left;margin-left: 20px;margin-top:-5px" %> 
-        <div style="margin-top: 0px;float: left;margin-left: 15px;">
-                This will overwrite the entire test.
-        </div>
-        <% end %>
+   <%= button_to "Delete all images", {:controller => 'quizzes', :action => 'question_images_delete_all', :quiz_id => @quiz.id}, {:class => "btn alert-error delete_button",:confirm => "Are you sure you want to delete all images?" } %>
+</div>
+
+<div style="float: middle;height:118px;" class="table table-bordered">
+	<%= form_for @quiz, :url => upload_full_excel_quiz_path(@quiz), :method => :post, :html => { :multipart => true } do |fe| %> 
+	<%= fe.file_field :full_quiz_excel,:class => "form_fields" %> <br /> <br />
+	<%= fe.submit "Upload Questions",:confirm => "Are you sure you want to overwrite existing questions?", :method => :post, :data => { :confirm => 'This will delete current questions for this quiz. Are you sure you want to upload new questions?' },
+	                :class => "btn alert-error delete_button",:style => "float:left;margin-left: 20px;margin-top:-5px" %> 
+	<div style="margin-top: 0px;float: left;margin-left: 15px;">
+	        This will overwrite the entire test.
+	</div>
+	<% end %>
+</div>
+
+<div style="float: middle;height:118px;" class="table table-bordered">
+    <%= form_for @quiz, :url => quiz_question_images_upload_url(@quiz), :method => :post, :html => { :multipart => true } do |fe| %> 
+    <%= fe.file_field :quiz_question_images,:class => "form_fields",:multiple => true %> <br /> <br />
+    <%= fe.submit "Upload Images",:confirm => "Are you sure you want to add selected images ?", :method => :post, :data => { :confirm => 'This will delete current questions for this quiz. Are you sure you want to upload new questions?' },
+                    :class => "btn alert-error delete_button",:style => "float:left;margin-left: 20px;margin-top:-5px" %> 
+    <div style="margin-top: 0px;float: left;margin-left: 15px;">
+            This will add images to the quiz.
+    </div>
+    <% end %>
 </div>
 
 <p>

@@ -109,6 +109,45 @@ class QuizzesController < ApplicationController
     end
     
   end
+  
+  # Upload multiple images associated with the quiz.
+  def question_images_upload
+    
+    @quiz = Quiz.find(params[:quiz_id])
+    
+    begin
+      quiz_question_images = params[:quiz][:quiz_question_images]
+      quiz_question_images.each do |quiz_question_image|
+        file = QuizQuestionImagesUploader.new
+        file.quiz_id = params[:quiz_id]
+        file.store!(quiz_question_image)
+      end
+    rescue Exception => e
+      redirect_to @quiz, notice: "Image upload failed."
+      return
+    end
+    
+    redirect_to @quiz, notice: "Images uploaded successfully."
+    
+  end
+  
+  # Action to delete all the images.
+  def question_images_delete_all
+    
+    @quiz = Quiz.find(params[:quiz_id])
+    
+    begin
+      uploader = QuizQuestionImagesUploader.new
+      uploader.quiz_id = params[:quiz_id]
+      logger.info(uploader.delete_all_images)
+    rescue Exception => e
+      redirect_to @quiz, notice: "Images could not be deleted."
+      return    
+    end
+    
+     redirect_to @quiz, notice: "Images deleted successfully."
+    
+  end
 
   def get_current_attempt
     @attempt = Attempt.where(:user_id => current_user.id, :is_current =>true).first()
