@@ -15,13 +15,12 @@
 //= require bootstrap
 //= require underscore
 //= require backbone
-//= require backbone.marionette
 //= require backbone/backbone.routefilter
 //= require backbone/backbone-associations
-//= require backbone/marionette/backbone.marionette
 //= require backbone/marionette/jquery.resolved
-//= require gre340
+//= require backbone/marionette/backbone.marionette
 //= require_tree ../templates
+//= require gre340
 //= require gre340.routing
 //= require ./testcenter/gre340.testcenter
 //= require ./testcenter/gre340.testcenter.routing
