@@ -1,5 +1,4 @@
-# Trigger file upload dialog when image is clicked.
-$ ->
+homeActions = ->
   $("#profile-image").click ->
     $("#profile_pic_uploader").trigger "click"
 
@@ -10,7 +9,7 @@ $ ->
     autoUpload: true
     dataType: "json"
     start: (e) ->
-      console.log "TODO: Start spinner for uploading profile image" 
+      console.log "TODO: Start spinner for uploading profile image"
     done: (e, data) ->
       console.log "TODO: Stop spinner for uploading profile image"
       if data.result.status is "true"
@@ -18,7 +17,7 @@ $ ->
         profile_image.src = data.result.imageurl
       else
         alert "Sorry couldn't upload file. Try again later"
-        
+
 # Tab selection toggled.
 $ ->
   $("#available-test-tabs a").click (e) ->
@@ -29,11 +28,12 @@ $ ->
 $ ->
   $(".test-list li").on
     mouseenter: ->
+      console.log "THis is called"
       $(this).find(".command-btn").show()
 
     mouseleave: ->
       $(this).find(".command-btn").hide()
-      
+
 # Remove profile image button click
 $ ->
   $("#remove-image-btn").click ->
@@ -49,5 +49,8 @@ $ ->
           if resp.status == "true"
             profile_image = document.getElementById("profile-image")
             profile_image.src = "/assets/metro-user.png"
-          else  
+          else
             alert "Unable to remove image right now. Try again later."
+# Trigger file upload dialog when image is clicked.
+$(document).ready(homeActions)
+$(window).bind('page:change', homeActions)
