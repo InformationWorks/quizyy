@@ -12,11 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap/bootstrap-alert.js
-//= require bootstrap/bootstrap-dropdown.js
-//= require bootstrap/bootstrap-tab.js
-//= require backbone/underscore
-//= require backbone/backbone
+//= require bootstrap
+//= require underscore
+//= require backbone
+//= require backbone.marionette
 //= require backbone/backbone.routefilter
 //= require backbone/backbone-associations
 //= require backbone/marionette/backbone.marionette
