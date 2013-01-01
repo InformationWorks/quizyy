@@ -10,7 +10,7 @@ class StoresController < ApplicationController
     
   end
 
-  def practise_tests
+  def practice_tests
    
     # Fetch categories & topics that have atleast one quiz.
     # TODO: .where("quizzes.approved = true")
