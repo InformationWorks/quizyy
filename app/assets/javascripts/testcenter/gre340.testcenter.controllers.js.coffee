@@ -191,4 +191,5 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     Controllers.questionController = new QuestionController()
 
   Controllers.addFinalizer ->
-      console.log 'stopped controller testcenter'
+    Backbone.history.stop() if Backbone.history
+    console.log 'stopped controller testcenter'

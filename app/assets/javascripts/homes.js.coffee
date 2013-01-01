@@ -47,11 +47,9 @@ initPage = ->
             alert "Unable to remove image right now. Try again later."
 # Trigger file upload dialog when image is clicked.
 
-$(window).bind('page:change', ->
+$(window).bind 'page:change', ->
   initPage()
-)
 
-$(document).ready( ->
+$(document).ready ->
   initPage()
-)
 
