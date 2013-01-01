@@ -75,6 +75,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     showQuestionByNumber:(sectionNumber,questionNumber)->
       if @quiz?
         if !@quiz.get('sections')?
+          attempt = Gre340.TestCenter.Data.currentAttempt
+          attempt.fetch(silent:true,async: false)
+          @quiz.url = '/api/v1/quizzes/'+attempt.get('quiz_id')+'.json'
           @quiz.fetch
             silent:true,
             async: false,
@@ -97,15 +100,17 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
     startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
-      console.log 'start section called'
-      @currentSection = section
-      @sectionNumber = @currentSectionCollection.indexOf(section)+1 if @currentSectionCollection
-      if questionNumber?
-        @currentQuestionCollection = section.get('questions')
-        Gre340.Routing.showRouteWithTrigger('test_center','section',@sectionNumber,'question',questionNumber)
-      else
-        @showSectionActionBar()
+      if section.get('submitted')
         Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))
+      else
+        @currentSection = section
+        @sectionNumber = @currentSectionCollection.indexOf(section)+1 if @currentSectionCollection
+        if questionNumber?
+          @currentQuestionCollection = section.get('questions')
+          Gre340.Routing.showRouteWithTrigger('test_center','section',@sectionNumber,'question',questionNumber)
+        else
+          @showSectionActionBar()
+          Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))
     startSectionByNumber:(sectionNumber,questionNumber) ->
       if !@quiz.get('sections')?
         @quiz.fetch
@@ -118,9 +123,11 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
             @sectionNumber = sectionNumber
       @startSection(@currentSectionCollection.at(sectionNumber-1),questionNumber)
     startNextSection: ()->
+      @submitSection(@currentSection)
       @startSection(@currentSectionCollection.next(@currentSection),null)
-    startPrevSection: ()->
-      @startSection(@currentSectionCollection.prev(@currentSection),@currentQuestionCollection.length)
+#TODO: Remove this function later if not needed
+#    startPrevSection: ()->
+#      @startSection(@currentSectionCollection.prev(@currentSection),@currentQuestionCollection.length)
     setQuiz:(model,isSilent) ->
       @quiz.set(model, {silent: isSilent})
     setQuizInProgress: ->
@@ -143,6 +150,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       Gre340.TestCenter.Layout.layout.content.show(new @Views.NoQuizInProgress())
     showQuizError:()->
       Gre340.TestCenter.Layout.layout.content.show(new @Views.QuizFatalError())
+    submitSection:(section)->
+      #TODO post data to server mark section as complete
+      section.set submitted: true
   #Events Listening
   Gre340.vent.on "show:next:question", ->
     controller = Controllers.questionController
@@ -159,9 +169,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
   Gre340.vent.on "show:prev:question", ->
     controller = Controllers.questionController
     if controller.currentQuestionCollection?
-      if controller.currentQuestionCollection.indexOf(controller.currentQuestion) == 0
-        controller.startPrevSection() if controller.currentSectionCollection.indexOf(controller.currentSection) != 0
-      else
+      if controller.currentQuestionCollection.indexOf(controller.currentQuestion) isnt 0
         controller.currentQuestion = controller.currentQuestionCollection.prev(controller.currentQuestion)
         Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestionCollection.indexOf(controller.currentQuestion)+1)
 

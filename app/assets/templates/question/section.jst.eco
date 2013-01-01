@@ -1,2 +1,5 @@
 <section id="section-info">
+    <% if @submitted? and @submitted: %>
+        <h2> You cant be here. Section already submitted.</h2>
+    <% end %>
 </section>
