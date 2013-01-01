@@ -22,8 +22,8 @@ end
   match "packages/:id/add_quiz_to_package" => "packages#add_quiz_to_package", via: [:put], :as => "add_quiz_to_package"
   
   # Store routes.
-  get "stores/full_quizzes"
-  get "stores/category_quizzes"
+  get "stores/timed_tests"
+  get "stores/practise_tests"
   match "stores/add_package_to_user/:package_id" => "stores#add_package_to_user", via: [:put], :as => "add_package_to_user"
   match "stores/add_quiz_to_user/:quiz_id" => "stores#add_quiz_to_user", via: [:post], :as => "add_quiz_to_user"
 
