@@ -5,7 +5,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     constructor: () ->
       @Views = Gre340.TestCenter.Views
       @models = Gre340.TestCenter.Data.Models
-      @typesToDiplayInTwoPane = ['V-MCQ-1','V-MCQ-2','V-SIP','Q-DI-MCQ-1','Q-DI-MCQ-2','Q-DI-NE-1','Q-DI-NE-2']
+      @typesToDiplayInTwoPane = ['V-MCQ-1','V-MCQ-2','V-SIP']
+      @diRegEx = /^Q-DI-/i
       @quiz = new @models.Quiz()
       @quizInProgress = false
       @currentSection = null
@@ -35,16 +36,20 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     showQuestion:(question) ->
       @currentQuestion = question
       @showActionBar()
-      qTypeCode = question.get('type').code
+      qTypeCode = question.get('type_code')
+      questionIsDI = false
       questionToDisplayInTwoPane = _.find @typesToDiplayInTwoPane, (code) ->
         if(code==qTypeCode)
-          return true
+          true
       #Checking Data Interpretation question location top (single pane) or side (two pane)
-      diLocation =  if question.get('di_location')? then question.get('di_location') else 'Top'
-      if !questionToDisplayInTwoPane and diLocation == 'Top'
-        Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
-      else
+      location =  if @diRegEx.test(qTypeCode) and question.get('di_location')? then question.get('di_location') else 'Top'
+      console.log(qTypeCode)
+      console.log(question.get('di_location'))
+      if questionToDisplayInTwoPane or location == 'Side'
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionTwoPaneView(model: question))
+      else
+        Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
+
     showQuestionById:(questionId)->
       if @quiz?
         if !@quiz.get('sections')?
