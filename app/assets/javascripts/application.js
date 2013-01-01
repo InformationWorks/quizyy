@@ -11,6 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require turbolinks
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap
 //= require backbone/json2
