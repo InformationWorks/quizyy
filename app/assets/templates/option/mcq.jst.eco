@@ -1,0 +1,12 @@
+<form class="form-horizontal">
+    <div class="control-group">
+        <div class="controls">
+            <% for option in @options:%>
+                <label class="checkbox">
+                    <input type="checkbox" value="<%= option.id %>">
+                    <span class="metro-checkbox"><%= option.content %></span>
+                </label>
+            <% end %>
+        </div>
+    </div>
+</form>

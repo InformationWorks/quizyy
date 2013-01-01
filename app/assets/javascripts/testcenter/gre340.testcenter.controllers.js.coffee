@@ -7,6 +7,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @models = Gre340.TestCenter.Data.Models
       @typesToDiplayInTwoPane = ['V-MCQ-1','V-MCQ-2','V-SIP']
       @diRegEx = /^Q-DI-/i
+      @numericEqRegEx = /NE-1|NE-2/i
+      @textCompRegEx = /TC-2|TC-3/i
+      @sipRegEx = /SIP/i
       @quiz = new @models.Quiz()
       @quizInProgress = false
       @currentSection = null
