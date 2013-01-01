@@ -16,14 +16,11 @@ class QuizzesController < ApplicationController
   end
 
   # GET /quizzes/1
-  # GET /quizzes/1.json
   def show
     @quiz = Quiz.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      @json = @quiz.to_json(:include => {:sections => {:include => {:questions => {:include => [:type]}}}})
-      format.json { render :json => @json }
     end
   end
 

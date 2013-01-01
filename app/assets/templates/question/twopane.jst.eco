@@ -21,26 +21,12 @@
     <form class="form-horizontal">
         <div class="control-group">
             <div class="controls">
-                <label class="checkbox">
-                    <input type="checkbox" name="optionsCheckbox" id="optionsChkBox1" value="option1" checked>
-                    <span class="metro-checkbox">Option one is this and that—be sure to include why it's great</span>
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="optionsCheckbox" id="optionsChkBox2" value="option2">
-                    <span class="metro-checkbox">Option two can be something else</span>
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="optionsCheckbox" id="optionsChkBox3" value="option3">
-                    <span class="metro-checkbox">Option two can be something else</span>
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="optionsCheckbox" id="optionsChkBox4" value="option4">
-                    <span class="metro-checkbox">Option two can be something else</span>
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="optionsCheckbox" id="optionsChkBox5" value="option5">
-                    <span class="metro-checkbox">Option two can be something else</span>
-                </label>
+                <% for option in @options:%>
+                    <label class="checkbox">
+                        <input type="checkbox" value="<%= option.id %>">
+                        <span class="metro-checkbox"><%= option.content %></span>
+                    </label>
+                <% end %>
             </div>
         </div>
     </form>

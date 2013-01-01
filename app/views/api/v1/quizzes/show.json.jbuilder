@@ -45,7 +45,6 @@
 		  json.options question.options do |option|
 		    json.id option.id
 		    json.content option.content
-		    json.corret option.correct
 		    json.sequence_no option.sequence_no
 		    json.question_id option.question_id
   		  end	  

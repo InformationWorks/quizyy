@@ -180,7 +180,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     if attempt?
       if @quiz?
         console.log attempt
-        @quiz.url = '/quizzes/'+attempt.get('quiz_id')+'.json'
+        @quiz.url = '/api/v1/quizzes/'+attempt.get('quiz_id')+'.json'
         @quiz.fetch(async: false)
       else #if somehow quiz is null then exit the test center
         Controllers.questionController.exitQuizCenter()
