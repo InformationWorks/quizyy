@@ -5,7 +5,7 @@ GremastersWeb::Application.routes.draw do
 # API v1
 namespace :api do
   namespace :v1 do
-    resources :quizzes, :only => [:show] do
+    resources :quizzes, :only => [:show], defaults: { format: :json } do
       resources :sections, :only => [:index, :show] do
         
       end

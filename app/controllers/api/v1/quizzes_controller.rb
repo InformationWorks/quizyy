@@ -5,8 +5,6 @@ module Api
         
         @quiz = Quiz.find(params[:id])
         
-        respond_with @quiz.to_json
-        
       end
     end
   end
