@@ -1,5 +1,18 @@
 GremastersWeb::Application.routes.draw do
 
+### API routes go here.
+  
+# API v1
+namespace :api do
+  namespace :v1 do
+    resources :quizzes, :only => [:show], defaults: { format: :json } do
+      resources :sections, :only => [:index, :show] do
+        
+      end
+    end
+  end
+end
+
   # Package routes.
   resources :packages do
     member do
