@@ -15,7 +15,6 @@ gem 'carrierwave'
 gem "mini_magick"
 gem 'rmagick'
 gem 'tinymce-rails'
-gem 'turbolinks'
 gem 'fog', '~> 1.3.1'
 
 # Gems used only for assets and not required
@@ -27,7 +26,6 @@ group :assets do
   gem 'bootstrap-sass', '~> 2.2.2.0'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-  gem 'jquery-turbolinks'
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-fileupload-rails'
 end

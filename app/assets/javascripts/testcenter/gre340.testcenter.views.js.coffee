@@ -21,6 +21,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     initialize: (options) ->
     onRender:() ->
       @$('#section-info').append(@model.get('display_text'))
+
   Views.QuestionActionBarView = Marionette.ItemView.extend
     template: 'actionbar'
     model: 'Gre340.TestCenter.Data.Models.Quiz'

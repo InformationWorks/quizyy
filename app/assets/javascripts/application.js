@@ -11,8 +11,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require turbolinks
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap
 //= require backbone/json2
@@ -34,7 +32,6 @@
 //= require tinymce
 //= require jquery-fileupload/basic
 //= require homes
-$.setReadyEvent('page:change');
 
 Backbone.Marionette.Renderer.render = function(template, data){
     if (!JST[template]) throw "Template '" + template + "' not found!";
