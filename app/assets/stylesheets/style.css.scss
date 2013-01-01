@@ -1,4 +1,4 @@
-$input-background: #ffffff;
+  $input-background: #ffffff;
   $border-default: 1px solid #cccccc;
   $green:#19DD89;
   $winter-green:#44932B;
@@ -177,6 +177,15 @@ $input-background: #ffffff;
   margin: 0px auto;
   margin-top: 100px;
 }
+
+#options{
+  width:100%;
+  margin:0 auto;
+  .form-horizontal .controls {
+    width:50%;
+    margin:0 auto;
+  }
+}
 #test-content{
 
   .single{
@@ -188,18 +197,19 @@ $input-background: #ffffff;
   .question{
     padding-bottom: 10px;
     text-align:justify;
+    width: 100%;
+    .blank{
+      width:200px;
+      border-bottom: 1px solid #777;
+      display: inline-block;
+    }
   }
 
   .instruction{
+    width: 100%;
     text-align:justify;
   }
-  .options{
-    width:70%;
-    margin:0px 50px;
-    .form-horizontal .controls {
-      margin-left: 10px;
-    }
-  }
+
   .left-pane{
     position: absolute;
     top: 250px;

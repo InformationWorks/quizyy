@@ -10,7 +10,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       if @numericEqRegEx.test(question_type)
         'option/ne'
       else if @textCompRegEx.test(question_type)
-        'option/none'
+        'option/tc'
       else if @sipRegEx.test(question_type)
         'option/none'
       else
@@ -25,6 +25,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
 
     onRender:()->
       @optionsRegion.show(new Views.OptionsView(model: @model))
+      @$('.question').html(@$('.question').text().replace(/<BLANK-[A-Z]*>/gi,'<div class="blank"></div>'))
 
   Views.QuestionTwoPaneView = Marionette.Layout.extend
     template: 'question/twopane'
