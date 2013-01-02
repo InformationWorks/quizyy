@@ -34,6 +34,7 @@
 //= require tinymce
 //= require jquery-fileupload/basic
 //= require homes
+//= require practice_tests
 
 Backbone.Marionette.Renderer.render = function(template, data){
     if (!JST[template]) throw "Template '" + template + "' not found!";
