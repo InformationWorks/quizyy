@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227113216) do
+ActiveRecord::Schema.define(:version => 20130101195215) do
 
   create_table "attempt_details", :force => true do |t|
     t.integer  "attempt_id"
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20121227113216) do
     t.integer  "topic_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.boolean  "timed"
   end
 
   add_index "quizzes", ["category_id"], :name => "index_quizzes_on_category_id"

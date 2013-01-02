@@ -133,6 +133,7 @@ end
   full_quiz_1.desc = "Full Length 1 desc"
   full_quiz_1.random = false
   full_quiz_1.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_1.timed = true
   full_quiz_1.save!
   
   full_quiz_2 = Quiz.new
@@ -140,6 +141,7 @@ end
   full_quiz_2.desc = "Full Length 2 desc"
   full_quiz_2.random = false
   full_quiz_2.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_2.timed = true
   full_quiz_2.save!
   
   full_quiz_3 = Quiz.new
@@ -147,6 +149,7 @@ end
   full_quiz_3.desc = "Full Length 3 desc"
   full_quiz_3.random = false
   full_quiz_3.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_3.timed = true
   full_quiz_3.save!
   
   full_quiz_4 = Quiz.new
@@ -154,6 +157,7 @@ end
   full_quiz_4.desc = "Full Length 4 desc"
   full_quiz_4.random = false
   full_quiz_4.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_4.timed = true
   full_quiz_4.save!
   
   full_quiz_5 = Quiz.new
@@ -161,6 +165,7 @@ end
   full_quiz_5.desc = "Full Length 5 desc"
   full_quiz_5.random = false
   full_quiz_5.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_5.timed = true
   full_quiz_5.save!
   
   full_quiz_6 = Quiz.new
@@ -168,6 +173,7 @@ end
   full_quiz_6.desc = "Full Length 6 desc"
   full_quiz_6.random = false
   full_quiz_6.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_6.timed = true
   full_quiz_6.save!
   
   full_quiz_7 = Quiz.new
@@ -175,6 +181,7 @@ end
   full_quiz_7.desc = "Full Length 7 desc"
   full_quiz_7.random = false
   full_quiz_7.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_7.timed = true
   full_quiz_7.save!
   
   full_quiz_8 = Quiz.new
@@ -182,6 +189,7 @@ end
   full_quiz_8.desc = "Full Length 8 desc"
   full_quiz_8.random = false
   full_quiz_8.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_8.timed = true
   full_quiz_8.save!
   
   full_quiz_9 = Quiz.new
@@ -189,6 +197,7 @@ end
   full_quiz_9.desc = "Full Length 9 desc"
   full_quiz_9.random = false
   full_quiz_9.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_9.timed = true
   full_quiz_9.save!
   
   full_quiz_10 = Quiz.new
@@ -196,6 +205,7 @@ end
   full_quiz_10.desc = "Full Length 10 desc"
   full_quiz_10.random = false
   full_quiz_10.quiz_type_id = QuizType.find_by_name("FullQuiz").id
+  full_quiz_10.timed = true
   full_quiz_10.save!
   
   # Create 5 Category-wise quiz
@@ -205,6 +215,7 @@ end
   cat_quiz_1.random = false
   cat_quiz_1.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   cat_quiz_1.category_id = Category.find_by_code("RC").id
+  cat_quiz_1.timed = true
   cat_quiz_1.save!
   
   cat_quiz_2 = Quiz.new
@@ -213,6 +224,7 @@ end
   cat_quiz_2.random = false
   cat_quiz_2.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   cat_quiz_2.category_id = Category.find_by_code("TC").id
+  cat_quiz_2.timed = false
   cat_quiz_2.save!
   
   cat_quiz_3 = Quiz.new
@@ -221,6 +233,7 @@ end
   cat_quiz_3.random = false
   cat_quiz_3.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   cat_quiz_3.category_id = Category.find_by_code("SE").id
+  cat_quiz_3.timed = false
   cat_quiz_3.save!
   
   cat_quiz_4 = Quiz.new
@@ -229,6 +242,7 @@ end
   cat_quiz_4.random = false
   cat_quiz_4.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   cat_quiz_4.category_id = Category.find_by_code("QC").id
+  cat_quiz_4.timed = false
   cat_quiz_4.save!
   
   cat_quiz_5 = Quiz.new
@@ -237,6 +251,7 @@ end
   cat_quiz_5.random = false
   cat_quiz_5.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   cat_quiz_5.category_id = Category.find_by_code("NE").id
+  cat_quiz_5.timed = false
   cat_quiz_5.save!
   
   # Create 5 Topic-wise quiz
@@ -246,6 +261,7 @@ end
   topic_quiz_1.random = false
   topic_quiz_1.quiz_type = QuizType.find_by_name("TopicQuiz")
   topic_quiz_1.topic_id = Topic.find_by_name("Integers").id
+  topic_quiz_1.timed = true
   topic_quiz_1.save!
   
   topic_quiz_2 = Quiz.new
@@ -254,6 +270,7 @@ end
   topic_quiz_2.random = false
   topic_quiz_2.quiz_type = QuizType.find_by_name("TopicQuiz")
   topic_quiz_2.topic_id = Topic.find_by_name("Fractions").id
+  topic_quiz_2.timed = false
   topic_quiz_2.save!
   
   topic_quiz_3 = Quiz.new
@@ -262,6 +279,7 @@ end
   topic_quiz_3.random = false
   topic_quiz_3.quiz_type = QuizType.find_by_name("TopicQuiz")
   topic_quiz_3.topic_id = Topic.find_by_name("Decimals").id
+  topic_quiz_3.timed = false
   topic_quiz_3.save!
   
   topic_quiz_4 = Quiz.new
@@ -270,6 +288,7 @@ end
   topic_quiz_4.random = false
   topic_quiz_4.quiz_type = QuizType.find_by_name("TopicQuiz")
   topic_quiz_4.topic_id = Topic.find_by_name("Exponents and Square Roots").id
+  topic_quiz_4.timed = false
   topic_quiz_4.save!
   
   topic_quiz_5 = Quiz.new
@@ -278,6 +297,7 @@ end
   topic_quiz_5.random = false
   topic_quiz_5.quiz_type = QuizType.find_by_name("TopicQuiz")
   topic_quiz_5.topic_id = Topic.find_by_name("Ordering and the Real Number Line").id
+  topic_quiz_5.timed = false
   topic_quiz_5.save!
   
   # Assign 5 full test to student1.

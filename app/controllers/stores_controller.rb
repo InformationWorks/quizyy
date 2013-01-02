@@ -2,7 +2,7 @@ class StoresController < ApplicationController
   
   before_filter :authenticate_user!
   
-  def full_quizzes
+  def timed_tests
     
     @package_1 = Package.find_by_position(1)
     @package_2 = Package.find_by_position(2)
@@ -10,7 +10,7 @@ class StoresController < ApplicationController
     
   end
 
-  def category_quizzes
+  def practice_tests
    
     # Fetch categories & topics that have atleast one quiz.
     # TODO: .where("quizzes.approved = true")

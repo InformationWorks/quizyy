@@ -126,8 +126,8 @@
 <div id="content">
   <header class="title">Available Tests</header>
   <ul class="nav nav-pills" id="available-test-tabs">
-    <li class= '<%= fullquiz_li_class %>' ><a href="#full-test">Full</a></li>
-    <li class= '<%= categoryquiz_li_class %>' ><a href="#category-test">Category</a></li>
+    <li class= '<%= fullquiz_li_class %>' ><a href="#full-test">Timed Tests</a></li>
+    <li class= '<%= categoryquiz_li_class %>' ><a href="#category-test">Practice Tests</a></li>
   </ul>
 
   <div class="tab-content">
@@ -169,7 +169,7 @@
       	<% end %>
       	
       </ul>
-      <%= link_to "Get more full tests", stores_full_quizzes_path %>
+      <%= link_to "Get more timed tests", stores_timed_tests_path %>
     </div>
   	
   	<div class= '<%= categoryquiz_tabpane_class %>' id="category-test">
@@ -210,7 +210,7 @@
       		<% end %>
                     
                 </ul>
-                <%= link_to "Get more category tests", stores_category_quizzes_path %>
+                <%= link_to "Get more practise tests", stores_practice_tests_path %>
             </div>
         
   </div>
