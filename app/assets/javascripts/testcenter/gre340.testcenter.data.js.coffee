@@ -54,7 +54,7 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
 
   Data.Models.Attempt = Backbone.Model.extend
     urlRoot: '/api/v1/attempts'
-    initialize:->
+    initialize:(options)->
       @on 'change:id',(attempt) ->
         Gre340.vent.trigger('new:attempt', attempt)
 

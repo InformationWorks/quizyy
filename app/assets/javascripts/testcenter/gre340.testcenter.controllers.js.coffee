@@ -39,10 +39,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         i++
     updateCurrentAttempt: (currentSectionId,currentQuestionId) ->
       @currentAttempt = Gre340.TestCenter.Data.currentAttempt
-      @currentAttempt.set({'current_section_id': currentSectionId,'current_question_id': currentQuestionId})
+      @currentAttempt.set({'current_section_id': currentSectionId,'current_question_id': currentQuestionId},{silent: true})
       @currentAttempt.save()
     showQuestion:(question) ->
-      console.log 'show question called'
       @currentQuestion = question
       @updateCurrentAttempt(@currentSection.id,@currentQuestion.id)
       @showActionBar()
@@ -61,10 +60,14 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
 
     showQuestionById:(questionId)->
+      console.log 'show question by Id called'
       if @quiz?
         if !@quiz.get('sections')?
           attempt = Gre340.TestCenter.Data.currentAttempt
-          attempt.fetch(silent:true,async: false)
+          attempt.fetch
+            silent:true,
+            async: false
+          console.log 'attempt fetch complete'
           @quiz.url = '/api/v1/quizzes/'+attempt.get('quiz_id')+'.json'
           @quiz.fetch
             silent:true,
@@ -84,6 +87,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         @exitQuizCenter()
 
     showQuestionByNumber:(sectionNumber,questionNumber)->
+      console.log 'show question by number called'
       if @quiz?
         if !@quiz.get('sections')?
           attempt = Gre340.TestCenter.Data.currentAttempt
@@ -191,6 +195,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',1)
 
   Gre340.vent.on "quiz:changed", (quiz) ->
+    console.log('quiz changed')
     if Controllers.questionController.getCurrentSection()?
       if Controllers.questionController.getCurrentQuestion()?
         Controllers.questionController.showQuestionById(Controllers.questionController.getCurrentQuestion().get('id'))
@@ -209,7 +214,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     if attempt?
       if @quiz?
         @quiz.url = '/api/v1/quizzes/'+attempt.get('quiz_id')+'.json'
-        @quiz.fetch(silent:true,async: false)
+        @quiz.fetch(async: false)
       else #if somehow quiz is null then exit the test center
         Controllers.questionController.exitQuizCenter()
     else

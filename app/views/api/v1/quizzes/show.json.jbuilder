@@ -51,6 +51,8 @@
             		  end
             	  end
       else
+          json.id section.id
           json.submitted true
+          json.questions []
       end
   end
