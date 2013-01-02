@@ -98,14 +98,14 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
             async: false,
             success:()=>
               @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
-              @currentSection=section = @currentSectionCollection.at(sectionNumber-1)
+              @currentSection = @currentSectionCollection.where(sequence_no: parseInt(sectionNumber))[0]
               @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
               @sectionNumber = sectionNumber
         if @sectionNumber != sectionNumber
           @sectionNumber = sectionNumber
-          @currentSection = @currentSectionCollection.at(sectionNumber-1)
+          @currentSection = @currentSectionCollection.where(sequence_no: parseInt(sectionNumber))[0]
           @currentQuestionCollection = @currentSection.get('questions')
-        question = if questionNumber <= @currentQuestionCollection.length then @currentQuestionCollection.at(questionNumber-1) else new Gre340.TestCenter.Data.Models.Question instruction: "No Such question Exists"
+        question = if questionNumber <= @currentQuestionCollection.length then @currentQuestionCollection.where(sequence_no: parseInt(questionNumber))[0] else new Gre340.TestCenter.Data.Models.Question instruction: "No Such question Exists"
         @showQuestion(question)
       else
         @exitQuizCenter()
@@ -125,7 +125,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
           @currentQuestionCollection = section.get('questions')
           Gre340.Routing.showRouteWithTrigger('test_center','section',@sectionNumber,'question',questionNumber)
         else
-          @updateCurrentAttempt(section,null)
+          @updateCurrentAttempt(section.id,null)
           @showSectionActionBar()
           Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))
     startSectionByNumber:(sectionNumber,questionNumber) ->
@@ -135,10 +135,10 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
           async: false,
           success:()=>
             @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
-            @currentSection=section = @currentSectionCollection.at(sectionNumber-1)
+            @currentSection = @currentSectionCollection.where(sequence_no: parseInt(sectionNumber))[0]
             @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
             @sectionNumber = sectionNumber
-      @startSection(@currentSectionCollection.at(sectionNumber-1),questionNumber)
+      @startSection(@currentSection,questionNumber)
     startNextSection: ()->
       @submitSection(@currentSection)
       @startSection(@currentSectionCollection.next(@currentSection),null)
