@@ -15,7 +15,8 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       Gre340.TestCenter.start()
     showIndex: ->
       Gre340.Routing.showRoute('/test_center/index')
-      Gre340.TestCenter.Controllers.questionController.start()
+      if !Gre340.TestCenter.Controllers.questionController.isStarted
+        Gre340.TestCenter.Controllers.questionController.start()
     showQuestion: (sectionNumber,questionNumber) ->
       qController = Gre340.TestCenter.Controllers.questionController
       qController.showQuestionByNumber(sectionNumber,questionNumber)

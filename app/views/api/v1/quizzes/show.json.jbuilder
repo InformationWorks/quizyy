@@ -53,6 +53,6 @@
       else
           json.id section.id
           json.submitted true
-          json.questions []
+          json.sequence_no section.sequence_no
       end
   end

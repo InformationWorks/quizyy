@@ -48,9 +48,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     tagName: "div"
     initialize: (options) ->
     onRender:() ->
-      submitted = @model.get('submitted') || null
-      if not submitted
-        @$('#section-info').append(@model.get('display_text'))
+      @$('#section-info').append(@model.get('display_text'))
 
   Views.QuestionActionBarView = Marionette.ItemView.extend
     template: 'actionbar'
@@ -91,3 +89,14 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
 
   Views.QuizFatalError = Marionette.ItemView.extend
     template: 'quiz-error'
+
+  Views.SectionSubmittedError = Marionette.ItemView.extend
+    template: 'question/section-submitted-error'
+    initialize: (options) ->
+      @section_index = options.section_index
+      @question_index = options.question_index
+    events:
+      'click #continue_current_attempt': 'gotoCurrentSection'
+    gotoCurrentSection:(events) ->
+      events.preventDefault()
+      Gre340.Routing.showRouteWithTrigger('test_center','section',@section_index)
