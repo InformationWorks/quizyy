@@ -15,7 +15,7 @@
             <hr>
             <!-- show only three per row -->
             <div class="row">
-              <% category_or_topic.quizzes.first(3).each do |quiz| %>
+              <% category_or_topic.quizzes.order("id ASC").first(3).each do |quiz| %>
               <div class="span2 quiz-tile">
                 <img src="http://placehold.it/150x100"/>
                 <div class="caption">
