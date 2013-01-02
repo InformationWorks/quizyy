@@ -21,7 +21,8 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
     model:Data.Models.Question
     next : (model) -> @at(this.indexOf(model) + 1)
     prev : (model) -> @at(this.indexOf(model) - 1)
-
+    comparator:(item) ->
+      item.get('sequence_no')
 
   Data.Models.Section = Backbone.AssociatedModel.extend
     relations: [
@@ -36,7 +37,8 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
     model: Data.Models.Section
     next : (model) -> @at(this.indexOf(model) + 1)
     prev : (model) -> @at(this.indexOf(model) - 1)
-
+    comparator:(item) ->
+      item.get('sequence_no')
 
   Data.Models.Quiz = Backbone.AssociatedModel.extend
     initialize:->
