@@ -13,7 +13,7 @@
   
   ## Sections
   json.sections @quiz.sections do |section|
-  	  if (@current_section and @current_section.id == section.id) or @current_section.nil?
+  	  if (@current_section and section.sequence_no >= @current_section.sequence_no) or @current_section.nil?
           json.id section.id
           json.name section.name
           json.display_text section.display_text

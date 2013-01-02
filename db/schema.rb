@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130102125713) do
+ActiveRecord::Schema.define(:version => 20130102131246) do
 
   create_table "attempt_details", :force => true do |t|
     t.integer  "attempt_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20130102125713) do
     t.boolean  "is_current"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.integer  "current_section_id"
   end
 
   add_index "attempts", ["quiz_id"], :name => "index_attempts_on_quiz_id"

@@ -37,6 +37,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         return unescape(y)  if x is c_name
         i++
     showQuestion:(question) ->
+      @currentAttempt = Gre340.TestCenter.Data.currentAttempt
+      @currentAttempt.set({'current_section_id': question.get('section_id'),'current_question_id': question.id})
+      @currentAttempt.save()
       @currentQuestion = question
       @showActionBar()
       qTypeCode = question.get('type_code')
@@ -68,6 +71,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
                 @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
                 @sectionNumber = @currentSectionCollection.indexOf(@currentSection)+1
           question = @currentQuestionCollection.get(questionId)
+
         @showQuestion(question)
       else
         @exitQuizCenter()
@@ -190,7 +194,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       else
         Controllers.questionController.showQuizError()
 
-  Gre340.vent.on "attempt:change", (attempt) ->
+  Gre340.vent.on "new:attempt", (attempt) ->
     console.log 'attempt changed so load quiz'
     @quiz = Controllers.questionController.quiz
     if attempt?

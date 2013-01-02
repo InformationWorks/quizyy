@@ -7,8 +7,12 @@ namespace :api do
   namespace :v1 do
     resources :quizzes, :only => [:show], defaults: { format: :json } do
       resources :sections, :only => [:index, :show] do
-        
+
       end
+    end
+
+    resources :attempts, :only => [:index, :update], defaults: { format: :json } do
+
     end
   end
 end
