@@ -18,6 +18,8 @@
 //= require backbone/json2
 //= require backbone/underscore
 //= require backbone/backbone
+//= require backbone/rivets.min
+//= require configure
 //= require backbone/backbone.routefilter
 //= require backbone/marionette/backbone.marionette
 //= require backbone/backbone-associations

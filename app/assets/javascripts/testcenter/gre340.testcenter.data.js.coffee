@@ -2,7 +2,9 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
   Data.Models = {}
   Data.Collections = {}
 
-  Data.Models.Option = Backbone.AssociatedModel.extend()
+  Data.Models.Option = Backbone.AssociatedModel.extend
+    initialize: (options)->
+      @on('change:option',(option) -> console.log option)
 
   Data.Collections.OptionsCollection = Backbone.Collection.extend
     model: Data.Models.Option

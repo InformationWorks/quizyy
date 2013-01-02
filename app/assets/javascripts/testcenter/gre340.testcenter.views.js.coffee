@@ -3,6 +3,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     initialize:(options)->
       question_type = @model.get('type_code')
       @template = @getOptionsTemplate(question_type)
+
     getOptionsTemplate:(question_type)->
       @numericEqRegEx = /NE-1|NE-2/i
       @textCompRegEx = /TC-2|TC-3/i
@@ -22,7 +23,6 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     regions:
       optionsRegion: '#options'
     initialize: (options) ->
-
     onRender:()->
       @optionsRegion.show(new Views.OptionsView(model: @model))
       @$('.question').html(@$('.question').text().replace(/<BLANK-[A-Z]*>/gi,'<div class="blank"></div>'))
@@ -45,7 +45,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     tagName: "div"
     initialize: (options) ->
     onRender:() ->
-      if @model.submitted? and not @model.submitted
+      submitted = @model.get('submitted') || null
+      if not submitted
         @$('#section-info').append(@model.get('display_text'))
 
   Views.QuestionActionBarView = Marionette.ItemView.extend
