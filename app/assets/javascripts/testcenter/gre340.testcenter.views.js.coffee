@@ -3,7 +3,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     initialize:(options)->
       question_type = @model.get('type_code')
       @template = @getOptionsTemplate(question_type)
-
+    events:
+      'click #options input[type=checkbox]': 'setUserResponse'
     getOptionsTemplate:(question_type)->
       @numericEqRegEx = /NE-1|NE-2/i
       @textCompRegEx = /TC-2|TC-3/i
@@ -16,6 +17,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         'option/none'
       else
         'option/mcq'
+    setUserResponse: (event)->
+      console.log @attr('value')
   Views.QuestionSingleView = Marionette.Layout.extend
     template: 'question/single'
     tagName: "div"
