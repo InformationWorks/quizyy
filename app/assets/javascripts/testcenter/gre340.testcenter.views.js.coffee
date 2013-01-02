@@ -99,4 +99,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       'click #continue_current_attempt': 'gotoCurrentSection'
     gotoCurrentSection:(events) ->
       events.preventDefault()
-      Gre340.Routing.showRouteWithTrigger('test_center','section',@section_index)
+      if @question_index
+        Gre340.Routing.showRouteWithTrigger('test_center','section',@section_index,'question',@question_index)
+      else
+        Gre340.Routing.showRouteWithTrigger('test_center','section',@section_index)

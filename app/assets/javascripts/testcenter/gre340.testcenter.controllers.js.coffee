@@ -108,7 +108,11 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
           question = if questionNumber <= @currentQuestionCollection.length then @currentQuestionCollection.where(sequence_no: parseInt(questionNumber))[0] else new Gre340.TestCenter.Data.Models.Question instruction: "No Such question Exists"
           @showQuestion(question)
         else
-          Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionSubmittedError(section_index: @currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'), question_index: @question_number))
+          if @attempt.get('current_question_id')?
+            @currentQuestionCollection = @currentSectionCollection.get(@attempt.get('current_section_id')).get('questions')
+            Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionSubmittedError(section_index: @currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'), question_index: @currentQuestionCollection.get(@attempt.get('current_question_id')).get('sequence_no')))
+          else
+            Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionSubmittedError(section_index: @currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no')))
       else
         @exitQuizCenter()
     showActionBar: () ->
@@ -119,7 +123,11 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       #TODO show section view first and then show questions
       console.log('start section')
       if section.get('submitted')
-        Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionSubmittedError(section_index: @currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'), question_index: null))
+        if @attempt.get('current_question_id')?
+          @currentQuestionCollection = @currentSectionCollection.get(@attempt.get('current_section_id')).get('questions')
+          Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionSubmittedError(section_index: @currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'), question_index: @currentQuestionCollection.get(@attempt.get('current_question_id')).get('sequence_no')))
+        else
+          Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionSubmittedError(section_index: @currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no')))
       else
         @currentSection = section
         @sectionNumber = section.get('sequence_no')
