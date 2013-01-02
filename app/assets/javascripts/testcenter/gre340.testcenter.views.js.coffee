@@ -26,6 +26,9 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     regions:
       optionsRegion: '#options'
     initialize: (options) ->
+      @removeFullHeight()
+    removeFullHeight: ->
+      $('body').removeClass('fill')
     onRender:()->
       @optionsRegion.show(new Views.OptionsView(model: @model))
       @$('.question').html(@$('.question').text().replace(/<BLANK-[A-Z]*>/gi,'<div class="blank"></div>'))
@@ -64,12 +67,23 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     events:
       'click #btn-next': 'showNextQuestion'
       'click #btn-prev': 'showPrevQuestion'
+      'click #btn-exit-section': 'exitSection'
+      'click #show-alert-exit-section': 'removeBackgroundFromActionBar'
+      'click .close-alert-exit-section': 'addBackgroundToActionBar'
     showNextQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:next:question'
     showPrevQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:prev:question'
+    exitSection: (event) ->
+      @addBackgroundToActionBar()
+      Gre340.vent.trigger 'exit:section'
+    removeBackgroundFromActionBar: (event)->
+      console.log 'it comes here'
+      $('#action-bar').addClass('no-bk')
+    addBackgroundToActionBar: ->
+      $('#action-bar').removeClass('no-bk')
 
   Views.SectionActionBarView = Marionette.ItemView.extend
     template: 'section-actionbar'

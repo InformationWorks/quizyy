@@ -110,9 +110,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         else
           if @attempt.get('current_question_id')?
             @currentQuestionCollection = @currentSectionCollection.get(@attempt.get('current_section_id')).get('questions')
-            Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionSubmittedError(section_index: @currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'), question_index: @currentQuestionCollection.get(@attempt.get('current_question_id')).get('sequence_no')))
+            Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'),'question', @currentQuestionCollection.get(@attempt.get('current_question_id')).get('sequence_no'))
           else
-            Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionSubmittedError(section_index: @currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no')))
+            Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'))
       else
         @exitQuizCenter()
     showActionBar: () ->
@@ -125,9 +125,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       if section.get('submitted')
         if @attempt.get('current_question_id')?
           @currentQuestionCollection = @currentSectionCollection.get(@attempt.get('current_section_id')).get('questions')
-          Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionSubmittedError(section_index: @currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'), question_index: @currentQuestionCollection.get(@attempt.get('current_question_id')).get('sequence_no')))
+          Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'),'question', @currentQuestionCollection.get(@attempt.get('current_question_id')).get('sequence_no'))
         else
-          Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionSubmittedError(section_index: @currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no')))
+          Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'))
       else
         @currentSection = section
         @sectionNumber = section.get('sequence_no')
@@ -237,7 +237,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         Controllers.questionController.exitQuizCenter()
     else
       Controllers.questionController.exitQuizCenter()
-
+  Gre340.vent.on "exit:section", ->
+    controller = Controllers.questionController
+    controller.startNextSection()
   Controllers.addInitializer ->
     Controllers.questionController = new QuestionController()
 
