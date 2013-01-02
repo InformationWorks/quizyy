@@ -6,19 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Role.delete_all
-User.delete_all
-Category.delete_all
-Topic.delete_all
-Type.delete_all
-QuizType.delete_all
-SectionType.delete_all
-Quiz.delete_all
-Section.delete_all
-Question.delete_all
-Package.delete_all
-PackageQuiz.delete_all
-
 super_admin_role = Role.new
 super_admin_role.name = "SuperAdmin"
 super_admin_role.save!
