@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130101195215) do
+ActiveRecord::Schema.define(:version => 20130102125713) do
 
   create_table "attempt_details", :force => true do |t|
     t.integer  "attempt_id"
@@ -119,9 +119,10 @@ ActiveRecord::Schema.define(:version => 20130101195215) do
     t.integer  "quiz_type_id"
     t.integer  "category_id"
     t.integer  "topic_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
     t.boolean  "timed"
+    t.decimal  "price",        :precision => 10, :scale => 2, :default => 0.0
   end
 
   add_index "quizzes", ["category_id"], :name => "index_quizzes_on_category_id"
