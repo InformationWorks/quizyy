@@ -8,6 +8,19 @@ class StoresController < ApplicationController
     @package_2 = Package.find_by_position(2)
     @package_3 = Package.find_by_position(3)
     
+    @full_length_quizzes = Quiz.where(['quiz_type_id = ?',QuizType.find_by_name("FullQuiz").id])
+    
+    # Fetch categories & topics that have atleast one quiz.
+    # TODO: .where("quizzes.approved = true")
+    @categories = Category.joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true')
+    @topics = Topic.joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true')
+    
+    # Merge categories & topics in the same list.
+    # TODO: Implement sorting
+    @categories_and_topics = []
+    @categories_and_topics +=  @categories
+    @categories_and_topics +=  @topics
+    logger.info("categories_and_topics = " + @categories_and_topics.to_s)
   end
 
   def practice_tests

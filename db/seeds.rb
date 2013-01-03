@@ -167,7 +167,19 @@ end
   end
   
   rc_cat_quiz.save!
-  
+end
+
+# Create 2 Category-wise quiz for RC + Timed [ 2 Paid ]
+(1..2).each do |index|
+  qc_cat_quiz = Quiz.new
+  qc_cat_quiz.name = "RC Timed " + (index).to_s
+  qc_cat_quiz.desc = "RC Timed " + (index).to_s + " desc"
+  qc_cat_quiz.random = false
+  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+  qc_cat_quiz.category_id = Category.find_by_code("RC").id
+  qc_cat_quiz.timed = true
+  qc_cat_quiz.price = 99.0
+  qc_cat_quiz.save!
 end
 
 # Create 5 Category-wise quiz for TC + Practice [ 1 Free + 4 Paid ]
@@ -189,6 +201,19 @@ end
   tc_cat_quiz.save!
 end
 
+# Create 2 Category-wise quiz for TC + Timed [ 2 Paid ]
+(1..2).each do |index|
+  qc_cat_quiz = Quiz.new
+  qc_cat_quiz.name = "TC Timed " + (index).to_s
+  qc_cat_quiz.desc = "TC Timed " + (index).to_s + " desc"
+  qc_cat_quiz.random = false
+  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+  qc_cat_quiz.category_id = Category.find_by_code("TC").id
+  qc_cat_quiz.timed = true
+  qc_cat_quiz.price = 99.0
+  qc_cat_quiz.save!
+end
+
 # Create 5 Category-wise quiz for SE + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   se_cat_quiz = Quiz.new
@@ -206,6 +231,19 @@ end
   end
   
   se_cat_quiz.save!
+end
+
+# Create 2 Category-wise quiz for SE + Timed [ 2 Paid ]
+(1..2).each do |index|
+  qc_cat_quiz = Quiz.new
+  qc_cat_quiz.name = "SE Timed " + (index).to_s
+  qc_cat_quiz.desc = "SE Timed " + (index).to_s + " desc"
+  qc_cat_quiz.random = false
+  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+  qc_cat_quiz.category_id = Category.find_by_code("SE").id
+  qc_cat_quiz.timed = true
+  qc_cat_quiz.price = 99.0
+  qc_cat_quiz.save!
 end
 
 # Create 5 Category-wise quiz for QC + Practice [ 1 Free + 4 Paid ]
@@ -227,6 +265,19 @@ end
   qc_cat_quiz.save!
 end
 
+# Create 2 Category-wise quiz for QC + Timed [ 2 Paid ]
+(1..2).each do |index|
+  qc_cat_quiz = Quiz.new
+  qc_cat_quiz.name = "QC Timed " + (index).to_s
+  qc_cat_quiz.desc = "QC Timed " + (index).to_s + " desc"
+  qc_cat_quiz.random = false
+  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+  qc_cat_quiz.category_id = Category.find_by_code("QC").id
+  qc_cat_quiz.timed = true
+  qc_cat_quiz.price = 99.0
+  qc_cat_quiz.save!
+end
+
 # Create 5 Category-wise quiz for QC + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   ne_cat_quiz = Quiz.new
@@ -244,6 +295,19 @@ end
   end
   
   ne_cat_quiz.save!
+end
+
+# Create 2 Category-wise quiz for NE + Timed [ 2 Paid ]
+(1..2).each do |index|
+  qc_cat_quiz = Quiz.new
+  qc_cat_quiz.name = "NE Timed " + (index).to_s
+  qc_cat_quiz.desc = "NE Timed " + (index).to_s + " desc"
+  qc_cat_quiz.random = false
+  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+  qc_cat_quiz.category_id = Category.find_by_code("NE").id
+  qc_cat_quiz.timed = true
+  qc_cat_quiz.price = 99.0
+  qc_cat_quiz.save!
 end
 
 # Create 2 Category-wise quiz for RC + Timed + Paid
@@ -268,6 +332,19 @@ end
   integers_quiz.save!
 end
 
+# Create 2 Topic-wise quiz for Integers + Timed [ 2 Paid ]
+(1..2).each do |index|
+  qc_cat_quiz = Quiz.new
+  qc_cat_quiz.name = "Integers Timed " + (index).to_s
+  qc_cat_quiz.desc = "Integers Timed " + (index).to_s + " desc"
+  qc_cat_quiz.random = false
+  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("TopicQuiz").id
+  qc_cat_quiz.topic_id = Topic.find_by_name("Integers").id
+  qc_cat_quiz.timed = true
+  qc_cat_quiz.price = 99.0
+  qc_cat_quiz.save!
+end
+
 # Create 5 Topic-wise quiz for Integers + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   decimals_quiz = Quiz.new
@@ -285,6 +362,19 @@ end
   end
   
   decimals_quiz.save!
+end
+
+# Create 2 Topic-wise quiz for Decimals + Timed [ 2 Paid ]
+(1..2).each do |index|
+  qc_cat_quiz = Quiz.new
+  qc_cat_quiz.name = "Decimals Timed " + (index).to_s
+  qc_cat_quiz.desc = "Decimals Timed " + (index).to_s + " desc"
+  qc_cat_quiz.random = false
+  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("TopicQuiz").id
+  qc_cat_quiz.topic_id = Topic.find_by_name("Decimals").id
+  qc_cat_quiz.timed = true
+  qc_cat_quiz.price = 99.0
+  qc_cat_quiz.save!
 end
 
 # Create 5 Topic-wise quiz for Fractions + Practice [ 1 Free + 4 Paid ]
@@ -306,6 +396,19 @@ end
   fractions_quiz.save!
 end
 
+# Create 2 Topic-wise quiz for Fractions + Timed [ 2 Paid ]
+(1..2).each do |index|
+  qc_cat_quiz = Quiz.new
+  qc_cat_quiz.name = "Fractions Timed " + (index).to_s
+  qc_cat_quiz.desc = "Fractions Timed " + (index).to_s + " desc"
+  qc_cat_quiz.random = false
+  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("TopicQuiz").id
+  qc_cat_quiz.topic_id = Topic.find_by_name("Fractions").id
+  qc_cat_quiz.timed = true
+  qc_cat_quiz.price = 99.0
+  qc_cat_quiz.save!
+end
+
 # Create 5 Topic-wise quiz for Exp. & Sq. roots + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   exp_sq_quiz = Quiz.new
@@ -325,6 +428,19 @@ end
   exp_sq_quiz.save!
 end
 
+# Create 2 Topic-wise quiz for Exponents and Square Roots + Timed [ 2 Paid ]
+(1..2).each do |index|
+  qc_cat_quiz = Quiz.new
+  qc_cat_quiz.name = "Exp. & Sq. roots Timed " + (index).to_s
+  qc_cat_quiz.desc = "Exp. & Sq. roots Timed " + (index).to_s + " desc"
+  qc_cat_quiz.random = false
+  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("TopicQuiz").id
+  qc_cat_quiz.topic_id = Topic.find_by_name("Exponents and Square Roots").id
+  qc_cat_quiz.timed = true
+  qc_cat_quiz.price = 99.0
+  qc_cat_quiz.save!
+end
+
 # Create 5 Topic-wise quiz for Ordering & real number line + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   ord_re_quiz = Quiz.new
@@ -342,6 +458,19 @@ end
   end
   
   ord_re_quiz.save!
+end
+
+# Create 2 Topic-wise quiz for Ordering & real number line + Timed [ 2 Paid ]
+(1..2).each do |index|
+  qc_cat_quiz = Quiz.new
+  qc_cat_quiz.name = "Ordering & real number line " + (index).to_s
+  qc_cat_quiz.desc = "Ordering & real number line " + (index).to_s + " desc"
+  qc_cat_quiz.random = false
+  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("TopicQuiz").id
+  qc_cat_quiz.topic_id = Topic.find_by_name("Ordering and the Real Number Line").id
+  qc_cat_quiz.timed = true
+  qc_cat_quiz.price = 99.0
+  qc_cat_quiz.save!
 end
   
 # Add 3 packages for full-quiz section in store.
