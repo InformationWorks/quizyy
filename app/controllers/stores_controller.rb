@@ -8,19 +8,19 @@ class StoresController < ApplicationController
     @package_2 = Package.find_by_position(2)
     @package_3 = Package.find_by_position(3)
     
-    @full_length_quizzes = Quiz.where(['quiz_type_id = ?',QuizType.find_by_name("FullQuiz").id])
+    @full_length_quizzes = Quiz.where(['quiz_type_id = ? AND timed = true AND id not in (?) ',QuizType.find_by_name("FullQuiz").id,current_user.quizzes.pluck('quizzes.id')]).order('id ASC').first(3)
+    @full_length_quizzes += current_user.quizzes.where(['quiz_type_id = ? AND timed = true',QuizType.find_by_name("FullQuiz").id])
     
     # Fetch categories & topics that have atleast one quiz.
     # TODO: .where("quizzes.approved = true")
-    @categories = Category.joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true')
-    @topics = Topic.joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true')
+    @categories = Category.joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true').order('id ASC')
+    @topics = Topic.joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true').order('id ASC')
     
     # Merge categories & topics in the same list.
     # TODO: Implement sorting
     @categories_and_topics = []
     @categories_and_topics +=  @categories
     @categories_and_topics +=  @topics
-    logger.info("categories_and_topics = " + @categories_and_topics.to_s)
   end
 
   def practice_tests
