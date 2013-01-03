@@ -26,6 +26,9 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     regions:
       optionsRegion: '#options'
     initialize: (options) ->
+      @removeFullHeight()
+    removeFullHeight: ->
+      $('body').removeClass('fill')
     onRender:()->
       @optionsRegion.show(new Views.OptionsView(model: @model))
       @$('.question').html(@$('.question').text().replace(/<BLANK-[A-Z]*>/gi,'<div class="blank"></div>'))
@@ -48,9 +51,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     tagName: "div"
     initialize: (options) ->
     onRender:() ->
-      submitted = @model.get('submitted') || null
-      if not submitted
-        @$('#section-info').append(@model.get('display_text'))
+      @$('#section-info').append(@model.get('display_text'))
 
   Views.QuestionActionBarView = Marionette.ItemView.extend
     template: 'actionbar'
@@ -66,12 +67,23 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     events:
       'click #btn-next': 'showNextQuestion'
       'click #btn-prev': 'showPrevQuestion'
+      'click #btn-exit-section': 'exitSection'
+      'click #show-alert-exit-section': 'removeBackgroundFromActionBar'
+      'click .close-alert-exit-section': 'addBackgroundToActionBar'
     showNextQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:next:question'
     showPrevQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:prev:question'
+    exitSection: (event) ->
+      @addBackgroundToActionBar()
+      Gre340.vent.trigger 'exit:section'
+    removeBackgroundFromActionBar: (event)->
+      console.log 'it comes here'
+      $('#action-bar').addClass('no-bk')
+    addBackgroundToActionBar: ->
+      $('#action-bar').removeClass('no-bk')
 
   Views.SectionActionBarView = Marionette.ItemView.extend
     template: 'section-actionbar'
@@ -91,3 +103,17 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
 
   Views.QuizFatalError = Marionette.ItemView.extend
     template: 'quiz-error'
+
+  Views.SectionSubmittedError = Marionette.ItemView.extend
+    template: 'question/section-submitted-error'
+    initialize: (options) ->
+      @section_index = options.section_index
+      @question_index = options.question_index
+    events:
+      'click #continue_current_attempt': 'gotoCurrentSection'
+    gotoCurrentSection:(events) ->
+      events.preventDefault()
+      if @question_index
+        Gre340.Routing.showRouteWithTrigger('test_center','section',@section_index,'question',@question_index)
+      else
+        Gre340.Routing.showRouteWithTrigger('test_center','section',@section_index)

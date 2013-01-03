@@ -143,7 +143,6 @@
 }
 
 /** content styles **/
-
 .marketing {
   text-align: center;
   color: #5A5A5A;
@@ -170,6 +169,16 @@
   background-color: white;
   .span6{
     width: 500px;
+  }
+}
+
+#action-bar.no-bk{
+  background-color: transparent !important;
+  hr{
+    display: none;
+  }
+  #btn-hide-time{
+    display: none;
   }
 }
 #section-info{
