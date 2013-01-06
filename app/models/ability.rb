@@ -10,6 +10,7 @@ class Ability
     elsif user.role? :admin
       # Roles for admins to approve quiz.
       # can :manage, [Product, Asset, Issue]
+      can :administer, :app
       can :manage, [Category,Topic,Quiz,Section,Question,Option]
       can :read, [Type]
     elsif user.role? :publisher
