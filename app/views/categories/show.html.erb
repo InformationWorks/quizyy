@@ -1,15 +1,46 @@
-<p id="notice"><%= notice %></p>
+<% content_for :admin_content do %>
 
-<p>
-  <b>Code:</b>
-  <%= @category.code %>
-</p>
+<!-- Data block -->
+<article class="span12 data-block">
+	<div class="data-container">
+		<header>
+			<h2>Showing a category</h2>
+			<ul class="data-header-actions">
+				<%= link_to(edit_category_path(@category),:class => "btn btn-warning" ) do %>
+				 Edit
+				<% end %>
+				<%= link_to(categories_path,:class => "btn btn-danger") do %>
+				 Back
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span11" style="margin-left: 15px;">
+			  	<div class="control-group">
+					<label class="control-label" for="input">Code</label>
+					<div class="controls">
+						<p><%= @category.code %></p>
+						<p class="help-block">This is used at several places in the source code. DO NOT CHANGE.</p>
+					</div>
+				</div>
+			  	
+			  	<div class="control-group">
+					<label class="control-label" for="textarea">Name</label>
+					<div class="controls">
+						<p><%= @category.name %></p>
+					</div>
+				</div>
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
 
-<p>
-  <b>Name:</b>
-  <%= @category.name %>
-</p>
+<br />
 
+<% end %>
 
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
+<%= render 'admins/admin_base' %>
