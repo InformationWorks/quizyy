@@ -1,3 +1,92 @@
+
+<% content_for :admin_content do %>
+
+<!-- Data block -->
+<article class="span12 data-block">
+	<div class="data-container">
+		<header>
+			<h2>Showing package at position <%= @package.position %></h2>
+			<ul class="data-header-actions">
+				<%= link_to(packages_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				 Cancel
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span11" style="margin-left: 15px;">
+				  
+				  	<div class="control-group">
+						<label class="control-label" for="input">Name</label>
+						<div class="controls">
+							<p><%= @package.name %></p>
+							<p class="help-block">This appears as the name of the package on the store.</p>
+						</div>
+					</div>
+				  	
+				  	<div class="control-group">
+						<label class="control-label" for="textarea">Description</label>
+						<div class="controls">
+							<p><%= @package.desc %></p>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input">Price</label>
+						<div class="controls">
+							<p><%= @package.price %></p>
+							<p class="help-block">Price is in Rupees.</p>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input">Position</label>
+						<div class="controls">
+							<p><%= @package.position %></p>
+							<p class="help-block">Position is used to sort & position packages.</p>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input">Quizzes</label>
+						<div class="controls">
+							<table class="table table-hover">
+					<thead>
+						<tr>
+						</tr>
+					</thead>
+					<tbody>
+						
+						<% @package.quizzes.each do |quiz| %>
+						  <tr>
+						    <td><%= link_to quiz.name, quiz_path(quiz) %></td>
+						    <td class="toolbar">
+						      <div class="btn-group">
+						      	<%= link_to(destroy_quiz_from_package_path(@package,quiz), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn") do %>
+						      	  <span class="awe-remove"></span>
+						      	<% end %>
+						      </div>
+						    </td>
+						  </tr>
+						<% end %>
+					</tbody>
+				</table>
+						</div>
+					</div>
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
+
+<br />
+
+<% end %>
+
+<%= render 'admins/admin_base' %>
+
 <p>
   <b>Name:</b>
   <%= @package.name %>
