@@ -1,28 +1,5 @@
-<% content_for :nav_menu_header do %>
-	Admin
+<% content_for :admin_content do %>
+  Content goes here
 <% end %>
 
-<%= stylesheet_link_tag "huraga-blue.css" %>	
-
-<div style="width:100%">
-	<div style="float:left;margin-left: 15px;">
-		<!-- Left (navigation) side -->
-			<div class="navigation-block affix-top">
-				<!-- Main navigation -->
-				<nav class="main-navigation" role="navigation">
-					<ul>
-						<li class="current"><a href="index.html" class="no-submenu"><span class="awe-home"></span>Dashboard</a></li>
-						<li><a href="charts.html" class="no-submenu"><span class="awe-signal"></span>Packages</a></li>
-						<li><a href="forms.html" class="no-submenu"><span class="awe-tasks"></span>Quizzes<span class="badge">7</span></a></li>
-						<li><a href="charts.html" class="no-submenu"><span class="awe-signal"></span>Categories</a></li>
-						<li><a href="tables.html" class="no-submenu"><span class="awe-table"></span>Types <span class="badge">23</span></a></li>
-						<li><a href="file-explorer.html" class="no-submenu"><span class="awe-file"></span>Student Management</a></li>
-					</ul>
-				</nav>
-				<!-- /Main navigation -->
-	</div>
-</div>
-<div style="float:left;margin-left: 20px;">
-		Content Goes Here
-	</div>
-	</div>
+<%= render "admin_base"%>
