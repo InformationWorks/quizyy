@@ -1,20 +1,54 @@
-<p id="notice"><%= notice %></p>
+<% content_for :admin_content do %>
 
-<p>
-  <b>Category:</b>
-  <%= @type.category %>
-</p>
+<!-- Data block -->
+<article class="span12 data-block">
+	<div class="data-container">
+		<header>
+			<h2>Showing a type</h2>
+			<ul class="data-header-actions">
+				<%= link_to(edit_type_path(@type),:class => "btn btn-warning" ) do %>
+				 Edit
+				<% end %>
+				<%= link_to(types_path,:class => "btn btn-danger") do %>
+				 Back
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span11" style="margin-left: 15px;">
+			  	
+			  	<div class="control-group">
+					<label class="control-label" for="input">Code</label>
+					<div class="controls">
+						<p><%= @type.code %></p>
+						<p class="help-block">This is used at several places in the source code. DO NOT CHANGE.</p>
+					</div>
+				</div>
+			  	
+			  	<div class="control-group">
+					<label class="control-label" for="input">Category</label>
+					<div class="controls">
+						<p><%= @type.category.name %></p>
+					</div>
+				</div>
+			  	
+			  	<div class="control-group">
+					<label class="control-label" for="textarea">Name</label>
+					<div class="controls">
+						<p><%= @type.name %></p>
+					</div>
+				</div>
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
 
-<p>
-  <b>Code:</b>
-  <%= @type.code %>
-</p>
+<br />
 
-<p>
-  <b>Name:</b>
-  <%= @type.name %>
-</p>
+<% end %>
 
-
-<%= link_to 'Edit', edit_type_path(@type) %> |
-<%= link_to 'Back', types_path %>
+<%= render 'admins/admin_base' %>
