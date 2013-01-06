@@ -1,14 +1,12 @@
 
 <%= render 'store_header' %>
 
-<div class="container-fluid">
-<div id="content">
-	<% if current_user.purchased_full_quizzes.count == 0 %> 
-    	<%= render "full_quiz_pack_selection"%>
-    <% else %>
-    	<%= render "timed_quiz_buy_extra"%>
-    <% end %>
-</div>  
 
-<script type="text/javascript">
-</script>
+<% if current_user.purchased_full_quizzes.count == 0 %>
+	<div class="container-fluid">
+	<div id="content"> 
+		<%= render "full_quiz_pack_selection"%>
+	</div>
+<% else %>
+	<%= render "timed_quiz_buy_extra"%>
+<% end %>  

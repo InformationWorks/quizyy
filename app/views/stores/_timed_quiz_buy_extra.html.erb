@@ -1,8 +1,9 @@
 <div class="container-fluid">
         <div id="content" class="span12">
-        	
           <div class="span8">
-      		<section class="category-section first">
+          	
+          	<!-- Full length tests -->
+          	<section class="category-section first">
             <h2>Full length tests</h2>
             <a href="#" class="pull-right"><h4>more in Full length tests</h4></a>
             <hr>
@@ -30,10 +31,8 @@
               <% end %>
             </div>
             </section>
-          </div>	
-        	
-          <div class="span8">
           	
+          	<!-- Category & Topic Tests -->
           	<% @categories_and_topics.each_with_index do |category_or_topic,index| %>
       		<% if index == 0 %>
       		<section class="category-section first">
