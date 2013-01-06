@@ -3,6 +3,7 @@
 .sass-cache
 capybara-*.html
 .rspec
+.idea
 /.bundle
 /vendor/bundle
 /log/*
@@ -16,3 +17,7 @@ capybara-*.html
 **.orig
 rerun.txt
 pickle-email-*.html
+*.DS_Store
+
+# InformationWorks' script files.
+*.iw.sh

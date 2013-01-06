@@ -33,7 +33,11 @@
 
         <div id="main-nav-menu" class="dropdown pull-left">
           <a class="header-dropdown dropdown-toggle accent-color" data-toggle="dropdown" href="#" data-no-turbolink>
-            Test Hub
+            <% if content_for?(:nav_menu_header) %>
+  			  <%= yield(:nav_menu_header) %>
+  			<% else %>
+  			  Test Hub
+			<% end %>
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
