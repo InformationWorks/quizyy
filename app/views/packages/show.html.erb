@@ -7,8 +7,11 @@
 		<header>
 			<h2>Showing package at position <%= @package.position %></h2>
 			<ul class="data-header-actions">
-				<%= link_to(packages_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
-				 Cancel
+				<%= link_to(edit_package_path(@package),:class => "btn btn-warning" ) do %>
+				 Edit
+				<% end %>
+				<%= link_to(packages_path,:class => "btn btn-danger") do %>
+				 Back
 				<% end %>	
 			</ul>
 		</header>
@@ -50,30 +53,45 @@
 					
 					<div class="control-group">
 						<label class="control-label" for="input">Quizzes</label>
+						<br />
 						<div class="controls">
 							<table class="table table-hover">
-					<thead>
-						<tr>
-						</tr>
-					</thead>
-					<tbody>
-						
-						<% @package.quizzes.each do |quiz| %>
-						  <tr>
-						    <td><%= link_to quiz.name, quiz_path(quiz) %></td>
-						    <td class="toolbar">
-						      <div class="btn-group">
-						      	<%= link_to(destroy_quiz_from_package_path(@package,quiz), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn") do %>
-						      	  <span class="awe-remove"></span>
-						      	<% end %>
-						      </div>
-						    </td>
-						  </tr>
-						<% end %>
-					</tbody>
-				</table>
+							<thead>
+								<tr>
+								</tr>
+							</thead>
+							<tbody>
+								
+								<% @package.quizzes.each do |quiz| %>
+								  <tr>
+								    <td><%= link_to quiz.name, quiz_path(quiz) %></td>
+								    <td class="toolbar">
+								      <div class="btn-group">
+								      	<%= link_to(destroy_quiz_from_package_path(@package,quiz), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn") do %>
+								      	  <span class="awe-remove"></span>
+								      	<% end %>
+								      </div>
+								    </td>
+								  </tr>
+								<% end %>
+							</tbody>
+							</table>
 						</div>
 					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input">Add quiz to package</label>
+						<br />
+						<div class="controls">
+							<%= form_for(@package, :url => add_quiz_to_package_path(@package), :html => { :class => "form-horizontal" , :style=>"background: white;border: 0px;" } ) do |f| %>
+								<%= collection_select(:quiz, :id, @quizzes, :id, :name, {:prompt => true}) %>
+								<br />
+								<br />
+								<%= f.submit "Add", :class => "btn btn-flat btn-info" %>
+							<% end %>
+						</div>
+					</div>
+					
 			</div>
 			<!-- Form ends here -->
 		</section>
@@ -86,56 +104,3 @@
 <% end %>
 
 <%= render 'admins/admin_base' %>
-
-<p>
-  <b>Name:</b>
-  <%= @package.name %>
-</p>
-
-<p>
-  <b>Desc:</b>
-  <%= @package.desc %>
-</p>
-
-<p>
-  <b>Price:</b>
-  <%= @package.price %>
-</p>
-
-<p>
-  <b>Position:</b>
-  <%= @package.position %>
-</p>
-
-<p>
-	<b>Quizzes</b>
-	
-	<table>
-  <tr>
-    <th>Quiz Name</th>
-    <th></th>
-  </tr>
-
-	<% @package.quizzes.each do |quiz| %>
-  <tr>
-    <td><%= link_to quiz.name, quiz_path(quiz) %></td>
-    <td><%= link_to 'Remove', destroy_quiz_from_package_path(@package,quiz), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-	<% end %>	
-	</table>
-	
-</p>
-
-<p>
-	<b>Add a quiz</b>
-	<%= form_for @package, :url => add_quiz_to_package_path(@package) do |f| %>
-	
-	<%= collection_select(:quiz, :id, @quizzes, :id, :name, {:prompt => true}) %>
-	<%= f.submit "Add" %>
-          
-	<% end %>          
-</p>
-
-
-<%= link_to 'Edit', edit_package_path(@package) %> |
-<%= link_to 'Back', packages_path %>
