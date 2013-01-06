@@ -11,16 +11,16 @@
 				<!-- Main navigation -->
 				<nav class="main-navigation" role="navigation">
 					<ul>
-						<li class="current"><a href="index.html" class="no-submenu"><span class="awe-home"></span>Dashboard</a></li>
-						<li>
+						<li><a href="index.html" class="no-submenu"><span class="awe-home"></span>Dashboard</a></li>
+						
+						<li <% if @current_controller == "packages" %>class = "current"<% end %> >
 							<%= link_to(packages_path, :class => "no-submenu") do %>
 							<span class="awe-signal"></span>Packages
 							<% end %>
 						</li>
-						<li><a href="charts.html" class="no-submenu"><span class="awe-signal"></span>Packages</a></li>
 						<li><a href="forms.html" class="no-submenu"><span class="awe-tasks"></span>Quizzes<span class="badge">7</span></a></li>
 						<li><a href="charts.html" class="no-submenu"><span class="awe-signal"></span>Categories</a></li>
-						<li><a href="tables.html" class="no-submenu"><span class="awe-table"></span>Types <span class="badge">23</span></a></li>
+						<li><a href="tables.html" class="no-submenu"><span class="awe-table"></span>Types</a></li>
 						<li><a href="file-explorer.html" class="no-submenu"><span class="awe-file"></span>Student Management</a></li>
 					</ul>
 				</nav>
