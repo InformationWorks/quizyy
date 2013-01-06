@@ -1,25 +1,61 @@
-<h1>Listing categories</h1>
+<% content_for :admin_content do %>
 
-<table>
-  <tr>
-    <th>Code</th>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @categories.each do |category| %>
-  <tr>
-    <td><%= category.code %></td>
-    <td><%= category.name %></td>
-    <td><%= link_to 'Show', category %></td>
-    <td><%= link_to 'Edit', edit_category_path(category) %></td>
-    <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<!-- Data block -->
+<article class="span12 data-block">
+	<div class="data-container">
+		<header>
+			<h2>Categories</h2>
+			<ul class="data-header-actions">
+				<%= link_to(new_category_path,:class => "btn btn-alt btn-inverse") do %>
+				 Create New Category
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+		
+			<!-- Tab #static -->
+			<div class="tab-pane active" id="static">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Code</th>
+							<th>Name</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						<% @categories.each do |category| %>
+						  <tr>
+						    <td><%= category.name %></td>
+						    <td><%= category.code %></td>
+						    <td class="toolbar">
+						      <div class="btn-group">
+						    	<%= link_to(category, :class => "btn") do %>
+						    	  <span class="awe-eye-open"></span>
+						    	<% end %>
+						    	<%= link_to(edit_category_path(category), :class => "btn") do %>
+						    	  <span class="awe-wrench"></span>
+						    	<% end %>
+						    	<%= link_to(category, method: :delete, data: { confirm: 'Are you sure you want to delete this package?' }, :class => "btn") do %>
+						    	  <span class="awe-remove"></span>
+						    	<% end %>
+						      </div>
+						    </td>
+						  </tr>
+						<% end %>
+					</tbody>
+				</table>
+		</section>
+		<footer class="warning">
+			<p>Package position is used to sort the packages in the store.</p>
+		</footer>
+	</div>
+</article>
+<!-- /Data block -->
 
 <br />
 
-<%= link_to 'New Category', new_category_path %>
+<% end %>
+
+<%= render 'admins/admin_base' %>
