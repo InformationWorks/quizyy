@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  
+  delegate :can?, :cannot?, :to => :ability
+  
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -26,6 +29,17 @@ class User < ActiveRecord::Base
       return false
     else
       return true
+    end
+    
+  end
+  
+  # Check if the user has ability to administer the app.
+  def can_administer?
+    
+    if ( authorize! :administer, :app )
+      return true
+    else
+      return false
     end
     
   end
@@ -88,6 +102,12 @@ class User < ActiveRecord::Base
       return true
     end
     
+  end
+  
+  private
+  
+  def ability
+    @ability ||= Ability.new(self)
   end
 
 end
