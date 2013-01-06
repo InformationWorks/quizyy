@@ -27,8 +27,8 @@
 						
 						<% @categories.each do |category| %>
 						  <tr>
-						    <td><%= category.name %></td>
 						    <td><%= category.code %></td>
+						    <td><%= category.name %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
 						    	<%= link_to(category, :class => "btn") do %>
