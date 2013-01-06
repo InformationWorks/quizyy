@@ -1,33 +1,80 @@
-<%= form_for(@package) do |f| %>
-  <% if @package.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@package.errors.count, "error") %> prohibited this package from being saved:</h2>
+<% content_for :admin_content do %>
 
-      <ul>
-      <% @package.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<!-- Data block -->
+<article class="span12 data-block">
+	<div class="data-container">
+		<header>
+			<h2><%= yield :package_form_title %></h2>
+			<ul class="data-header-actions">
+				<%= link_to(packages_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				 Cancel
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span11" style="margin-left: 15px;">
+				  <%= form_for(@package) do |f| %>
+				  <% if @package.errors.any? %>
+				  
+				  	<div class="alert alert-error">
+						<button class="close" data-dismiss="alert"></button>
+						<strong><%= pluralize(@package.errors.count, "error") %> prohibited this package from being saved!</strong>
+						<br />
+						<br /> 
+						<ul>
+					      <% @package.errors.full_messages.each do |msg| %>
+					        <li><%= msg %></li>
+					      <% end %>
+					    </ul>
+					</div>
+				  <% end %>
+				
+				  	<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :name %></label>
+						<div class="controls">
+							<%= f.text_field :name, :class => "input-xlarge" %>
+							<p class="help-block">This appears as the name of the package on the store.</p>
+						</div>
+					</div>
+				  	
+				  	<div class="control-group">
+						<label class="control-label" for="textarea"><%= f.label :desc, "Description" %></label>
+						<div class="controls">
+							<%= f.text_area :desc, :class => "input-xlarge",:rows=>40, :cols=>40,:style => "width: 510px;height: 100px;" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :price %></label>
+						<div class="controls">
+							<%= f.text_field :price, :class => "input-xlarge" %>
+							<p class="help-block">Price is in Rupees.</p>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :position %></label>
+						<div class="controls">
+							<%= f.number_field :position,{ :style => "width: 270px;" } %>
+							<p class="help-block">Position is used to sort & position packages.</p>
+						</div>
+					</div>
+				  	
+				  	<div class="form-actions">
+						<%= f.submit :class => "btn btn-info" %>
+					</div>
+				<% end %>
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :desc %><br />
-    <%= f.text_area :desc %>
-  </div>
-  <div class="field">
-    <%= f.label :price %><br />
-    <%= f.text_field :price %>
-  </div>
-  <div class="field">
-    <%= f.label :position %><br />
-    <%= f.number_field :position %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<br />
+
 <% end %>
+
+<%= render 'admins/admin_base' %>
