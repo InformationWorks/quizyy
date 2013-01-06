@@ -11,8 +11,11 @@
 				<!-- Main navigation -->
 				<nav class="main-navigation" role="navigation">
 					<ul>
-						<li><a href="index.html" class="no-submenu"><span class="awe-home"></span>Dashboard</a></li>
-						
+						<li <% if @current_controller == "admins" && @current_action == "home" %>class = "current"<% end %> >
+							<%= link_to(admins_home_path, :class => "no-submenu") do %>
+							<span class="awe-home"></span>Dashboard
+							<% end %>
+						</li>
 						<li <% if @current_controller == "packages" %>class = "current"<% end %> >
 							<%= link_to(packages_path, :class => "no-submenu") do %>
 							<span class="awe-signal"></span>Packages
