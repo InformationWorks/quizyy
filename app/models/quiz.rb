@@ -10,4 +10,7 @@ class Quiz < ActiveRecord::Base
   
   has_many :package_quizzes
   has_many :packages, :through => :package_quizzes
+  
+  has_one :publisher, :class_name => "User", :foreign_key => "id"
+  has_one :approver, :class_name => "User", :foreign_key => "id"
 end
