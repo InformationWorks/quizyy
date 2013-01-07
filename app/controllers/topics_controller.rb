@@ -5,7 +5,7 @@ class TopicsController < ApplicationController
   # GET /topics
   # GET /topics.json
   def index
-    @topics = Topic.all
+    @topics = Topic.order(:name).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -79,7 +79,7 @@ class TopicsController < ApplicationController
     @topic.destroy
 
     respond_to do |format|
-      format.html { redirect_to topics_url }
+      format.html { redirect_to topics_url, notice: 'Topic was successfully deleted.' }
       format.json { head :no_content }
     end
   end

@@ -1,23 +1,61 @@
-<h1>Listing topics</h1>
+<% content_for :admin_content do %>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @topics.each do |topic| %>
-  <tr>
-    <td><%= topic.name %></td>
-    <td><%= link_to 'Show', topic %></td>
-    <td><%= link_to 'Edit', edit_topic_path(topic) %></td>
-    <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<!-- Data block -->
+<article class="span12 data-block">
+	<div class="data-container">
+		<header>
+			<h2>Topics</h2>
+			<ul class="data-header-actions">
+				<%= link_to(new_topic_path,:class => "btn btn-alt btn-inverse") do %>
+				 Create New Topic
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+		
+			<!-- Tab #static -->
+			<div class="tab-pane active" id="static">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						<% @topics.each do |topic| %>
+						  <tr>
+						    <td><%= topic.name %></td>
+						    <td class="toolbar">
+						      <div class="btn-group">
+						    	<%= link_to(topic, :class => "btn") do %>
+						    	  <span class="awe-eye-open"></span>
+						    	<% end %>
+						    	<%= link_to(edit_topic_path(topic), :class => "btn") do %>
+						    	  <span class="awe-wrench"></span>
+						    	<% end %>
+						    	<%= link_to(topic, method: :delete, data: { confirm: 'Are you sure you want to delete this package?' }, :class => "btn") do %>
+						    	  <span class="awe-remove"></span>
+						    	<% end %>
+						      </div>
+						    </td>
+						  </tr>
+						<% end %>
+					</tbody>
+				</table>
+		</section>
+		<footer class="error">
+			<div class="alert alert-error">
+				<strong style="font-size: 15px;">DO NOT DELETE OR RENAME TOPIC IF YOU DON'T KNOW WHAT YOU ARE DOING !</strong>
+			</div>
+		</footer>
+	</div>
+</article>
+<!-- /Data block -->
 
 <br />
 
-<%= link_to 'New Topic', new_topic_path %>
+<% end %>
+
+<%= render 'admins/admin_base' %>

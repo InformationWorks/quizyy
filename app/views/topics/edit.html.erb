@@ -1,6 +1,5 @@
-<h1>Editing topic</h1>
+<% content_for :topic_form_title do %>
+Edit a new topic
+<% end %>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @topic %> |
-<%= link_to 'Back', topics_path %>
