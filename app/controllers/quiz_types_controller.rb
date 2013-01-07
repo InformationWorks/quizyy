@@ -79,7 +79,7 @@ class QuizTypesController < ApplicationController
     @quiz_type.destroy
 
     respond_to do |format|
-      format.html { redirect_to quiz_types_url }
+      format.html { redirect_to quiz_types_url, notice: 'Quiz type was successfully deleted.'  }
       format.json { head :no_content }
     end
   end

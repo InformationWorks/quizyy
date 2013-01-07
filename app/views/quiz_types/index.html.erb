@@ -1,23 +1,61 @@
-<h1>Listing quiz_types</h1>
+<% content_for :admin_content do %>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @quiz_types.each do |quiz_type| %>
-  <tr>
-    <td><%= quiz_type.name %></td>
-    <td><%= link_to 'Show', quiz_type %></td>
-    <td><%= link_to 'Edit', edit_quiz_type_path(quiz_type) %></td>
-    <td><%= link_to 'Destroy', quiz_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<!-- Data block -->
+<article class="span12 data-block">
+	<div class="data-container">
+		<header>
+			<h2>QuizTypes</h2>
+			<ul class="data-header-actions">
+				<%= link_to(new_quiz_type_path,:class => "btn btn-alt btn-inverse") do %>
+				 Create New QuizType
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+		
+			<!-- Tab #static -->
+			<div class="tab-pane active" id="static">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						<% @quiz_types.each do |quiz_type| %>
+						  <tr>
+						    <td><%= quiz_type.name %></td>
+						    <td class="toolbar">
+						      <div class="btn-group">
+						    	<%= link_to(quiz_type, :class => "btn") do %>
+						    	  <span class="awe-eye-open"></span>
+						    	<% end %>
+						    	<%= link_to(edit_quiz_type_path(quiz_type), :class => "btn") do %>
+						    	  <span class="awe-wrench"></span>
+						    	<% end %>
+						    	<%= link_to(quiz_type, method: :delete, data: { confirm: 'Are you sure you want to delete this QuizType' }, :class => "btn") do %>
+						    	  <span class="awe-remove"></span>
+						    	<% end %>
+						      </div>
+						    </td>
+						  </tr>
+						<% end %>
+					</tbody>
+				</table>
+		</section>
+		<footer class="error">
+			<div class="alert alert-error">
+				<strong style="font-size: 15px;">DO NOT DELETE OR RENAME QuizType IF YOU DON'T KNOW WHAT YOU ARE DOING !</strong>
+			</div>
+		</footer>
+	</div>
+</article>
+<!-- /Data block -->
 
 <br />
 
-<%= link_to 'New Quiz type', new_quiz_type_path %>
+<% end %>
+
+<%= render 'admins/admin_base' %>
