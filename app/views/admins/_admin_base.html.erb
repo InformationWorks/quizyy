@@ -42,6 +42,11 @@
 							<span class="awe-table"></span>QuizTypes
 							<% end %>
 						</li>
+						<li <% if @current_controller == "section_types" %>class = "current"<% end %> >
+							<%= link_to(section_types_path, :class => "no-submenu") do %>
+							<span class="awe-table"></span>SectionTypes
+							<% end %>
+						</li>
 						<li><a href="file-explorer.html" class="no-submenu"><span class="awe-file"></span>Student Management</a></li>
 					</ul>
 				</nav>
