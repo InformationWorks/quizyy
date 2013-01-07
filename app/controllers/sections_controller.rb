@@ -97,7 +97,7 @@ class SectionsController < ApplicationController
     @section.destroy
 
     respond_to do |format|
-      format.html { redirect_to sections_url }
+      format.html { redirect_to sections_url, notice: 'Section was successfully deleted.' }
       format.json { head :no_content }
     end
   end
