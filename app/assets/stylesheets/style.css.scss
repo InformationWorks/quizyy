@@ -3,6 +3,7 @@
   $green:#19DD89;
   $winter-green:#44932B;
   $blue:#2287e6;
+  $light-blue:#2FBFED;
   $other-blue:#2f87ed;
   $light-grey:#f7f7f7;
   $style: solid;
@@ -158,6 +159,10 @@
 .test-list .command-btn {
   display: none;
 }
+
+.metro a{
+  color: $light-blue;
+}
 #content{
   margin-top: 30px;
 }
@@ -167,6 +172,7 @@
   top: 0px;
   z-index: 1999;
   background-color: white;
+  width: 90%;
   .span6{
     width: 500px;
   }
@@ -200,7 +206,7 @@
   .single{
     width:60%;
     margin: 0px auto;
-    margin-top: 200px;
+    margin-top: 210px;
   }
 
   .question{
@@ -276,6 +282,9 @@
 
 @media (max-width: 767px){
   #test-content {
+    .single {
+      margin-top: 300px;
+    }
     .left-pane,.right-pane{
       top: 250px;
     }
@@ -296,7 +305,7 @@
     }
     .single{
       width: 70%;
-      margin-top: 50%;
+      margin-top: 300px;
     }
     .left-pane{
       width:25%;

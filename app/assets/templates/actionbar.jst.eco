@@ -1,10 +1,10 @@
 <div class="row">
-    <div class="span6 align-left">
+    <div class="span4 pull-left align-left">
         <h4><%= @name %></h4>
 
         <h2>Section <%= @section_index %> of 4</h2>
     </div>
-    <div class="span6 pull-right align-right">
+    <div class="pull-right align-right">
         <button class="win-command">
             <span class="win-commandimage win-commandring">&#xe03b;</span>
             <span class="win-label">Quit Test</span>
@@ -40,7 +40,7 @@
     <div class="span7 align-right">
         <h2>Question <%=@question_number%> of <%=@total_questions%></h2>
     </div>
-    <div class="span5 align-right">
+    <div class="span3 pull-right align-right">
         <p class="lead">
             <button class="btn" id="btn-hide-time">Hide Time</button>
             1:00:00
