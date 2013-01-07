@@ -6,7 +6,7 @@ class TypesController < ApplicationController
   # GET /types
   # GET /types.json
   def index
-    @types = Type.all
+    @types = Type.order(:name).all
 
     respond_to do |format|
       format.html # index.html.erb
