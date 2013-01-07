@@ -2,9 +2,33 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :store_location
   before_filter :instantiate_controller_and_action_names
+  
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
-    redirect_to homes_index_url
+    
+    # For controllers under "Admin" section redirect to specific index page.
+    if @current_controller == "topics"
+      flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
+      redirect_to topics_url
+    elsif @current_controller == "categories"
+      flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
+      redirect_to categories_url
+    elsif @current_controller == "types"
+      flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
+      redirect_to types_url
+    elsif @current_controller == "packages"
+      flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
+      redirect_to packages_url
+    elsif @current_controller == "quiz_types"
+      flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
+      redirect_to quiz_types_url
+    elsif @current_controller == "section_types"
+      flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
+      redirect_to section_types_url
+    else
+      redirect_to homes_index_url
+    end
+  
   end
   
   # Devise override
