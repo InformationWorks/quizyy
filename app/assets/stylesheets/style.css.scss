@@ -43,6 +43,11 @@
     font-family: none;
   }
   /** navbar styles **/
+  body{
+    header{
+      padding: 0px;
+    }
+  }
   #nav-bar {
     position: fixed;
     top: 0px;
@@ -50,7 +55,9 @@
     background-color: white;
     width: 100%;
     border-bottom: 1px solid $light-grey;
+    margin-bottom: 0px;
     height: auto;
+    min-height: 95px;
   }
 
   .navbar {
@@ -150,6 +157,12 @@
 }
 
 /** content styles **/
+.content{
+  margin-top: 70px;
+}
+#admin-content{
+  margin-top: 20px;
+}
 .marketing {
   text-align: center;
   color: #5A5A5A;
@@ -277,7 +290,7 @@
   padding-bottom: 40px;
   padding-right:20px;
   padding-left: 40px;
-  margin-top: 50px;
+  margin-top: -20px;
   width: 100%;
   overflow: auto;
 }
