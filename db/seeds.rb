@@ -135,6 +135,12 @@ full_quiz_type_id = QuizType.find_by_name("FullQuiz").id
   full_quiz.quiz_type_id = full_quiz_type_id 
   full_quiz.timed = true
   full_quiz.price = 99.0
+  full_quiz.published = true  
+  full_quiz.publisher_id = publisher_user.id
+  full_quiz.published_at = DateTime.now
+  full_quiz.approved = true
+  full_quiz.approver_id = admin_user.id
+  full_quiz.approved_at = DateTime.now
   full_quiz.save!
 end
 
@@ -147,6 +153,12 @@ end
   full_quiz.quiz_type_id = full_quiz_type_id 
   full_quiz.timed = true
   full_quiz.price = 0.0
+  full_quiz.published = true  
+  full_quiz.publisher_id = publisher_user.id
+  full_quiz.published_at = DateTime.now
+  full_quiz.approved = true
+  full_quiz.approver_id = admin_user.id
+  full_quiz.approved_at = DateTime.now
   full_quiz.save!
 end
 
@@ -160,7 +172,6 @@ end
   rc_cat_quiz.category_id = Category.find_by_code("RC").id
   rc_cat_quiz.timed = false
   rc_cat_quiz.price = 99.0
-  
   # First one is free
   if index == 1
     rc_cat_quiz.price = 0.0
