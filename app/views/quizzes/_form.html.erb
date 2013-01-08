@@ -1,37 +1,91 @@
-<%= form_for(@quiz) do |f| %>
-  <% if @quiz.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
+<% content_for :admin_content do %>
 
-      <ul>
-      <% @quiz.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<!-- Data block -->
+<article class="span12 data-block">
+	<div class="data-container">
+		<header>
+			<h2><%= yield :quiz_form_title %></h2>
+			<ul class="data-header-actions">
+				<%= link_to(quizzes_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				 Cancel
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span11" style="margin-left: 15px;">
+				  <%= form_for(@quiz) do |f| %>
+				  <% if @quiz.errors.any? %>
+				  
+				  	<div class="alert alert-error">
+						<button class="close" data-dismiss="alert"></button>
+						<strong><%= pluralize(@quiz.errors.count, "error") %> prohibited this quiz from being saved!</strong>
+						<br />
+						<br /> 
+						<ul>
+					      <% @quiz.errors.full_messages.each do |msg| %>
+					        <li><%= msg %></li>
+					      <% end %>
+					    </ul>
+					</div>
+				  <% end %>
+				
+				  	<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :name %></label>
+						<div class="controls">
+							<%= f.text_field :name, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :desc %></label>
+						<div class="controls">
+							<%= f.text_area :desc, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :random %></label>
+						<div class="controls">
+							<%= f.check_box :random , :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :quiz_type %></label>
+						<div class="controls">
+							<%= f.collection_select :quiz_type_id, QuizType.all, :id, :name %>
+						</div>
+					</div>
+				  	
+				  	<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :category %></label>
+						<div class="controls">
+							<%= f.collection_select :category_id, Category.all, :id, :name %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :topic %></label>
+						<div class="controls">
+							<%= f.collection_select :topic_id, Topic.all, :id, :name %>
+						</div>
+					</div>
+				  	
+				  	<div class="form-actions">
+						<%= f.submit :class => "btn btn-info" %>
+					</div>
+				<% end %>
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :random %><br />
-    <%= f.check_box :random %>
-  </div>
-  <div class="field">
-    <%= f.label :quiz_type %><br />
-	<%= f.collection_select :quiz_type_id, QuizType.all, :id, :name %>
-  </div>
-  <div class="field">
-    <%= f.label :category %><br />
-    <%= f.collection_select :category_id, Category.all, :id, :name %>
-  </div>
-  <div class="field">
-    <%= f.label :topic %><br />
-    <%= f.collection_select :topic_id, Topic.all, :id, :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<br />
+
 <% end %>
+
+<%= render 'admins/admin_base' %>
