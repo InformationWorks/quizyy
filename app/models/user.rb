@@ -23,6 +23,9 @@ class User < ActiveRecord::Base
   has_many :quiz_users
   has_many :quizzes, :through => :quiz_users
   
+  has_many :published_quizzes, :class_name => "Quiz", :foreign_key => "publisher_id"
+  has_many :approved_quizzes, :class_name => "Quiz", :foreign_key => "approver_id"
+  
   def role?(role)
     
     if ( self.roles.find_by_name(role.to_s.camelize) == nil )
