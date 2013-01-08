@@ -1,6 +1,7 @@
 class SectionsController < ApplicationController
   
   before_filter :authenticate_user!
+  load_and_authorize_resource
   
   # GET /sections
   # GET /sections.json
@@ -96,7 +97,7 @@ class SectionsController < ApplicationController
     @section.destroy
 
     respond_to do |format|
-      format.html { redirect_to sections_url }
+      format.html { redirect_to sections_url, notice: 'Section was successfully deleted.' }
       format.json { head :no_content }
     end
   end

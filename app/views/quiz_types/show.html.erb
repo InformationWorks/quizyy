@@ -1,10 +1,38 @@
-<p id="notice"><%= notice %></p>
+<% content_for :admin_content do %>
 
-<p>
-  <b>Name:</b>
-  <%= @quiz_type.name %>
-</p>
+<!-- Data block -->
+<article class="span12 data-block">
+	<div class="data-container">
+		<header>
+			<h2>Showing a QuizType</h2>
+			<ul class="data-header-actions">
+				<%= link_to(edit_quiz_type_path(@quiz_type),:class => "btn btn-warning" ) do %>
+				 Edit
+				<% end %>
+				<%= link_to(quiz_types_path,:class => "btn btn-danger") do %>
+				 Back
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span11" style="margin-left: 15px;">
+			  	<div class="control-group">
+					<label class="control-label" for="textarea">Name</label>
+					<div class="controls">
+						<p><%= @quiz_type.name %></p>
+					</div>
+				</div>
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
 
+<br />
 
-<%= link_to 'Edit', edit_quiz_type_path(@quiz_type) %> |
-<%= link_to 'Back', quiz_types_path %>
+<% end %>
+
+<%= render 'admins/admin_base' %>

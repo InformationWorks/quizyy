@@ -1,6 +1,7 @@
 class QuizzesController < ApplicationController
   
   before_filter :authenticate_user!
+  load_and_authorize_resource
   
   include UploadExcel
   
@@ -79,7 +80,7 @@ class QuizzesController < ApplicationController
     @quiz.destroy
 
     respond_to do |format|
-      format.html { redirect_to quizzes_url }
+      format.html { redirect_to quizzes_url, notice: 'Quiz was successfully deleted.' }
       format.json { head :no_content }
     end
   end

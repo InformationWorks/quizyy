@@ -1,6 +1,7 @@
 class QuizTypesController < ApplicationController
   
   before_filter :authenticate_user!
+  load_and_authorize_resource
   
   # GET /quiz_types
   # GET /quiz_types.json
@@ -79,7 +80,7 @@ class QuizTypesController < ApplicationController
     @quiz_type.destroy
 
     respond_to do |format|
-      format.html { redirect_to quiz_types_url }
+      format.html { redirect_to quiz_types_url, notice: 'Quiz type was successfully deleted.'  }
       format.json { head :no_content }
     end
   end

@@ -1,6 +1,7 @@
 class PackagesController < ApplicationController
   
   before_filter :authenticate_user!
+  load_and_authorize_resource
   
   # GET /packages
   # GET /packages.json
@@ -86,7 +87,7 @@ class PackagesController < ApplicationController
     @package.destroy
 
     respond_to do |format|
-      format.html { redirect_to packages_url }
+      format.html { redirect_to packages_url, notice: 'Package was successfully deleted.' }
       format.json { head :no_content }
     end
   end

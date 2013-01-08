@@ -1,21 +1,56 @@
-<%= form_for(@topic) do |f| %>
-  <% if @topic.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@topic.errors.count, "error") %> prohibited this topic from being saved:</h2>
+<% content_for :admin_content do %>
 
-      <ul>
-      <% @topic.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<!-- Data block -->
+<article class="span12 data-block">
+	<div class="data-container">
+		<header>
+			<h2><%= yield :topic_form_title %></h2>
+			<ul class="data-header-actions">
+				<%= link_to(topics_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				 Cancel
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span11" style="margin-left: 15px;">
+				  <%= form_for(@topic) do |f| %>
+				  <% if @topic.errors.any? %>
+				  
+				  	<div class="alert alert-error">
+						<button class="close" data-dismiss="alert"></button>
+						<strong><%= pluralize(@topic.errors.count, "error") %> prohibited this category from being saved!</strong>
+						<br />
+						<br /> 
+						<ul>
+					      <% @topic.errors.full_messages.each do |msg| %>
+					        <li><%= msg %></li>
+					      <% end %>
+					    </ul>
+					</div>
+				  <% end %>
+			
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :name %></label>
+						<div class="controls">
+							<%= f.text_field :name, :class => "input-xlarge" %>
+						</div>
+					</div>
+				  	
+				  	<div class="form-actions">
+						<%= f.submit :class => "btn btn-info" %>
+					</div>
+				<% end %>
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<br />
+
 <% end %>
+
+<%= render 'admins/admin_base' %>

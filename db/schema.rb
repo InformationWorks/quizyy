@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130102131246) do
+ActiveRecord::Schema.define(:version => 20130107191645) do
 
   create_table "attempt_details", :force => true do |t|
     t.integer  "attempt_id"
@@ -120,13 +120,21 @@ ActiveRecord::Schema.define(:version => 20130102131246) do
     t.integer  "quiz_type_id"
     t.integer  "category_id"
     t.integer  "topic_id"
-    t.datetime "created_at",                                                   :null => false
-    t.datetime "updated_at",                                                   :null => false
+    t.datetime "created_at",                                                     :null => false
+    t.datetime "updated_at",                                                     :null => false
     t.boolean  "timed"
     t.decimal  "price",        :precision => 10, :scale => 2, :default => 0.0
+    t.boolean  "published",                                   :default => false
+    t.integer  "publisher_id"
+    t.datetime "published_at"
+    t.boolean  "approved",                                    :default => false
+    t.integer  "approver_id"
+    t.datetime "approved_at"
   end
 
+  add_index "quizzes", ["approver_id"], :name => "index_quizzes_on_approver_id"
   add_index "quizzes", ["category_id"], :name => "index_quizzes_on_category_id"
+  add_index "quizzes", ["publisher_id"], :name => "index_quizzes_on_publisher_id"
   add_index "quizzes", ["quiz_type_id"], :name => "index_quizzes_on_quiz_type_id"
   add_index "quizzes", ["topic_id"], :name => "index_quizzes_on_topic_id"
 

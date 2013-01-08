@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   
   before_filter :authenticate_user!
+  load_and_authorize_resource
   
   # GET /categories
   # GET /categories.json
@@ -79,7 +80,7 @@ class CategoriesController < ApplicationController
     @category.destroy
 
     respond_to do |format|
-      format.html { redirect_to categories_url }
+      format.html { redirect_to categories_url, notice: 'Category was successfully deleted.' }
       format.json { head :no_content }
     end
   end

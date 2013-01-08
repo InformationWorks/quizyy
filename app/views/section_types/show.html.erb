@@ -1,15 +1,45 @@
-<p id="notice"><%= notice %></p>
+<% content_for :admin_content do %>
 
-<p>
-  <b>Name:</b>
-  <%= @section_type.name %>
-</p>
+<!-- Data block -->
+<article class="span12 data-block">
+	<div class="data-container">
+		<header>
+			<h2>Showing a category</h2>
+			<ul class="data-header-actions">
+				<%= link_to(edit_section_type_path(@section_type),:class => "btn btn-warning" ) do %>
+				 Edit
+				<% end %>
+				<%= link_to(section_types_path,:class => "btn btn-danger") do %>
+				 Back
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span11" style="margin-left: 15px;">
+			  	<div class="control-group">
+					<label class="control-label" for="input">Name</label>
+					<div class="controls">
+						<p><%= @section_type.name %></p>
+					</div>
+				</div>
+			  	
+			  	<div class="control-group">
+					<label class="control-label" for="textarea">Instruction</label>
+					<div class="controls">
+						<p><%= @section_type.instruction %></p>
+					</div>
+				</div>
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
 
-<p>
-  <b>Instruction:</b>
-  <%= @section_type.instruction %>
-</p>
+<br />
 
+<% end %>
 
-<%= link_to 'Edit', edit_section_type_path(@section_type) %> |
-<%= link_to 'Back', section_types_path %>
+<%= render 'admins/admin_base' %>
