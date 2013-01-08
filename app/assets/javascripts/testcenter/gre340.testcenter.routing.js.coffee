@@ -2,6 +2,7 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
 
   Router = Backbone.Router.extend(
     routes:
+      'homes/index': 'goToAvailableTest'
       'test_center/error': 'showError'
       'test_center/index?quiz_id=:id': 'showIndex'
       'test_center/section/:sindex/question/:qindex': 'showQuestion'
@@ -27,6 +28,9 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       Gre340.TestCenter.stop()
     showError:()->
 
+    goToAvailableTest: () ->
+      if !Modernizr.mq("screen and (min-width: 1200px)")
+        scrollToElement("#available-tests")
   )
 
   TestCenterRouting.addInitializer ->

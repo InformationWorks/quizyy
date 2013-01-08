@@ -19,6 +19,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         'option/mcq'
     setUserResponse: (event)=>
       #TODO save user response to db
+
   Views.QuestionSingleView = Marionette.Layout.extend
     template: 'question/single'
     tagName: "div"

@@ -14,6 +14,7 @@
 //= require turbolinks
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require libs/modernizr.custom
 //= require bootstrap
 //= require backbone/json2
 //= require backbone/underscore
@@ -39,4 +40,11 @@
 Backbone.Marionette.Renderer.render = function(template, data){
     if (!JST[template]) throw "Template '" + template + "' not found!";
     return JST[template](data);
+}
+
+function scrollToElement(el) {
+    $("html, body").stop().animate({
+        scrollLeft: $(el).offset().left,
+        scrollTop: $(el).offset().top-150
+    }, 1500);
 }

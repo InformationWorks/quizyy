@@ -14,29 +14,29 @@
         </div>
         <div class="row">
           <div class="span3" id = '<%= current_user.id %>' >
-            <div class="tile square image">
-              
+            <div class="square image">
+
               <% if current_user.profile_image_url.to_s != "" %>
               	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src= "<%= current_user.profile_image_url.to_s %>" alt="">
               <% else %>
               	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src="/assets/metro-user.png" alt="">
               <% end %>
-              
+
             </div>
-            
+
             <input type="button" id="remove-image-btn" value="Remove Image" data-confirm="Are you sure you want to remove the image?">
-            
+
             <%= form_tag("/users/profiles/update_profile_pic", :multipart => true) do %>
-			  <input id="profile_pic_uploader" type="file" name="profile_pic_file" style="visibility:hidden" />
+			  <input id="profile_pic_uploader" type="file" name="profile_pic_file" style="display:none;" />
 			<% end %>
-            
+
           </div>
           <div class="span3">
             <p>You should work on</p>
             <% current_user.areas_of_improvement.first(3).each do |area_of_improvement| %>
             <p><a href="#"><%= area_of_improvement.name %></a></p>
             <% end %>
-            
+
             <% if current_user.areas_of_improvement.count > 3 %>
             <p><a href="#">more</a></p>
             <% end %>
@@ -128,6 +128,7 @@
 <% end %>
 
 <div id="content">
+  <section id="available-tests">
   <header class="title">Available Tests</header>
   <ul class="nav nav-pills" id="available-test-tabs">
     <li class= '<%= fullquiz_li_class %>' ><a href="#full-test">Timed Tests</a></li>
@@ -137,16 +138,16 @@
   <div class="tab-content">
     <div class= '<%= fullquiz_tabpane_class %>' id="full-test">
       <ul class="test-list">
-      	
+
       	<% current_user.purchased_full_quizzes.each do |full_quiz| %>
-      		
+
       		<!%-- Set the css properties based on the status of the quiz --%>
       		<% status = full_quiz.quiz_users.where(:quiz_id => full_quiz.id,:user_id => current_user.id).first.status %>
-      		
+
       		<% if status == :new %>
       			<% li_class = "mediumListIconTextItem new"  %>
       			<% command_btn_image = "" %>
-      			<% action_text = "Start" %> 
+      			<% action_text = "Start" %>
       		<% elsif status == :paused %>
       			<% li_class = "mediumListIconTextItem pause"  %>
       			<% command_btn_image = "" %>
@@ -156,7 +157,7 @@
       		    <% command_btn_image = "" %>
       		    <% action_text = "Review" %>
       		<% end %>
-      		      		
+
       		<li class= "<%= li_class %>">
 	          <small><%= status %></small>
 	          <div class="mediumListIconTextItem-Detail">
@@ -171,23 +172,23 @@
 	          </div>
 	        </li>
       	<% end %>
-      	
+
       </ul>
       <%= link_to "Get more timed tests", stores_timed_tests_path %>
     </div>
-  	
+
   	<div class= '<%= categoryquiz_tabpane_class %>' id="category-test">
                 <ul class="test-list">
-                    
+
             <% current_user.purchased_category_topic_quizzes.each do |category_topic_quiz| %>
-      		
+
       		<!%-- Set the css properties based on the status of the quiz --%>
       		<% status = category_topic_quiz.quiz_users.where(:quiz_id => category_topic_quiz.id,:user_id => current_user.id).first.status %>
-      		
+
       		<% if status == :new %>
       			<% li_class = "mediumListIconTextItem new"  %>
       			<% command_btn_image = "" %>
-      			<% action_text = "Start" %> 
+      			<% action_text = "Start" %>
       		<% elsif status == :paused %>
       			<% li_class = "mediumListIconTextItem pause"  %>
       			<% command_btn_image = "" %>
@@ -197,7 +198,7 @@
       		    <% command_btn_image = "" %>
       		    <% action_text = "Review" %>
       		<% end %>
-      		      		
+
       		<li class= "<%= li_class %>">
 	          <small><%= status %></small>
 	          <div class="mediumListIconTextItem-Detail">
@@ -212,13 +213,13 @@
 	          </div>
 	        </li>
       		<% end %>
-                    
+
                 </ul>
                 <%= link_to "Get more practise tests", stores_practice_tests_path %>
             </div>
-        
+
   </div>
-        
+  </section>
   </div>
   		<%= button_to "Reset user quizzes", { :action => "reset_user_quizzes" },
           :confirm => "Are you sure you want to delete all the quizzes ?", :method => :delete %>
