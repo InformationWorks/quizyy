@@ -40,7 +40,16 @@
 				</div>
 				
 				<div class="control-group">
+					<header>
 					<h3>Sections</h3>
+					<ul class="data-header-actions">
+						<li class="demoTabs">
+						<%= link_to(new_quiz_section_path(@quiz),:class => "btn") do %>
+						 Create New Section
+						<% end %>	
+						</li>
+					</ul>
+					</header>
 					<div class="controls">
 						<table class="table table-hover">
 						 <thead>
