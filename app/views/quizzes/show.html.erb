@@ -7,12 +7,12 @@
 			<h2>Showing a quiz</h2>
 			<ul class="data-header-actions">
 				<li class="demoTabs">
-				<%= link_to(edit_quiz_path(@quiz),:class => "btn btn-warning" ) do %>
+				<%= link_to(edit_quiz_path(@quiz),:class => "btn btn-primary	" ) do %>
 				 Edit
 				<% end %>
 				</li>
 				<li class="demoTabs">
-				<%= link_to(quizzes_path,:class => "btn btn-danger") do %>
+				<%= link_to(quizzes_path,:class => "btn") do %>
 				 Back
 				<% end %>	
 				</li>
@@ -21,7 +21,7 @@
 		<section class="tab-content">
 			
 			<!-- Form starts here -->
-			<div class="span11" style="margin-left: 15px;">
+			<div class="span9" style="margin-left: 15px;">
 			  	
 			  	<div class="control-group">
 					<label class="control-label" for="input">Name</label>

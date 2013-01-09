@@ -1,9 +1,5 @@
-
-<%= link_to (@section.quiz.name) , quiz_path(@section.quiz) %>
-
-<h1>Editing section</h1>
+<% content_for :section_form_title do %>
+Edit a section
+<% end %>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', quiz_section_path(@quiz,@section) %> |
-<%= link_to 'Back', quiz_section_path(@quiz,@section) %>
