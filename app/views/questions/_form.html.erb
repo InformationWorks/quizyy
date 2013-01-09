@@ -1,23 +1,69 @@
-<%= form_for([@quiz,@section,@question]) do |f| %>
-  <% if @question.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
+<% content_for :admin_content do %>
 
-      <ul>
-      <% @question.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<!-- Data block -->
+<article class="data-block">
+	<div class="data-container">
+		<header>
+			<h2><%= yield :question_form_title %></h2>
+			<ul class="data-header-actions">
+				<%= link_to(quizzes_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				 Cancel
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span11" style="margin-left: 15px;">
+				  <%= form_for([@quiz,@section,@question]) do |f| %>
+				  <% if @question.errors.any? %>
+				  
+				  	<div class="alert alert-error">
+						<button class="close" data-dismiss="alert"></button>
+						<strong><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved!</strong>
+						<br />
+						<br /> 
+						<ul>
+					      <% @question.errors.full_messages.each do |msg| %>
+					        <li><%= msg %></li>
+					      <% end %>
+					    </ul>
+					</div>
+				  <% end %>
+				
+				  	<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :sequence_no %></label>
+						<div class="controls">
+							<%= f.number_field :sequence_no, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					
+				  	
+				  	<div class="form-actions">
+						<%= f.submit :class => "btn btn-info" %>
+					</div>
+				<% end %>
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
+
+<br />
+
+<% end %>
+
+<%= render 'admins/admin_base' %>
+
+
+<%= form_for([@quiz,@section,@question]) do |f| %>
+  
 
   <div class="field">
     <%= f.label :sequence_no %><br />
     <%= f.number_field :sequence_no %>
-  </div>
-  <div class="field">
-    <%= f.label :header %><br />
-    <%= f.text_area :header %>
   </div>
   <div class="field">
     <%= f.label :instruction %><br />

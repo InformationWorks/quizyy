@@ -1,5 +1,5 @@
-<h1>New question</h1>
+<% content_for :question_form_title do %>
+Create a new quiz
+<% end %>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', quiz_section_questions_path %>

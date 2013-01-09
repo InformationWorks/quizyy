@@ -1,101 +1,196 @@
-<p id="notice"><%= notice %></p>
+<% content_for :admin_content do %>
 
-<%= link_to (@section.quiz.name) , quiz_path(@section.quiz) %> ->
-<%= link_to (@section.name) , quiz_section_path(@section.quiz,@section) %>
+<!-- Data block -->
+<article class="data-block">
+	<div class="data-container">
+		<header>
+			<h2><%= @quiz.name %></h2>
+			<h3><%= @section.name %></h3>
+			<span class="label">Question No. <%= @question.sequence_no %></span>
+			
+			<% if @question.type %>
+			<span class="label">
+			  <%= @question.type ? @question.type.name : "N/A" %>
+			</span>
+			<% end %>
+			
+			<% if @question.topic %>
+			<span class="label">
+			  <%= @question.topic ? @question.topic.name : "N/A" %>
+			</span>
+			<% end %>
+			
+			<ul class="data-header-actions">
+				<%= link_to(edit_quiz_section_question_path(@quiz,@section,@question),:class => "btn btn-warning" ) do %>
+				 Edit
+				<% end %>
+				<%= link_to(quiz_section_path(@quiz,@section),:class => "btn btn-danger" ) do %>
+				 Back to section
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span9" style="margin-left: 0px;">
+				
+				<div class="control-group">
+					<label class="control-label" for="input">Instruction</label>
+					<div class="controls">
+						<blockquote>
+							<p>
+							 <%= @question.instruction %>
+							</p>
+						</blockquote>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input">Passage</label>
+					<div class="controls">
+						<blockquote>
+							<p>
+							 <%= @question.passage %>
+							</p>
+						</blockquote>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input">QueText</label>
+					<div class="controls">
+						<blockquote>
+							<p>
+							 <%= @question.que_text %>
+							</p>
+						</blockquote>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input">QueText</label>
+					<div class="controls">
+						<blockquote>
+							<p>
+							 <%= @question.sol_text %>
+							</p>
+						</blockquote>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input">Option set count</label>
+					<div class="controls">
+						<blockquote>
+							<p>
+							 <%= @question.option_set_count %>
+							</p>
+						</blockquote>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input">Que imag</label>
+					<div class="controls">
+						<blockquote>
+							<p>
+							 <%= @question.que_image %>
+							</p>
+						</blockquote>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input">Sol imag</label>
+					<div class="controls">
+						<blockquote>
+							<p>
+							 <%= @question.sol_image %>
+							</p>
+						</blockquote>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input">Di location</label>
+					<div class="controls">
+						<blockquote>
+							<p>
+							 <%= @question.di_location %>
+							</p>
+						</blockquote>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input">Quantity a</label>
+					<div class="controls">
+						<blockquote>
+							<p>
+							 <%= @question.quantity_a %>
+							</p>
+						</blockquote>
+					</div>
+				</div>
 
-<p>
-  <b>Sequence no:</b>
-  <%= @question.sequence_no %>
-</p>
 
-<p>
-  <b>Instruction:</b>
-  <%= @question.instruction %>
-</p>
+				<div class="control-group">
+					<label class="control-label" for="input">Quantity b</label>
+					<div class="controls">
+						<blockquote>
+							<p>
+							 <%= @question.quantity_b %>
+							</p>
+						</blockquote>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input"><h3>Options</h3></label>
+					<div class="controls">
+					<table class="table table-hover">
+					 <thead>
+					  <tr>
+					  	<th>#</th>
+					    <th>content</th>
+					    <th></th>
+					  </tr>
+					  </thead>
+					  <tbody>
+						 <% @question.options.order("sequence_no ASC").each do |option| %>
+						  <tr>
+						  	<td><%= option.sequence_no %> </td>
+						    <td><%= option.content %> <% if option.correct %> <span class="label label-success">Correct</span> <% end %> </td>
+						    <td class="toolbar">
+						      <div class="btn-group">
+						    	<%= link_to(quiz_section_question_option_path(@quiz,@section,@question,option), :class => "btn") do %>
+						    	  <span class="awe-eye-open"></span>
+						    	<% end %>
+						    	<%= link_to(edit_quiz_section_question_option_path(@quiz,@section,@question,option), :class => "btn") do %>
+						    	  <span class="awe-wrench"></span>
+						    	<% end %>
+						    	<%= link_to(quiz_section_question_option_path(@quiz,@section,@question,option), method: :delete, data: { confirm: 'Are you sure you want to delete this quiz' }, :class => "btn") do %>
+						    	  <span class="awe-remove"></span>
+						    	<% end %>
+						      </div>
+						    </td>
+						  </tr>
+						<% end %>
+					  </tbody>
+					  </table>
+					  
+					  </div>
+				</div>
+				
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
 
-<p>
-  <b>Passage:</b>
-  <%= @question.passage %>
-</p>
+<br />
 
-<p>
-  <b>Que text:</b>
-  <%= @question.que_text %>
-</p>
+<% end %>
 
-<p>
-  <b>Sol text:</b>
-  <%= @question.sol_text %>
-</p>
-
-<p>
-  <b>Option set count:</b>
-  <%= @question.option_set_count %>
-</p>
-
-<p>
-  <b>Que image:</b>
-  <%= @question.que_image %>
-</p>
-
-<p>
-  <b>Sol image:</b>
-  <%= @question.sol_image %>
-</p>
-
-<p>
-  <b>Di location:</b>
-  <%= @question.di_location %>
-</p>
-
-<p>
-  <b>Quantity a:</b>
-  <%= @question.quantity_a %>
-</p>
-
-<p>
-  <b>Quantity b:</b>
-  <%= @question.quantity_b %>
-</p>
-
-<p>
-  <b>Type:</b>
-  <%= @question.type ? @question.type.name : "N/A" %>
-</p>
-
-<p>
-  <b>Topic:</b>
-  <%= @question.topic ? @question.topic.name : "N/A" %>
-</p>
-
-<p>
-  <b>Section:</b>
-  <%= @question.section ? @question.section.name : "N/A" %>
-</p>
-
-<p>
-  <b>Options:</b>
-  <table>
-  <tr>
-    <th>Content</th>
-    <th>Correct</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-  <% @question.options.order("sequence_no ASC").each do |option| %>
-  <tr>
-    <td><%= option.content %></td>
-    <td><%= option.correct %></td>
-    <td><%= link_to 'Show', quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option) %></td>
-    <td><%= link_to 'Edit', edit_quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option) %></td>
-    <td><%= link_to 'Destroy', quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-  <% end %>
-</table>
-</p>
-
-
-<%= link_to 'Edit', edit_quiz_section_question_path(@quiz,@section,@question) %> |
-<%= link_to 'Back', quiz_section_path(@quiz,@section) %>
+<%= render 'admins/admin_base' %>
