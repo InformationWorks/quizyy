@@ -40,15 +40,15 @@ GremastersWeb::Application.routes.draw do
   # Options sub-routes
   get "quizzes/get_current_attempt"
   resources :quizzes do
-    post 'question_images_upload'
-    post 'question_images_delete_all'
-    member do
-       post 'upload_full_excel'
-    end
     resources :sections do
       resources :questions do
         resources :options
       end    
+    end
+    post 'question_images_upload'
+    post 'question_images_delete_all'
+    member do
+       post 'upload_full_excel'
     end
   end
 

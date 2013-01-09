@@ -6,9 +6,16 @@
 		<header>
 			<h2><%= yield :section_form_title %></h2>
 			<ul class="data-header-actions">
-				<%= link_to(quiz_section_path(@quiz,@section),:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
-				 Cancel
-				<% end %>	
+				
+				<% if @section.new_record? %>
+				 	<%= link_to(quiz_path(@quiz),:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				 	Cancel
+					<% end %>
+				<% else %>
+				 	<%= link_to(quiz_section_path(@quiz,@section),:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				 	Cancel
+					<% end %>
+				<% end %>
 			</ul>
 		</header>
 		<section class="tab-content">

@@ -5,16 +5,23 @@
 	<div class="data-container">
 		<header>
 			<h2><%= yield :question_form_title %></h2>
+			<br />
+			<h2><%= @quiz.name %></h2>
+			<h3><%= @section.name %></h3>
+			
 			<ul class="data-header-actions">
-				<%= link_to(quizzes_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
-				 Cancel
+				<%= link_to(edit_quiz_section_question_path(@quiz,@section,@question),:class => "btn btn-warning" ) do %>
+				 Edit
+				<% end %>
+				<%= link_to(quiz_section_path(@quiz,@section),:class => "btn btn-danger" ) do %>
+				 Back to section
 				<% end %>	
 			</ul>
 		</header>
 		<section class="tab-content">
 			
 			<!-- Form starts here -->
-			<div class="span11" style="margin-left: 15px;">
+			<div class="span9" style="margin-left: 15px;">
 				  <%= form_for([@quiz,@section,@question]) do |f| %>
 				  <% if @question.errors.any? %>
 				  
@@ -30,6 +37,20 @@
 					    </ul>
 					</div>
 				  <% end %>
+				  
+				    <div class="control-group">
+						<label class="control-label" for="input"><%= f.label :type %></label>
+						<div class="controls">
+							<%= f.collection_select :type_id, Type.all,:id,:name, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :topic %></label>
+						<div class="controls">
+							<%= f.collection_select :topic_id, Topic.all,:id,:name, :class => "input-xlarge" %>
+						</div>
+					</div>
 				
 				  	<div class="control-group">
 						<label class="control-label" for="input"><%= f.label :sequence_no %></label>
@@ -38,7 +59,75 @@
 						</div>
 					</div>
 					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :instruction %></label>
+						<div class="controls">
+							<%= f.text_area :instruction, :class => "input-xlarge" %>
+						</div>
+					</div>
 					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :passage %></label>
+						<div class="controls">
+							<%= f.text_area :passage, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :que_text %></label>
+						<div class="controls">
+							<%= f.text_area :que_text, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :sol_text %></label>
+						<div class="controls">
+							<%= f.text_area :sol_text, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :option_set_count %></label>
+						<div class="controls">
+							<%= f.number_field :option_set_count, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :que_image %></label>
+						<div class="controls">
+							<%= f.text_field :que_image, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :sol_image %></label>
+						<div class="controls">
+							<%= f.text_field :sol_image, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :di_location %></label>
+						<div class="controls">
+							<%= f.text_field :di_location, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :quantity_a %></label>
+						<div class="controls">
+							<%= f.text_area :quantity_a, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :quantity_b %></label>
+						<div class="controls">
+							<%= f.text_area :quantity_b, :class => "input-xlarge" %>
+						</div>
+					</div>
 				  	
 				  	<div class="form-actions">
 						<%= f.submit :class => "btn btn-info" %>
@@ -56,64 +145,3 @@
 <% end %>
 
 <%= render 'admins/admin_base' %>
-
-
-<%= form_for([@quiz,@section,@question]) do |f| %>
-  
-
-  <div class="field">
-    <%= f.label :sequence_no %><br />
-    <%= f.number_field :sequence_no %>
-  </div>
-  <div class="field">
-    <%= f.label :instruction %><br />
-    <%= f.text_area :instruction %>
-  </div>
-  <div class="field">
-    <%= f.label :passage %><br />
-    <%= f.text_area :passage %>
-  </div>
-  <div class="field">
-    <%= f.label :que_text %><br />
-    <%= f.text_area :que_text %>
-  </div>
-  <div class="field">
-    <%= f.label :sol_text %><br />
-    <%= f.text_area :sol_text %>
-  </div>
-  <div class="field">
-    <%= f.label :option_set_count %><br />
-    <%= f.number_field :option_set_count %>
-  </div>
-  <div class="field">
-    <%= f.label :que_image %><br />
-    <%= f.text_area :que_image %>
-  </div>
-  <div class="field">
-    <%= f.label :sol_image %><br />
-    <%= f.text_area :sol_image %>
-  </div>
-  <div class="field">
-    <%= f.label :di_location %><br />
-    <%= f.text_field :di_location %>
-  </div>
-  <div class="field">
-    <%= f.label :quantity_a %><br />
-    <%= f.text_area :quantity_a %>
-  </div>
-  <div class="field">
-    <%= f.label :quantity_b %><br />
-    <%= f.text_area :quantity_b %>
-  </div>
-  <div class="field">
-    <%= f.label :type %><br />
-    <%= f.collection_select :type_id, Type.all, :id, :name %>
-  </div>
-  <div class="field">
-    <%= f.label :topic %><br />
-    <%= f.collection_select :topic_id, Topic.all, :id, :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
