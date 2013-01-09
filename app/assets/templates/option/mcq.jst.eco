@@ -3,7 +3,7 @@
         <div class="controls">
             <% for option in @options:%>
                 <label class="checkbox">
-                    <input type="checkbox" value="<%= option.id %>">
+                    <input type="checkbox" name="option<%=option.id%>" value="<%= option.id %>">
                     <span class="metro-checkbox"><%= option.content %></span>
                 </label>
             <% end %>

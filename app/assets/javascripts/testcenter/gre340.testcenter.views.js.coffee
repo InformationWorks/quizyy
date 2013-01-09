@@ -4,10 +4,12 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       question_type = @model.get('type_code')
       @template = @getOptionsTemplate(question_type)
     events:
-      'click input[type=checkbox]': 'setUserResponse'
+      'change input[type=checkbox]': 'saveUserResponse'
+      'change select': 'saveUserResponse'
+      'change input[type=text]': 'saveUserResponse'
     getOptionsTemplate:(question_type)->
       @numericEqRegEx = /NE-1|NE-2/i
-      @textCompRegEx = /TC-2|TC-3/i
+      @textCompRegEx = /TC-1|TC-2|TC-3/i
       @sipRegEx = /SIP/i
       if @numericEqRegEx.test(question_type)
         'option/ne'
@@ -17,8 +19,19 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         'option/none'
       else
         'option/mcq'
-    setUserResponse: (event)=>
-      #TODO save user response to db
+    setUserResponse: (event)->
+      switch @type
+        when "tc" then console.log 'tc'
+        when "ne" then console.log 'ne'
+    saveUserResponse:(event)->
+      options = new Backbone.Model(option for option in $('#options form').serializeArray())
+      if event.currentTarget.type == 'text'
+        attempt_details = new Backbone.Model({'attempt_details':{'question_id': @model.get('id'), 'user_input': options}})
+      else
+        attempt_details = new Backbone.Model({'attempt_details':{'question_id': @model.get('id'), 'options': options}})
+      attempt_details.url = '/api/v1/attempt_details'
+      attempt_details.save()
+  #TODO save user response to db
 
   Views.QuestionSingleView = Marionette.Layout.extend
     template: 'question/single'
