@@ -45,6 +45,11 @@ class QuizzesController < ApplicationController
   # POST /quizzes.json
   def create
     @quiz = Quiz.new(params[:quiz])
+    
+    if @quiz.quiz_type_id == QuizType.find_by_name("FullQuiz").id
+      @quiz.category_id = nil
+      @quiz.topic_id = nil
+    end
 
     respond_to do |format|
       if @quiz.save
@@ -61,6 +66,17 @@ class QuizzesController < ApplicationController
   # PUT /quizzes/1.json
   def update
     @quiz = Quiz.find(params[:id])
+    
+    # If quiz type is "FullQuiz" then category_id & topic_id should be nil
+    # Step 1: Remove category_id & topic_id from params hash
+    # Step 2: Set category_id & topic_id as nil
+    if params[:quiz][:quiz_type_id] == QuizType.find_by_name("FullQuiz").id.to_s
+      params[:quiz].delete :category_id
+      params[:quiz].delete :topic_id
+      
+      @quiz.category_id = nil
+      @quiz.topic_id = nil
+    end
 
     respond_to do |format|
       if @quiz.update_attributes(params[:quiz])

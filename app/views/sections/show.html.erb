@@ -1,60 +1,94 @@
-<p id="notice"><%= notice %></p>
+<% content_for :admin_content do %>
 
-<%= link_to (@section.quiz.name) , quiz_path(@section.quiz) %>
+<!-- Data block -->
+<article class="data-block">
+	<div class="data-container">
+		<header>
+			<h2><%= @section.quiz.name %></h2>
+			<h3><%= @section.name %></h3>
+				<span class="label">Sequence No. <%= @section.sequence_no %></span>
+				<span class="label"><%= @section.section_type.name %></span>
+			<ul class="data-header-actions">
+				<%= link_to(edit_quiz_section_path(@section.quiz,@section),:class => "btn btn-warning" ) do %>
+				 Edit
+				<% end %>
+				<%= link_to(quiz_path(@section.quiz),:class => "btn btn-danger" ) do %>
+				 Back to quiz
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span9" style="margin-left: 0px;">
+			  
+				<div class="control-group">
+					<article class="span9 data-block accordion-block decent" style="margin-left: 0px;">
+						<div class="data-container">
+							<div id="accordionName" class="accordion">
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionName" href="#accordionTabOne">Section Text</a>
+									</div>
+									<div id="accordionTabOne" class="accordion-body collapse" style="height: 0px;">
+										<div class="accordion-inner">
+											<%= text_area_tag :display_text, @section.display_text ,:rows=>40, :cols=>300,:style => "width: 710px;", :class => "tinymce" %>
+    										<%= tinymce :read %>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+						</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input"><h3>Questions</h3></label>
+					<div class="controls">
+					<table class="table table-hover">
+					 <thead>
+					  <tr>
+					    <th>Sequence no</th>
+					    <th>Type</th>
+					    <th>Topic</th>
+					    <th></th>
+					  </tr>
+					  </thead>
+					  <tbody>
+						<% @section.questions.order("sequence_no ASC").each do |question| %>
+						  <tr>
+						    <td><%= question.sequence_no %></td>
+						    <td><%= question.type ? question.type.name : "N/A" %></td>
+						    <td><%= question.topic ? question.topic.name : "N/A" %></td>
+						    <td class="toolbar">
+						      <div class="btn-group">
+						    	<%= link_to(quiz_section_question_path(question.section.quiz,question.section,question), :class => "btn") do %>
+						    	  <span class="awe-eye-open"></span>
+						    	<% end %>
+						    	<%= link_to(edit_quiz_section_question_path(question.section.quiz,question.section,question), :class => "btn") do %>
+						    	  <span class="awe-wrench"></span>
+						    	<% end %>
+						    	<%= link_to(quiz_section_question_path(question.section.quiz,question.section,question), method: :delete, data: { confirm: 'Are you sure you want to delete this quiz' }, :class => "btn") do %>
+						    	  <span class="awe-remove"></span>
+						    	<% end %>
+						      </div>
+						    </td>
+						  </tr>
+						<% end %>
+					  </tbody>
+					  </table>
+					  </div>
+				</div>
+				
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
 
-<p>
-  <b>Name:</b>
-  <%= @section.name %>
-</p>
-
-<p>
-  <b>Sequence no:</b>
-  <%= @section.sequence_no %>
-</p>
-
-<p>
-  <b>Quiz:</b>
-  <%= @section.quiz.name %>
-</p>
-<p>
-	<b>Section Text:</b>
-</p>
 <br />
-	<%= text_area_tag :display_text, @section.display_text ,:rows=>40, :cols=>300,:style => "width: 710px;", :class => "tinymce" %>
-    <%= tinymce :read %>
 
-<p>
-  <b>Section type:</b>
-  <%= @section.section_type.name %>
-</p>
+<% end %>
 
-	<p>
-	<b>Questions</b>
-	
-	<table>
-  <tr>
-    <th>Sequence no</th>
-    <th>Type</th>
-    <th>Topic</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-	<% @section.questions.order("	sequence_no ASC").each do |question| %>
-  <tr>
-    <td><%= question.sequence_no %></td>
-    <td><%= question.type ? question.type.name : "N/A" %></td>
-    <td><%= question.topic ? question.topic.name : "N/A" %></td>
-    <td><%= link_to 'Show', quiz_section_question_path(question.section.quiz,question.section,question) %></td>
-    <td><%= link_to 'Edit', edit_quiz_section_question_path(question.section.quiz,question.section,question) %></td>
-    <td><%= link_to 'Destroy', quiz_section_question_path(question.section.quiz,question.section,question), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-	<% end %>	
-	</table>
-	
-</p>
-
-
-<%= link_to 'Edit', edit_quiz_section_path(@section.quiz,@section) %> |
-<%= link_to 'Back', quiz_path(@section.quiz	) %>
+<%= render 'admins/admin_base' %>

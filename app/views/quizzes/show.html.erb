@@ -4,15 +4,23 @@
 <article class="data-block">
 	<div class="data-container">
 		<header>
-			<h2>Showing a quiz</h2>
+			<h2><%= @quiz.name %></h2>
+			<br />
+			<span class="label"><%= @quiz.quiz_type.name %></span>
+			<% if @quiz.category_id != nil %> 
+			  <span class="label"><%= @quiz.category.name %></span>
+			<% end %>
+			<% if @quiz.topic_id != nil %> 
+			  <span class="label"><%= @quiz.topic.name %></span>
+			<% end %>
 			<ul class="data-header-actions">
 				<li class="demoTabs">
-				<%= link_to(edit_quiz_path(@quiz),:class => "btn btn-warning" ) do %>
+				<%= link_to(edit_quiz_path(@quiz),:class => "btn btn-primary	" ) do %>
 				 Edit
 				<% end %>
 				</li>
 				<li class="demoTabs">
-				<%= link_to(quizzes_path,:class => "btn btn-danger") do %>
+				<%= link_to(quizzes_path,:class => "btn") do %>
 				 Back
 				<% end %>	
 				</li>
@@ -21,47 +29,17 @@
 		<section class="tab-content">
 			
 			<!-- Form starts here -->
-			<div class="span11" style="margin-left: 15px;">
+			<div class="span9" style="margin-left: 15px;">
 			  	
-			  	<div class="control-group">
-					<label class="control-label" for="input">Name</label>
-					<div class="controls">
-						<p><%= @quiz.name %></p>
-					</div>
-				</div>
-				
 				<div class="control-group">
-					<label class="control-label" for="input">Desc</label>
 					<div class="controls">
-						<p><%= @quiz.desc %></p>
+						<blockquote>
+							<p>
+							<%= text_area_tag :display_text, @quiz.desc ,:rows=>10, :cols=>40,  :disabled => true, :class=>"span8" %>
+							</p>
+						</blockquote>
 					</div>
 				</div>
-				
-				<div class="control-group">
-					<label class="control-label" for="input">QuizType</label>
-					<div class="controls">
-						<p><%= @quiz.quiz_type.name %></p>
-					</div>
-				</div>
-				
-				
-				<% if @quiz.category %>
-				<div class="control-group">
-					<label class="control-label" for="input">Category</label>
-					<div class="controls">
-						<p><%= @quiz.category.code %></p>
-					</div>
-				</div>
-				<% end %>
-				
-				<% if @quiz.topic %>
-				<div class="control-group">
-					<label class="control-label" for="input">Topic</label>
-					<div class="controls">
-						<p><%= @quiz.topic.name %></p>
-					</div>
-				</div>
-				<% end %>
 				
 				<div class="control-group">
 					<h3>Sections</h3>
