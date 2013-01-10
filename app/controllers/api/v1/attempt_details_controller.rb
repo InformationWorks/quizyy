@@ -17,8 +17,8 @@ module Api
           else
             combined_input = []
             input_str = nil
-            #an array is sent for text completion type question and a string for select in passage
-            if user_input.is_a?(Array)
+            #a hash is sent for text completion type question and a string for select in passage
+            if user_input.is_a?(Hash)
               user_input.each do |input|
                 combined_input << input[1][:value]
               end

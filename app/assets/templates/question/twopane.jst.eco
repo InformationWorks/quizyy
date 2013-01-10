@@ -10,6 +10,9 @@
             <%= @passage %>
         </p>
     </section>
+    <% if @que_image: %>
+        <img style="margin: 0 auto;" src="<%= @que_image %>" alt=""/>
+    <% end %>
 </div>
 <div class="right-pane span6 scroll-y">
 <section class="question">

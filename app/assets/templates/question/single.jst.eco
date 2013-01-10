@@ -10,6 +10,9 @@
             <%= @passage %>
         </p>
     <% end %>
+    <% if @que_image: %>
+        <img src="<%= @que_image %>" alt=""/>
+    <% end %>
     <% if @quantity_a and @quantity_b :%>
         <div class="row-fluid">
             <div class="span6 align-center">

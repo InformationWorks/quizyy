@@ -1,10 +1,25 @@
 Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
+  Views.saveAttemptDetails=(event,model)->
+    options = new Backbone.Model(option for option in $('#options form').serializeArray())
+    if event.currentTarget.type == 'text'
+      attempt_details = new Backbone.Model({'attempt_details':{'question_id': model.get('id'), 'user_input': options}})
+    else
+      attempt_details = new Backbone.Model({'attempt_details':{'question_id': model.get('id'), 'options': options}})
+    attempt_details.url = '/api/v1/attempt_details'
+    attempt_details.save()
+
   Views.OptionsView = Marionette.ItemView.extend
     initialize:(options)->
       question_type = @model.get('type_code')
+      @singleRight = false
+      if /QC|TC-1|[A-Z]*-MCQ-1/i.test(question_type)
+        @singleRight = true
       @template = @getOptionsTemplate(question_type)
+    templateHelpers: ->
+      singleRight: @singleRight
     events:
       'change input[type=checkbox]': 'saveUserResponse'
+      'change input[type=radio]': 'saveUserResponse'
       'change select': 'saveUserResponse'
       'change input[type=text]': 'saveUserResponse'
     getOptionsTemplate:(question_type)->
@@ -24,13 +39,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         when "tc" then console.log 'tc'
         when "ne" then console.log 'ne'
     saveUserResponse:(event)->
-      options = new Backbone.Model(option for option in $('#options form').serializeArray())
-      if event.currentTarget.type == 'text'
-        attempt_details = new Backbone.Model({'attempt_details':{'question_id': @model.get('id'), 'user_input': options}})
-      else
-        attempt_details = new Backbone.Model({'attempt_details':{'question_id': @model.get('id'), 'options': options}})
-      attempt_details.url = '/api/v1/attempt_details'
-      attempt_details.save()
+      Views.saveAttemptDetails(event,@model)
   #TODO save user response to db
 
   Views.QuestionSingleView = Marionette.Layout.extend
@@ -80,6 +89,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       attempt_details = new Backbone.Model({'attempt_details':{'question_id': @model.get('id'), 'user_input': sentence_index}})
       attempt_details.url = '/api/v1/attempt_details'
       attempt_details.save()
+
   Views.SectionInfoView = Marionette.ItemView.extend
     template: 'question/section'
     tagName: "div"
