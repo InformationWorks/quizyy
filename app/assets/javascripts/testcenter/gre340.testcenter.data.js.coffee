@@ -44,7 +44,7 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
 
   Data.Models.Quiz = Backbone.AssociatedModel.extend
     initialize:->
-      @on 'change',(quiz) ->
+      @on 'change:id',(quiz) ->
         Gre340.vent.trigger('quiz:changed', quiz)
     relations: [
       type: Backbone.Many

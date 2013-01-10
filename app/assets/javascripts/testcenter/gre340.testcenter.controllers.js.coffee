@@ -214,9 +214,14 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
 
   Gre340.vent.on "quiz:changed", (quiz) ->
     console.log('quiz changed')
+    qc = Controllers.questionController
+    qc.setCurrentSectionCollection(quiz.get('sections')) unless qc.getCurrentSection()?
+    qc.setCurrentSection(qc.getCurrentSectionCollection().get(qc.attempt.get('current_section_id'))) if qc.attempt.get('current_section_id')?
+    qc.setCurrentQuestion(qc.getCurrentSection().get('questions').get(qc.attempt.get('current_question_id'))) if qc.getCurrentSection()? and qc.attempt.get('current_question_id')?
+
     if Controllers.questionController.getCurrentSection()?
       if Controllers.questionController.getCurrentQuestion()?
-        Controllers.questionController.showQuestionById(Controllers.questionController.getCurrentQuestion().get('id'))
+        Controllers.questionController.startSection(Controllers.questionController.getCurrentSection(),Controllers.questionController.getCurrentQuestion().get('sequence_no'))
       else
         Controllers.questionController.startSection(Controllers.questionController.getCurrentSection(),null)
     else
