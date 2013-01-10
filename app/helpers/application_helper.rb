@@ -1,4 +1,9 @@
 module ApplicationHelper
+  
+  def s3_base_url
+    return ENV["GRE340_S3_BUCKET_URL"]
+  end
+  
   def resource_name
     :user
   end
