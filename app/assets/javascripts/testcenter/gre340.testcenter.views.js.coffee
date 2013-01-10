@@ -74,14 +74,23 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     makeFullHeight: ->
       $('body').addClass('fill')
     onRender:()->
-      console.log @model
       if /SIP/i.test @model.get('type_code')
+        @attempt_details = new Backbone.Collection()
+        @attempt_details.url =  '/api/v1/attempt_details'
+        @attempt_details.fetch(data: $.param({ attempt_id: Gre340.request('currentAttemptId'), question_id: @model.get('id')}), async: false )
+        @selected_sentence = null
+        if @attempt_details.length > 0
+          @selected_sentence = @attempt_details.first().get('user_input')
+
         sentences = @$('.passage').text().split('.')
         passage_with_sentences = ''
         i = 0
         for sentence in sentences
           if sentence.trim() != ''
-            passage_with_sentences = passage_with_sentences+'<span class="sentence" data-index='+'"'+i+'">'+ sentence + '.</span>'
+            if @selected_sentence? and parseInt(@selected_sentence)==i
+              passage_with_sentences = passage_with_sentences+'<span class="sentence selected" data-index='+'"'+i+'">'+ sentence + '.</span>'
+            else
+              passage_with_sentences = passage_with_sentences+'<span class="sentence" data-index='+'"'+i+'">'+ sentence + '.</span>'
             i++
         @$('.passage').html(passage_with_sentences)
       else
