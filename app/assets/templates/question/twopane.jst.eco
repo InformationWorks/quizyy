@@ -6,10 +6,13 @@
     </section>
     <hr>
     <section class="left-content">
-        <p>
+        <p class="passage">
             <%= @passage %>
         </p>
     </section>
+    <% if @que_image: %>
+        <img style="margin: 0 auto;" src="<%= @que_image %>" alt=""/>
+    <% end %>
 </div>
 <div class="right-pane span6 scroll-y">
 <section class="question">

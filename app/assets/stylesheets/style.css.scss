@@ -6,6 +6,7 @@
   $light-blue:#2FBFED;
   $other-blue:#2f87ed;
   $light-grey:#f7f7f7;
+  $grey: #d3d3d3;
   $style: solid;
   /** resets **/
   body{
@@ -41,6 +42,11 @@
   }
   label.checkbox input[type="checkbox"] ~ span.metro-checkbox::after {
     font-family: none;
+  }
+
+  .center {
+    display: table;
+    margin: 30px auto;
   }
   /** navbar styles **/
   body{
@@ -185,13 +191,17 @@
 #content{
   margin-top: 30px;
 }
-
 #action-bar{
   position: fixed;
   top: 0px;
+  left:0px;
   z-index: 1999;
   background-color: white;
-  width: 90%;
+  width: 100%;
+  .row{
+   width: 90%;
+    margin: auto;
+  }
   .span6{
     width: 500px;
   }
@@ -250,7 +260,15 @@
     width:35%;
     left: 10%;
     bottom: 120px;
-
+    .sentence{
+      cursor: pointer;
+    }
+    .sentence:hover{
+      background-color: $grey;
+    }
+    .sentence.selected{
+      background-color: $light-blue;
+    }
   }
   .right-pane{
     position: absolute;

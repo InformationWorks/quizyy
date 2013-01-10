@@ -1,6 +1,8 @@
 <form>
     <% first = @options[0..2] %>
-    <% second = @options[3..5] %>
+    <% if @options.length is 6: %>
+        <% second = @options[3..5] %>
+    <% end %>
     <% if @options.length is 9: %>
        <% third = @options[6..8] %>
     <% end %>
@@ -8,30 +10,32 @@
     <div class="control-group pull-left" style="margin-right: 10px;">
         <div class="controls">
             <label>(i)</label>
-            <select multiple="multiple">
+            <select name="option1" multiple="multiple">
                 <% for option in first: %>
-                    <option><%= option.content %></option>
+                    <option value="<%=option.id%>"><%= option.content %></option>
                 <% end %>
             </select>
         </div>
     </div>
+    <% if second: %>
     <div class="control-group pull-left" style="margin-right: 10px;">
         <div class="controls">
             <label>(ii)</label>
-            <select multiple="multiple">
+            <select name="option2" multiple="multiple">
                 <% for option in second: %>
-                    <option><%= option.content %></option>
+                    <option value="<%=option.id%>"><%= option.content %></option>
                 <% end %>
             </select>
         </div>
     </div>
+    <% end %>
     <% if third: %>
         <div class="control-group pull-left" style="margin-right: 10px;">
             <div class="controls">
                 <label>(iii)</label>
-                <select multiple="multiple">
+                <select name="option3" multiple="multiple">
                     <% for option in third: %>
-                    <option><%= option.content %></option>
+                    <option value="<%=option.id%>"><%= option.content %></option>
                     <% end %>
                 </select>
             </div>

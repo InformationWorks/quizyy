@@ -3,9 +3,9 @@
         <div class="controls">
             <% if @options.length is 1:%>
                 <% if @options.pop().content.split(',').length is 2: %>
-                    <input type="text"> <hr style="width: 200px;"/> <input type="text"/>
+                    <input name="first" type="text"> <hr style="width: 200px;"/> <input name="second" type="text"/>
                 <% else: %>
-                    <input type="text">
+                    <input name="first" type="text">
                 <% end %>
             <% end %>
         </div>

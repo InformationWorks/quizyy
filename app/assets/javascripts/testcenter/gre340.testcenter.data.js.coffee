@@ -8,6 +8,8 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
 
   Data.Collections.OptionsCollection = Backbone.Collection.extend
     model: Data.Models.Option
+    comparator:(item) ->
+      item.get('sequence_no')
 
   Data.Models.Question  = Backbone.AssociatedModel.extend
     relations: [

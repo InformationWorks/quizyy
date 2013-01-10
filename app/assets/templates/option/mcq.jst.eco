@@ -1,12 +1,22 @@
 <form class="form-horizontal">
     <div class="control-group">
         <div class="controls">
-            <% for option in @options:%>
+            <% if @singleRight: %>
+                <% for option in @options:%>
+                <label class="radio">
+                    <input type="radio" name="option" value="<%= option.id %>">
+                    <span class="metro-radio"><%= option.content %></span>
+                </label>
+                <% end %>
+            <% else: %>
+                <% for option in @options:%>
                 <label class="checkbox">
-                    <input type="checkbox" value="<%= option.id %>">
+                    <input type="checkbox" name="option" value="<%= option.id %>">
                     <span class="metro-checkbox"><%= option.content %></span>
                 </label>
+                <% end %>
             <% end %>
         </div>
     </div>
 </form>
+

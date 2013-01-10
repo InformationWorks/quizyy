@@ -1,13 +1,30 @@
 Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
+  Views.saveAttemptDetails=(event,model)->
+    options = new Backbone.Model(option for option in $('#options form').serializeArray())
+    if event.currentTarget.type == 'text'
+      attempt_details = new Backbone.Model({'attempt_details':{'question_id': model.get('id'), 'user_input': options}})
+    else
+      attempt_details = new Backbone.Model({'attempt_details':{'question_id': model.get('id'), 'options': options}})
+    attempt_details.url = '/api/v1/attempt_details'
+    attempt_details.save()
+
   Views.OptionsView = Marionette.ItemView.extend
     initialize:(options)->
       question_type = @model.get('type_code')
+      @singleRight = false
+      if /QC|TC-1|[A-Z]*-MCQ-1/i.test(question_type)
+        @singleRight = true
       @template = @getOptionsTemplate(question_type)
+    templateHelpers: ->
+      singleRight: @singleRight
     events:
-      'click input[type=checkbox]': 'setUserResponse'
+      'change input[type=checkbox]': 'saveUserResponse'
+      'change input[type=radio]': 'saveUserResponse'
+      'change select': 'saveUserResponse'
+      'change input[type=text]': 'saveUserResponse'
     getOptionsTemplate:(question_type)->
       @numericEqRegEx = /NE-1|NE-2/i
-      @textCompRegEx = /TC-2|TC-3/i
+      @textCompRegEx = /TC-1|TC-2|TC-3/i
       @sipRegEx = /SIP/i
       if @numericEqRegEx.test(question_type)
         'option/ne'
@@ -17,8 +34,13 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         'option/none'
       else
         'option/mcq'
-    setUserResponse: (event)=>
-      #TODO save user response to db
+    setUserResponse: (event)->
+      switch @type
+        when "tc" then console.log 'tc'
+        when "ne" then console.log 'ne'
+    saveUserResponse:(event)->
+      Views.saveAttemptDetails(event,@model)
+  #TODO save user response to db
 
   Views.QuestionSingleView = Marionette.Layout.extend
     template: 'question/single'
@@ -31,13 +53,16 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     removeFullHeight: ->
       $('body').removeClass('fill')
     onRender:()->
+      if /<BLANK-[A-Z]*>/gi.test @$('.question').text()
+        @$('.question').html(@$('.question').text().replace(/<BLANK-[A-Z]*>/gi,'<div class="blank"></div>'))
       @optionsRegion.show(new Views.OptionsView(model: @model))
-      @$('.question').html(@$('.question').text().replace(/<BLANK-[A-Z]*>/gi,'<div class="blank"></div>'))
 
   Views.QuestionTwoPaneView = Marionette.Layout.extend
     template: 'question/twopane'
     tagName: "div"
     className: "row"
+    events:
+      'click .sentence': 'saveSentenceSelection'
     regions:
       optionsRegion: '#options'
     initialize: (options) ->
@@ -45,7 +70,25 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     makeFullHeight: ->
       $('body').addClass('fill')
     onRender:()->
-      @optionsRegion.show(new Views.OptionsView(model: @model))
+      console.log @model
+      if /SIP/i.test @model.get('type_code')
+        sentences = @$('.passage').text().split('.')
+        passage_with_sentences = ''
+        i = 0
+        for sentence in sentences
+          if sentence.trim() != ''
+            passage_with_sentences = passage_with_sentences+'<span class="sentence" data-index='+'"'+i+'">'+ sentence + '.</span>'
+            i++
+        @$('.passage').html(passage_with_sentences)
+      else
+        @optionsRegion.show(new Views.OptionsView(model: @model))
+    saveSentenceSelection:(event)->
+      @$('.sentence').removeClass('selected')
+      @$(event.currentTarget).addClass('selected')
+      sentence_index = event.currentTarget.attributes['data-index'].value
+      attempt_details = new Backbone.Model({'attempt_details':{'question_id': @model.get('id'), 'user_input': sentence_index}})
+      attempt_details.url = '/api/v1/attempt_details'
+      attempt_details.save()
 
   Views.SectionInfoView = Marionette.ItemView.extend
     template: 'question/section'
