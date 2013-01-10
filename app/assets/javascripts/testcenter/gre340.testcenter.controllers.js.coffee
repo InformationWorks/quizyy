@@ -240,9 +240,14 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
   Gre340.vent.on "exit:section", ->
     controller = Controllers.questionController
     controller.startNextSection()
+
+  #request handlers
+  Gre340.reqres.addHandler "currentAttemptId", ()->
+    Controllers.questionController.attempt.get('id')
+
   Controllers.addInitializer ->
     Controllers.questionController = new QuestionController()
 
-  Controllers.addFinalizer ->
+    Controllers.addFinalizer ->
     Backbone.history.stop() if Backbone.history
     #console.log 'stopped controller testcenter'

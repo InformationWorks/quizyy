@@ -13,10 +13,14 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       question_type = @model.get('type_code')
       @singleRight = false
       if /QC|TC-1|[A-Z]*-MCQ-1/i.test(question_type)
-        @singleRight = true
+        @oneRightAnswer = true
       @template = @getOptionsTemplate(question_type)
+      @attempt_details = new Backbone.Collection()
+      @attempt_details.url =  '/api/v1/attempt_details'
+      @attempt_details.fetch(data: $.param({ attempt_id: Gre340.request('currentAttemptId'), question_id: @model.get('id')}), async: false )
     templateHelpers: ->
-      singleRight: @singleRight
+      oneRightAnswer: @oneRightAnswer
+      attempt_details: @attempt_details
     events:
       'change input[type=checkbox]': 'saveUserResponse'
       'change input[type=radio]': 'saveUserResponse'
