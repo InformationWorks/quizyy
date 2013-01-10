@@ -31,10 +31,10 @@
           		  json.passage question.passage
           		  json.quantity_a question.quantity_a
           		  json.quantity_b question.quantity_b
-          		  json.que_image question.que_image
+          		  json.que_image question.que_image_url
           		  json.que_text question.que_text
           		  json.sequence_no question.sequence_no
-          		  json.sol_image question.sol_image
+          		  json.sol_image question.sol_image_url
           		  json.sol_text question.sol_text
           		  json.topic_id question.topic_id
           		  json.topic_name question.topic ? question.topic.name : nil
