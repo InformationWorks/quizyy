@@ -32,40 +32,38 @@
 
         <a class="pull-left" href="/"><%= image_tag("gre340-02.png",:width=> 85, :height => 70)%></a>
 
-        <div id="main-nav-menu" class="dropdown pull-left">
-          <a class="header-dropdown dropdown-toggle accent-color" data-toggle="dropdown" href="#" data-no-turbolink>
-            <% if content_for?(:nav_menu_header) %>
-  			  <%= yield(:nav_menu_header) %>
-  			<% else %>
-  			  Test Hub
+		<% if current_user %>
+	        <div id="main-nav-menu" class="dropdown pull-left">
+	          <a class="header-dropdown dropdown-toggle accent-color" data-toggle="dropdown" href="#" data-no-turbolink>
+	            <% if content_for?(:nav_menu_header) %>
+	  			  <%= yield(:nav_menu_header) %>
+	  			<% else %>
+	  			  Test Hub
+				<% end %>
+	            <b class="caret"></b>
+	          </a>
+				<ul class="dropdown-menu">
+					<li><%= link_to "Test Hub",homes_index_path,:"data-no-turbolink" => true %></li>
+	                <li><%= link_to "Store", stores_timed_tests_path,:"data-no-turbolink" => true %></li>
+					<% if current_user.can? :administer, :app %>
+	                	<li><%= link_to "Admin", admins_home_path,:"data-no-turbolink"=>true%></li>
+	            	<% end %>
+	            	<li class="divider"></li>
+	            	<li><%= link_to 'Logout', destroy_user_session_url, :method => 'delete' %></li>
+	            </ul>
+	        </div>
+	      </div>
+	      <div id="second-nav">
+	      	
+	      	<% if content_for?(:store_header_dropdown) %>
+	  			<%= yield(:store_header_dropdown) %>
 			<% end %>
-            <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu">
-
-            <% if current_user.can? :administer, :app %>
-                <li><%= link_to "Test Hub",homes_index_path,:"data-no-turbolink" => true %></li>
-                <li><%= link_to "Store", stores_timed_tests_path,:"data-no-turbolink" => true %></li>
-                <li><%= link_to "Admin", admins_home_path,:"data-no-turbolink"=>true%></li>
-            <%else%>
-                <li><%= link_to "Test Hub",homes_index_path %></li>
-                <li><%= link_to "Store", stores_timed_tests_path%></li>
-            <% end %>
-            <li class="divider"></li>
-            <li><%= link_to 'Logout', destroy_user_session_url, :method => 'delete' %></li>
-          </ul>
-        </div>
-      </div>
-      <div id="second-nav">
-      	
-      	<% if content_for?(:store_header_dropdown) %>
-  			<%= yield(:store_header_dropdown) %>
-		<% end %>
-      	
-        <form class="navbar-search pull-left">
-          <input type="text" class="search-query" placeholder="Search">
-        </form>
-      </div>
+	      	
+	        <form class="navbar-search pull-left">
+	          <input type="text" class="search-query" placeholder="Search">
+	        </form>
+	      </div>
+      <% end %>
     </div>
   </div>
 </header>
