@@ -2,6 +2,7 @@ module Api
   module V1
     class AttemptDetailsController < Api::V1::BaseController
       def create
+        #TODO remove current_attempt dependency
         question_id = params[:attempt_details][:question_id]
         options = params[:attempt_details][:options]
         #if options are not sent means the question is TC or SIP in which user provide input
@@ -35,6 +36,21 @@ module Api
         rescue => e
           respond_to do |format|
             format.json { render :json => {:success=>false, :message => e.message} }
+          end
+        end
+      end
+
+      def index
+        question_id = params[:question_id]
+        attempt_id = params[:attempt_id]
+        begin
+          attempt_details = AttemptDetail.where(:attempt_id => attempt_id,:question_id => question_id)
+          respond_to do |format|
+            format.json {render :json => attempt_details}
+          end
+        rescue => e
+          respond_to do |format|
+            format.json {render :json => {success=> false, :message => e.message}}
           end
         end
       end
