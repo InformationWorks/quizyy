@@ -4,6 +4,7 @@ module Api
       def create
         question_id = params[:attempt_details][:question_id]
         options = params[:attempt_details][:options]
+        #if options are not sent means the question is TC or SIP in which user provide input
         if options.nil?
           user_input = params[:attempt_details][:user_input]
         end
@@ -15,10 +16,18 @@ module Api
             end
           else
             combined_input = []
-            user_input.each do |input|
-              combined_input << input[1][:value]
+            input_str = nil
+            #an array is sent for text completion type question and a string for select in passage
+            if user_input.is_a?(Array)
+              user_input.each do |input|
+                combined_input << input[1][:value]
+              end
+              input_str=combined_input.join(',')
+            elsif user_input.is_a?(String)
+              input_str = user_input
             end
-            AttemptDetail.create(:attempt_id=>current_attempt.id,:question_id=>question_id,:user_input=>combined_input.join(','))
+
+            AttemptDetail.create(:attempt_id=>current_attempt.id,:question_id=>question_id,:user_input=>input_str)
           end
           respond_to do |format|
             format.json { render :json => {:success=>true} }

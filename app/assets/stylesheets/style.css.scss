@@ -6,6 +6,7 @@
   $light-blue:#2FBFED;
   $other-blue:#2f87ed;
   $light-grey:#f7f7f7;
+  $grey: #d3d3d3;
   $style: solid;
   /** resets **/
   body{
@@ -254,7 +255,15 @@
     width:35%;
     left: 10%;
     bottom: 120px;
-
+    .sentence{
+      cursor: pointer;
+    }
+    .sentence:hover{
+      background-color: $grey;
+    }
+    .sentence.selected{
+      background-color: $light-blue;
+    }
   }
   .right-pane{
     position: absolute;

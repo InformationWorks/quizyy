@@ -44,13 +44,16 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     removeFullHeight: ->
       $('body').removeClass('fill')
     onRender:()->
+      if /<BLANK-[A-Z]*>/gi.test @$('.question').text()
+        @$('.question').html(@$('.question').text().replace(/<BLANK-[A-Z]*>/gi,'<div class="blank"></div>'))
       @optionsRegion.show(new Views.OptionsView(model: @model))
-      @$('.question').html(@$('.question').text().replace(/<BLANK-[A-Z]*>/gi,'<div class="blank"></div>'))
 
   Views.QuestionTwoPaneView = Marionette.Layout.extend
     template: 'question/twopane'
     tagName: "div"
     className: "row"
+    events:
+      'click .sentence': 'saveSentenceSelection'
     regions:
       optionsRegion: '#options'
     initialize: (options) ->
@@ -58,8 +61,25 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     makeFullHeight: ->
       $('body').addClass('fill')
     onRender:()->
-      @optionsRegion.show(new Views.OptionsView(model: @model))
-
+      console.log @model
+      if /SIP/i.test @model.get('type_code')
+        sentences = @$('.passage').text().split('.')
+        passage_with_sentences = ''
+        i = 0
+        for sentence in sentences
+          if sentence.trim() != ''
+            passage_with_sentences = passage_with_sentences+'<span class="sentence" data-index='+'"'+i+'">'+ sentence + '.</span>'
+            i++
+        @$('.passage').html(passage_with_sentences)
+      else
+        @optionsRegion.show(new Views.OptionsView(model: @model))
+    saveSentenceSelection:(event)->
+      @$('.sentence').removeClass('selected')
+      @$(event.currentTarget).addClass('selected')
+      sentence_index = event.currentTarget.attributes['data-index'].value
+      attempt_details = new Backbone.Model({'attempt_details':{'question_id': @model.get('id'), 'user_input': sentence_index}})
+      attempt_details.url = '/api/v1/attempt_details'
+      attempt_details.save()
   Views.SectionInfoView = Marionette.ItemView.extend
     template: 'question/section'
     tagName: "div"

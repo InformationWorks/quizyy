@@ -5,14 +5,28 @@
 </section>
 <hr>
 <section class="question">
-    <% if @passage && @passage != "-" : %>
+    <% if @passage and @passage != "-" : %>
         <p>
             <%= @passage %>
         </p>
     <% end %>
-    <p>
-        <%= @que_text %>
-    </p>
+    <% if @quantity_a and @quantity_b :%>
+        <div class="row-fluid">
+            <div class="span6 align-center">
+                <h3>Quantity A</h3>
+                <p><%= @quantity_a %></p>
+            </div>
+            <div class="span6 align-center">
+                <h3>Quantity B</h3>
+                <p><%= @quantity_b %></p>
+            </div>
+        </div>
+    <% else : %>
+        <p>
+            <%= @que_text %>
+        </p>
+    <% end %>
+
 </section>
 <section id="options">
 

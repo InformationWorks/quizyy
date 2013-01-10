@@ -6,7 +6,7 @@
     </section>
     <hr>
     <section class="left-content">
-        <p>
+        <p class="passage">
             <%= @passage %>
         </p>
     </section>
