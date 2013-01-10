@@ -7,13 +7,77 @@
 			<h2><%= @quiz.name %></h2>
 			<br />
 			<span class="label"><%= @quiz.quiz_type.name %></span>
+			
+			<!-- Category & Topic -->
 			<% if @quiz.category_id != nil %> 
 			  <span class="label"><%= @quiz.category.name %></span>
 			<% end %>
 			<% if @quiz.topic_id != nil %> 
 			  <span class="label"><%= @quiz.topic.name %></span>
 			<% end %>
+			
+			<!-- In-Store / Waiting Approval / Unpublished. -->
+			<% if @quiz.approved %>
+	    		<span class="label label-success">In-Store</span>
+	    	<% elsif @quiz.published %>
+	    		<span class="label label-warning">Awaiting approval</span>
+			<% else %>
+	    		<span class="label label-error">Unpublished</span>						    		
+	    	<% end %>
+			
 			<ul class="data-header-actions">
+				
+				<!-- Publisher account -->
+				<% if current_user.role? :publisher %>
+					
+					<% if @quiz.approved %>
+						<li class="demoTabs">
+						<a class="btn disabled" href="#">In-Store</a>
+						</li>
+					<% elsif @quiz.published %>
+						<li class="demoTabs">
+						<%= button_to('Un-Publish', { :action => "unpublish", :quiz_id => @quiz.id } , :confirm => 'Are you sure you want to unpublish this test?',
+          					:method => "post", :remote => false, :disable_with => 'unpublishing...') %>
+						</li>
+					<% else %>	
+						<li class="demoTabs">
+						<%= button_to('Publish', quiz_publish_path(@quiz) , :confirm => 'Are you sure you want to publish this test?',
+          					:method => :post, :remote => false, :disable_with => 'publishing...') %>
+						</li>
+					<% end %>
+				
+				<% end %>
+				
+				<!-- Admin account -->
+				<% if (current_user.role? :admin) || (current_user.role? :super_admin) %>
+					
+					<% if @quiz.approved %>
+						<li class="demoTabs">
+						<%= button_to('Un-Approve', { :action => "unapprove", :quiz_id => @quiz.id } , :confirm => 'Are you sure you want to unapprove this test?',
+          					:method => "post", :remote => false, :disable_with => 'unpublishing...') %>
+						</li>
+					<% else %>	
+						
+						<% if @quiz.published %>
+							<li class="demoTabs">
+							<%= button_to('Approve', { :action => "approve", :quiz_id => @quiz.id } , :confirm => 'Are you sure you want to approve this test?',
+	          					:method => "post", :remote => false, :disable_with => 'unpublishing...') %>
+							</li>
+							<li class="demoTabs">
+							<%= button_to('Reject', { :action => "reject", :quiz_id => @quiz.id } , :confirm => 'Are you sure you want to reject this test?',
+	          					:method => "post", :remote => false, :disable_with => 'unpublishing...') %>
+							</li>
+						<% else %>
+							<li class="demoTabs">
+							<%= button_to('Publish', { :action => "publish", :quiz_id => @quiz.id } , :confirm => 'Are you sure you want to publish this test?',
+	          					:method => "post", :remote => false, :disable_with => 'publishing...') %>
+							</li>
+						<% end %>
+						
+					<% end %>
+				
+				<% end %>
+				
 				<li class="demoTabs">
 				<%= link_to(edit_quiz_path(@quiz),:class => "btn btn-primary	" ) do %>
 				 Edit

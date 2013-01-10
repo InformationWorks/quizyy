@@ -50,6 +50,11 @@ GremastersWeb::Application.routes.draw do
     member do
        post 'upload_full_excel'
     end
+    post 'publish'
+    post 'unpublish'
+    post 'approve'
+    post 'unapprove'
+    post 'reject'
   end
 
   resources :section_types
