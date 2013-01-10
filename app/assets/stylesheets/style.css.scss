@@ -43,6 +43,11 @@
   label.checkbox input[type="checkbox"] ~ span.metro-checkbox::after {
     font-family: none;
   }
+
+  .center {
+    display: table;
+    margin: 30px auto;
+  }
   /** navbar styles **/
   body{
     header{
