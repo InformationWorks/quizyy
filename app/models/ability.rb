@@ -11,7 +11,7 @@ class Ability
       # Roles for admins to approve quiz.
       # can :manage, [Product, Asset, Issue]
       can :administer, :app
-      can :manage, [Quiz,Section,Question,Option]
+      can :manage, [Quiz,Section,Question,Option,User]
       can :read, [Category,Type,Topic,Package,QuizType,SectionType]
     elsif user.role? :publisher
       # Roles for publishers to create & publish a quiz.
