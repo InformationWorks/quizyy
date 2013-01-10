@@ -49,12 +49,13 @@ class OptionsController < ApplicationController
   # POST /options
   # POST /options.json
   def create
+    
     @option = Option.new(params[:option])
     @option.question_id = params[:question_id]
 
     respond_to do |format|
       if @option.save
-        format.html { redirect_to  [@option.question.section.quiz,@option.question.section,@option.question,@option], notice: 'Option was successfully created.' }
+        format.html { redirect_to [@option.question.section.quiz,@option.question.section,@option.question], notice: 'Option was successfully created.' }
         format.json { render json: [@option.question.section.quiz,@option.question.section,@option.question,@option], status: :created, location: @option }
       else
         format.html { render action: "new" }
@@ -67,11 +68,12 @@ class OptionsController < ApplicationController
   # PUT /options/1.json
   def update
 
+    load_quiz_section_and_question
     load_option
 
     respond_to do |format|
       if @option.update_attributes(params[:option])
-        format.html { redirect_to [@option.question.section.quiz,@option.question.section,@option.question,@option], notice: 'Option was successfully updated.' }
+        format.html { redirect_to [@quiz,@section,@question], notice: 'Option was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

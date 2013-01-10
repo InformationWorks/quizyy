@@ -1,24 +1,82 @@
-<p id="notice"><%= notice %></p>
+<% content_for :admin_content do %>
 
-<%= link_to (@option.question.section.quiz.name) , quiz_path(@option.question.section.quiz) %> ->
-<%= link_to (@option.question.section.name) , quiz_section_path(@option.question.section.quiz,@option.question.section) %> ->
-<%= link_to ("Q#"+@option.question.sequence_no.to_s) , quiz_section_question_path(@option.question.section.quiz,@option.question.section,@option.question) %>
+<!-- Data block -->
+<article class="data-block">
+	<div class="data-container">
+		<header>
+			<h2><%= @quiz.name %></h2>
+			<h3><%= @section.name %></h3>
+			<h3>Question # <%= @question.sequence_no %></h3>
+			<% if @question.type %>
+			<span class="label">
+			  <%= @question.type ? @question.type.name : "N/A" %>
+			</span>
+			<% end %>
+			
+			<% if @question.topic %>
+			<span class="label">
+			  <%= @question.topic ? @question.topic.name : "N/A" %>
+			</span>
+			<% end %>
+			
+			<ul class="data-header-actions">
+				<%= link_to(edit_quiz_section_question_option_path(@quiz,@section,@question,@option),:class => "btn btn-warning" ) do %>
+				 Edit
+				<% end %>
+				<%= link_to(quiz_section_question_path(@quiz,@section,@question),:class => "btn btn-danger" ) do %>
+				 Back to question
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span9" style="margin-left: 0px;">
+				
+				<div class="control-group">
+					<label class="control-label" for="input">Sequence No.</label>
+					<div class="controls">
+						<p>
+						 <%= @option.sequence_no %>
+						</p>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input">Content</label>
+					<div class="controls">
+						<p>
+						 <%= @option.content %>
+						</p>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="input">Correct</label>
+					<div class="controls">
+						
+						<p>
+							
+						 <% if @option.correct %> 
+						 	<span class="label label-success">True</span> 
+						 <% else %>
+						 	<span class="label label-failure">False</span>
+						 <% end %>
+						 
+						</p>
+					
+					</div>
+				</div>
+				
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
 
-<p>
-  <b>Content:</b>
-  <%= @option.content %>
-</p>
+<br />
 
-<p>
-  <b>Correct:</b>
-  <%= @option.correct %>
-</p>
+<% end %>
 
-<p>
-  <b>Question:</b>
-  <%= @option.question ? @option.question.sequence_no : "N/A" %>
-</p>
-
-
-<%= link_to 'Edit', edit_quiz_section_question_option_path(@option.question.section.quiz,@option.question.section,@option.question,@option) %> |
-<%= link_to 'Back', quiz_section_question_path(@quiz,@section,@question) %>
+<%= render 'admins/admin_base' %>

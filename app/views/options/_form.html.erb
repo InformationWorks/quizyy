@@ -1,25 +1,70 @@
-<%= form_for([@quiz,@section,@question,@option]) do |f| %>
-  <% if @option.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@option.errors.count, "error") %> prohibited this option from being saved:</h2>
+<% content_for :admin_content do %>
 
-      <ul>
-      <% @option.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<!-- Data block -->
+<article class="data-block">
+	<div class="data-container">
+		<header>
+			<h2><%= yield :option_form_title %></h2>
+			<ul class="data-header-actions">
+				<%= link_to(quiz_section_question_path(@quiz,@section,@question),:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				 Cancel
+				<% end %>	
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span11" style="margin-left: 15px;">
+				  <%= form_for([@quiz,@section,@question,@option]) do |f| %>
+				  <% if @option.errors.any? %>
+				  
+				  	<div class="alert alert-error">
+						<button class="close" data-dismiss="alert"></button>
+						<strong><%= pluralize(@option.errors.count, "error") %> prohibited this option from being saved!</strong>
+						<br />
+						<br /> 
+						<ul>
+					      <% @option.errors.full_messages.each do |msg| %>
+					        <li><%= msg %></li>
+					      <% end %>
+					    </ul>
+					</div>
+				  <% end %>
+				
+				  	<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :content %></label>
+						<div class="controls">
+							<%= f.text_area :content, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :correct %></label>
+						<div class="controls">
+							<%= f.check_box :correct, :class => "input-xlarge" %>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="input"><%= f.label :sequence_no %></label>
+						<div class="controls">
+							<%= f.number_field :sequence_no, :class => "input-xlarge" %>
+						</div>
+					</div>
+				  	
+				  	<div class="form-actions">
+						<%= f.submit :class => "btn btn-info" %>
+					</div>
+				<% end %>
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
 
-  <div class="field">
-    <%= f.label :content %><br />
-    <%= f.text_area :content %>
-  </div>
-  <div class="field">
-    <%= f.label :correct %><br />
-    <%= f.check_box :correct %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<br />
+
 <% end %>
+
+<%= render 'admins/admin_base' %>
