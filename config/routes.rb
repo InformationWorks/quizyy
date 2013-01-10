@@ -14,6 +14,9 @@ GremastersWeb::Application.routes.draw do
       resources :attempts, :only => [:index, :update], defaults: { format: :json } do
   
       end
+      resources :attempt_details, :only => [:create], defaults: { format: :json } do
+
+      end
     end
   end
 

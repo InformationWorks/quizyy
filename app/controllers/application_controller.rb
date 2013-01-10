@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :store_location
   before_filter :instantiate_controller_and_action_names
-  
+
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
     
