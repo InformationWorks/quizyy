@@ -8,7 +8,11 @@ class QuizzesController < ApplicationController
   # GET /quizzes
   # GET /quizzes.json
   def index
+    
     @quizzes = Quiz.all
+    @full_quizzes = Quiz.where(:quiz_type_id => QuizType.find_by_name("FullQuiz"))
+    @category_quizzes = Quiz.where(:quiz_type_id => QuizType.find_by_name("CategoryQuiz"))
+    @topic_quizzes = Quiz.where(:quiz_type_id => QuizType.find_by_name("TopicQuiz"))
 
     respond_to do |format|
       format.html # index.html.erb
