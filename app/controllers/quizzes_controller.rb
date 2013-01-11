@@ -149,6 +149,66 @@ class QuizzesController < ApplicationController
     
   end
   
+  def publish
+    
+    @quiz = Quiz.find(params[:quiz_id])
+    @quiz.published = true
+    @quiz.publisher_id = current_user.id
+    @quiz.published_at = DateTime.now
+    @quiz.save!
+    
+    redirect_to @quiz, notice: "Quiz published successfully."
+    
+  end
+  
+  def unpublish
+    
+    @quiz = Quiz.find(params[:quiz_id])
+    @quiz.published = false
+    @quiz.publisher_id = current_user.id
+    @quiz.published_at = DateTime.now
+    @quiz.save!
+    
+    redirect_to @quiz, notice: "Quiz unpublished successfully."
+    
+  end
+  
+  def approve
+    
+    @quiz = Quiz.find(params[:quiz_id])
+    @quiz.approved = true
+    @quiz.approver_id = current_user.id
+    @quiz.approved_at = DateTime.now
+    @quiz.save!
+    
+    redirect_to @quiz, notice: "Quiz approved successfully."
+    
+  end
+  
+  def reject
+    
+    @quiz = Quiz.find(params[:quiz_id])
+    @quiz.published = false
+    @quiz.approver_id = current_user.id
+    @quiz.approved_at = DateTime.now
+    @quiz.save!
+    
+    redirect_to @quiz, notice: "Quiz rejected successfully."
+    
+  end
+  
+  def unapprove
+    
+    @quiz = Quiz.find(params[:quiz_id])
+    @quiz.approved = false
+    @quiz.approver_id = current_user.id
+    @quiz.approved_at = DateTime.now
+    @quiz.save!
+    
+    redirect_to @quiz, notice: "Quiz unapproved successfully."
+    
+  end
+  
   # Action to delete all the images.
   def question_images_delete_all
     

@@ -94,7 +94,10 @@
 					<div class="controls">
 						<blockquote>
 							<p>
-							 <%= @question.que_image %>
+							<% if @question.que_image_url %>
+								 <%= @question.que_image_url %>
+								 <%= image_tag(@question.que_image_url, :size => "300x300", :alt => "Que Image") %>
+							<% end %>	 
 							</p>
 						</blockquote>
 					</div>
@@ -105,7 +108,10 @@
 					<div class="controls">
 						<blockquote>
 							<p>
-							 <%= @question.sol_image %>
+							 <% if @question.sol_image_url %>
+								 <%= @question.sol_image_url %>
+								 <%= image_tag(@question.sol_image_url, :size => "300x300", :alt => "Sol Image") %>
+							<% end %>
 							</p>
 						</blockquote>
 					</div>

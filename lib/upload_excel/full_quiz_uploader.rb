@@ -551,17 +551,17 @@ module UploadExcel
       
       begin
         
-        question.sequence_no = row[0].to_i
-        question.di_location = row[2].to_s
-        question.instruction = row[4].to_s
-        question.passage = row[5].to_s
-        question.que_text = row[6].to_s
-        question.que_image = (row[7].to_s == "-") ? nil : row[7].to_s
-        question.sol_text = row[8].to_s
-        question.sol_image = (row[9].to_s == "-") ? nil : row[9].to_s
-        question.quantity_a = row[10].to_s
-        question.quantity_b = row[11].to_s
-        question.option_set_count = row[12].to_i
+        question.sequence_no = (row[0].to_s == "") ? nil : row[0].to_i
+        question.di_location = (row[2].to_s == "") ? nil : row[2].to_s
+        question.instruction = (row[4].to_s == "") ? nil : row[4].to_s
+        question.passage = (row[5].to_s == "") ? nil : row[5].to_s
+        question.que_text = (row[6].to_s == "") ? nil : row[6].to_s
+        question.que_image = (row[7].to_s == "") ? nil : row[7].to_s
+        question.sol_text = (row[8].to_s == "") ? nil : row[8].to_s
+        question.sol_image = (row[9].to_s == "") ? nil : row[9].to_s
+        question.quantity_a = (row[10].to_s == "") ? nil : row[10].to_s
+        question.quantity_b = (row[11].to_s == "") ? nil : row[11].to_s
+        question.option_set_count = (row[12].to_s == "") ? nil : row[12].to_i
         
         # Question references.
         question.topic_id = Topic.find_by_name(row[3].to_s).id
