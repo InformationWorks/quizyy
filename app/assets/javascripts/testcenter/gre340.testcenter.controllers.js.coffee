@@ -61,6 +61,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       else
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
       @setTimer(@totalSeconds)
+      @updateServerTime()
     showQuestionById:(questionId)->
       console.log 'show question by Id called'
       if @quiz?
@@ -92,6 +93,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       if @quiz?
         if !@quiz.get('sections')?
           @attempt.fetch(silent:true,async: false)
+          @totalSeconds = @attempt.get('current_time')
           @quiz.url = '/api/v1/quizzes/'+@attempt.get('quiz_id')+'.json'
           @quiz.fetch
             silent:true,
@@ -122,8 +124,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
     startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
-      console.log('start section')
-      @updateInterval = window.setInterval(@updateServerTime,10000)
       if section.get('submitted')
         if @attempt.get('current_question_id')?
           @currentQuestionCollection = @currentSectionCollection.get(@attempt.get('current_section_id')).get('questions')
@@ -141,7 +141,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
           @updateCurrentAttempt(section.id,null)
           @showSectionActionBar()
           Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))
-      @totalSeconds = 1800 #30 mins
+      @totalSeconds = 1800 if @totalSeconds == null #30 mins
     startSectionByNumber:(sectionNumber,questionNumber) ->
       console.log('start section by number')
       if !@quiz.get('sections')?
@@ -214,7 +214,10 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       if @totalSeconds?
         attempt = new Backbone.Model({'attempt_id':@attempt.get('id'), 'current_time':@totalSeconds})
         attempt.url = '/api/v1/attempts/update_time'
-        attempt.save()  
+        attempt.save()
+      if @updateInterval
+        clearInterval(@updateInterval)
+      @updateInterval = window.setInterval(@updateServerTime,10000)   
   #Events Listening
   Gre340.vent.on "show:question", ->
     controller = Controllers.questionController

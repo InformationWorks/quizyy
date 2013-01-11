@@ -9,14 +9,14 @@ module Api
       end
       def update
         @attempt = Attempt.find(params[:id])
-        if @attempt.update_attributes(params[:attempt])
+        if @attempt.update_attributes(params[:attempt].except(:current_time))
           respond_with @attempt
         end
       end
       def update_time
         @attempt = Attempt.find(params[:attempt_id])
         @current_time = params[:current_time]
-        @attempt[:current_time] = @current_time if @attempt
+        @attempt.current_time = @current_time if @attempt
         @attempt.save()
         respond_to do |format| 
           format.json {render :json => @attempt }

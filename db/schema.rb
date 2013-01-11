@@ -11,13 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130111164433) do
+ActiveRecord::Schema.define(:version => 20130111172007) do
 
   create_table "attempt_details", :force => true do |t|
     t.integer  "attempt_id"
     t.integer  "question_id"
     t.integer  "option_id"
-    t.integer  "time_spent"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "user_input"
@@ -32,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20130111164433) do
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.integer  "current_section_id"
+    t.integer  "current_time"
   end
 
   add_index "attempts", ["quiz_id"], :name => "index_attempts_on_quiz_id"
