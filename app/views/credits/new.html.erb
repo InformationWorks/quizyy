@@ -1,0 +1,57 @@
+<% content_for :admin_content do %>
+
+<!-- Data block -->
+<article class="data-block">
+	<div class="data-container">
+		<header>
+			<h2><%= @user.full_name %>'s account</h2>
+			<code style="margin-left: 10px;">Available Credits: <%= @user.credits %></code>
+			<ul class="data-header-actions">
+				<li>
+					<%= link_to(credits_index_path,:class => "btn") do %>
+					 Back
+					<% end %>
+				</li>
+			</ul>
+		</header>
+		<section class="tab-content">
+			
+			<!-- Form starts here -->
+			<div class="span9" style="margin-left: 15px;">
+			  	
+				<div class="control-group">
+					<div class="controls">
+					<p>
+					<div class="input-append">
+						
+					<% if current_user.role? :super_admin %>
+						<%= form_tag(credits_path(@user.id), :method=>'post', :style => "background-color: transparent;border: 0px;" ) do %>
+							<%= number_field_tag(:credits_to_add,nil, :in => 50..2000,:step => 50,:value => 50) %>
+							<%= submit_tag 'Add Credits',:class => "btn" %>
+						<% end %>
+					<% else %>
+						<%= form_tag(credits_path(@user.id), :method=>'post', :style => "background-color: transparent;border: 0px;") do %>
+							<%= select_tag(:credits_to_add, options_for_select(['1000',
+                 													       '1500',
+                 													       '2000'], '2000')) %>
+                 			<%= submit_tag 'Add Credits',:class => "btn" %>
+						<% end %>
+					<% end %>
+					</div>
+					</p>
+					</div>
+				</div>
+				
+				
+			</div>
+			<!-- Form ends here -->
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
+
+<br />
+
+<% end %>
+
+<%= render 'admins/admin_base' %>

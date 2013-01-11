@@ -28,7 +28,7 @@
 						    <td><%= user.credits %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
-						    	<%= link_to(credits_index_path, :class => "btn") do %>
+						    	<%= link_to(new_credit_path(user.id), :class => "btn") do %>
 						    	  <span class="awe-money"></span>
 						    	<% end %>
 						      </div>

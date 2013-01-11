@@ -1,7 +1,5 @@
 GremastersWeb::Application.routes.draw do
-
-  get "credits/index"
-
+  
   ### API routes go here.
     
   # API v1
@@ -94,6 +92,11 @@ GremastersWeb::Application.routes.draw do
   get "test_center/index"
   match 'test_center' => 'test_center#index'
   match 'test_center/*anything' => "test_center#index"
+  
+  # Credits routes
+  get "credits/index"
+  match "credits/:user_id/new" => "credits#new", via: [:get], :as => "new_credit"
+  match "credits/:user_id/create" => "credits#create", via: [:post], :as => "credits"
 
   root :to => "landings#index"
   # Devise routes.
