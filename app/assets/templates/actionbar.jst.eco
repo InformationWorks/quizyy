@@ -9,7 +9,7 @@
             <span class="win-commandimage win-commandring">&#xe03b;</span>
             <span class="win-label">Quit Test</span>
         </button>
-        <button id="show-alert-exit-section" href="#alert-exit-section" class="win-command" data-toggle="modal">
+        <button id="btn-exit-section"  class="win-command" data-toggle="modal">
             <span class="win-commandimage win-commandring">&#xe040;</span>
             <span class="win-label">Exit Section</span>
         </button>
@@ -47,17 +47,4 @@
         </p>
     </div>
 
-</div>
-<div id="alert-exit-section" class="modal message hide fade" tabindex="-1" role="dialog" aria-labelledby="Exit Section?" aria-hidden="true" style="display: none; z-index: 2100">
-    <div class="modal-header">
-        <button type="button" class="close close-alert-exit-section" data-dismiss="modal" aria-hidden="true"></button>
-        <h3 class="alert-heading">Do you really want to exit the section?</h3>
-    </div>
-    <div class="modal-body">
-        <h4>Once the section is submitted you cannot come back to it.</h4>
-    </div>
-    <div class="modal-footer">
-        <button class="btn close-alert-exit-section" data-dismiss="modal">No</button>
-        <button id="btn-exit-section" data-dismiss="modal" class="btn btn-primary">Yes</button>
-    </div>
 </div>

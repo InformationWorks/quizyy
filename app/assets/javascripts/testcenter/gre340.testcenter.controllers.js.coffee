@@ -184,18 +184,26 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @currentSectionCollection
     exitQuizCenter:()->
       Gre340.TestCenter.Layout.layout.content.show(new @Views.NoQuizInProgress())
+    exitSection: () ->
+      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionExitActionBarView(model: @quiz, section_index: @sectionNumber))
+      Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionExitView())
     showQuizError:()->
       Gre340.TestCenter.Layout.layout.content.show(new @Views.QuizFatalError())
     submitSection:(section)->
       section.set submitted: true
   #Events Listening
+  Gre340.vent.on "show:question", ->
+    controller = Controllers.questionController
+    console.log controller.sectionNumber
+    console.log controller.currentQuestion.get('sequence_no')
+    Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestion.get('sequence_no'))
   Gre340.vent.on "show:next:question", ->
     controller = Controllers.questionController
     if controller.currentQuestionCollection?
       if controller.currentQuestionCollection.length-1 == controller.currentQuestionCollection.indexOf(controller.currentQuestion)
         #HACK - indexOf was returning -1 instead of 0 for the first model so we first find the model and than restore it
         controller.currentSection = controller.currentSectionCollection.get(controller.currentSection)
-        controller.startNextSection() if controller.currentSectionCollection.indexOf(controller.currentSection) != controller.currentSectionCollection.length-1
+        Gre340.vent.trigger 'exit:section' if controller.currentSectionCollection.indexOf(controller.currentSection) != controller.currentSectionCollection.length-1
       else
         controller.currentQuestion = controller.currentQuestionCollection.next(controller.currentQuestion)
         console.log(controller.currentQuestion.get('id'))
@@ -211,7 +219,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
   Gre340.vent.on "start:section", ->
     controller = Controllers.questionController
     Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',1)
-
+  Gre340.vent.on "show:next:section", ->
+    controller = Controllers.questionController
+    Gre340.Routing.showRouteWithTrigger('test_center','section',parseInt(controller.sectionNumber)+1,null)
   Gre340.vent.on "quiz:changed", (quiz) ->
     console.log('quiz changed')
     qc = Controllers.questionController
@@ -244,8 +254,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       Controllers.questionController.exitQuizCenter()
   Gre340.vent.on "exit:section", ->
     controller = Controllers.questionController
-    controller.startNextSection()
-
+    Gre340.Routing.showRoute('test_center','section',controller.sectionNumber,'exit')
+    controller.exitSection()
   #request handlers
   Gre340.reqres.addHandler "currentAttemptId", ()->
     Controllers.questionController.attempt.get('id')

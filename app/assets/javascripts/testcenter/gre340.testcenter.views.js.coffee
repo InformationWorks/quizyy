@@ -125,8 +125,6 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       'click #btn-next': 'showNextQuestion'
       'click #btn-prev': 'showPrevQuestion'
       'click #btn-exit-section': 'exitSection'
-      'click #show-alert-exit-section': 'removeBackgroundFromActionBar'
-      'click .close-alert-exit-section': 'addBackgroundToActionBar'
     showNextQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:next:question'
@@ -134,13 +132,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:prev:question'
     exitSection: (event) ->
-      @addBackgroundToActionBar()
       Gre340.vent.trigger 'exit:section'
-    removeBackgroundFromActionBar: (event)->
-      console.log 'it comes here'
-      $('#action-bar').addClass('no-bk')
-    addBackgroundToActionBar: ->
-      $('#action-bar').removeClass('no-bk')
 
   Views.SectionActionBarView = Marionette.ItemView.extend
     template: 'section-actionbar'
@@ -155,11 +147,31 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       event.preventDefault()
       Gre340.vent.trigger 'start:section'
 
+  Views.SectionExitActionBarView = Marionette.ItemView.extend
+    template: 'section-exit-actionbar'
+    model:'Gre340.TestCenter.Data.Models.Quiz'
+    initialize: (options) ->
+      @section_index = options.section_index
+    templateHelpers: ->
+      section_index: @section_index
+    events:
+      'click #btn-continue': 'showNextSection'
+      'click #btn-return': 'showQuestion'
+    showNextSection:(event) ->
+      event.preventDefault()
+      Gre340.vent.trigger 'show:next:section'
+    showQuestion: (event) ->
+      event.preventDefault()
+      Gre340.vent.trigger 'show:question'
+
   Views.NoQuizInProgress = Marionette.ItemView.extend
     template: 'no-attempt-error'
 
   Views.QuizFatalError = Marionette.ItemView.extend
     template: 'quiz-error'
+
+  Views.SectionExitView = Marionette.ItemView.extend
+    template: 'section-exit'
 
   Views.SectionSubmittedError = Marionette.ItemView.extend
     template: 'question/section-submitted-error'
