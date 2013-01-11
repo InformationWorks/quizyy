@@ -1,5 +1,7 @@
 GremastersWeb::Application.routes.draw do
 
+  get "credits/index"
+
   ### API routes go here.
     
   # API v1
