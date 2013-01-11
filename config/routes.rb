@@ -17,11 +17,14 @@ GremastersWeb::Application.routes.draw do
       resources :attempt_details, :only => [:create], defaults: { format: :json } do
 
       end
+      resources :visits, :only => [:create], defaults: { format: :json } do
+
+      end
     end
   end
   #api routes.
   get "api/v1/attempt_details" => "api/v1/attempt_details#index"
-
+  post "api/v1/visits/update" => "api/v1/visits#update" 
   # Admin routes.
   get "admins/home"
 
