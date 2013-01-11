@@ -43,7 +43,7 @@
     <div class="span3 pull-right align-right">
         <p class="lead">
             <button class="btn" id="btn-hide-time">Hide Time</button>
-            1:00:00
+            <div id="timer">1:00:00</div>
         </p>
     </div>
 

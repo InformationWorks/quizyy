@@ -11,4 +11,5 @@ class Attempt < ActiveRecord::Base
     self.is_current = true
     self.save
   end
+
 end

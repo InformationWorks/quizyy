@@ -19,6 +19,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @sectionNumber=1
       @isStarted = false
       @attempt = Gre340.TestCenter.Data.currentAttempt
+      @totalSeconds = null
     start:() ->
     #have moved quiz fetch to attempt:reset event
     #so we only load quiz once we find the current attempt
@@ -59,7 +60,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionTwoPaneView(model: question))
       else
         Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
-
+      @setTimer(@totalSeconds)
     showQuestionById:(questionId)->
       console.log 'show question by Id called'
       if @quiz?
@@ -122,6 +123,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
       console.log('start section')
+      @updateInterval = window.setInterval(@updateServerTime,10000)
       if section.get('submitted')
         if @attempt.get('current_question_id')?
           @currentQuestionCollection = @currentSectionCollection.get(@attempt.get('current_section_id')).get('questions')
@@ -139,6 +141,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
           @updateCurrentAttempt(section.id,null)
           @showSectionActionBar()
           Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))
+      @totalSeconds = 1800 #30 mins
     startSectionByNumber:(sectionNumber,questionNumber) ->
       console.log('start section by number')
       if !@quiz.get('sections')?
@@ -190,7 +193,28 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     showQuizError:()->
       Gre340.TestCenter.Layout.layout.content.show(new @Views.QuizFatalError())
     submitSection:(section)->
+      clearInterval(@updateInterval) if @updateInterval?
       section.set submitted: true
+    setTimer:(time)->
+      @totalSeconds = time
+      @timer = $('#timer')
+      @updateTimer()
+      if @timerInterval
+        clearInterval(@timerInterval)
+      @timerInterval = window.setInterval(@tick,1000)
+    updateTimer:()->
+      @timer.html(@totalSeconds)
+    tick:()=>
+      if @totalSeconds > 0
+        @totalSeconds -= 1
+        @updateTimer()
+      else
+        clearInterval(@timerInterval)
+    updateServerTime:()=>
+      if @totalSeconds?
+        attempt = new Backbone.Model({'attempt_id':@attempt.get('id'), 'current_time':@totalSeconds})
+        attempt.url = '/api/v1/attempts/update_time'
+        attempt.save()  
   #Events Listening
   Gre340.vent.on "show:question", ->
     controller = Controllers.questionController
@@ -263,6 +287,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
   Controllers.addInitializer ->
     Controllers.questionController = new QuestionController()
 
-    Controllers.addFinalizer ->
+  Controllers.addFinalizer ->
     Backbone.history.stop() if Backbone.history
     console.log 'stopped controller testcenter'

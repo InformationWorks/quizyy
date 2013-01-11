@@ -24,6 +24,7 @@ GremastersWeb::Application.routes.draw do
   end
   #api routes.
   get "api/v1/attempt_details" => "api/v1/attempt_details#index"
+  post "api/v1/attempts/update_time" => "api/v1/attempts#update_time" 
   post "api/v1/visits/update" => "api/v1/visits#update" 
   # Admin routes.
   get "admins/home"

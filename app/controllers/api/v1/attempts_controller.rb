@@ -13,6 +13,15 @@ module Api
           respond_with @attempt
         end
       end
+      def update_time
+        @attempt = Attempt.find(params[:attempt_id])
+        @current_time = params[:current_time]
+        @attempt[:current_time] = @current_time if @attempt
+        @attempt.save()
+        respond_to do |format| 
+          format.json {render :json => @attempt }
+        end
+      end
     end
   end
 end
