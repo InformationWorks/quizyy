@@ -44,7 +44,7 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
 
   Data.Models.Quiz = Backbone.AssociatedModel.extend
     initialize:->
-      @on 'change',(quiz) ->
+      @on 'change:id',(quiz) ->
         Gre340.vent.trigger('quiz:changed', quiz)
     relations: [
       type: Backbone.Many
@@ -53,13 +53,11 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
       collectionType:'Gre340.TestCenter.Data.Collections.SectionCollection'
     ]
 
-
   Data.Models.Attempt = Backbone.Model.extend
     urlRoot: '/api/v1/attempts'
     initialize:(options)->
       @on 'change:id',(attempt) ->
         Gre340.vent.trigger('new:attempt', attempt)
-
 
   Data.addInitializer ->
     Data.currentAttempt = new Data.Models.Attempt()

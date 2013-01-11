@@ -6,6 +6,7 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       'test_center/error': 'showError'
       'test_center/index?quiz_id=:id': 'showIndex'
       'test_center/section/:sindex/question/:qindex': 'showQuestion'
+      'test_center/section/:sindex/exit': 'exitSection'
       'test_center/section/:sindex': 'showSection'
       'test_center': 'showIndex'
       'test_center/*anything': 'showIndex'
@@ -22,8 +23,12 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       qController = Gre340.TestCenter.Controllers.questionController
       qController.showQuestionByNumber(sectionNumber,questionNumber)
     showSection: (sectionNumber) ->
+      console.log 'show section is called'
       qController = Gre340.TestCenter.Controllers.questionController
       qController.startSectionByNumber(sectionNumber,null)
+    exitSection: (sectionNumber) ->
+      qController = Gre340.TestCenter.Controllers.questionController
+      qController.exitSection()
     stopAllModules:()->
       Gre340.TestCenter.stop()
     showError:()->

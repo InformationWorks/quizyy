@@ -13,10 +13,14 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       question_type = @model.get('type_code')
       @singleRight = false
       if /QC|TC-1|[A-Z]*-MCQ-1/i.test(question_type)
-        @singleRight = true
+        @oneRightAnswer = true
       @template = @getOptionsTemplate(question_type)
+      @attempt_details = new Backbone.Collection()
+      @attempt_details.url =  '/api/v1/attempt_details'
+      @attempt_details.fetch(data: $.param({ attempt_id: Gre340.request('currentAttemptId'), question_id: @model.get('id')}), async: false )
     templateHelpers: ->
-      singleRight: @singleRight
+      oneRightAnswer: @oneRightAnswer
+      attempt_details: @attempt_details
     events:
       'change input[type=checkbox]': 'saveUserResponse'
       'change input[type=radio]': 'saveUserResponse'
@@ -70,14 +74,23 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     makeFullHeight: ->
       $('body').addClass('fill')
     onRender:()->
-      console.log @model
       if /SIP/i.test @model.get('type_code')
+        @attempt_details = new Backbone.Collection()
+        @attempt_details.url =  '/api/v1/attempt_details'
+        @attempt_details.fetch(data: $.param({ attempt_id: Gre340.request('currentAttemptId'), question_id: @model.get('id')}), async: false )
+        @selected_sentence = null
+        if @attempt_details.length > 0
+          @selected_sentence = @attempt_details.first().get('user_input')
+
         sentences = @$('.passage').text().split('.')
         passage_with_sentences = ''
         i = 0
         for sentence in sentences
           if sentence.trim() != ''
-            passage_with_sentences = passage_with_sentences+'<span class="sentence" data-index='+'"'+i+'">'+ sentence + '.</span>'
+            if @selected_sentence? and parseInt(@selected_sentence)==i
+              passage_with_sentences = passage_with_sentences+'<span class="sentence selected" data-index='+'"'+i+'">'+ sentence + '.</span>'
+            else
+              passage_with_sentences = passage_with_sentences+'<span class="sentence" data-index='+'"'+i+'">'+ sentence + '.</span>'
             i++
         @$('.passage').html(passage_with_sentences)
       else
@@ -112,8 +125,6 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       'click #btn-next': 'showNextQuestion'
       'click #btn-prev': 'showPrevQuestion'
       'click #btn-exit-section': 'exitSection'
-      'click #show-alert-exit-section': 'removeBackgroundFromActionBar'
-      'click .close-alert-exit-section': 'addBackgroundToActionBar'
     showNextQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:next:question'
@@ -121,13 +132,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:prev:question'
     exitSection: (event) ->
-      @addBackgroundToActionBar()
       Gre340.vent.trigger 'exit:section'
-    removeBackgroundFromActionBar: (event)->
-      console.log 'it comes here'
-      $('#action-bar').addClass('no-bk')
-    addBackgroundToActionBar: ->
-      $('#action-bar').removeClass('no-bk')
 
   Views.SectionActionBarView = Marionette.ItemView.extend
     template: 'section-actionbar'
@@ -142,11 +147,31 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       event.preventDefault()
       Gre340.vent.trigger 'start:section'
 
+  Views.SectionExitActionBarView = Marionette.ItemView.extend
+    template: 'section-exit-actionbar'
+    model:'Gre340.TestCenter.Data.Models.Quiz'
+    initialize: (options) ->
+      @section_index = options.section_index
+    templateHelpers: ->
+      section_index: @section_index
+    events:
+      'click #btn-continue': 'showNextSection'
+      'click #btn-return': 'showQuestion'
+    showNextSection:(event) ->
+      event.preventDefault()
+      Gre340.vent.trigger 'show:next:section'
+    showQuestion: (event) ->
+      event.preventDefault()
+      Gre340.vent.trigger 'show:question'
+
   Views.NoQuizInProgress = Marionette.ItemView.extend
     template: 'no-attempt-error'
 
   Views.QuizFatalError = Marionette.ItemView.extend
     template: 'quiz-error'
+
+  Views.SectionExitView = Marionette.ItemView.extend
+    template: 'section-exit'
 
   Views.SectionSubmittedError = Marionette.ItemView.extend
     template: 'question/section-submitted-error'

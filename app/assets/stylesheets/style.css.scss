@@ -231,7 +231,12 @@
   }
 }
 #test-content{
-
+  .section-exit-info{
+    margin: 0 auto;
+    margin-top: 250px;
+    width:60%;
+    text-align:justify;
+  }
   .single{
     width:60%;
     margin: 0px auto;

@@ -12,7 +12,18 @@
             <label>(i)</label>
             <select name="option1" multiple="multiple">
                 <% for option in first: %>
-                    <option value="<%=option.id%>"><%= option.content %></option>
+                    <% if @attempt_details.length > 0: %>
+                        <% _.each @attempt_details.models, (attempt) -> %>
+                            <% if attempt.get('option_id') == option.id: %>
+                                <% option.selected = true %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                    <% if option.selected :%>
+                        <option value="<%=option.id%>" selected><%= option.content %></option>
+                    <% else :%>
+                        <option value="<%=option.id%>"><%= option.content %></option>
+                    <% end %>
                 <% end %>
             </select>
         </div>
@@ -23,7 +34,18 @@
             <label>(ii)</label>
             <select name="option2" multiple="multiple">
                 <% for option in second: %>
-                    <option value="<%=option.id%>"><%= option.content %></option>
+                    <% if @attempt_details.length > 0: %>
+                        <% _.each @attempt_details.models, (attempt) -> %>
+                            <% if attempt.get('option_id') == option.id: %>
+                                <% option.selected = true %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                    <% if option.selected :%>
+                        <option value="<%=option.id%>" selected><%= option.content %></option>
+                    <% else :%>
+                        <option value="<%=option.id%>"><%= option.content %></option>
+                    <% end %>
                 <% end %>
             </select>
         </div>
@@ -35,7 +57,18 @@
                 <label>(iii)</label>
                 <select name="option3" multiple="multiple">
                     <% for option in third: %>
-                    <option value="<%=option.id%>"><%= option.content %></option>
+                        <% if @attempt_details.length > 0: %>
+                            <% _.each @attempt_details.models, (attempt) -> %>
+                                <% if attempt.get('option_id') == option.id: %>
+                                    <% option.selected = true %>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                        <% if option.selected :%>
+                            <option value="<%=option.id%>" selected><%= option.content %></option>
+                        <% else :%>
+                            <option value="<%=option.id%>"><%= option.content %></option>
+                        <% end %>
                     <% end %>
                 </select>
             </div>
