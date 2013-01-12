@@ -229,7 +229,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       visit.url = '/api/v1/visits/set_end_time'
       visit.save()
     handleErrors:(model,xhr)->
-      console.log xhr
       if xhr.status == 500
         console.log 'an error occured on the server'
       else if xhr.status == 0
