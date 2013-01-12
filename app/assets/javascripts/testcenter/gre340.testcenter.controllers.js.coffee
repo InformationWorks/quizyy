@@ -230,10 +230,10 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       visit.save()
     handleErrors:(model,xhr)->
       console.log xhr
-      if xhr.status == 'failed'
-        console.log 'lost internet connection'
-      else
+      if xhr.status == 500
         console.log 'an error occured on the server'
+      else if xhr.status == 0
+        console.log 'lost internet connection'
   #Events Listening
   Gre340.vent.on "show:question", ->
     controller = Controllers.questionController
