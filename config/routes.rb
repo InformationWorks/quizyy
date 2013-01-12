@@ -103,6 +103,12 @@ GremastersWeb::Application.routes.draw do
   match "credits/:user_id/create" => "credits#create", via: [:post], :as => "credits"
   match "credits/activity_log" => "credits#activity_log", via: [:get], :as => "credits_activity_log"
 
+  # Cart routes.
+  resources :carts, :only => [:index]
+
+  # CartItem routes.
+  resources :cart_items, :only => [:create]
+
   root :to => "landings#index"
   # Devise routes.
   # devise_scope :user do

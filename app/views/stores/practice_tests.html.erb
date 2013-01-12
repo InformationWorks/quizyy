@@ -26,8 +26,10 @@
                   	</div>
                   <% else %>
                   	<div class="actions hide">
-                      <%= button_to( "Buy"  , add_quiz_to_user_path(quiz) ,
+                      <%= button_to( "Quick Buy"  , add_quiz_to_user_path(quiz) ,
           				:method => "post", :disable_with => 'processing...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
+          			  <%= button_to( "Add to cart"  , cart_items_path(:quiz_id => quiz.id,:back_controller => "stores",:back_action => "practice_tests") ,
+          				:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
                   	</div>
                   <% end %>
                 </div>
@@ -44,7 +46,7 @@
                   <span class="icon icon-cart"></span>
                 </div>
                 <div class="app-label">Cart</div>
-                <div class="app-count">1</div>
+                <div class="app-count"><%= @cart.cart_items.count %></div>
               </a>
             </div>
           </div>
