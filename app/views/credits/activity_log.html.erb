@@ -1,0 +1,47 @@
+<% content_for :admin_content do %>
+
+<!-- Data block -->
+<article class="data-block">
+	<div class="data-container">
+		<header>
+			<h2><span class="awe-money"></span> Credits Activity Log</h2>
+			<ul class="data-header-actions">
+				<%= link_to(credits_index_path,:class => "btn btn-primary") do %>
+				 Back to Credits Management
+				<% end %>
+			</ul>
+		</header>
+		<section class="tab-content">
+			<!-- Tab #static -->
+			<div class="tab-pane active" id="static">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>When ?</th>
+							<th>Actor</th>
+							<th>Action</th>
+							<th>Activity</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @activity_logs.each do |activity_log| %>
+						  <tr>
+						  	<td><%= activity_log.updated_at.in_time_zone("Mumbai").strftime("%d-%b-%y %H:%M:%S") %></td>
+						    <td><%= activity_log.actor.full_name %></td>
+						    <td><%= activity_log.action %></td>
+						    <td><%= activity_log.activity %></td>
+						  </tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
+
+<br />
+
+<% end %>
+
+<%= render 'admins/admin_base' %>
