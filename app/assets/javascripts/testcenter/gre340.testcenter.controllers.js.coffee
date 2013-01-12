@@ -215,7 +215,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       if @totalSeconds?
         attempt = new Backbone.Model({'attempt_id':@attempt.get('id'), 'current_time':@totalSeconds})
         attempt.url = '/api/v1/attempts/update_time'
-        attempt.save()
+        attempt.save
+          error: @handleErrors
       if @updateInterval
         clearInterval(@updateInterval)
       @updateInterval = window.setInterval(@updateServerTime,10000)
@@ -226,7 +227,12 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     endVisit:(question_id)->
       visit = new Backbone.Model({'attempt_id':@attempt.get('id'), 'question_id':question_id,'time':@totalSeconds})
       visit.url = '/api/v1/visits/set_end_time'
-      visit.save() 
+      visit.save()
+    handleErrors:()->
+      if response.status == '504'
+        alert('lost internet connectivity')
+      else
+        alert('an error occured on the server')
   #Events Listening
   Gre340.vent.on "show:question", ->
     controller = Controllers.questionController
