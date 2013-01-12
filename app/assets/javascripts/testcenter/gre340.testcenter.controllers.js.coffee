@@ -215,8 +215,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       if @totalSeconds?
         attempt = new Backbone.Model({'attempt_id':@attempt.get('id'), 'current_time':@totalSeconds})
         attempt.url = '/api/v1/attempts/update_time'
-        attempt.save
-          null
+        attempt.save null,
           error:(model, xhr, options) ->
             console.log xhr
             if xhr.status == '504'
