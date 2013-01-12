@@ -4,10 +4,11 @@ module Api
       def create
         attempt_id = params[:attempt_id]
         question_id = params[:question_id]
+        time = params[:time]
         begin
-          visit = Visit.create(:attempt_id => attempt_id,:question_id=>question_id)
+          visit = Visit.create(:attempt_id => attempt_id,:question_id=>question_id,:start => time)
           respond_to do |format|
-            format.json { render :json => @visit }
+            format.json { render :json => visit }
           end
         rescue => e
           respond_to do |format|
@@ -15,22 +16,14 @@ module Api
           end
         end
       end
-      def update
+      def set_end_time
         attempt_id = params[:attempt_id]
         question_id = params[:question_id]
-        time_spent = params[:time_spent]
-        begin
-          visit = Visit.where(:attempt_id => attempt_id,:question_id=>question_id).last
-          visit.time_spent = time_spent if visit
-          visit.save
-          respond_to do |format|
-            format.json { render :json => @visit }
-          end
-        rescue => e
-          respond_to do |format|
-            format.json { render :json => {:success => false, :message => e.message} }
-          end
-        end
+        time = params[:time]
+        visit = Visit.update(attempt_id,question_id,time)
+        respond_to do |format|
+            format.json { render :json => visit }
+        end 
       end
     end
   end

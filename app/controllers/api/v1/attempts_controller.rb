@@ -18,6 +18,7 @@ module Api
         @current_time = params[:current_time]
         @attempt.current_time = @current_time if @attempt
         @attempt.save()
+        Visit.update(@attempt.id,@attempt.current_question_id,@current_time)
         respond_to do |format| 
           format.json {render :json => @attempt }
         end
