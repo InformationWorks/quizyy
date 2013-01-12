@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130112094520) do
+ActiveRecord::Schema.define(:version => 20130112183956) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "actor_id"
@@ -46,6 +46,26 @@ ActiveRecord::Schema.define(:version => 20130112094520) do
   add_index "attempts", ["quiz_id"], :name => "index_attempts_on_quiz_id"
   add_index "attempts", ["user_id", "quiz_id"], :name => "index_attempts_on_user_id_and_quiz_id", :unique => true
   add_index "attempts", ["user_id"], :name => "index_attempts_on_user_id"
+
+  create_table "cart_items", :force => true do |t|
+    t.integer  "quiz_id"
+    t.integer  "pacakge_id"
+    t.integer  "cart_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "cart_items", ["cart_id"], :name => "index_cart_items_on_cart_id"
+  add_index "cart_items", ["pacakge_id"], :name => "index_cart_items_on_pacakge_id"
+  add_index "cart_items", ["quiz_id"], :name => "index_cart_items_on_quiz_id"
+
+  create_table "carts", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "carts", ["user_id"], :name => "index_carts_on_user_id"
 
   create_table "categories", :force => true do |t|
     t.string   "code"
