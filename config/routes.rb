@@ -99,6 +99,7 @@ GremastersWeb::Application.routes.draw do
   get "credits/index"
   match "credits/:user_id/new" => "credits#new", via: [:get], :as => "new_credit"
   match "credits/:user_id/create" => "credits#create", via: [:post], :as => "credits"
+  match "credits/activity_log" => "credits#activity_log", via: [:get], :as => "credits_activity_log"
 
   root :to => "landings#index"
   # Devise routes.

@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130110172903) do
+ActiveRecord::Schema.define(:version => 20130112074053) do
+
+  create_table "activity_logs", :force => true do |t|
+    t.integer  "actor_id"
+    t.string   "action"
+    t.text     "activity"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "attempt_details", :force => true do |t|
     t.integer  "attempt_id"
