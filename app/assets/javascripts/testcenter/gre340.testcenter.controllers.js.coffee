@@ -217,6 +217,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         attempt.url = '/api/v1/attempts/update_time'
         attempt.save
           error:(model, xhr, options) ->
+            console.log xhr
             if xhr.status == '504'
               alert('lost internet connectivity')
             else
