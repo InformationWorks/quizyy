@@ -210,6 +210,7 @@ ActiveRecord::Schema.define(:version => 20130112000418) do
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "profile_image"
+    t.integer  "credits",                :default => 0
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

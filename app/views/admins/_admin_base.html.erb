@@ -58,6 +58,11 @@
 							<% end %>
 						</li>
 						<li><a href="file-explorer.html" class="no-submenu"><span class="awe-file"></span>Student Management</a></li>
+						<li <% if @current_controller == "credits" %>class = "current"<% end %> >
+							<%= link_to(credits_index_path, :class => "no-submenu") do %>
+							<span class="awe-money"></span>Credit Management
+							<% end %>
+						</li>
 					</ul>
 				</nav>
 				<!-- /Main navigation -->
