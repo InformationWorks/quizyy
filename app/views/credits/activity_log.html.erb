@@ -20,6 +20,7 @@
 							<th>When ?</th>
 							<th>Actor</th>
 							<th>Action</th>
+							<th>Target</th>
 							<th>Activity</th>
 						</tr>
 					</thead>
@@ -29,6 +30,14 @@
 						  	<td><%= activity_log.updated_at.in_time_zone("Mumbai").strftime("%d-%b-%y %H:%M:%S") %></td>
 						    <td><%= activity_log.actor.full_name %></td>
 						    <td><%= activity_log.action %></td>
+						    <td>
+						    	<% if activity_log.target.profile_image_url.to_s != "" %>
+				              	  <img id="profile-image" style="width:50px;height: 50px;" src= "<%= activity_log.target.profile_image_url.to_s %>" alt="">
+				                <% else %>
+				              	  <img id="profile-image" style="width:50px;height: 50px;" src="/assets/metro-user.png" alt="">
+				                <% end %>
+						    	<%= activity_log.target.full_name %>
+						    </td>
 						    <td><%= activity_log.activity %></td>
 						  </tr>
 						<% end %>

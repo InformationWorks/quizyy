@@ -1,0 +1,67 @@
+<div id="content" class="span12">
+  <div class="span8">
+	<section class="category-section first">
+    <h2>Buy <%= @quiz.name %></h2>
+    <a href="#" class="pull-right"><h4>add to cart for buying later</h4></a>
+    <hr>
+    <!-- show only three per row -->
+    <div class="row">
+      <div class="span2 quiz-tile">
+        <img src="http://placehold.it/150x100"/>
+        <div class="caption">
+          <h3><a href="#">Full Length 101</a></h3>
+          <p>Hello</p>
+          <p>Rs. 999</p> 
+        </div>
+      </div>
+    </div>
+    </section>
+  </div>
+  <div class="span3">
+    <div class="metro pull-right">
+      <a class="tile app bg-color-green" href="#">
+         <div class="image-wrapper">
+          <div style="font-size: 25px;">Proceed to Payment</div>
+        </div>
+        <div class="app-count">Rs. 999</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<form action="/post_to_zaakpay" method="post">
+<input type="hidden" name="amount" value="200000" /> 
+<input type="hidden" name="buyerAddress" value="A/31 Avdhoot Society" /> 
+<input type="hidden" name="buyerCity" value="bharuch" /> 
+<input type="hidden" name="buyerCountry" value="India" /> 
+<input type="hidden" name="buyerEmail" value="a@b.com" /> 
+<input type="hidden" name="buyerFirstName" value="harshal" /> 
+<input type="hidden" name="buyerLastName" value="bhakta" /> 
+<input type="hidden" name="buyerPhoneNumber" value="9800000000" /> 
+<input type="hidden" name="buyerPincode" value="392002" /> 
+<input type="hidden" name="buyerState" value="Gujarat" />  
+<input type="hidden" name="currency" value="INR" /> 
+<input type="hidden" name="merchantIdentifier" value="4a4a35d8b8c94019a8b0c3cedf3474cb" /> 
+<input type="hidden" name="merchantIpAddress" value="127.0.0.1" /> 
+<input type="hidden" name="mode" value="0" /> 
+<input type="hidden" name="orderId" value="<%= Time.current.strftime("%Y%m%d%H%M%S").to_i %>" /> 
+<input type="hidden" name="product1Description" value="" /> 
+<input type="hidden" name="product2Description" value="" /> 
+<input type="hidden" name="product3Description" value="" /> 
+<input type="hidden" name="product4Description" value="" /> 
+<input type="hidden" name="productDescription" value="test product" /> 
+<input type="hidden" name="purpose" value="1" /> 
+<input type="hidden" name="returnUrl" value="" /> 
+<input type="hidden" name="shipToAddress" value="" /> 
+<input type="hidden" name="shipToCity" value="" /> 
+<input type="hidden" name="shipToCountry" value="" /> 
+<input type="hidden" name="shipToFirstname" value="" /> 
+<input type="hidden" name="shipToLastname" value="" /> 
+<input type="hidden" name="shipToPhoneNumber" value="" /> 
+<input type="hidden" name="shipToPincode" value="" /> 
+<input type="hidden" name="shipToState" value="" /> 
+<input type="hidden" name="txnDate" value="2013-01-14" /> 
+<input type="hidden" name="txnType" value="1" /> 
+<input type="hidden" name="zpPayOption" value="1" />
+<%= submit_tag "submit" %>
+</form> 

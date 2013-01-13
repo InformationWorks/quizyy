@@ -103,6 +103,18 @@ GremastersWeb::Application.routes.draw do
   match "credits/:user_id/create" => "credits#create", via: [:post], :as => "credits"
   match "credits/activity_log" => "credits#activity_log", via: [:get], :as => "credits_activity_log"
 
+  # Cart routes.
+  resources :carts, :only => [:index]
+
+  # CartItem routes.
+  resources :cart_items, :only => [:create,:destroy]
+  
+  # Checkout routes.
+  match "buy/test/:id" => "checkout#buy_test", via: [:get], :as => "checkout_buy_test"
+  match "buy/package/:id" => "checkout#buy_package", via: [:get], :as => "checkout_buy_package"
+  match 'post_to_zaakpay' => 'checkout#post_to_zaakpay'
+  match 'z_response'      => 'checkout#z_response'
+
   root :to => "landings#index"
   # Devise routes.
   # devise_scope :user do

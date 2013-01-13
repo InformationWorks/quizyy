@@ -29,7 +29,13 @@
 					<tbody>
 						<% @users.each do |user| %>
 						  <tr>
-						  	<td><img style="width:50px;height:50px" src= <%= user.profile_image_url %> /></td>
+						  	<td>
+							  	<% if user.profile_image_url.to_s != "" %>
+				              	  <img id="profile-image" style="width:50px;height: 50px;" src= "<%= user.profile_image_url.to_s %>" alt="">
+				                <% else %>
+				              	  <img id="profile-image" style="width:50px;height: 50px;" src="/assets/metro-user.png" alt="">
+				                <% end %>
+						  	</td>
 						    <td><%= user.full_name %></td>
 						    <td><%= user.email %></td>
 						    <td><%= user.credits %></td>

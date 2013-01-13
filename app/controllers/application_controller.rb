@@ -60,4 +60,16 @@ class ApplicationController < ActionController::Base
       @current_action = action_name
       @current_controller = controller_name
   end
+  
+  private
+
+  def initialize_cart
+    if @cart == nil
+      @cart = Cart.where(:user_id => current_user.id).first
+      if @cart == nil
+        @cart = Cart.create(:user_id => current_user.id)
+      end
+    end
+  end
+  
 end

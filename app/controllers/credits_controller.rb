@@ -17,9 +17,10 @@ class CreditsController < ApplicationController
     
     # Log the "AddCredit" activity in ActivityLog.
     activity_log = ActivityLog.new
-    activity_log.action = "AddCredit"
     activity_log.actor_id = current_user.id
-    activity_log.activity = "added #{@user.credits} to #{@user.full_name}'s account."
+    activity_log.action = "AddCredit"
+    activity_log.target_id = @user.id
+    activity_log.activity = "added #{params[:credits_to_add]} to #{@user.full_name}'s account."
     activity_log.save!
     
     redirect_to new_credit_path(@user.id), notice: "Credit added successfully."
