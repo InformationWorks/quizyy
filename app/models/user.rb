@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
     return [ Topic.first, Topic.last, Category.first, Category.last ]
   end
   
-  # Return true is user has purchased the quiz.
+  # Return true if user has purchased the quiz.
   def has_purchased_quiz?(quiz_id)
     
     if QuizUser.where(:quiz_id => quiz_id,:user_id => self.id).count == 0
@@ -105,6 +105,37 @@ class User < ActiveRecord::Base
       return true
     end
     
+  end
+  
+  # Return true if user has the quiz in his cart.
+  def has_quiz_in_cart?(quiz_id)
+    
+    if get_cart_item_id(quiz_id) == -1
+      return false
+    else
+      return true
+    end
+    
+  end
+  
+  # Return cart_item id for a user's quiz.
+  # -1 if cart_item does not exist for a quiz.
+  def get_cart_item_id(quiz_id)
+    cart = Cart.where(:user_id => self.id).first
+     
+    if cart == nil
+      return -1
+    else
+      
+      cart_item = cart.cart_items.where(:quiz_id => quiz_id).first 
+      
+      if cart_item == nil
+        return -1
+      else
+        return cart_item.id
+      end
+      
+    end
   end
   
   private

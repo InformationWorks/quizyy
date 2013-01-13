@@ -107,7 +107,7 @@ GremastersWeb::Application.routes.draw do
   resources :carts, :only => [:index]
 
   # CartItem routes.
-  resources :cart_items, :only => [:create]
+  resources :cart_items, :only => [:create,:destroy]
 
   root :to => "landings#index"
   # Devise routes.

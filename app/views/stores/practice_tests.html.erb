@@ -1,53 +1,68 @@
 <%= render 'store_header' %>
-        <div id="content" class="span12">
-          <div class="span8">
+
+<div id="content" class="span12">
+  <div class="span8">
+  	
+  	<% @categories_and_topics.each_with_index do |category_or_topic,index| %>
+	<% if index == 0 %>
+	<section class="category-section first">
+	<% else %>
+	<section class="category-section">	
+	<% end %>
+    <h2><%= category_or_topic.name %></h2>
+    <a href="#" class="pull-right"><h4>more in <%= category_or_topic.name %></h4></a>
+    <hr>
+    <!-- show only three per row -->
+    <div class="row">
+      <% category_or_topic.quizzes.order("id ASC").first(3).each do |quiz| %>
+      <div class="span2 quiz-tile">
+        <img src="http://placehold.it/150x100"/>
+        <div class="caption">
+          <h3><a href="#"><%= quiz.name %></a></h3>
+          <p><%= quiz.desc %></p>
+          <p><%= (quiz.price == 0) ? "Free" : "\u20B9 " + quiz.price.to_s %></p> 
+          
+          <% if current_user.has_purchased_quiz?(quiz.id) %>
+          	<div>
+              <%= button_to( "Purchased" , "#" , :disabled => true ) %>
+          	</div>
+          <% else %>
+              	
+          	<div class="actions hide">
+          	   <%= button_to( "Quick Buy"  , add_quiz_to_user_path(quiz) ,
+  				:method => "post", :disable_with => 'processing...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
+          	</div>
+            
+            <% cart_item_id = current_user.get_cart_item_id(quiz.id) %>  	
+          	<% if cart_item_id != -1 %>
+          		<div>
+  			    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "practice_tests") ,
+  						:method => "delete", :disable_with => 'removing from cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
+          		</div>
+          	<% else %>
+          		<div class="actions hide">
+  			    	<%= button_to( "Add to cart"  , cart_items_path(:quiz_id => quiz.id,:back_controller => "stores",:back_action => "practice_tests") ,
+  						:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
+          		</div>
+          	<% end %>
           	
-          	<% @categories_and_topics.each_with_index do |category_or_topic,index| %>
-      		<% if index == 0 %>
-      		<section class="category-section first">
-      		<% else %>
-      		<section class="category-section">	
-      		<% end %>
-            <h2><%= category_or_topic.name %></h2>
-            <a href="#" class="pull-right"><h4>more in <%= category_or_topic.name %></h4></a>
-            <hr>
-            <!-- show only three per row -->
-            <div class="row">
-              <% category_or_topic.quizzes.order("id ASC").first(3).each do |quiz| %>
-              <div class="span2 quiz-tile">
-                <img src="http://placehold.it/150x100"/>
-                <div class="caption">
-                  <h3><a href="#"><%= quiz.name %></a></h3>
-                  <p><%= quiz.desc %></p>
-                  <p><%= (quiz.price == 0) ? "Free" : "\u20B9 " + quiz.price.to_s %></p> 
-                  <% if current_user.has_purchased_quiz?(quiz.id) %>
-                  	<div>
-                      <%= button_to( "Purchased" , "#" , :disabled => true ) %>
-                  	</div>
-                  <% else %>
-                  	<div class="actions hide">
-                      <%= button_to( "Quick Buy"  , add_quiz_to_user_path(quiz) ,
-          				:method => "post", :disable_with => 'processing...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
-          			  <%= button_to( "Add to cart"  , cart_items_path(:quiz_id => quiz.id,:back_controller => "stores",:back_action => "practice_tests") ,
-          				:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
-                  	</div>
-                  <% end %>
-                </div>
-              </div>
-              <% end %>
-            </div>
-            </section>
-            <% end %>
-          </div>
-          <div class="span3">
-            <div class="metro pull-right">
-              <a class="tile app bg-color-green" href="#">
-                 <div class="image-wrapper">
-                  <span class="icon icon-cart"></span>
-                </div>
-                <div class="app-label">Cart</div>
-                <div class="app-count"><%= @cart.cart_items.count %></div>
-              </a>
-            </div>
-          </div>
+          <% end %>
         </div>
+      </div>
+      <% end %>
+    </div>
+    </section>
+    <% end %>
+  </div>
+  <div class="span3">
+    <div class="metro pull-right">
+      <a class="tile app bg-color-green" href="#">
+         <div class="image-wrapper">
+          <span class="icon icon-cart"></span>
+        </div>
+        <div class="app-label">Cart</div>
+        <div class="app-count"><%= @cart.cart_items.count %></div>
+      </a>
+    </div>
+  </div>
+</div>
