@@ -108,6 +108,10 @@ GremastersWeb::Application.routes.draw do
 
   # CartItem routes.
   resources :cart_items, :only => [:create,:destroy]
+  
+  # Checkout routes.
+  match "buy/test/:id" => "checkout#buy_test", via: [:get], :as => "checkout_buy_test"
+  match "buy/package/:id" => "checkout#buy_package", via: [:get], :as => "checkout_buy_package"
 
   root :to => "landings#index"
   # Devise routes.
