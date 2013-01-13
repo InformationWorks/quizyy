@@ -8,6 +8,7 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       'test_center/section/:sindex/question/:qindex': 'showQuestion'
       'test_center/section/:sindex/exit': 'exitSection'
       'test_center/section/:sindex': 'showSection'
+      'test_center/submit': 'showReport'
       'test_center': 'showIndex'
       'test_center/*anything': 'showIndex'
       '*anyotherpath': 'stopAllModules'
@@ -15,10 +16,10 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
     before:(route) ->
       Gre340.TestCenter = Gre340.module("TestCenter");
       Gre340.TestCenter.start()
-    showIndex: ->
-      Gre340.Routing.showRoute('/test_center/index')
       if !Gre340.TestCenter.Controllers.questionController.isStarted
         Gre340.TestCenter.Controllers.questionController.start()
+    showIndex: ->
+      Gre340.Routing.showRoute('/test_center/index')
     showQuestion: (sectionNumber,questionNumber) ->
       qController = Gre340.TestCenter.Controllers.questionController
       qController.showQuestionByNumber(sectionNumber,questionNumber)
@@ -33,6 +34,10 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       Gre340.TestCenter.stop()
     showError:()->
 
+    showReport:()->
+      qController = Gre340.TestCenter.Controllers.questionController
+      qController.submitQuiz()
+      alert 'The test has been submitted.'
     goToAvailableTest: () ->
       if !Modernizr.mq("screen and (min-width: 1200px)")
         scrollToElement("#available-tests")
