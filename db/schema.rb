@@ -49,14 +49,14 @@ ActiveRecord::Schema.define(:version => 20130112183956) do
 
   create_table "cart_items", :force => true do |t|
     t.integer  "quiz_id"
-    t.integer  "pacakge_id"
+    t.integer  "package_id"
     t.integer  "cart_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "cart_items", ["cart_id"], :name => "index_cart_items_on_cart_id"
-  add_index "cart_items", ["pacakge_id"], :name => "index_cart_items_on_pacakge_id"
+  add_index "cart_items", ["package_id"], :name => "index_cart_items_on_package_id"
   add_index "cart_items", ["quiz_id"], :name => "index_cart_items_on_quiz_id"
 
   create_table "carts", :force => true do |t|
