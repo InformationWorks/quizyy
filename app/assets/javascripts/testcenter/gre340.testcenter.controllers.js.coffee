@@ -20,6 +20,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @isStarted = false
       @attempt = Gre340.TestCenter.Data.currentAttempt
       @totalSeconds = null
+      @connection = true
     start:() ->
     #have moved quiz fetch to attempt:reset event
     #so we only load quiz once we find the current attempt
@@ -40,29 +41,36 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         x = x.replace(/^\s+|\s+$/g, "")
         return unescape(y)  if x is c_name
         i++
+    lostConnection:()->
+      @connection = false
+    gotConnection:()->
+      @connection = true
     updateCurrentAttempt: (currentSectionId,currentQuestionId) ->
       @attempt.set({'current_section_id': currentSectionId,'current_question_id': currentQuestionId},{silent: true})
       @attempt.save()
     showQuestion:(question) ->
       @currentQuestion = question
-      @updateCurrentAttempt(@currentSection.id,@currentQuestion.id)
-      @showActionBar()
-      @startVisit(@currentQuestion.get('id'))
-      qTypeCode = question.get('type_code')
-      questionIsDI = false
-      questionToDisplayInTwoPane = _.find @typesToDiplayInTwoPane, (code) ->
-        if(code==qTypeCode)
-          true
-      #Checking Data Interpretation question location top (single pane) or side (two pane)
-      location =  if @diRegEx.test(qTypeCode) and question.get('di_location')? then question.get('di_location') else 'Top'
-      console.log(qTypeCode)
-      console.log(question.get('di_location'))
-      if questionToDisplayInTwoPane or location == 'Side'
-        Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionTwoPaneView(model: question))
+      if @checkTimeAvailable()
+        @updateCurrentAttempt(@currentSection.id,@currentQuestion.id)
+        @showActionBar()
+        @startVisit(@currentQuestion.get('id'))
+        qTypeCode = question.get('type_code')
+        questionIsDI = false
+        questionToDisplayInTwoPane = _.find @typesToDiplayInTwoPane, (code) ->
+          if(code==qTypeCode)
+            true
+        #Checking Data Interpretation question location top (single pane) or side (two pane)
+        location =  if @diRegEx.test(qTypeCode) and question.get('di_location')? then question.get('di_location') else 'Top'
+        console.log(qTypeCode)
+        console.log(question.get('di_location'))
+        if questionToDisplayInTwoPane or location == 'Side'
+          Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionTwoPaneView(model: question))
+        else
+          Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
+        @updateTimer(@totalSeconds)
+        @updateServerTimeWithInterval()
       else
-        Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
-      @setTimer(@totalSeconds)
-      @updateServerTime()
+        @startNextSection()
     showQuestionById:(questionId)->
       console.log 'show question by Id called'
       if @quiz?
@@ -84,8 +92,10 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
                 @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
                 @sectionNumber = @currentSectionCollection.indexOf(@currentSection)+1
           question = @currentQuestionCollection.get(questionId)
-
-        @showQuestion(question)
+        if @checkTimeAvailable()
+          @showQuestion(question)
+        else
+          @startNextSection()
       else
         @exitQuizCenter()
 
@@ -107,7 +117,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         if @sectionNumber != sectionNumber
           @sectionNumber = sectionNumber
           @currentSection = @currentSectionCollection.where(sequence_no: parseInt(sectionNumber))[0]
-          @currentQuestionCollection = @currentSection.get('questions')
+          @currentQuestionCollection = @currentSection.get('questions')        
         if !@currentSection.get('submitted')
           question = if questionNumber <= @currentQuestionCollection.length then @currentQuestionCollection.where(sequence_no: parseInt(questionNumber))[0] else new Gre340.TestCenter.Data.Models.Question instruction: "No Such question Exists"
           @showQuestion(question)
@@ -125,24 +135,30 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
     startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
-      if section.get('submitted')
-        if @attempt.get('current_question_id')?
-          @currentQuestionCollection = @currentSectionCollection.get(@attempt.get('current_section_id')).get('questions')
-          Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'),'question', @currentQuestionCollection.get(@attempt.get('current_question_id')).get('sequence_no'))
+      if @checkTimeAvailable()
+        if section.get('submitted')
+          if @attempt.get('current_question_id')?
+            @currentQuestionCollection = @currentSectionCollection.get(@attempt.get('current_section_id')).get('questions')
+            Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'),'question', @currentQuestionCollection.get(@attempt.get('current_question_id')).get('sequence_no'))
+          else
+            Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'))
         else
-          Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'))
+          @currentSection = section
+          @sectionNumber = section.get('sequence_no')
+          #if we have recived a questionNumber than the user should see a question else we show section start information
+          if questionNumber?
+            @currentQuestionCollection = section.get('questions')
+            Gre340.Routing.showRouteWithTrigger('test_center','section',@sectionNumber,'question',questionNumber)
+          else
+            @updateCurrentAttempt(section.id,null)
+            @updateServerTime()
+            @showSectionActionBar()
+            Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))
+        @totalSeconds = @attempt.get('current_time') if @totalSeconds == null
       else
         @currentSection = section
-        @sectionNumber = section.get('sequence_no')
-        #if we have recived a questionNumber than the user should see a question else we show section start information
-        if questionNumber?
-          @currentQuestionCollection = section.get('questions')
-          Gre340.Routing.showRouteWithTrigger('test_center','section',@sectionNumber,'question',questionNumber)
-        else
-          @updateCurrentAttempt(section.id,null)
-          @showSectionActionBar()
-          Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))
-      @totalSeconds = 1800 if @totalSeconds == null #30 mins
+        @startNextSection()
+      @setTimer(@totalSeconds)
     startSectionByNumber:(sectionNumber,questionNumber) ->
       console.log('start section by number')
       if !@quiz.get('sections')?
@@ -161,10 +177,19 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         @currentSection = @currentSectionCollection.where(sequence_no: parseInt(sectionNumber))[0]
         @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
         @sectionNumber = sectionNumber
-      @startSection(@currentSection,questionNumber)
+      
+      if @checkTimeAvailable()
+        @startSection(@currentSection,questionNumber)
+      else
+        @startNextSection()
     startNextSection: ()->
       @submitSection(@currentSection)
-      Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.next(@currentSection).get('sequence_no'))
+      @resetTotalSeconds()
+      if @currentSectionCollection.next(@currentSection).get('sequence_no')
+        Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.next(@currentSection).get('sequence_no'))
+      else
+        #TODO submit quiz
+
 #TODO: Remove this function later if not needed
 #    startPrevSection: ()->
 #      @startSection(@currentSectionCollection.prev(@currentSection),@currentQuestionCollection.length)
@@ -195,31 +220,47 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       Gre340.TestCenter.Layout.layout.content.show(new @Views.QuizFatalError())
     submitSection:(section)->
       clearInterval(@updateInterval) if @updateInterval?
+      clearInterval(@timerInterval) if @timerInterval?
       section.set submitted: true
     setTimer:(time)->
       @totalSeconds = time
-      @timer = $('#timer')
-      @updateTimer()
+      @updateTimer(@totalSeconds)
       if @timerInterval
         clearInterval(@timerInterval)
       @timerInterval = window.setInterval(@tick,1000)
-    updateTimer:()->
+    updateTimer:(time)->
+      @timer = $('#timer')
       @timer.html(@totalSeconds)
+      if @timerInterval == undefined or @timerInterval == null 
+        @timerInterval = window.setInterval(@tick,1000)
     tick:()=>
-      if @totalSeconds > 0
+      if @totalSeconds > 0 && @connection
         @totalSeconds -= 1
-        @updateTimer()
-      else
-        clearInterval(@timerInterval)
+        @updateTimer(@totalSeconds)
+      else if !@connection
+        #do nothing
+      else if @totalSeconds == 0
+        @submitSection(@currentSection)
+        
+    updateServerTimeWithInterval:()=>
+      if @totalSeconds?
+        attempt = new Backbone.Model({'attempt_id':@attempt.get('id'), 'current_time':@totalSeconds})
+        attempt.url = '/api/v1/attempts/update_time'
+        attempt.save null,
+          success:(model,response)=>
+            @gotConnection()
+          error:@handleErrors
+      if @updateInterval
+        clearInterval(@updateInterval)
+      @updateInterval = window.setInterval(@updateServerTimeWithInterval,10000)
     updateServerTime:()=>
       if @totalSeconds?
         attempt = new Backbone.Model({'attempt_id':@attempt.get('id'), 'current_time':@totalSeconds})
         attempt.url = '/api/v1/attempts/update_time'
         attempt.save null,
+          success:(model,response)=>
+            @gotConnection()
           error:@handleErrors
-      if @updateInterval
-        clearInterval(@updateInterval)
-      @updateInterval = window.setInterval(@updateServerTime,10000)
     startVisit:(question_id)->
       visit = new Backbone.Model({'attempt_id':@attempt.get('id'), 'question_id':question_id,'time':@totalSeconds})
       visit.url = '/api/v1/visits/create'
@@ -228,46 +269,65 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       visit = new Backbone.Model({'attempt_id':@attempt.get('id'), 'question_id':question_id,'time':@totalSeconds})
       visit.url = '/api/v1/visits/set_end_time'
       visit.save()
+    resetTotalSeconds:()->
+      clearInterval(@timerInterval)
+      @endVisit(@currentQuestion.get('id')) if @currentQuestion.get('id')
+      @totalSeconds = 1800 #30mins
+      
     handleErrors:(model,xhr)->
       if xhr.status == 500
         console.log 'an error occured on the server'
       else if xhr.status == 0
         console.log 'lost internet connection'
+        @lostConnection()
+    checkTimeAvailable:() ->
+      if @totalSeconds == 0 then false else true
   #Events Listening
   Gre340.vent.on "show:question", ->
     controller = Controllers.questionController
-    console.log controller.sectionNumber
-    console.log controller.currentQuestion.get('sequence_no')
-    Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestion.get('sequence_no'))
-  
+    if controller.checkTimeAvailable()
+      console.log controller.sectionNumber
+      console.log controller.currentQuestion.get('sequence_no')
+      Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestion.get('sequence_no'))
+    else
+      Gre340.vent.trigger "show:next:section"
   Gre340.vent.on "show:next:question", ->
     controller = Controllers.questionController
-    if controller.currentQuestionCollection?
-      if controller.currentQuestionCollection.length-1 == controller.currentQuestionCollection.indexOf(controller.currentQuestion)
-        #HACK - indexOf was returning -1 instead of 0 for the first model so we first find the model and than restore it
-        controller.currentSection = controller.currentSectionCollection.get(controller.currentSection)
-        Gre340.vent.trigger 'exit:section' if controller.currentSectionCollection.indexOf(controller.currentSection) != controller.currentSectionCollection.length-1
-      else
-        controller.endVisit(controller.currentQuestion.get('id'))
-        controller.currentQuestion = controller.currentQuestionCollection.next(controller.currentQuestion)
-        console.log(controller.currentQuestion.get('id'))
-        Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestionCollection.indexOf(controller.currentQuestion)+1)
-        
+    if controller.checkTimeAvailable()
+      if controller.currentQuestionCollection?
+        if controller.currentQuestionCollection.length-1 == controller.currentQuestionCollection.indexOf(controller.currentQuestion)
+          #HACK - indexOf was returning -1 instead of 0 for the first model so we first find the model and than restore it
+          controller.currentSection = controller.currentSectionCollection.get(controller.currentSection)
+          Gre340.vent.trigger 'exit:section' if controller.currentSectionCollection.indexOf(controller.currentSection) != controller.currentSectionCollection.length-1
+        else
+          controller.endVisit(controller.currentQuestion.get('id'))
+          controller.currentQuestion = controller.currentQuestionCollection.next(controller.currentQuestion)
+          console.log(controller.currentQuestion.get('id'))
+          Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestionCollection.indexOf(controller.currentQuestion)+1)
+    else
+      Gre340.vent.trigger "show:next:section"    
   
   Gre340.vent.on "show:prev:question", ->
     controller = Controllers.questionController
-    if controller.currentQuestionCollection?
-      if controller.currentQuestionCollection.indexOf(controller.currentQuestion) isnt 0
-        controller.endVisit(controller.currentQuestion.get('id'))
-        controller.currentQuestion = controller.currentQuestionCollection.prev(controller.currentQuestion)
-        Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestionCollection.indexOf(controller.currentQuestion)+1)
+    if controller.checkTimeAvailable()
+      if controller.currentQuestionCollection?
+        if controller.currentQuestionCollection.indexOf(controller.currentQuestion) isnt 0
+          controller.endVisit(controller.currentQuestion.get('id'))
+          controller.currentQuestion = controller.currentQuestionCollection.prev(controller.currentQuestion)
+          Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestionCollection.indexOf(controller.currentQuestion)+1)
+    else
+      Gre340.vent.trigger "show:next:section"
   
   Gre340.vent.on "start:section", ->
     controller = Controllers.questionController
-    Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',1)
+    if controller.checkTimeAvailable()
+      Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',1)
+    else
+      Gre340.vent.trigger "show:next:section"
   
   Gre340.vent.on "show:next:section", ->
     controller = Controllers.questionController
+    controller.resetTotalSeconds()
     Gre340.Routing.showRouteWithTrigger('test_center','section',parseInt(controller.sectionNumber)+1,null)
   
   Gre340.vent.on "quiz:changed", (quiz) ->

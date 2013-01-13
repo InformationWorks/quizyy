@@ -9,7 +9,7 @@ class TestCenterController < ApplicationController
       @quiz_id = "#{params[:quiz_id].to_i}"
       if QuizUser.where('user_id = ? AND quiz_id = ?',current_user.id,@quiz_id).length > 0
         @attempt = Attempt.where("user_id = ? AND quiz_id = ?",current_user.id.to_s,@quiz_id)\
-                    .first_or_create(:user_id=> current_user.id,:quiz_id=>@quiz_id)
+                    .first_or_create(:user_id=> current_user.id,:quiz_id=>@quiz_id,:current_time=>1800)
         @attempt.set_attempt_as_current unless(@attempt.is_current)
       else
         redirect_to :action => 'error'
