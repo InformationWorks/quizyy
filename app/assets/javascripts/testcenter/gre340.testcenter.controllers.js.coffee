@@ -245,9 +245,20 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @timerInterval = window.setInterval(@tick,1000)
     updateTimer:(time)->
       @timer = $('#timer')
-      @timer.html(@totalSeconds)
-      if @timerInterval == undefined or @timerInterval == null 
+      seconds = time
+
+      hours = Math.floor(seconds / 3600)
+      seconds -= hours * (3600)
+
+      minutes = Math.floor(seconds / 60)
+      seconds -= minutes * (60)
+
+      timeStr = @leadingZero(hours) + ":" + @leadingZero(minutes) + ":" + @leadingZero(seconds)
+      @timer.html(timeStr)
+      if @timerInterval == undefined or @timerInterval == null
         @timerInterval = window.setInterval(@tick,1000)
+    leadingZero: (time) ->
+      if (time < 10) then "0" + time else time
     tick:()=>
       if @totalSeconds > 0 && @connection
         @totalSeconds -= 1

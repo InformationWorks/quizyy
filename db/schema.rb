@@ -259,8 +259,8 @@ ActiveRecord::Schema.define(:version => 20130115102326) do
     t.integer  "question_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "start"
     t.integer  "end"
+    t.integer  "start"
   end
 
 end
