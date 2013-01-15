@@ -110,6 +110,7 @@ GremastersWeb::Application.routes.draw do
   resources :cart_items, :only => [:create,:destroy]
   
   # Checkout routes.
+  match "stores/cart" => "checkout#show_cart", via: [:get], :as => "show_cart"
   match "buy/test/:id" => "checkout#buy_test", via: [:get], :as => "checkout_buy_test"
   match "buy/package/:id" => "checkout#buy_package", via: [:get], :as => "checkout_buy_package"
   match 'post_to_zaakpay' => 'checkout#post_to_zaakpay'
