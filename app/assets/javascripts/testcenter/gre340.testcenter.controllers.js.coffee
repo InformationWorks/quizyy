@@ -21,6 +21,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @attempt = Gre340.TestCenter.Data.currentAttempt
       @totalSeconds = null
       @connection = true
+      @noInternetErrorShown = false
     start:() ->
     #have moved quiz fetch to attempt:reset event
     #so we only load quiz once we find the current attempt
@@ -43,8 +44,14 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         i++
     lostConnection:()->
       @connection = false
+      $('#action-bar').addClass('no-bk')
+      $('#no-internet-error').modal('show')
     gotConnection:()->
       @connection = true
+      @noInternetErrorShown = false
+      $('#action-bar').removeClass('no-bk')
+      $('#no-internet-error').modal('hide')
+
     updateCurrentAttempt: (currentSectionId,currentQuestionId) ->
       @attempt.set({'current_section_id': currentSectionId,'current_question_id': currentQuestionId},{silent: true})
       @attempt.save()
@@ -302,7 +309,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @endVisit(@currentQuestion.get('id')) if @currentQuestion
       @totalSeconds = 1800 #30mins
       
-    handleErrors:(model,xhr)->
+    handleErrors:(model,xhr)=>
       if xhr.status == 500
         console.log 'an error occured on the server'
       else if xhr.status == 0
@@ -388,6 +395,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         Controllers.questionController.exitQuizCenter()
     else
       Controllers.questionController.exitQuizCenter()
+  Gre340.vent.on 'no:internet:error:shown', ->
+    controller = Controllers.questionController
+    controller.noInternetErrorShown = true
   Gre340.vent.on "exit:section", ->
     controller = Controllers.questionController
     Gre340.Routing.showRoute('test_center','section',controller.sectionNumber,'exit')
