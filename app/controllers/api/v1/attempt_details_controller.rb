@@ -20,10 +20,8 @@ module Api
             input_str = nil
             #a hash is sent for text completion type question and a string for select in passage
             if user_input.is_a?(Hash)
-              user_input.each do |input|
-                combined_input << input[1][:value]
-              end
-              input_str=combined_input.join(',')
+              user_input.each {|input| combined_input << input[1][:value]}
+              input_str = user_input.inject([]) {|combined_input,input| combined_input << input[1][:value]}.join(',')
             elsif user_input.is_a?(String)
               input_str = user_input
             end
