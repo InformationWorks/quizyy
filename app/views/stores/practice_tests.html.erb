@@ -29,8 +29,8 @@
           <% else %>
               	
           	<div class="actions hide">
-          	   <%= button_to( "Buy"  , checkout_buy_test_path(quiz) ,
-  				:method => "get", :disable_with => 'checkout...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
+          	   <%= button_to( "Buy"  , cart_items_path(:quiz_id => quiz.id,:back_controller => "checkout",:back_action => "show_cart") ,
+  						:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
           	</div>
             
             <% cart_item_id = current_user.get_cart_item_id(quiz.id) %>  	
@@ -56,13 +56,13 @@
   </div>
   <div class="span3">
     <div class="metro pull-right">
-      <a class="tile app bg-color-green" href="#">
+      <%= link_to(show_cart_path, :class => "tile app bg-color-green") do %>
          <div class="image-wrapper">
           <span class="icon icon-cart"></span>
         </div>
         <div class="app-label">Cart</div>
         <div class="app-count"><%= @cart.cart_items.count %></div>
-      </a>
+      <% end %>
     </div>
   </div>
 </div>

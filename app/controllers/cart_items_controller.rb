@@ -8,12 +8,30 @@ class CartItemsController < ApplicationController
     if params[:quiz_id]
       # Add quiz to cart.
       quiz = Quiz.find(params[:quiz_id])
-      @cart.cart_items.create(:quiz_id => quiz.id)
+      
+      cart_item = @cart.cart_items.where(:quiz_id => quiz.id).first
+      
+      if cart_item == nil
+        @cart.cart_items.create(:quiz_id => quiz.id)  
+      else
+        # If already exists, save to modify updated_at.
+        cart_item.save!
+      end
+      
       entity = "Test"
     elsif params[:package_id]
       # Add package to cart.
       package = Package.find(params[:package_id])
-      @cart.cart_items.create(:package_id => package.id)
+      
+      cart_item = @cart.cart_items.where(:package_id => package.id).first
+      
+      if cart_item == nil
+        @cart.cart_items.create(:package_id => package.id)  
+      else
+        # If already exists, save to modify updated_at.
+        cart_item.save!
+      end
+      
       entity = "Package"
     end
     
@@ -22,7 +40,7 @@ class CartItemsController < ApplicationController
     redirect_to :controller => params[:back_controller], :action => params[:back_action]
     
   end
-  
+   
   def destroy
     
     cart_item = CartItem.find(params[:id])

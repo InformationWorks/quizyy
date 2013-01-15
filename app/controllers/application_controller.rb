@@ -63,9 +63,13 @@ class ApplicationController < ActionController::Base
   
   private
 
+  # Pick up the existing cart if a corresponding entry is not created in order table.
+  # Once a entry is inserted in the order table, cart entry is to be considered as 
+  # processed and a new cart should be used for future processing. User will be 
+  # shown a orders page to check status of the created orders.
   def initialize_cart
     if @cart == nil
-      @cart = Cart.where(:user_id => current_user.id).first
+      @cart = Cart.joins("left join orders o on carts.id = o.cart_id").where("o.id is null").first
       if @cart == nil
         @cart = Cart.create(:user_id => current_user.id)
       end

@@ -1,5 +1,16 @@
 class CheckoutController < ApplicationController
   
+  before_filter :authenticate_user!
+  before_filter :initialize_cart
+
+  def show_cart
+    
+  end
+  
+  def post_order_to_zaakpay
+    
+  end
+  
   def buy_test
     @quiz = Quiz.find(params[:id])
   end
