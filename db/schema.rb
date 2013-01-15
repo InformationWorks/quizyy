@@ -253,7 +253,6 @@ ActiveRecord::Schema.define(:version => 20130112183956) do
     t.datetime "updated_at",  :null => false
     t.integer  "start"
     t.integer  "end"
-    t.integer  "start"
   end
 
 end
