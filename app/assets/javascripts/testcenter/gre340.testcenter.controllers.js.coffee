@@ -237,6 +237,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       clearInterval(@updateInterval) if @updateInterval?
       clearInterval(@timerInterval) if @timerInterval?
       section.set submitted: true
+      if @currentSection.get('sequence_no') == @currentSectionCollection.length
+        Gre340.Routing.showRouteWithTrigger('test_center','submit')
     setTimer:(time)->
       @totalSeconds = time
       @updateTimer(@totalSeconds)
@@ -324,7 +326,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         if controller.currentQuestionCollection.length-1 == controller.currentQuestionCollection.indexOf(controller.currentQuestion)
           #HACK - indexOf was returning -1 instead of 0 for the first model so we first find the model and than restore it
           controller.currentSection = controller.currentSectionCollection.get(controller.currentSection)
-          Gre340.vent.trigger 'exit:section' if controller.currentSectionCollection.indexOf(controller.currentSection) != controller.currentSectionCollection.length-1
+          Gre340.vent.trigger 'exit:section'
         else
           controller.endVisit(controller.currentQuestion.get('id'))
           controller.currentQuestion = controller.currentQuestionCollection.next(controller.currentQuestion)
