@@ -1,7 +1,7 @@
 class CheckoutController < ApplicationController
   
-  before_filter :authenticate_user!
-  before_filter :initialize_cart
+  #before_filter :authenticate_user!
+  #before_filter :initialize_cart
 
   def show_cart
     
