@@ -8,12 +8,12 @@ module Zaakpay
   # arguements: a parameters hash.  
   # return value: HMAC-SHA-256 checksum usign the Key
   def self.generate_checksum(params_hash)
-    #sorted_params = self.sort_params(params_hash)
     
     paramsstring = ""
     params_hash.each {|key, value|
       paramsstring += "'" + value.to_s + "'"    
     }
+    
     checksum = OpenSSL::HMAC.hexdigest('sha256', Zaakpay::Key, paramsstring)
   end
   
@@ -29,8 +29,57 @@ module Zaakpay
     end
     sorted_params_hash
   end
-
-
+  
+  # This is a helper method for removing extra params that
+  # are not required by Zaakpay.
+  # arguments: a parameters hash
+  # return value: a hash with only required params.
+  def self.remove_extra_params(params_hash)
+    
+    supported_params = [
+                      "amount",
+                      "buyerAddress",
+                      "buyerCity",
+                      "buyerCountry",
+                      "buyerEmail",
+                      "buyerFirstName",
+                      "buyerLastName",
+                      "buyerPhoneNumber",
+                      "buyerPincode",
+                      "buyerState",
+                      "currency",
+                      "merchantIdentifier",
+                      "merchantIpAddress",
+                      "mode",
+                      "orderId",
+                      "product1Description",
+                      "product2Description",
+                      "product3Description",
+                      "product4Description",
+                      "productDescription",
+                      "purpose",
+                      "returnUrl",
+                      "shipToAddress",
+                      "shipToCity",
+                      "shipToCountry",
+                      "shipToFirstname",
+                      "shipToLastname",
+                      "shipToPhoneNumber",
+                      "shipToPincode",
+                      "shipToState",
+                      "showMobile",
+                      "txnDate",
+                      "txnType",
+                      "zpPayOption"]
+    
+    filtered_params_hash = {}
+    params_hash.each {|key, value|
+      if supported_params.include? key.to_s
+        filtered_params_hash[key] = params_hash[key]
+      end
+    }
+    filtered_params_hash
+  end
 
   #
   # This class is for wrappers around the Zaakpay request.
@@ -47,9 +96,10 @@ module Zaakpay
     attr_reader :params, :all_params, :checksum
     
     def initialize(args_hash)
-      @params = args_hash
-      @checksum = Zaakpay.generate_checksum(@params)
-      @all_params = {}.merge(@params).merge({'checksum' => @checksum })
+      @filtered_params = Zaakpay.remove_extra_params(args_hash)
+      @sorted_params = Zaakpay.sort_params(@filtered_params)
+      @checksum = Zaakpay.generate_checksum(@sorted_params)
+      @all_params = {}.merge(@sorted_params).merge({'checksum' => @checksum })
     end
 
   end

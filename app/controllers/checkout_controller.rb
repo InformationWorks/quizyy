@@ -29,11 +29,7 @@ class CheckoutController < ApplicationController
     order.save!
     
     # Add orderId to params.
-    # params.merge!(:orderId => order.id)
-    
-    # Remove extra params. Zaakpay needs only relavent params.
-    params.delete :authenticity_token
-    params.delete :utf8
+    params.merge!(:orderId => order.id)
     
     zr = Zaakpay::Request.new(params) 
     @zaakpay_data = zr.all_params   
