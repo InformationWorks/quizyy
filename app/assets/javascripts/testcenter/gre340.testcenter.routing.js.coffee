@@ -9,8 +9,8 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       'test_center/section/:sindex/exit': 'exitSection'
       'test_center/section/:sindex': 'showSection'
       'test_center/submit': 'showReport'
-      'test_center': 'showIndex'
       'test_center/*anything': 'showIndex'
+      'test_center': 'showIndex'
       '*anyotherpath': 'stopAllModules'
 
     before:(route) ->
@@ -39,6 +39,7 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
       qController.submitQuiz()
       alert 'The test has been submitted.'
     goToAvailableTest: () ->
+      @stopAllModules()
       if !Modernizr.mq("screen and (min-width: 1200px)")
         scrollToElement("#available-tests")
   )
