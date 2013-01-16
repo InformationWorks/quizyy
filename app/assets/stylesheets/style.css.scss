@@ -270,7 +270,7 @@
 
   .left-pane{
     position: absolute;
-    top: 250px;
+    top: 210px;
     width:35%;
     left: 10%;
     bottom: 120px;
@@ -286,7 +286,7 @@
   }
   .right-pane{
     position: absolute;
-    top: 250px;
+    top: 210px;
     left: 50%;
     width: 35%;
     bottom: 120px;
@@ -460,7 +460,7 @@ hr.blue{
 @media (min-width: 1200px){
   #test-content {
     .left-pane,.right-pane{
-      top: 200px;
+      top: 220px;
       width: 30%;
     }
     .left-pane{
@@ -471,15 +471,15 @@ hr.blue{
 @media (max-width: 979px) and (min-width: 768px){
   #test-content {
     .left-pane,.right-pane{
-      top: 250px;
+      top: 210px;
     }
     .left-pane{
       width:40%;
       left: 80px;
     }
     .right-pane{
-      left: 50%;
-      width: 40%;
+      left: 55%;
+      width: 35%;
     }
   }
   #metrosections{
@@ -496,14 +496,14 @@ hr.blue{
       margin-top: 300px;
     }
     .left-pane,.right-pane{
-      top: 250px;
+      top: 280px;
     }
     .left-pane{
       width:40%;
     }
     .right-pane{
-      left: 50%;
-      width: 40%;
+      left: 55%;
+      width: 35%;
     }
   }
 

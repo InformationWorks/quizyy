@@ -117,10 +117,12 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       @section_index = options.section_index
       @question_number = options.question_number
       @total_questions = options.total_questions
+      @showCalc = options.section_quant
     templateHelpers: ->
       section_index: @section_index
       question_number: @question_number
       total_questions: @total_questions
+      showCalc: @showCalc
     events:
       'click #btn-next': 'showNextQuestion'
       'click #btn-prev': 'showPrevQuestion'

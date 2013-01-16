@@ -36,6 +36,7 @@
 //= require jquery-fileupload/basic
 //= require homes
 //= require practice_tests
+//= require libs/jquery.calculator
 
 Backbone.Marionette.Renderer.render = function(template, data){
     if (!JST[template]) throw "Template '" + template + "' not found!";
