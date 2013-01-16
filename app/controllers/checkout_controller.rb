@@ -1,7 +1,8 @@
 class CheckoutController < ApplicationController
   
-  #before_filter :authenticate_user!
-  #before_filter :initialize_cart
+  before_filter :authenticate_user!, :except => [:z_response]
+  before_filter :initialize_cart
+  protect_from_forgery :except => [:z_response]
 
   def show_cart
     
@@ -21,6 +22,19 @@ class CheckoutController < ApplicationController
   
   # POST /post_to_zaakpay
   def post_to_zaakpay
+    
+    # Generate Order for the current cart.
+    order = Order.new
+    order.cart_id = @cart.id
+    order.save!
+    
+    # Add orderId to params.
+    # params.merge!(:orderId => order.id)
+    
+    # Remove extra params. Zaakpay needs only relavent params.
+    params.delete :authenticity_token
+    params.delete :utf8
+    
     zr = Zaakpay::Request.new(params) 
     @zaakpay_data = zr.all_params   
     render :layout => false    
