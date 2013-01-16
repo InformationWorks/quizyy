@@ -147,7 +147,10 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       else
         Gre340.Routing.showRouteWithTrigger('test_center','submit')
     showActionBar: () ->
-      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber, question_number:@currentQuestion.get('sequence_no'),total_questions: @currentQuestionCollection.length))
+      @section_quant = false
+      if /quant/i.test(@currentSection.get('section_type_name'))
+        @section_quant = true
+      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber, question_number:@currentQuestion.get('sequence_no'),total_questions: @currentQuestionCollection.length, section_quant: @section_quant ))
     showSectionActionBar: () ->
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
     startSection: (section,questionNumber) ->

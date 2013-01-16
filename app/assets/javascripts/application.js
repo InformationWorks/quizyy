@@ -14,6 +14,7 @@
 //= require turbolinks
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require libs/jquery-ui-1.9.2.custom.min
 //= require libs/modernizr.custom
 //= require bootstrap
 //= require backbone/json2
@@ -36,6 +37,7 @@
 //= require jquery-fileupload/basic
 //= require homes
 //= require practice_tests
+//= require libs/jquery.calculator
 
 Backbone.Marionette.Renderer.render = function(template, data){
     if (!JST[template]) throw "Template '" + template + "' not found!";
