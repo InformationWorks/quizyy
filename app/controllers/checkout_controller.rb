@@ -1,6 +1,6 @@
 class CheckoutController < ApplicationController
   
-  before_filter :authenticate_user!, :except => [:z_response]
+  before_filter :authenticate_user!
   before_filter :initialize_cart
   protect_from_forgery :except => [:z_response]
 
