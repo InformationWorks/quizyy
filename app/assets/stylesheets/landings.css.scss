@@ -13,11 +13,8 @@ $light-grey:#f7f7f7;
     padding:40px;
   }
   .tagline{
-    padding: 25px;
-    margin-left: 20px;
-    margin-bottom: 20px;
-    height: 500px;
-    width: 500px;
+    max-height: 500px;
+    max-width: 500px;
     color: white;
     text-align: center;
     h1{text-shadow: 2px 2px 5px #0c58cc;}
