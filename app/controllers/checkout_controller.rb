@@ -41,7 +41,7 @@ class CheckoutController < ApplicationController
     zr = Zaakpay::Response.new(request.raw_post)  
     @checksum_check = zr.valid?
     @zaakpay_post = zr.all_params
-    render :layout => false
+    #render :layout => false
   end
   
 end
