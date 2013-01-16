@@ -124,6 +124,7 @@
 #second-nav{
   margin-top:25px;
 }
+
 /** Hero unit styles **/
 .main-unit {     
   background-image: url(../img/noisy-texture.png);
@@ -188,6 +189,13 @@
 #content{
   margin-top: 30px;
 }
+
+#calculator{
+  position: absolute;
+  top:400px;
+  left:100px;
+  display:none;
+}
 #action-bar{
   position: fixed;
   top: 0px;
@@ -216,6 +224,11 @@
     display: none;
   }
 }
+
+.calculator-row .calculator-use {
+  width: 100% !important;
+}
+
 #section-info{
   width:60%;
   margin: 0px auto;

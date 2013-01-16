@@ -22,7 +22,7 @@
             <span class="win-label">Mark</span>
         </button>
         <% if @showCalc:%>
-        <button id="btn-calc" class="win-command">
+        <button id="btn-calc" class="win-command calculator-trigger">
             <span class="win-commandimage win-commandring">&#x003e;</span>
             <span class="win-label">Calc</span>
         </button>

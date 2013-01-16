@@ -14,6 +14,7 @@
 //= require turbolinks
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require libs/jquery-ui-1.9.2.custom.min
 //= require libs/modernizr.custom
 //= require bootstrap
 //= require backbone/json2

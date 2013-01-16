@@ -30,13 +30,19 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       @numericEqRegEx = /NE-1|NE-2/i
       @textCompRegEx = /TC-1|TC-2|TC-3/i
       @sipRegEx = /SIP/i
+      @qtype = ''
       if @numericEqRegEx.test(question_type)
+        $(@el).addClass('ne')
+        @qtype = 'ne'
         'option/ne'
       else if @textCompRegEx.test(question_type)
+        @qtype = 'tc'
         'option/tc'
       else if @sipRegEx.test(question_type)
+        @qtype = 'none'
         'option/none'
       else
+        @qtype = 'mcq'
         'option/mcq'
     setUserResponse: (event)->
       switch @type
@@ -44,6 +50,40 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         when "ne" then console.log 'ne'
     saveUserResponse:(event)->
       Views.saveAttemptDetails(event,@model)
+    onRender:()->
+        if @qtype != 'ne'
+          $('#calculator').calculator
+            showOn: 'operator'
+            layout: [$.calculator.CLOSE,'MRMCM+M-MS', '_7_8_9_/CA',
+              '_4_5_6_*CE', '_1_2_3_-SR', '+-_0_._+_=']
+            closeText: 'X'
+          $('#btn-calc').click =>
+            $('#calculator').calculator('show')
+            $('.calculator-popup').css
+              position: 'absolute'
+              top: '400px'
+              width: 'auto'
+              left: '100px'
+              display: 'block'
+            $('.calculator-popup').draggable()
+        else
+          @$('input[type=text]').calculator
+            showOn: 'operator'
+            layout: [$.calculator.CLOSE,'MRMCM+M-MS', '_7_8_9_/CA',
+              '_4_5_6_*CE', '_1_2_3_-SR', '+-_0_._+_=',$.calculator.USE]
+            closeText: 'X'
+            useText: 'Transfer Display'
+          selectedInput = null
+          @$('input[type=text]').focus ->
+            selectedInput = @
+          $('#btn-calc').click =>
+            if @$('input[type=text]').length > 1 and selectedInput != null
+              $(selectedInput).calculator('show')
+            else if @$('input[type=text]').length > 1 and selectedInput == null
+              @$('input[type=text]').first().calculator('show')
+            else
+              @$('input[type=text]').calculator('show')
+            $('.calculator-popup').draggable()
   #TODO save user response to db
 
   Views.QuestionSingleView = Marionette.Layout.extend

@@ -2,7 +2,7 @@
 </div>
 <div id="test-content" class="container">
 </div>
-<input type="hidden" class="calculator"/>
+<input type="hidden" id="calculator"/>
 <div id="no-internet-error" class="modal hide fade" data-backdrop="static" data-keyboard="false">
 <h4 class="modal-header">Oh snap! Could not connect to Internet.</h4>
 <div class="modal-body">
