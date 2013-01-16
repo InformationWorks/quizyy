@@ -21,6 +21,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @attempt = Gre340.TestCenter.Data.currentAttempt
       @totalSeconds = null
       @connection = true
+      @noInternetErrorShown = false
     start:() ->
     #have moved quiz fetch to attempt:reset event
     #so we only load quiz once we find the current attempt
@@ -43,8 +44,14 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         i++
     lostConnection:()->
       @connection = false
+      $('#action-bar').addClass('no-bk')
+      $('#no-internet-error').modal('show')
     gotConnection:()->
       @connection = true
+      @noInternetErrorShown = false
+      $('#action-bar').removeClass('no-bk')
+      $('#no-internet-error').modal('hide')
+
     updateCurrentAttempt: (currentSectionId,currentQuestionId) ->
       @attempt.set({'current_section_id': currentSectionId,'current_question_id': currentQuestionId},{silent: true})
       @attempt.save()
@@ -237,6 +244,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       clearInterval(@updateInterval) if @updateInterval?
       clearInterval(@timerInterval) if @timerInterval?
       section.set submitted: true
+      if @currentSection.get('sequence_no') == @currentSectionCollection.length
+        Gre340.Routing.showRouteWithTrigger('test_center','submit')
     setTimer:(time)->
       @totalSeconds = time
       @updateTimer(@totalSeconds)
@@ -245,9 +254,20 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @timerInterval = window.setInterval(@tick,1000)
     updateTimer:(time)->
       @timer = $('#timer')
-      @timer.html(@totalSeconds)
-      if @timerInterval == undefined or @timerInterval == null 
+      seconds = time
+
+      hours = Math.floor(seconds / 3600)
+      seconds -= hours * (3600)
+
+      minutes = Math.floor(seconds / 60)
+      seconds -= minutes * (60)
+
+      timeStr = @leadingZero(hours) + ":" + @leadingZero(minutes) + ":" + @leadingZero(seconds)
+      @timer.html(timeStr)
+      if @timerInterval == undefined or @timerInterval == null
         @timerInterval = window.setInterval(@tick,1000)
+    leadingZero: (time) ->
+      if (time < 10) then "0" + time else time
     tick:()=>
       if @totalSeconds > 0 && @connection
         @totalSeconds -= 1
@@ -289,7 +309,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @endVisit(@currentQuestion.get('id')) if @currentQuestion
       @totalSeconds = 1800 #30mins
       
-    handleErrors:(model,xhr)->
+    handleErrors:(model,xhr)=>
       if xhr.status == 500
         console.log 'an error occured on the server'
       else if xhr.status == 0
@@ -313,7 +333,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         if controller.currentQuestionCollection.length-1 == controller.currentQuestionCollection.indexOf(controller.currentQuestion)
           #HACK - indexOf was returning -1 instead of 0 for the first model so we first find the model and than restore it
           controller.currentSection = controller.currentSectionCollection.get(controller.currentSection)
-          Gre340.vent.trigger 'exit:section' if controller.currentSectionCollection.indexOf(controller.currentSection) != controller.currentSectionCollection.length-1
+          Gre340.vent.trigger 'exit:section'
         else
           controller.endVisit(controller.currentQuestion.get('id'))
           controller.currentQuestion = controller.currentQuestionCollection.next(controller.currentQuestion)
@@ -375,6 +395,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         Controllers.questionController.exitQuizCenter()
     else
       Controllers.questionController.exitQuizCenter()
+  Gre340.vent.on 'no:internet:error:shown', ->
+    controller = Controllers.questionController
+    controller.noInternetErrorShown = true
   Gre340.vent.on "exit:section", ->
     controller = Controllers.questionController
     Gre340.Routing.showRoute('test_center','section',controller.sectionNumber,'exit')
