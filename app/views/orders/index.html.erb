@@ -1,0 +1,30 @@
+	<!-- show orders here -->
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Order#</th>
+				<th>Status</th>
+				<th>Description</th>
+				<th>Processed at</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @orders.each do |order| %>
+			  <tr>
+			  	<td><%= order.id %></td>
+			  	<td>
+			  		<% if order.responseCode == nil %>
+			  			<span class="label label-warning">Unprocessed</span>
+			  		<% elsif order.responseCode == 100 %>
+			  			<span class="label label-success">Success</span>
+			  		<% else %>
+			  			<span class="label label-fail">Fail</span>
+			  		<% end %>
+			  	</td>
+			  	<td><%= order.responseDescription %></td>
+			  	<td><%= order.updated_at %></td>
+			  </tr>
+			<% end %>
+		</tbody>
+	</table>
