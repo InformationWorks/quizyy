@@ -214,9 +214,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       else
         @submitSection(@currentSection)
         Gre340.Routing.showRouteWithTrigger('test_center','submit')
-#TODO: Remove this function later if not needed
-#    startPrevSection: ()->
-#      @startSection(@currentSectionCollection.prev(@currentSection),@currentQuestionCollection.length)
     setQuiz:(model,isSilent) ->
       @quiz.set(model, {silent: isSilent})
     setQuizInProgress: ->
