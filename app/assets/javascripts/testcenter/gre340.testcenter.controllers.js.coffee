@@ -51,7 +51,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @noInternetErrorShown = false
       $('#action-bar').removeClass('no-bk')
       $('#no-internet-error').modal('hide')
-
     updateCurrentAttempt: (currentSectionId,currentQuestionId) ->
       @attempt.set({'current_section_id': currentSectionId,'current_question_id': currentQuestionId},{silent: true})
       @attempt.save()
@@ -320,7 +319,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         @lostConnection()
     checkTimeAvailable:() ->
       if @totalSeconds == 0 then false else true
-  #Events Listening
+  
+  #-----------------------Events Listening------------------------------
+
   Gre340.vent.on "show:question", ->
     controller = Controllers.questionController
     if controller.checkTimeAvailable()
@@ -405,7 +406,8 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     controller = Controllers.questionController
     Gre340.Routing.showRoute('test_center','section',controller.sectionNumber,'exit')
     controller.exitSection()
-  #request handlers
+  
+  #---------------------request handlers--------------------------
   Gre340.reqres.addHandler "currentAttemptId", ()->
     Controllers.questionController.attempt.get('id')
 

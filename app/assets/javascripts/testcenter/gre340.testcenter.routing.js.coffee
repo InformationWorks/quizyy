@@ -21,22 +21,22 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
     showIndex: ->
       Gre340.Routing.showRoute('/test_center/index')
     showQuestion: (sectionNumber,questionNumber) ->
-      qController = Gre340.TestCenter.Controllers.questionController
-      qController.showQuestionByNumber(sectionNumber,questionNumber)
+      q = Gre340.TestCenter.Controllers.questionController
+      q.showQuestionByNumber(sectionNumber,questionNumber)
     showSection: (sectionNumber) ->
       console.log 'show section is called'
-      qController = Gre340.TestCenter.Controllers.questionController
-      qController.startSectionByNumber(sectionNumber,null)
+      q = Gre340.TestCenter.Controllers.questionController
+      q.startSectionByNumber(sectionNumber,null)
     exitSection: (sectionNumber) ->
-      qController = Gre340.TestCenter.Controllers.questionController
-      qController.exitSection()
+      q = Gre340.TestCenter.Controllers.questionController
+      q.exitSection()
     stopAllModules:()->
       Gre340.TestCenter.stop()
     showError:()->
 
     showReport:()->
-      qController = Gre340.TestCenter.Controllers.questionController
-      qController.submitQuiz()
+      q = Gre340.TestCenter.Controllers.questionController
+      q.submitQuiz()
       alert 'The test has been submitted.'
     goToAvailableTest: () ->
       @stopAllModules()
