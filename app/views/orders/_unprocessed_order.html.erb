@@ -2,8 +2,15 @@
   <div class="span8">
 	<section class="category-section first">
     <h2>Order # <%= @order.id %></h2>
-    <%= link_to "continue shopping", stores_timed_tests_path, :class => "pull-right" %>
-    <hr>
+    
+    <% if @order.responseCode == nil %>
+    	<span class="label label-warning">Unprocessed</span>
+    <% else %>
+    	<span class="label label-important">Processing Failed</span>
+    <% end %>
+    
+    <%= link_to "Back to My Orders", orders_path, :class => "pull-right" %>
+    <hr>	 
     <!-- show cart items here -->
     <table class="table table-hover">
 		<thead>
@@ -55,12 +62,22 @@
 			
 		</tbody>
 	</table>
+	<% if @order.responseDescription == nil %>
+		<div class="alert alert-warning">
+  			<strong>Status:</strong> <%= @order.responseDescription ? @order.responseDescription : "None" %>
+		</div>
+	<% else %>
+		<div class="alert alert-error">
+  			<strong>Status:</strong> <%= @order.responseDescription ? @order.responseDescription : "None" %>
+		</div>
+	<% end %>
+	
     </section>
   </div>
   <div class="span3">
     <div class="metro pull-right">
       
-      <%= form_tag("/post_to_zaakpay", :method => "post") do %>
+      <%= form_tag("/post_existing_order_to_zaakpay", :method => "post") do %>
 		<input type="hidden" name="amount" value="200000" /> 
 		<input type="hidden" name="buyerAddress" value="A/31 Avdhoot Society" /> 
 		<input type="hidden" name="buyerCity" value="bharuch" /> 
@@ -75,6 +92,7 @@
 		<input type="hidden" name="merchantIdentifier" value="4a4a35d8b8c94019a8b0c3cedf3474cb" /> 
 		<input type="hidden" name="merchantIpAddress" value="127.0.0.1" /> 
 		<input type="hidden" name="mode" value="0" /> 
+		<input type="hidden" name="orderId" value="<%= @order.id.to_s %>" /> 
 		<input type="hidden" name="product1Description" value="" /> 
 		<input type="hidden" name="product2Description" value="" /> 
 		<input type="hidden" name="product3Description" value="" /> 

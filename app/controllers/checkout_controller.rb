@@ -8,10 +8,6 @@ class CheckoutController < ApplicationController
     
   end
   
-  def post_order_to_zaakpay
-    
-  end
-  
   def buy_test
     @quiz = Quiz.find(params[:id])
   end
@@ -36,6 +32,14 @@ class CheckoutController < ApplicationController
     render :layout => false    
   end
   
+  # POST /post_existing_order_to_zaakpay
+  # Order id passed in params.
+  def post_existing_order_to_zaakpay
+    zr = Zaakpay::Request.new(params) 
+    @zaakpay_data = zr.all_params   
+    render :layout => false
+  end
+  
   # POST /z_response
   def z_response
     zr = Zaakpay::Response.new(request.raw_post)  
@@ -53,6 +57,9 @@ class CheckoutController < ApplicationController
       # If responseCode == 100, add the quizzes/packages to user's account.
       if order.responseCode == 100
         process_order(order)
+        redirect_to order_path(order), notice: "Order processed successfully."
+      else
+        redirect_to order_path(order), notice: "Order processing failed."
       end
     end
   end
