@@ -9,6 +9,7 @@
 			<tr>
 				<th>Order#</th>
 				<th>Status</th>
+				<th>Price</th>
 				<th>Description</th>
 				<th>Processed at - IST</th>
 				<th></th>
@@ -26,6 +27,9 @@
 			  		<% else %>
 			  			<span class="label label-important">Failed</span>
 			  		<% end %>
+			  	</td>
+			  	<td>
+			  	<%= "\u20B9 " + order.price.to_s %>	
 			  	</td>
 			  	<td>
 			  		<% if order.responseCode == nil %>
