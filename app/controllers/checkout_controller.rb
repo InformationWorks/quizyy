@@ -19,25 +19,32 @@ class CheckoutController < ApplicationController
   # POST /post_to_zaakpay
   def post_to_zaakpay
     
-    # Generate Order for the current cart.
-    order = Order.new
-    order.cart_id = @cart.id
-    order.save!
+    if params[:orderId] == nil
+      # Generate Order for the current cart
+      # and add order.id to params
+      order = create_order(@cart.id)
+      params.merge!(:orderId => order.id)
+    else
+      # Retrive existing Order
+      order = Order.find(params[:orderId])
+    end
     
-    # Add orderId to params.
-    params.merge!(:orderId => order.id)
+    if params[:amount].to_i == 0
+      # Set order as processed
+      mark_order_as_processed(order)
+      
+      # Process the order and add the quiz/package to the user's account.
+      process_order(order)
+      
+      # Redirect to order's page.
+      redirect_to order_path(order), notice: "Order processed successfully."
+    else
+      # Handle payment for paid test.
+      zr = Zaakpay::Request.new(params) 
+      @zaakpay_data = zr.all_params   
+      render :layout => false
+    end
     
-    zr = Zaakpay::Request.new(params) 
-    @zaakpay_data = zr.all_params   
-    render :layout => false    
-  end
-  
-  # POST /post_existing_order_to_zaakpay
-  # Order id passed in params.
-  def post_existing_order_to_zaakpay
-    zr = Zaakpay::Request.new(params) 
-    @zaakpay_data = zr.all_params   
-    render :layout => false
   end
   
   # POST /z_response
@@ -65,6 +72,19 @@ class CheckoutController < ApplicationController
   end
   
   private
+  
+  def mark_order_as_processed(order)
+    order.responseCode = 100
+    order.responseDescription = "Free tests added to your account."
+    order.save!
+  end
+  
+  def create_order(cart_id)
+    order = Order.new
+    order.cart_id = @cart.id
+    order.save!
+    order
+  end
   
   def save_order(params)
     order = Order.find(params["orderId"].to_i)

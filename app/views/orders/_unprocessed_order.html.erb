@@ -77,7 +77,7 @@
   <div class="span3">
     <div class="metro pull-right">
       
-      <%= form_tag("/post_existing_order_to_zaakpay", :method => "post") do %>
+      <%= form_tag("/post_to_zaakpay", :method => "post") do %>
 		<input type="hidden" name="amount" value="200000" /> 
 		<input type="hidden" name="buyerAddress" value="A/31 Avdhoot Society" /> 
 		<input type="hidden" name="buyerCity" value="bharuch" /> 
@@ -111,7 +111,11 @@
 		<input type="hidden" name="txnDate" value="<%= Time.current.strftime("%Y-%m-%d").to_s %>" /> 
 		<input type="hidden" name="txnType" value="1" /> 
 		<input type="hidden" name="zpPayOption" value="1" />
-		<%= submit_tag "Pay", :class => "tile app bg-color-green" %>
+		<% if total == 0 %>
+			<%= submit_tag "Add to account", :class => "tile app bg-color-green" %>
+		<% else %>
+			<%= submit_tag "Pay", :class => "tile app bg-color-green" %>
+		<% end %>
 	  <% end %>
       
     </div>
