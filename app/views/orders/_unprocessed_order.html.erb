@@ -6,7 +6,7 @@
     <% if @order.responseCode == nil %>
     	<span class="label label-warning">Unprocessed</span>
     <% else %>
-    	<span class="label label-important">Processing Failed</span>
+    	<span class="label label-important">Failed</span>
     <% end %>
     
     <%= link_to "Back to My Orders", orders_path, :class => "pull-right" %>
@@ -26,7 +26,7 @@
 		    	<% if cart_item.quiz_id != nil %>
 		    		<td>
 			    		<%= cart_item.quiz.name %>
-			    		<span class="label label-success">Test</span>
+			    		<span class="label">Test</span>
 			    		<br />
 			    		<%= link_to( "Delete"  , cart_item_path(:id => cart_item.id,:back_controller => "checkout",:back_action => "show_cart") ,
   						:method => "delete") %>
@@ -39,7 +39,7 @@
 		    	<% elsif cart_item.package_id != nil %>
 		    		<td>
 			    		<%= cart_item.package.name %>
-			    		<span class="label label-success">Package</span>
+			    		<span class="label">Package</span>
 			    	</td>
 			    	<td style="text-align: right">
 			    		<%= "\u20B9 " + cart_item.package.price.to_s %>
@@ -64,7 +64,7 @@
 	</table>
 	<% if @order.responseDescription == nil %>
 		<div class="alert" style="background-color: #f89406;font-size: 14px;">
-  			<strong>Status:</strong> <%= @order.responseDescription ? @order.responseDescription : "None" %>
+  			<strong>Status:</strong> <%= @order.responseDescription ? @order.responseDescription : "Transaction pending. Try again." %>
 		</div>
 	<% else %>
 		<div class="alert" style="background-color: #b94a48;font-size: 14px;">

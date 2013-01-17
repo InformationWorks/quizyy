@@ -17,9 +17,9 @@
 			  		<% if order.responseCode == nil %>
 			  			<span class="label label-warning">Unprocessed</span>
 			  		<% elsif order.responseCode == 100 %>
-			  			<span class="label label-success">Success</span>
+			  			<span class="label label-success">Processed</span>
 			  		<% else %>
-			  			<span class="label label-fail">Fail</span>
+			  			<span class="label label-important">Failed</span>
 			  		<% end %>
 			  	</td>
 			  	<td>
