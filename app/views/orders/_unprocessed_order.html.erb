@@ -63,11 +63,11 @@
 		</tbody>
 	</table>
 	<% if @order.responseDescription == nil %>
-		<div class="alert alert-warning">
+		<div class="alert" style="background-color: #f89406;font-size: 14px;">
   			<strong>Status:</strong> <%= @order.responseDescription ? @order.responseDescription : "None" %>
 		</div>
 	<% else %>
-		<div class="alert alert-error">
+		<div class="alert" style="background-color: #b94a48;font-size: 14px;">
   			<strong>Status:</strong> <%= @order.responseDescription ? @order.responseDescription : "None" %>
 		</div>
 	<% end %>
