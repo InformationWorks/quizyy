@@ -109,7 +109,7 @@
 		<input type="hidden" name="shipToPincode" value="" /> 
 		<input type="hidden" name="shipToState" value="" /> 
 		<input type="hidden" name="txnDate" value="<%= Time.current.strftime("%Y-%m-%d").to_s %>" /> 
-		<input type="hidden" name="txnType" value="1" /> 
+		<input type="hidden" name="txnType" value="2" /> 
 		<input type="hidden" name="zpPayOption" value="1" />
 		<% if total == 0 %>
 			<%= submit_tag "Add to account", :class => "tile app bg-color-green" %>
