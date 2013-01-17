@@ -61,7 +61,7 @@
     <div class="metro pull-right">
       
       <%= form_tag("/post_to_zaakpay", :method => "post") do %>
-		<input type="hidden" name="amount" value="<%= total * 100 %>" /> 
+		<input type="hidden" name="amount" value="<%= (total * 100).to_i %>" /> 
 		<input type="hidden" name="buyerAddress" value="A/31 Avdhoot Society" /> 
 		<input type="hidden" name="buyerCity" value="bharuch" /> 
 		<input type="hidden" name="buyerCountry" value="India" /> 
