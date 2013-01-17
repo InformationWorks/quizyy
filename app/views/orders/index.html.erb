@@ -5,7 +5,7 @@
 				<th>Order#</th>
 				<th>Status</th>
 				<th>Description</th>
-				<th>Processed at</th>
+				<th>Processed at - IST</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -22,8 +22,21 @@
 			  			<span class="label label-fail">Fail</span>
 			  		<% end %>
 			  	</td>
-			  	<td><%= order.responseDescription %></td>
-			  	<td><%= order.updated_at %></td>
+			  	<td>
+			  		<% if order.responseCode == nil %>
+			  			Transaction pending. Try again.
+			  		<% else %>
+			  			<%= order.responseDescription %>
+			  		<% end %>
+			  	</td>
+			  	<td><%= order.updated_at.in_time_zone("Mumbai").strftime("%d-%b-%y %H:%M:%S") %></td>
+			  	<td class="toolbar">
+			      <div class="btn-group">
+			    	<%= link_to(order_path(order), :class => "btn") do %>
+			    	  <span class="awe-eye-open">Show</span>
+			    	<% end %>
+			      </div>
+			    </td>
 			  </tr>
 			<% end %>
 		</tbody>

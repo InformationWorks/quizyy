@@ -1,2 +1,5 @@
-<h1>Orders#show</h1>
-<p>Find me in app/views/orders/show.html.erb</p>
+<% if @order.responseCode == 100 %>
+	<%= render 'processed_order' %>
+<% else %>
+	<%= render 'unprocessed_order' %>
+<% end %>

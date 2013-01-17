@@ -1,0 +1,101 @@
+<div id="content" class="span12">
+  <div class="span8">
+	<section class="category-section first">
+    <h2>Order # <%= @order.id %></h2>
+    <%= link_to "continue shopping", stores_timed_tests_path, :class => "pull-right" %>
+    <hr>
+    <!-- show cart items here -->
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th style="text-align: right">Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% total = 0.0 %>
+			<% @order.cart.cart_items.order("updated_at desc").each do |cart_item| %>
+			  <tr>
+		    	<% if cart_item.quiz_id != nil %>
+		    		<td>
+			    		<%= cart_item.quiz.name %>
+			    		<span class="label label-success">Test</span>
+			    		<br />
+			    		<%= link_to( "Delete"  , cart_item_path(:id => cart_item.id,:back_controller => "checkout",:back_action => "show_cart") ,
+  						:method => "delete") %>
+			    		
+			    	</td>
+			    	<td style="text-align: right">
+			    		<%= "\u20B9 " + cart_item.quiz.price.to_s %>
+			    		<% total += cart_item.quiz.price %>
+			    	</td>
+		    	<% elsif cart_item.package_id != nil %>
+		    		<td>
+			    		<%= cart_item.package.name %>
+			    		<span class="label label-success">Package</span>
+			    	</td>
+			    	<td style="text-align: right">
+			    		<%= "\u20B9 " + cart_item.package.price.to_s %>
+			    		<% total += cart_item.package.price %>
+			    	</td>
+				<% else %>
+					Oops. Something went wrong.						    		
+		    	<% end %>
+			  </tr>
+			<% end %>
+			
+			<tr style="background-color: whitesmoke">
+		    <td style="text-align: left;font-weight: bold;">
+		    	Total 	
+		    </td>
+		    <td style="text-align: right;font-weight: bold;">
+		    	<%= "\u20B9 " + total.to_s %>
+		    </td>	
+			</tr>
+			
+		</tbody>
+	</table>
+    </section>
+  </div>
+  <div class="span3">
+    <div class="metro pull-right">
+      
+      <%= form_tag("/post_to_zaakpay", :method => "post") do %>
+		<input type="hidden" name="amount" value="200000" /> 
+		<input type="hidden" name="buyerAddress" value="A/31 Avdhoot Society" /> 
+		<input type="hidden" name="buyerCity" value="bharuch" /> 
+		<input type="hidden" name="buyerCountry" value="India" /> 
+		<input type="hidden" name="buyerEmail" value="a@b.com" /> 
+		<input type="hidden" name="buyerFirstName" value="harshal" /> 
+		<input type="hidden" name="buyerLastName" value="bhakta" /> 
+		<input type="hidden" name="buyerPhoneNumber" value="9800000000" /> 
+		<input type="hidden" name="buyerPincode" value="392002" /> 
+		<input type="hidden" name="buyerState" value="Gujarat" />  
+		<input type="hidden" name="currency" value="INR" /> 
+		<input type="hidden" name="merchantIdentifier" value="4a4a35d8b8c94019a8b0c3cedf3474cb" /> 
+		<input type="hidden" name="merchantIpAddress" value="127.0.0.1" /> 
+		<input type="hidden" name="mode" value="0" /> 
+		<input type="hidden" name="product1Description" value="" /> 
+		<input type="hidden" name="product2Description" value="" /> 
+		<input type="hidden" name="product3Description" value="" /> 
+		<input type="hidden" name="product4Description" value="" /> 
+		<input type="hidden" name="productDescription" value="test product" /> 
+		<input type="hidden" name="purpose" value="1" /> 
+		<input type="hidden" name="returnUrl" value="" /> 
+		<input type="hidden" name="shipToAddress" value="" /> 
+		<input type="hidden" name="shipToCity" value="" /> 
+		<input type="hidden" name="shipToCountry" value="" /> 
+		<input type="hidden" name="shipToFirstname" value="" /> 
+		<input type="hidden" name="shipToLastname" value="" /> 
+		<input type="hidden" name="shipToPhoneNumber" value="" /> 
+		<input type="hidden" name="shipToPincode" value="" /> 
+		<input type="hidden" name="shipToState" value="" /> 
+		<input type="hidden" name="txnDate" value="<%= Time.current.strftime("%Y-%m-%d").to_s %>" /> 
+		<input type="hidden" name="txnType" value="1" /> 
+		<input type="hidden" name="zpPayOption" value="1" />
+		<%= submit_tag "Pay", :class => "tile app bg-color-green" %>
+	  <% end %>
+      
+    </div>
+  </div>
+</div>

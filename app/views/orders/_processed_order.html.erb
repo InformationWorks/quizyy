@@ -1,0 +1,62 @@
+<div id="content" class="span12">
+  <div class="span10">
+	<section class="category-section first">
+    <h2>Order # <%= @order.id %></h2>
+    <span class="label label-success">Processed</span>
+    <%= link_to "Back to My Orders", orders_path, :class => "pull-right" %>
+    <hr>
+    <!-- show cart items here -->
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th style="text-align: right">Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% total = 0.0 %>
+			<% @order.cart.cart_items.order("updated_at desc").each do |cart_item| %>
+			  <tr>
+		    	<% if cart_item.quiz_id != nil %>
+		    		<td>
+		    			<%= link_to() do %>
+			    			<%= cart_item.quiz.name %>
+			    		<% end %>
+			    		<br />
+			    		<span class="label">Test</span>
+			    		<br />
+			    	</td>
+			    	<td style="text-align: right">
+			    		<%= "\u20B9 " + cart_item.quiz.price.to_s %>
+			    		<% total += cart_item.quiz.price %>
+			    	</td>
+		    	<% elsif cart_item.package_id != nil %>
+		    		<td>
+			    		<%= cart_item.package.name %>
+			    		<br />
+			    		<span class="label">Package</span>
+			    	</td>
+			    	<td style="text-align: right">
+			    		<%= "\u20B9 " + cart_item.package.price.to_s %>
+			    		<% total += cart_item.package.price %>
+			    	</td>
+				<% else %>
+					Oops. Something went wrong.						    		
+		    	<% end %>
+			  </tr>
+			<% end %>
+			
+			<tr style="background-color: whitesmoke">
+		    <td style="text-align: left;font-weight: bold;">
+		    	Total 	
+		    </td>
+		    <td style="text-align: right;font-weight: bold;">
+		    	<%= "\u20B9 " + total.to_s %>
+		    </td>	
+			</tr>
+			
+		</tbody>
+	</table>
+    </section>
+  </div>
+</div>
