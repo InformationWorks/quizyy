@@ -306,8 +306,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     resetTotalSeconds:()->
       clearInterval(@timerInterval)
       @endVisit(@currentQuestion.get('id')) if @currentQuestion
-      @totalSeconds = 1800 #30mins
-      
+      @totalSeconds = 1800 #30mins      
     handleErrors:(model,xhr)=>
       if xhr.status == 500
         console.log 'an error occured on the server'
