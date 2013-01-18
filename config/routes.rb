@@ -1,5 +1,5 @@
 GremastersWeb::Application.routes.draw do
-  
+
   ### API routes go here.
     
   # API v1
@@ -109,11 +109,15 @@ GremastersWeb::Application.routes.draw do
   # CartItem routes.
   resources :cart_items, :only => [:create,:destroy]
   
+  # Orders routes.
+  resources :orders, :only => [:index,:show]
+  
   # Checkout routes.
   match "stores/cart" => "checkout#show_cart", via: [:get], :as => "show_cart"
   match "buy/test/:id" => "checkout#buy_test", via: [:get], :as => "checkout_buy_test"
   match "buy/package/:id" => "checkout#buy_package", via: [:get], :as => "checkout_buy_package"
   match 'post_to_zaakpay' => 'checkout#post_to_zaakpay'
+  match 'post_existing_order_to_zaakpay' => 'checkout#post_existing_order_to_zaakpay'
   match 'z_response'      => 'checkout#z_response'
 
   root :to => "landings#index"

@@ -1,0 +1,55 @@
+<div id="content" class="span12">
+  <div class="span8">
+  	<!-- Full length tests -->
+  	<section class="category-section first">
+    <h2>My Orders</h2>
+	<!-- show orders here -->
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Order#</th>
+				<th>Status</th>
+				<th>Price</th>
+				<th>Description</th>
+				<th>Processed at - IST</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @orders.each do |order| %>
+			  <tr>
+			  	<td><%= order.id %></td>
+			  	<td>
+			  		<% if order.responseCode == nil %>
+			  			<span class="label label-warning">Unprocessed</span>
+			  		<% elsif order.responseCode == 100 %>
+			  			<span class="label label-success">Processed</span>
+			  		<% else %>
+			  			<span class="label label-important">Failed</span>
+			  		<% end %>
+			  	</td>
+			  	<td>
+			  	<%= "\u20B9 " + order.price.to_s %>	
+			  	</td>
+			  	<td>
+			  		<% if order.responseCode == nil %>
+			  			Transaction pending. Try again.
+			  		<% else %>
+			  			<%= order.responseDescription %>
+			  		<% end %>
+			  	</td>
+			  	<td><%= order.updated_at.in_time_zone("Mumbai").strftime("%d-%b-%y %H:%M:%S") %></td>
+			  	<td class="toolbar">
+			      <div class="btn-group">
+			    	<%= link_to(order_path(order), :class => "btn") do %>
+			    	  <span class="awe-eye-open">Show</span>
+			    	<% end %>
+			      </div>
+			    </td>
+			  </tr>
+			<% end %>
+		</tbody>
+	</table>
+	</section>
+	</div>
+</div>
