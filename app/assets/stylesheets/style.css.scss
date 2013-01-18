@@ -11,12 +11,12 @@
   /** resets **/
   body{
     background: white;
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-family: "Roboto","Open Sans", Helvetica, Arial, sans-serif;
     font-weight: 100;
     font-size: 16px;
   }
   p{
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-family: "Roboto","Open Sans", Helvetica, Arial, sans-serif;
   }
   h1,
   h2,
@@ -36,7 +36,7 @@
     line-height: 20px;
   }
   input,button,select,textarea,input.btn,button.btn,a.btn,a.win-command, button, input[type="button"], input[type="reset"], input[type="submit"]  {
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-family: "Roboto","Open Sans", Helvetica, Arial, sans-serif;
     font-weight: 100;
     font-size: 16px;
   }
@@ -164,9 +164,6 @@
 }
 
 /** content styles **/
-#admin-content{
-  margin-top: 20px;
-}
 .marketing {
   text-align: center;
   color: #5A5A5A;
@@ -186,10 +183,17 @@
 .metro a{
   color: $light-blue;
 }
-#content{
-  margin-top: 30px;
+
+.content {
+  margin-top: 20px;
 }
 
+#content{
+  margin-top: 70px;
+}
+#admin-content{
+  margin-top: 55px;
+}
 #calculator{
   position: absolute;
   top:400px;
@@ -764,8 +768,4 @@ footer {
   
 h3.admin {
   font-size: 16.95px;
-}
-
-.content {
-  margin-top: 70px;
 }
