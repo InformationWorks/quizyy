@@ -58,6 +58,18 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
     initialize:(options)->
       @on 'change:id',(attempt) ->
         Gre340.vent.trigger('new:attempt', attempt)
-
+      Gre340.vent.on 'update:current:attempt', (currentSectionId, currentQuestionId) =>
+        @updateCurrentAttempt(currentSectionId,currentQuestionId)
+      Gre340.vent.on 'submit:current:attempt',() =>
+        @completeAttempt() 
+    updateCurrentAttempt: (currentSectionId,currentQuestionId) ->
+      @set({'current_section_id': currentSectionId,'current_question_id': currentQuestionId},{silent: true})
+      @save()
+    completeAttempt:()->
+      @set({'completed': true},{silent: true})
+      @save()
+  
   Data.addInitializer ->
     Data.currentAttempt = new Data.Models.Attempt()
+    Data.currentAttempt.fetch()
+    Data.quiz = new Data.Models.Quiz()

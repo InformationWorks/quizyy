@@ -27,7 +27,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     #so we only load quiz once we find the current attempt
     #TODO we should show a loading image when starting the controller
       console.log 'start question controller called'
-      @attempt.fetch()
       @isStarted = true
     #sorce w2school
     getCookie: (c_name) ->
@@ -51,17 +50,13 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @noInternetErrorShown = false
       $('#action-bar').removeClass('no-bk')
       $('#no-internet-error').modal('hide')
-    updateCurrentAttempt: (currentSectionId,currentQuestionId) ->
-      @attempt.set({'current_section_id': currentSectionId,'current_question_id': currentQuestionId},{silent: true})
-      @attempt.save()
     submitQuiz:()->
-      @attempt.set({'completed': true},{silent: true})
-      @attempt.save()
+      Gre340.vent.trigger("submit:current:attempt")
     showQuestion:(question) -> 
       if !@attempt.get('completed')
         @currentQuestion = question
         if @checkTimeAvailable()
-          @updateCurrentAttempt(@currentSection.id,@currentQuestion.id)
+          Gre340.vent.trigger("update:current:attempt",@currentSection.id,@currentQuestion.id)
           @showActionBar()
           @startVisit(@currentQuestion.get('id'))
           qTypeCode = question.get('type_code')
@@ -170,7 +165,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
               @currentQuestionCollection = section.get('questions')
               Gre340.Routing.showRouteWithTrigger('test_center','section',@sectionNumber,'question',questionNumber)
             else
-              @updateCurrentAttempt(section.id,null)
+              Gre340.vent.trigger("update:current:attempt",section.id,null)
               @updateServerTime()
               @showSectionActionBar()
               Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))

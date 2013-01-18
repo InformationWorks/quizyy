@@ -14,7 +14,6 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       @singleRight = false
       if /QC|TC-1|[A-Z]*-MCQ-1/i.test(question_type)
         @oneRightAnswer = true
-      @template = @getOptionsTemplate(question_type)
       @attempt_details = new Backbone.Collection()
       @attempt_details.url =  '/api/v1/attempt_details'
       @attempt_details.fetch(data: $.param({ attempt_id: Gre340.request('currentAttemptId'), question_id: @model.get('id')}), async: false )
@@ -26,7 +25,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       'change input[type=radio]': 'saveUserResponse'
       'change select': 'saveUserResponse'
       'change input[type=text]': 'saveUserResponse'
-    getOptionsTemplate:(question_type)->
+    getTemplate:()->
+      question_type = @model.get('type_code')
       @numericEqRegEx = /NE-1|NE-2/i
       @textCompRegEx = /TC-1|TC-2|TC-3/i
       @sipRegEx = /SIP/i
@@ -44,10 +44,6 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       else
         @qtype = 'mcq'
         'option/mcq'
-    setUserResponse: (event)->
-      switch @type
-        when "tc" then console.log 'tc'
-        when "ne" then console.log 'ne'
     saveUserResponse:(event)->
       Views.saveAttemptDetails(event,@model)
     onRender:()->
@@ -84,8 +80,6 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
             else
               @$('input[type=text]').calculator('show')
             $('.calculator-popup').draggable()
-  #TODO save user response to db
-
   Views.QuestionSingleView = Marionette.Layout.extend
     template: 'question/single'
     tagName: "div"
