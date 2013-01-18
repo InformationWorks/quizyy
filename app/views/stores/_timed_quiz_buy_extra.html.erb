@@ -22,9 +22,22 @@
                   	</div>
                   <% else %>
                   	<div class="actions hide">
-                      <%= button_to( "Buy"  , add_quiz_to_user_path(quiz) ,
-          				:method => "post", :disable_with => 'processing...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
-                  	</div>
+		          	   <%= button_to( "Buy"  , cart_items_path(:quiz_id => quiz.id,:back_controller => "checkout",:back_action => "show_cart") ,
+		  						:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
+		          	</div>
+		            
+		            <% cart_item_id = current_user.get_cart_item_id(quiz.id) %>  	
+		          	<% if cart_item_id != -1 %>
+		          		<div>
+		  			    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
+		  						:method => "delete", :disable_with => 'removing from cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
+		          		</div>
+		          	<% else %>
+		          		<div class="actions hide">
+		  			    	<%= button_to( "Add to cart"  , cart_items_path(:quiz_id => quiz.id,:back_controller => "stores",:back_action => "timed_tests") ,
+		  						:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
+		          		</div>
+		          	<% end %>
                   <% end %>
                 </div>
               </div>
@@ -56,10 +69,25 @@
                       <%= button_to( "Purchased" , "#" , :disabled => true ) %>
                   	</div>
                   <% else %>
+                  	
                   	<div class="actions hide">
-                      <%= button_to( "Buy"  , add_quiz_to_user_path(quiz) ,
-          				:method => "post", :disable_with => 'processing...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
-                  	</div>
+		          	   <%= button_to( "Buy"  , cart_items_path(:quiz_id => quiz.id,:back_controller => "checkout",:back_action => "show_cart") ,
+		  						:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
+		          	</div>
+		            
+		            <% cart_item_id = current_user.get_cart_item_id(quiz.id) %>  	
+		          	<% if cart_item_id != -1 %>
+		          		<div>
+		  			    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
+		  						:method => "delete", :disable_with => 'removing from cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
+		          		</div>
+		          	<% else %>
+		          		<div class="actions hide">
+		  			    	<%= button_to( "Add to cart"  , cart_items_path(:quiz_id => quiz.id,:back_controller => "stores",:back_action => "timed_tests") ,
+		  						:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
+		          		</div>
+		          	<% end %>
+                  	
                   <% end %>
                 </div>
               </div>
@@ -69,14 +97,14 @@
             <% end %>
           </div>
           <div class="span3">
-            <div class="metro pull-right">
-              <a class="tile app bg-color-green" href="#">
-                 <div class="image-wrapper">
-                  <span class="icon icon-cart"></span>
-                </div>
-                <div class="app-label">Cart</div>
-                <div class="app-count">1</div>
-              </a>
-            </div>
-          </div>
+			<div class="metro pull-right">
+			  <%= link_to(show_cart_path, :class => "tile app bg-color-green") do %>
+			     <div class="image-wrapper">
+			      <span class="icon icon-cart"></span>
+			    </div>
+			    <div class="app-label">Cart</div>
+			    <div class="app-count"><%= @cart.cart_items.count %></div>
+			  <% end %>
+			</div>
+		  </div>
         </div>

@@ -1,0 +1,5 @@
+<% if @order.responseCode == 100 %>
+	<%= render 'processed_order' %>
+<% else %>
+	<%= render 'unprocessed_order' %>
+<% end %>

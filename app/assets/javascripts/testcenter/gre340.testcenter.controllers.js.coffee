@@ -214,9 +214,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       else
         @submitSection(@currentSection)
         Gre340.Routing.showRouteWithTrigger('test_center','submit')
-#TODO: Remove this function later if not needed
-#    startPrevSection: ()->
-#      @startSection(@currentSectionCollection.prev(@currentSection),@currentQuestionCollection.length)
     setQuiz:(model,isSilent) ->
       @quiz.set(model, {silent: isSilent})
     setQuizInProgress: ->
@@ -309,8 +306,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     resetTotalSeconds:()->
       clearInterval(@timerInterval)
       @endVisit(@currentQuestion.get('id')) if @currentQuestion
-      @totalSeconds = 1800 #30mins
-      
+      @totalSeconds = 1800 #30mins      
     handleErrors:(model,xhr)=>
       if xhr.status == 500
         console.log 'an error occured on the server'

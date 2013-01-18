@@ -8,10 +8,6 @@ class CheckoutController < ApplicationController
     
   end
   
-  def post_order_to_zaakpay
-    
-  end
-  
   def buy_test
     @quiz = Quiz.find(params[:id])
   end
@@ -23,17 +19,32 @@ class CheckoutController < ApplicationController
   # POST /post_to_zaakpay
   def post_to_zaakpay
     
-    # Generate Order for the current cart.
-    order = Order.new
-    order.cart_id = @cart.id
-    order.save!
+    if params[:orderId] == nil
+      # Generate Order for the current cart
+      # and add order.id to params
+      order = create_order(@cart.id)
+      params.merge!(:orderId => order.id)
+    else
+      # Retrive existing Order
+      order = Order.find(params[:orderId])
+    end
     
-    # Add orderId to params.
-    params.merge!(:orderId => order.id)
+    if params[:amount].to_i == 0
+      # Set order as processed
+      mark_order_as_processed(order)
+      
+      # Process the order and add the quiz/package to the user's account.
+      process_order(order)
+      
+      # Redirect to order's page.
+      redirect_to order_path(order), notice: "Order processed successfully."
+    else
+      # Handle payment for paid test.
+      zr = Zaakpay::Request.new(params) 
+      @zaakpay_data = zr.all_params   
+      render :layout => false
+    end
     
-    zr = Zaakpay::Request.new(params) 
-    @zaakpay_data = zr.all_params   
-    render :layout => false    
   end
   
   # POST /z_response
@@ -41,7 +52,72 @@ class CheckoutController < ApplicationController
     zr = Zaakpay::Response.new(request.raw_post)  
     @checksum_check = zr.valid?
     @zaakpay_post = zr.all_params
-    #render :layout => false
+    
+    # Log Error if checksum does not match
+    # Process order for user's account only if the checksum matched.
+    if !@checksum_check
+      logger.info("CHECKSUM MISMATCH FROM IP-ADDRESS " + request.remote_ip.to_s)
+    else
+      # Save order values.
+      order = save_order(@zaakpay_post)
+      
+      # If responseCode == 100, add the quizzes/packages to user's account.
+      if order.responseCode == 100
+        process_order(order)
+        redirect_to order_path(order), notice: "Order processed successfully."
+      else
+        redirect_to order_path(order), notice: "Order processing failed."
+      end
+    end
+  end
+  
+  private
+  
+  def mark_order_as_processed(order)
+    order.responseCode = 100
+    order.responseDescription = "Free tests added to your account."
+    order.save!
+  end
+  
+  def create_order(cart_id)
+    order = Order.new
+    order.cart_id = @cart.id
+    order.save!
+    order
+  end
+  
+  def save_order(params)
+    order = Order.find(params["orderId"].to_i)
+    order.responseCode = params["responseCode"].to_i
+    order.responseDescription = params["responseDescription"].to_s
+    order.save!
+    order
+  end
+  
+  def process_order(order)
+    cart = Cart.find(order.cart_id)
+        
+    # Add each cartitem to user's account.
+    cart.cart_items.each do | cart_item |
+      
+      if cart_item.quiz_id != nil
+      # Add Quiz
+        quiz_user = QuizUser.new
+        quiz_user.quiz_id = cart_item.quiz_id
+        quiz_user.user_id = current_user.id
+        quiz_user.save!
+        
+      elsif cart_item.package_id != nil
+      # Add Package
+        package_quizzes_ids = Package.find(cart_item.package_id).quizzes.pluck(:quiz_id)
+        package_quizzes_ids.each do |quiz_id|
+          quiz_user = QuizUser.new
+          quiz_user.quiz_id = quiz_id
+          quiz_user.user_id = current_user.id
+          quiz_user.save!
+        end  
+       end        
+    end
   end
   
 end
