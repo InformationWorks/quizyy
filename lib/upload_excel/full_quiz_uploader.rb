@@ -119,9 +119,11 @@ module UploadExcel
         
       end
       
-      @success_messages << "sections = " << @sections.count.to_s
-      @success_messages << "section 1 Questions = " << @questions[0].count.to_s
-      @success_messages << "section 2 Questions = " << @questions[1].count.to_s
+      @success_messages << ("#{@sections.count.to_s} sections uploaded.")
+      @success_messages << ("section 1 #{@questions[0].count.to_s} Questions uploaded")
+      @success_messages << ("section 2 #{@questions[1].count.to_s} Questions uploaded")
+      @success_messages << ("section 3 #{@questions[2].count.to_s} Questions uploaded")
+      @success_messages << ("section 4 #{@questions[3].count.to_s} Questions uploaded")
       
       # Save the objects stored in the array.
       if !save_objects_to_db
@@ -354,12 +356,24 @@ module UploadExcel
       
       begin
         
-        question.sequence_no = row[0].to_i
-        question.instruction = row[2].to_s
-        question.passage = row[3].to_s
-        question.que_text = row[4].to_s
-        question.sol_text = row[5].to_s
-        question.option_set_count = row[6].to_i
+        sequence_no = row[0].to_s.strip
+        question.sequence_no = (sequence_no == "") ? nil : sequence_no.to_i
+        
+        instruction = row[2].to_s.strip
+        question.instruction = (instruction == "") ? nil : instruction
+        
+        passage = row[3].to_s.strip
+        question.passage = (passage == "") ? nil : passage
+        
+        que_text = row[4].to_s.strip
+        question.que_text = (que_text == "") ? nil : que_text
+        
+        sol_text = row[5].to_s.strip
+        question.sol_text = (sol_text == "") ? nil : sol_text
+        
+        option_set_count = row[6].to_s.strip
+        question.option_set_count = (option_set_count == "") ? nil : row[6].to_i        
+
         question.que_image = nil
         question.sol_image = nil
         question.di_location = nil
@@ -395,20 +409,34 @@ module UploadExcel
       
       if question.type == Type.find_by_code("V-MCQ-1")
         
-        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1) 
-        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2) 
-        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
-        options << (Option.new :content => row[11].to_s,:correct => false,:sequence_no => 4)
-        options << (Option.new :content => row[12].to_s,:correct => false,:sequence_no => 5)
+        option = row[8].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 1) 
+        
+        option = row[9].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 2) 
+        
+        option = row[10].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 3)
+        
+        option = row[11].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 4)
+        
+        option = row[12].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 5)
         
         # set correct option 
         options[row[7].to_i-1].correct = true
         
       elsif question.type == Type.find_by_code("V-MCQ-2")
         
-        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1) 
-        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2) 
-        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
+        option = row[8].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 1)
+        
+        option = row[9].to_s.strip 
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 2)
+         
+        option = row[10].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 3)
         
         # set correct options
         row[7].to_s.split(",").each do |correct_index|
@@ -419,24 +447,44 @@ module UploadExcel
         # No options
       elsif question.type == Type.find_by_code("V-TC-1")
         
-        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1)
-        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2)
-        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
-        options << (Option.new :content => row[11].to_s,:correct => false,:sequence_no => 4)
-        options << (Option.new :content => row[12].to_s,:correct => false,:sequence_no => 5)
+        option = row[8].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 1)
+        
+        option = row[9].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 2)
+        
+        option = row[10].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 3)
+        
+        option = row[11].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 4)
+        
+        option = row[12].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 5)
         
         # set correct option 
         options[row[7].to_i-1].correct = true
         
       elsif question.type == Type.find_by_code("V-TC-2")
         
-        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1)
-        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2)
-        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
-        options << (Option.new :content => row[11].to_s,:correct => false,:sequence_no => 4)
-        options << (Option.new :content => row[12].to_s,:correct => false,:sequence_no => 5)
-        options << (Option.new :content => row[13].to_s,:correct => false,:sequence_no => 6)
+        option = row[8].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 1)
         
+        option = row[9].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 2)
+        
+        option = row[10].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 3)
+        
+        option = row[11].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 4)
+        
+        option = row[12].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 5)
+        
+        option = row[13].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 6)
+
         # set correct options
         correct_options = row[7].to_s.split(",")
         
@@ -445,15 +493,32 @@ module UploadExcel
         
       elsif question.type == Type.find_by_code("V-TC-3")
         
-        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1) 
-        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2)
-        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
-        options << (Option.new :content => row[11].to_s,:correct => false,:sequence_no => 4)
-        options << (Option.new :content => row[12].to_s,:correct => false,:sequence_no => 5)
-        options << (Option.new :content => row[13].to_s,:correct => false,:sequence_no => 6)
-        options << (Option.new :content => row[14].to_s,:correct => false,:sequence_no => 7)
-        options << (Option.new :content => row[15].to_s,:correct => false,:sequence_no => 8)
-        options << (Option.new :content => row[16].to_s,:correct => false,:sequence_no => 9)
+        option = row[8].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 1)
+        
+        option = row[9].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 2)
+        
+        option = row[10].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 3)
+        
+        option = row[11].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 4)
+        
+        option = row[12].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 5)
+        
+        option = row[13].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 6)
+        
+        option = row[14].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 7)
+        
+        option = row[15].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 8)
+        
+        option = row[16].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 9)
         
         # set correct options
         correct_options = row[7].to_s.split(",")
@@ -464,12 +529,23 @@ module UploadExcel
         
       elsif question.type == Type.find_by_code("V-SE")
         
-        options << (Option.new :content => row[8].to_s,:correct => false,:sequence_no => 1) 
-        options << (Option.new :content => row[9].to_s,:correct => false,:sequence_no => 2)
-        options << (Option.new :content => row[10].to_s,:correct => false,:sequence_no => 3)
-        options << (Option.new :content => row[11].to_s,:correct => false,:sequence_no => 4)
-        options << (Option.new :content => row[12].to_s,:correct => false,:sequence_no => 5)
-        options << (Option.new :content => row[13].to_s,:correct => false,:sequence_no => 6)
+        option = row[8].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 1)
+        
+        option = row[9].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 2)
+        
+        option = row[10].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 3)
+        
+        option = row[11].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 4)
+        
+        option = row[12].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 5)
+        
+        option = row[13].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 6)
         
         # set correct options
         correct_options = row[7].to_s.split(",")
@@ -479,21 +555,37 @@ module UploadExcel
         
       elsif question.type == Type.find_by_code("Q-QC")
         
-        options << (Option.new :content => row[14].to_s,:correct => false,:sequence_no => 1) 
-        options << (Option.new :content => row[15].to_s,:correct => false,:sequence_no => 2)
-        options << (Option.new :content => row[16].to_s,:correct => false,:sequence_no => 3)
-        options << (Option.new :content => row[17].to_s,:correct => false,:sequence_no => 4)
+        option = row[14].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 1)
+        
+        option = row[15].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 2)
+        
+        option = row[16].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 3)
+        
+        option = row[17].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 4)
         
         # set correct option 
         options[row[13].to_i-1].correct = true
         
       elsif ((question.type == Type.find_by_code("Q-MCQ-1")) || (question.type == Type.find_by_code("Q-DI-MCQ-1")))
         
-        options << (Option.new :content => row[14].to_s,:correct => false,:sequence_no => 1)
-        options << (Option.new :content => row[15].to_s,:correct => false,:sequence_no => 2)
-        options << (Option.new :content => row[16].to_s,:correct => false,:sequence_no => 3)
-        options << (Option.new :content => row[17].to_s,:correct => false,:sequence_no => 4)
-        options << (Option.new :content => row[18].to_s,:correct => false,:sequence_no => 5)
+        option = row[14].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 1)
+        
+        option = row[15].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 2)
+        
+        option = row[16].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 3)
+        
+        option = row[17].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 4)
+        
+        option = row[18].to_s.strip
+        options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 5)
         
         # set correct option 
         options[row[13].to_i-1].correct = true
@@ -501,7 +593,8 @@ module UploadExcel
       elsif ((question.type == Type.find_by_code("Q-MCQ-2")) || (question.type == Type.find_by_code("Q-DI-MCQ-2")))
         
         (1..(row[12].to_i)).each do |option_index|
-          options <<  (Option.new :content => row[13+option_index].to_s,:correct => false,:sequence_no => option_index)
+          option = row[13+option_index].to_s.strip
+          options <<  (Option.new :content => option,:correct => false,:sequence_no => option_index)
         end
         
         # set correct options
@@ -511,11 +604,13 @@ module UploadExcel
         
       elsif ((question.type == Type.find_by_code("Q-NE-1")) || (question.type == Type.find_by_code("Q-DI-NE-1"))) 
         
-        options << (Option.new :content => row[13].to_s,:correct => true,:sequence_no => 1)
+        option = row[13].to_s.strip 
+        options << (Option.new :content => option,:correct => true,:sequence_no => 1)
       
       elsif ((question.type == Type.find_by_code("Q-NE-2")) || (question.type == Type.find_by_code("Q-DI-NE-2")))
         
-        options << (Option.new :content => row[13].to_s,:correct => true,:sequence_no => 1)
+        option = row[13].to_s.strip
+        options << (Option.new :content => option,:correct => true,:sequence_no => 1)
       
       end
       
@@ -551,17 +646,38 @@ module UploadExcel
       
       begin
         
-        question.sequence_no = (row[0].to_s == "") ? nil : row[0].to_i
-        question.di_location = (row[2].to_s == "") ? nil : row[2].to_s
-        question.instruction = (row[4].to_s == "") ? nil : row[4].to_s
-        question.passage = (row[5].to_s == "") ? nil : row[5].to_s
-        question.que_text = (row[6].to_s == "") ? nil : row[6].to_s
-        question.que_image = (row[7].to_s == "") ? nil : row[7].to_s
-        question.sol_text = (row[8].to_s == "") ? nil : row[8].to_s
-        question.sol_image = (row[9].to_s == "") ? nil : row[9].to_s
-        question.quantity_a = (row[10].to_s == "") ? nil : row[10].to_s
-        question.quantity_b = (row[11].to_s == "") ? nil : row[11].to_s
-        question.option_set_count = (row[12].to_s == "") ? nil : row[12].to_i
+        sequence_no = row[0].to_s.strip
+        question.sequence_no = (sequence_no == "") ? nil : row[0].to_i
+        
+        di_location = row[2].to_s.strip
+        question.di_location = (di_location == "") ? nil : di_location
+        
+        instruction = row[4].to_s.strip
+        question.instruction = (instruction == "") ? nil : instruction
+        
+        passage = row[5].to_s.strip
+        question.passage = (passage == "") ? nil : passage
+        
+        que_text = row[6].to_s.strip
+        question.que_text = (que_text == "") ? nil : que_text
+        
+        que_image = row[7].to_s.strip
+        question.que_image = (que_image == "") ? nil : que_image
+        
+        sol_text = row[8].to_s.strip
+        question.sol_text = (sol_text == "") ? nil : sol_text
+        
+        sol_image = row[9].to_s.strip
+        question.sol_image = (sol_image == "") ? nil : sol_image
+        
+        quantity_a = row[10].to_s.strip
+        question.quantity_a = (quantity_a == "") ? nil : quantity_a
+        
+        quantity_b = row[11].to_s.strip
+        question.quantity_b = (quantity_b == "") ? nil : quantity_b
+        
+        option_set_count = row[12].to_s.strip
+        question.option_set_count = (option_set_count == "") ? nil : option_set_count.to_i
         
         # Question references.
         question.topic_id = Topic.find_by_name(row[3].to_s).id
