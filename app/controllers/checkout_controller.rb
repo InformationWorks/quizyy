@@ -36,6 +36,14 @@ class CheckoutController < ApplicationController
       # Process the order and add the quiz/package to the user's account.
       process_order(order)
       
+      # Log the activity in transactions table.
+      Transaction.create!( :ipaddress => request.remote_ip.to_s, 
+                           :action => "Free tests added to your account.",
+                           :responseCode => 100,
+                           :responseDescription => "Free tests added to your account.",
+                           :user_id => current_user.id,
+                           :order_id => order.id)
+      
       # Redirect to order's page.
       redirect_to order_path(order), notice: "Order processed successfully."
     else
@@ -57,13 +65,35 @@ class CheckoutController < ApplicationController
     # Process order for user's account only if the checksum matched.
     if !@checksum_check
       logger.info("CHECKSUM MISMATCH FROM IP-ADDRESS " + request.remote_ip.to_s)
+      
+      Transaction.create!( :ipaddress => request.remote_ip.to_s, 
+                           :action => "CHECKSUM_ERROR",
+                           :responseCode => -1,
+                           :responseDescription => "Checksum mismatch error.",
+                           :user_id => current_user.id,
+                           :order_id => order.id)
     else
       # Save order values.
       order = save_order(@zaakpay_post)
       
+      Transaction.create!( :ipaddress => request.remote_ip.to_s, 
+                           :action => "ZAAKPAY_RESPONSE",
+                           :responseCode => order.responseCode,
+                           :responseDescription => order.responseDescription,
+                           :user_id => current_user.id,
+                           :order_id => order.id)
+      
       # If responseCode == 100, add the quizzes/packages to user's account.
       if order.responseCode == 100
         process_order(order)
+        
+        Transaction.create!( :ipaddress => request.remote_ip.to_s, 
+                           :action => "PROCESS_ORDER",
+                           :responseCode => order.responseCode,
+                           :responseDescription => "Order processed successfully",
+                           :user_id => current_user.id,
+                           :order_id => order.id)
+        
         redirect_to order_path(order), notice: "Order processed successfully."
       else
         redirect_to order_path(order), notice: "Order processing failed."

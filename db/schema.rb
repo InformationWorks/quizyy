@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130115102326) do
+ActiveRecord::Schema.define(:version => 20130119094552) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "actor_id"
@@ -217,6 +217,20 @@ ActiveRecord::Schema.define(:version => 20130115102326) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "transactions", :force => true do |t|
+    t.string   "action"
+    t.integer  "responseCode"
+    t.string   "responseDescription"
+    t.string   "ipaddress"
+    t.integer  "order_id"
+    t.integer  "user_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "transactions", ["order_id"], :name => "index_transactions_on_order_id"
+  add_index "transactions", ["user_id"], :name => "index_transactions_on_user_id"
 
   create_table "types", :force => true do |t|
     t.integer  "category_id"
