@@ -10,7 +10,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @numericEqRegEx = /NE-1|NE-2/i
       @textCompRegEx = /TC-2|TC-3/i
       @sipRegEx = /SIP/i
-      @quiz = new @models.Quiz()
+      @quiz = null
       @quizInProgress = false
       @currentSection = null
       @currentQuestion = null
@@ -28,19 +28,23 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     #TODO we should show a loading image when starting the controller
       console.log 'start question controller called'
       @isStarted = true
-    #sorce w2school
-    getCookie: (c_name) ->
-      i = undefined
-      x = undefined
-      y = undefined
-      ARRcookies = document.cookie.split(";")
-      i = 0
-      while i < ARRcookies.length
-        x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="))
-        y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1)
-        x = x.replace(/^\s+|\s+$/g, "")
-        return unescape(y)  if x is c_name
-        i++
+    checkPrerequisite:()->      
+      if !@attempt.isComplete() and @checkTimeAvailable() 
+        true 
+      else if @attempt.isComplete()
+        Gre340.Routing.showRouteWithTrigger('test_center','submit')
+        false
+      else if !@checkTimeAvailable()
+        @startNextSection()
+        false
+      else
+        false
+    loadQuiz:()->
+      @quiz = Gre340.TestCenter.Data.currentQuiz
+      @quiz.url = '/api/v1/quizzes/'+@attempt.get('quiz_id')+'.json'
+      @quiz.fetch
+        silent:false,
+        async: false
     lostConnection:()->
       @connection = false
       $('#action-bar').addClass('no-bk')
@@ -52,10 +56,12 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       $('#no-internet-error').modal('hide')
     submitQuiz:()->
       Gre340.vent.trigger("submit:current:attempt")
-    showQuestion:(question) -> 
-      if !@attempt.get('completed')
-        @currentQuestion = question
-        if @checkTimeAvailable()
+    showQuestion:(question)->
+      if @checkPrerequisite()
+        if !@quiz 
+          @loadQuiz()
+        else
+          @currentQuestion = question
           Gre340.vent.trigger("update:current:attempt",@currentSection.id,@currentQuestion.id)
           @showActionBar()
           @startVisit(@currentQuestion.get('id'))
@@ -66,67 +72,25 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
               true
           #Checking Data Interpretation question location top (single pane) or side (two pane)
           location =  if @diRegEx.test(qTypeCode) and question.get('di_location')? then question.get('di_location') else 'Top'
-          console.log(qTypeCode)
-          console.log(question.get('di_location'))
           if questionToDisplayInTwoPane or location == 'Side'
             Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionTwoPaneView(model: question))
           else
             Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
-          @updateTimer(@totalSeconds)
-          @updateServerTimeWithInterval()
-        else
-          @startNextSection()
-      else
-         Gre340.Routing.showRouteWithTrigger('test_center','submit')
+        @updateTimer(@totalSeconds)
+        @updateServerTimeWithInterval()
     showQuestionById:(questionId)->
-      if !@attempt.get('completed')
-        if @quiz?
-          if !@quiz.get('sections')?
-            @attempt.fetch
-              silent:true,
-              async: false
-            console.log 'attempt fetch complete'
-            @quiz.url = '/api/v1/quizzes/'+@attempt.get('quiz_id')+'.json'
-            @quiz.fetch
-              silent:true,
-              async: false,
-              success:()=>
-                @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
-                  if !@currentSection?
-                    _.each @currentSectionCollection.models, (section)=>
-                      if section.get('questions').get(questionId)?
-                        @currentSection=section
-                  @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
-                  @sectionNumber = @currentSectionCollection.indexOf(@currentSection)+1
-            question = @currentQuestionCollection.get(questionId)
-          if @checkTimeAvailable()
-            @showQuestion(question)
-          else
-            @startNextSection()
+      if @checkPrerequisite()
+        if !@quiz 
+          @loadQuiz()
         else
-          @exitQuizCenter()
-      else
-        Gre340.Routing.showRouteWithTrigger('test_center','submit')
+          question = @currentQuestionCollection.get(questionId)
+          @showQuestion(question)
     showQuestionByNumber:(sectionNumber,questionNumber)->
       console.log 'show question by number called'
-      if !@attempt.get('completed')
-        if @quiz?
-          if !@quiz.get('sections')?
-            @attempt.fetch(silent:true,async: false)
-            @totalSeconds = @attempt.get('current_time')
-            @quiz.url = '/api/v1/quizzes/'+@attempt.get('quiz_id')+'.json'
-            @quiz.fetch
-              silent:true,
-              async: false,
-              success:()=>
-                @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
-                @currentSection = @currentSectionCollection.where(sequence_no: parseInt(sectionNumber))[0]
-                @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
-                @sectionNumber = sectionNumber
-          if @sectionNumber != sectionNumber
-            @sectionNumber = sectionNumber
-            @currentSection = @currentSectionCollection.where(sequence_no: parseInt(sectionNumber))[0]
-            @currentQuestionCollection = @currentSection.get('questions')        
+      if @checkPrerequisite()
+        if !@quiz 
+          @loadQuiz()
+        else       
           if !@currentSection.get('submitted')
             question = if questionNumber <= @currentQuestionCollection.length then @currentQuestionCollection.where(sequence_no: parseInt(questionNumber))[0] else new Gre340.TestCenter.Data.Models.Question instruction: "No Such question Exists"
             @showQuestion(question)
@@ -136,10 +100,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
               Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'),'question', @currentQuestionCollection.get(@attempt.get('current_question_id')).get('sequence_no'))
             else
               Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'))
-        else
-          @exitQuizCenter()
-      else
-        Gre340.Routing.showRouteWithTrigger('test_center','submit')
     showActionBar: () ->
       @section_quant = false
       if /quant/i.test(@currentSection.get('section_type_name'))
@@ -149,58 +109,42 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
     startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
-      if !@attempt.get('completed') 
-        if @checkTimeAvailable()
+      if @checkPrerequisite()
+        if !@quiz 
+          @loadQuiz()
+        else
           if section.get('submitted')
             if @attempt.get('current_question_id')?
               @currentQuestionCollection = @currentSectionCollection.get(@attempt.get('current_section_id')).get('questions')
-              Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'),'question', @currentQuestionCollection.get(@attempt.get('current_question_id')).get('sequence_no'))
+              Gre340.Routing.showRoute('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'),'question', @currentQuestionCollection.get(@attempt.get('current_question_id')).get('sequence_no'))
+              @showQuestion(@currentQuestionCollection.get(@attempt.get('current_question_id')))
             else
-              Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'))
+              Gre340.Routing.showRoute('test_center','section',@currentSectionCollection.get(@attempt.get('current_section_id')).get('sequence_no'))
+              @startSection(@currentSectionCollection.get(@attempt.get('current_section_id')),null)
           else
             @currentSection = section
             @sectionNumber = section.get('sequence_no')
             #if we have recived a questionNumber than the user should see a question else we show section start information
             if questionNumber?
               @currentQuestionCollection = section.get('questions')
-              Gre340.Routing.showRouteWithTrigger('test_center','section',@sectionNumber,'question',questionNumber)
+              Gre340.Routing.showRoute('test_center','section',@sectionNumber,'question',questionNumber)
+              @showQuestion(@currentQuestion)   
             else
+              Gre340.Routing.showRoute('test_center','section',@sectionNumber)
               Gre340.vent.trigger("update:current:attempt",section.id,null)
               @updateServerTime()
               @showSectionActionBar()
               Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))
-          @totalSeconds = @attempt.get('current_time') if @totalSeconds == null
-        else
-          @currentSection = section
-          @startNextSection()
-      else
-        Gre340.Routing.showRouteWithTrigger('test_center','submit')
+        @totalSeconds = @attempt.get('current_time') if @totalSeconds == null
+
     startSectionByNumber:(sectionNumber,questionNumber) ->
-      console.log('start section by number')
-      if !@attempt.get('completed')
-        if !@quiz.get('sections')?
-          @attempt.fetch(silent:true,async: false)
-          @quiz.url = '/api/v1/quizzes/'+ @attempt.get('quiz_id')+'.json'
-          @quiz.fetch
-            silent:true,
-            async:false,
-            success:()=>
-              @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
-              @currentSection = @currentSectionCollection.where(sequence_no: parseInt(sectionNumber))[0]
-              @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
-              @sectionNumber = sectionNumber
-        else
-          @currentSectionCollection = @quiz.get('sections') if !@currentSectionCollection?
-          @currentSection = @currentSectionCollection.where(sequence_no: parseInt(sectionNumber))[0]
-          @currentQuestionCollection = @currentSection.get('questions') if !@currentQuestionCollection?
-          @sectionNumber = sectionNumber
-        
-        if @checkTimeAvailable()
-          @startSection(@currentSection,questionNumber)
-        else
-          @startNextSection()
-      else
-        Gre340.Routing.showRouteWithTrigger('test_center','submit')
+      if @checkPrerequisite()
+        if !@quiz 
+          @loadQuiz()
+        else 
+          section = @currentSectionCollection.where(sequence_no: parseInt(sectionNumber))[0] 
+          @startSection(section,questionNumber)
+
     startNextSection: ()->
       @submitSection(@currentSection)
       @resetTotalSeconds()
@@ -227,6 +171,10 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @currentSectionCollection = collection
     getCurrentSectionCollection:()->
       @currentSectionCollection
+    setCurrentQuestionCollection:(collection)->
+      @currentQuestionCollection=collection
+    getCurrentQuestionCollection:()->
+      @currentQuestionCollection
     exitQuizCenter:()->
       Gre340.TestCenter.Layout.layout.content.show(new @Views.NoQuizInProgress())
     exitSection: () ->
@@ -316,8 +264,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
   Gre340.vent.on "show:question", ->
     controller = Controllers.questionController
     if controller.checkTimeAvailable()
-      console.log controller.sectionNumber
-      console.log controller.currentQuestion.get('sequence_no')
       Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestion.get('sequence_no'))
     else
       Gre340.vent.trigger "show:next:section"
@@ -332,7 +278,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         else
           controller.endVisit(controller.currentQuestion.get('id'))
           controller.currentQuestion = controller.currentQuestionCollection.next(controller.currentQuestion)
-          console.log(controller.currentQuestion.get('id'))
           Gre340.Routing.showRouteWithTrigger('test_center','section',controller.sectionNumber,'question',controller.currentQuestionCollection.indexOf(controller.currentQuestion)+1)
     else
       Gre340.vent.trigger "show:next:section"    
@@ -361,35 +306,26 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     controller.startNextSection()
   
   Gre340.vent.on "quiz:changed", (quiz) ->
-    console.log('quiz changed')
     qc = Controllers.questionController
-    qc.setCurrentSectionCollection(quiz.get('sections')) unless qc.getCurrentSection()?
-    qc.setCurrentSection(qc.getCurrentSectionCollection().get(qc.attempt.get('current_section_id'))) if qc.attempt.get('current_section_id')?
-    qc.setCurrentQuestion(qc.getCurrentSection().get('questions').get(qc.attempt.get('current_question_id'))) if qc.getCurrentSection()? and qc.attempt.get('current_question_id')?
-
-    if Controllers.questionController.getCurrentSection()?
-      if Controllers.questionController.getCurrentQuestion()?
-        Controllers.questionController.startSection(Controllers.questionController.getCurrentSection(),Controllers.questionController.getCurrentQuestion().get('sequence_no'))
+    qc.quiz = quiz
+    console.log('quiz changed')
+    qc.setCurrentSection(quiz.getCurrentSection())
+    qc.setCurrentQuestion(quiz.getCurrentQuestion())
+    qc.setCurrentQuestionCollection(quiz.getCurrentQuestionCollection())
+    qc.setCurrentSectionCollection(quiz.getCurrentSectionCollection())
+    
+    if qc.getCurrentSection()?
+      if qc.getCurrentQuestion()?
+        qc.startSection(Controllers.questionController.getCurrentSection(),Controllers.questionController.getCurrentQuestion().get('sequence_no'))
       else
-        Controllers.questionController.startSection(Controllers.questionController.getCurrentSection(),null)
+        qc.startSection(Controllers.questionController.getCurrentSection(),null)
     else
       if quiz.get('sections').length>0
-        Controllers.questionController.setCurrentSectionCollection(quiz.get('sections'))
-        Controllers.questionController.startSection(Controllers.questionController.getCurrentSectionCollection().first(),null)
+        qc.setCurrentSectionCollection(quiz.get('sections'))
+        qc.startSection(Controllers.questionController.getCurrentSectionCollection().first(),null)
       else
-        Controllers.questionController.showQuizError()
-
-  Gre340.vent.on "new:attempt", (attempt) ->
-    console.log 'attempt changed so load quiz'
-    @quiz = Controllers.questionController.quiz
-    if attempt?
-      if @quiz?
-        @quiz.url = '/api/v1/quizzes/'+attempt.get('quiz_id')+'.json'
-        @quiz.fetch(async: true)
-      else #if somehow quiz is null then exit the test center
-        Controllers.questionController.exitQuizCenter()
-    else
-      Controllers.questionController.exitQuizCenter()
+        qc.showQuizError()
+      
   Gre340.vent.on 'no:internet:error:shown', ->
     controller = Controllers.questionController
     controller.noInternetErrorShown = true
@@ -404,7 +340,6 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
 
   Controllers.addInitializer ->
     Controllers.questionController = new QuestionController()
-
   Controllers.addFinalizer ->
     Backbone.history.stop() if Backbone.history
     console.log 'stopped controller testcenter'

@@ -13,7 +13,6 @@
   body{
     background: white;
     font-family: "Roboto","Open Sans", Helvetica, Arial, sans-serif;
-    font-weight: 100;
     font-size: 16px;
   }
   p{
@@ -33,12 +32,12 @@
   select,
   textarea {
     font-size: 16px;
-    font-weight: 100;
+    font-weight: 300;
     line-height: 20px;
   }
   input,button,select,textarea,input.btn,button.btn,a.btn,a.win-command, button, input[type="button"], input[type="reset"], input[type="submit"]  {
     font-family: "Roboto","Open Sans", Helvetica, Arial, sans-serif;
-    font-weight: 100;
+    font-weight: 300;
     font-size: 16px;
   }
   label.checkbox input[type="checkbox"] ~ span.metro-checkbox::after {
@@ -258,6 +257,10 @@
   }
 }
 #test-content{
+  p{
+    line-height: 25px;
+    text-align: justify;
+  }
   .section-exit-info{
     margin: 0 auto;
     margin-top: 250px;
