@@ -1,0 +1,62 @@
+<% content_for :admin_content do %>
+
+<!-- Data block -->
+<article class="data-block">
+	<div class="data-container">
+		<header>
+			<h2><span class="awe-money"></span> Transaction Management</h2>
+		</header>
+		<section class="tab-content">
+			<!-- Tab #static -->
+			<div class="tab-pane active" id="static">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>User</th>
+							<th>Order</th>
+							<th>Action</th>
+							<th>Code</th>
+							<th>Description</th>
+							<th>ipAddress</th>
+							<th>When ?</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @transactions.each do |transaction| %>
+						  <tr>
+						  	<td>
+				    		 <%= transaction.user.full_name %>
+					    	</td>
+					    	<td>
+				    		 <%= transaction.order.id %>
+					    	</td>
+				    		<td>
+				    		 <%= transaction.action %>
+					    	</td>
+					    	<td>
+					    	<%= transaction.responseCode %>	
+					    	</td>
+					    	<td>
+					    	<%= transaction.responseDescription %>
+					    	</td>
+					    	<td>
+					    	<%= transaction.ipaddress %>
+					    	</td>
+					    	<td>
+					    	 <%= transaction.created_at.in_time_zone("Mumbai").strftime("%d-%b-%y %H:%M:%S") %>
+					    	</td>
+						  </tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+</article>
+<!-- /Data block -->
+
+<br />
+
+<% end %>
+
+<%= render 'admins/admin_base' %>

@@ -1,5 +1,7 @@
 GremastersWeb::Application.routes.draw do
 
+  get "transactions/index"
+
   ### API routes go here.
     
   # API v1

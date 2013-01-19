@@ -63,6 +63,11 @@
 							<span class="awe-money"></span>Credit Management
 							<% end %>
 						</li>
+						<li <% if @current_controller == "transactions" %>class = "current"<% end %> >
+							<%= link_to(transactions_index_path, :class => "no-submenu") do %>
+							<span class="awe-money"></span>Transaction Management
+							<% end %>
+						</li>
 					</ul>
 				</nav>
 				<!-- /Main navigation -->
