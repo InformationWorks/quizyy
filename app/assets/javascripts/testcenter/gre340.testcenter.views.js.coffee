@@ -141,8 +141,11 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     template: 'question/section'
     tagName: "div"
     initialize: (options) ->
+      @removeFullHeight()
     onRender:() ->
       @$('#section-info').append(@model.get('display_text'))
+    removeFullHeight: ->
+      $('body').removeClass('fill') 
 
   Views.QuestionActionBarView = Marionette.ItemView.extend
     template: 'actionbar'
@@ -162,6 +165,9 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       'click #btn-prev': 'showPrevQuestion'
       'click #btn-exit-section': 'exitSection'
       'click #btn-review': 'showReview'
+      'click #btn-quit':'quitQuiz'
+      'click #show-alert-quit-quiz': 'removeBackgroundFromActionBar'
+      'click .close-alert-quit-quiz': 'addBackgroundToActionBar'
     showNextQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:next:question'
@@ -173,7 +179,15 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       Gre340.vent.trigger 'show:review:section'
     exitSection: (event) ->
       Gre340.vent.trigger 'exit:section'
-
+    quitQuiz:(event) ->
+      event.preventDefault()
+      console.log 'comes here'
+      window.location.href = '/homes/index';
+    removeBackgroundFromActionBar: (event)->
+      $('#action-bar').addClass('no-bk')
+    addBackgroundToActionBar:(event) ->
+      event.preventDefault()
+      $('#action-bar').removeClass('no-bk')
   Views.SectionActionBarView = Marionette.ItemView.extend
     template: 'section-actionbar'
     model:'Gre340.TestCenter.Data.Models.Quiz'
@@ -252,6 +266,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     template:'question/review-question-row'
     tagName: 'tr'
     initialize:(options)->
+      @removeFullHeight()
       @current_question_number = options.current_question_number
       $(@el).attr 'data-value', @model.get('sequence_no')
       if @current_question_number==@model.get("sequence_no") 
@@ -277,4 +292,6 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     onRender:()->
       @$('.selectable').selectable
         filter:'tr'
-        cancel: '.cancel' 
+        cancel: '.cancel'
+    removeFullHeight: ->
+      $('body').removeClass('fill') 

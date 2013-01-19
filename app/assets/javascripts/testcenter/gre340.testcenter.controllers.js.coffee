@@ -50,12 +50,15 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         async: false
     lostConnection:()->
       @connection = false
+      $('#action-bar').addClass('no-connection')
       $('#action-bar').addClass('no-bk')
       $('#no-internet-error').modal('show')
     gotConnection:()->
       @connection = true
       @noInternetErrorShown = false
-      $('#action-bar').removeClass('no-bk')
+      if $('#action-bar').hasClass('no-connection')
+        $('#action-bar').removeClass('no-connection')
+        $('#action-bar').removeClass('no-bk')
       $('#no-internet-error').modal('hide')
     submitQuiz:()->
       Gre340.vent.trigger("submit:current:attempt")
