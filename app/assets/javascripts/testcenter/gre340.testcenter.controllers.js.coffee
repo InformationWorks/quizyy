@@ -25,6 +25,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @loadingView = new @Views.LoadingView()
     start:() ->
       console.log 'start question controller called'
+      @attempt.fetch()
       @isStarted = true
     showLoading:() ->
       Gre340.TestCenter.Layout.layout.loading.show(@loadingView)

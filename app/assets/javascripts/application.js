@@ -20,8 +20,8 @@
 //= require backbone/json2
 //= require backbone/underscore
 //= require backbone/backbone
-//= require backbone/backbone.routefilter
 //= require backbone/marionette/backbone.marionette
+//= require backbone/backbone.routefilter
 //= require backbone/backbone-associations
 //= require backbone/marionette/jquery.resolved
 //= require_tree ../templates

@@ -16,18 +16,23 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
     before:(route) ->
       Gre340.TestCenter = Gre340.module("TestCenter");
       Gre340.TestCenter.start()
+    showIndex: ->
       if !Gre340.TestCenter.Controllers.questionController.isStarted
         Gre340.TestCenter.Controllers.questionController.start()
-    showIndex: ->
       Gre340.Routing.showRoute('/test_center/index')
     showQuestion: (sectionNumber,questionNumber) ->
+      if !Gre340.TestCenter.Controllers.questionController.isStarted
+          Gre340.TestCenter.Controllers.questionController.start()
       q = Gre340.TestCenter.Controllers.questionController
       q.showQuestionByNumber(sectionNumber,questionNumber)
     showSection: (sectionNumber) ->
-      console.log 'show section is called'
+      if !Gre340.TestCenter.Controllers.questionController.isStarted
+          Gre340.TestCenter.Controllers.questionController.start()
       q = Gre340.TestCenter.Controllers.questionController
       q.startSectionByNumber(sectionNumber,null)
     exitSection: (sectionNumber) ->
+      if !Gre340.TestCenter.Controllers.questionController.isStarted
+          Gre340.TestCenter.Controllers.questionController.start()
       q = Gre340.TestCenter.Controllers.questionController
       q.exitSection()
     stopAllModules:()->
