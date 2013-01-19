@@ -1,0 +1,38 @@
+<div id="content" class="span12">
+  <div class="span10">
+	<section class="category-section first">
+    <h2>Order # <%= @order.id %> - Transaction History</h2>
+    <%= link_to "Back to Order", order_path(@order), :class => "pull-right" %>
+    <hr>
+    <!-- show cart items here -->
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Action</th>
+				<th>ResponseCode</th>
+				<th>ResponseDescription</th>
+				<th>When ?</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @transactions.order("created_at desc").each do |transaction| %>
+			  <tr>
+	    		<td>
+	    		 <%= transaction.action %>
+		    	</td>
+		    	<td>
+		    	<%= transaction.responseCode %>	
+		    	</td>
+		    	<td>
+		    	<%= transaction.responseDescription %>
+		    	</td>
+		    	<td>
+		    	 <%= transaction.created_at.in_time_zone("Mumbai").strftime("%d-%b-%y %H:%M:%S") %>
+		    	</td>
+			  </tr>
+			<% end %>
+		</tbody>
+	</table>
+    </section>
+  </div>
+</div>

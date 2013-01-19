@@ -111,6 +111,7 @@ GremastersWeb::Application.routes.draw do
   
   # Orders routes.
   resources :orders, :only => [:index,:show]
+  match "orders/:id/transactions" => "orders#transactions", via: [:get], :as => "order_transactions"
   
   # Checkout routes.
   match "stores/cart" => "checkout#show_cart", via: [:get], :as => "show_cart"
