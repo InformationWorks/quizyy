@@ -268,7 +268,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         @lostConnection()
     checkTimeAvailable:() ->
       if @totalSeconds == 0 then false else true
-  
+    showReviewSection:()->
+      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.ReviewActionBarView(model: @quiz, section_index: @sectionNumber))
+      Gre340.TestCenter.Layout.layout.content.show(new @Views.ReviewView(section_id:@currentSection.get('id'),attempt_id:@attempt.get('id'),current_question_number: @currentQuestion.get('sequence_no')))
   #-----------------------Events Listening------------------------------
 
   Gre340.vent.on "show:question", ->
@@ -335,7 +337,10 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         qc.startSection(Controllers.questionController.getCurrentSectionCollection().first(),null)
       else
         qc.showQuizError()
-      
+  Gre340.vent.on "show:review:section", ->
+    controller = Controllers.questionController
+    Gre340.Routing.showRoute('test_center','section',controller.sectionNumber,'review')
+    controller.showReviewSection()    
   Gre340.vent.on 'no:internet:error:shown', ->
     controller = Controllers.questionController
     controller.noInternetErrorShown = true

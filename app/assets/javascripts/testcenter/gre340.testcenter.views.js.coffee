@@ -161,12 +161,16 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       'click #btn-next': 'showNextQuestion'
       'click #btn-prev': 'showPrevQuestion'
       'click #btn-exit-section': 'exitSection'
+      'click #btn-review': 'showReview'
     showNextQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:next:question'
     showPrevQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:prev:question'
+    showReview:(event)->
+      event.preventDefault()
+      Gre340.vent.trigger 'show:review:section'
     exitSection: (event) ->
       Gre340.vent.trigger 'exit:section'
 
@@ -225,3 +229,52 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         Gre340.Routing.showRouteWithTrigger('test_center','section',@section_index,'question',@question_index)
       else
         Gre340.Routing.showRouteWithTrigger('test_center','section',@section_index)
+  Views.ReviewActionBarView = Marionette.ItemView.extend
+    template: 'review-actionbar'
+    model:'Gre340.TestCenter.Data.Models.Quiz'
+    initialize: (options) ->
+      @section_index = options.section_index
+    templateHelpers: ->
+      section_index: @section_index
+    events:
+      'click #btn-return': 'returnSection'
+      'click #btn-go-to-q': 'goToQuestion'
+    returnSection:(event) ->
+      event.preventDefault()
+      window.history.back()
+    goToQuestion:(event)->
+      event.preventDefault()
+      if $('.ui-selected').length > 0
+        question_number =  $('.ui-selected')[0].attributes['data-value'].value
+        Gre340.Routing.showRouteWithTrigger('test_center','section',@section_index,'question',question_number)
+
+  Views.ReviewQuestionRow = Marionette.ItemView.extend
+    template:'question/review-question-row'
+    tagName: 'tr'
+    initialize:(options)->
+      @current_question_number = options.current_question_number
+      $(@el).attr 'data-value', @model.get('sequence_no')
+      if @current_question_number==@model.get("sequence_no") 
+        $(@el).addClass('current')
+  Views.ReviewView = Marionette.CompositeView.extend
+    initialize:(options)->
+      @section_id = options.section_id
+      @attempt_id = options.attempt_id
+      @current_question_number = options.current_question_number
+      @collection = new Backbone.Collection()
+      @collection.comparator = (item) -> item.get('sequence_no')
+      @collection.url = '/api/v1/attempt_details/questions_status?section_id='+@section_id+'&attempt_id='+@attempt_id
+      @collection.fetch(async:false)
+    template:"question/review"
+    itemView:Views.ReviewQuestionRow
+    itemViewOptions:(model) ->
+        {current_question_number: @current_question_number} 
+    appendHtml:(collectionView, itemView, index) ->
+      if index+1 > itemView.model.collection.length/2
+        collectionView.$("#right tbody").append(itemView.el)
+      else
+        collectionView.$("#left tbody").append(itemView.el)
+    onRender:()->
+      @$('.selectable').selectable
+        filter:'tr'
+        cancel: '.cancel' 

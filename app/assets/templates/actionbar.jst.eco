@@ -13,7 +13,7 @@
             <span class="win-commandimage win-commandring">&#xe040;</span>
             <span class="win-label">Exit Section</span>
         </button>
-        <button class="win-command">
+        <button id="btn-review" class="win-command">
             <span class="win-commandimage win-commandring">&#xe015;</span>
             <span class="win-label">Review</span>
         </button>

@@ -268,6 +268,17 @@
   }
 }
 #test-content{
+  .selectable tr.current{background: $grey;}
+  .selectable tr.current.ui-selected { background: $light-blue; color: white; }
+  .selectable .ui-selecting { background: $light-grey; }
+  .selectable .ui-selected { background: $light-blue; color: white; }
+  .selectable { width: 100%; }
+  .selectable tr { margin: 3px; padding: 0.4em; cursor: pointer;}
+  .review{
+    width:70%;
+    margin: 0px auto;
+    margin-top: 180px;
+  }
   p{
     line-height: 25px;
     text-align: justify;
@@ -524,6 +535,9 @@ hr.blue{
 
 @media (max-width: 767px){
   #test-content {
+    .review{
+      margin-top: 210px;
+    }
     .single {
       margin-top: 300px;
     }
@@ -564,6 +578,9 @@ hr.blue{
   #test-content {
     .left-pane,.right-pane{
       top: 250px;
+    }
+    .review{
+      margin-top: 210px;
     }
     .single{
       width: 70%;
