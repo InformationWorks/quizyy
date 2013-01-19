@@ -1,6 +1,10 @@
+<div id="loading-test">
+</div>
 <div id="action-bar">
 </div>
 <div id="test-content" class="container">
+</div>
+<div id="loading-wrapper">
 </div>
 <input type="hidden" id="calculator"/>
 <div id="no-internet-error" class="modal hide fade" data-backdrop="static" data-keyboard="false">

@@ -22,12 +22,14 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @totalSeconds = null
       @connection = true
       @noInternetErrorShown = false
+      @loadingView = new @Views.LoadingView()
     start:() ->
-    #have moved quiz fetch to attempt:reset event
-    #so we only load quiz once we find the current attempt
-    #TODO we should show a loading image when starting the controller
       console.log 'start question controller called'
       @isStarted = true
+    showLoading:() ->
+      Gre340.TestCenter.Layout.layout.loading.show(@loadingView)
+    hideLoading:() ->
+      Gre340.TestCenter.Layout.layout.loading.close()
     checkPrerequisite:()->      
       if !@attempt.isComplete() and @checkTimeAvailable() 
         true 
@@ -57,6 +59,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     submitQuiz:()->
       Gre340.vent.trigger("submit:current:attempt")
     showQuestion:(question)->
+      @showLoading()
       if @checkPrerequisite()
         if !@quiz 
           @loadQuiz()
@@ -78,7 +81,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
             Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
         @updateTimer(@totalSeconds)
         @updateServerTimeWithInterval()
+      @hideLoading()
     showQuestionById:(questionId)->
+      @showLoading()
       if @checkPrerequisite()
         if !@quiz 
           @loadQuiz()
@@ -87,6 +92,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
           @showQuestion(question)
     showQuestionByNumber:(sectionNumber,questionNumber)->
       console.log 'show question by number called'
+      @showLoading()
       if @checkPrerequisite()
         if !@quiz 
           @loadQuiz()
@@ -109,6 +115,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
     startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
+      @showLoading()
       if @checkPrerequisite()
         if !@quiz 
           @loadQuiz()
@@ -136,8 +143,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
               @showSectionActionBar()
               Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))
         @totalSeconds = @attempt.get('current_time') if @totalSeconds == null
-
+        @hideLoading()
     startSectionByNumber:(sectionNumber,questionNumber) ->
+      @showLoading()
       if @checkPrerequisite()
         if !@quiz 
           @loadQuiz()
@@ -146,6 +154,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
           @startSection(section,questionNumber)
 
     startNextSection: ()->
+      @showLoading()
       @submitSection(@currentSection)
       @resetTotalSeconds()
       if @currentSectionCollection.next(@currentSection)

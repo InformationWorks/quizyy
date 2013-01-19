@@ -209,6 +209,9 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
   Views.SectionExitView = Marionette.ItemView.extend
     template: 'section-exit'
 
+  Views.LoadingView = Marionette.ItemView.extend
+    template: 'loading'
+    
   Views.SectionSubmittedError = Marionette.ItemView.extend
     template: 'question/section-submitted-error'
     initialize: (options) ->

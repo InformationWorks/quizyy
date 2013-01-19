@@ -194,6 +194,17 @@
 #admin-content{
   margin-top: 55px;
 }
+
+#loading{
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  background-image:image-url('loader.gif');
+  z-index: 3000;
+  width:64px;
+  height: 64px;
+}
+
 #calculator{
   position: absolute;
   top:400px;
