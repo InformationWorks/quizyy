@@ -108,17 +108,20 @@ class QuizzesController < ApplicationController
   # Upload full legth test excel
   def upload_full_excel
     
-    full_quiz_uploader = FullQuizUploader.new(getWorkbookFromParams(params),Quiz.find(params[:id]))
+    quiz = Quiz.find(params[:id])
+    
+    full_quiz_uploader = FullQuizUploader.new(getWorkbookFromParams(params),quiz)
     
     if full_quiz_uploader.validate_excel_workbook
       # Valid Excel
       
       if full_quiz_uploader.execute_excel_upload
         # Excel upload executed successfully.
-        render :json => { :message => "Valid and uploaded correctly",:success => full_quiz_uploader.success_messages.to_s }  
+        #render :json => { :message => "Valid and uploaded correctly",:success => full_quiz_uploader.success_messages.to_s }
+        redirect_to  quiz_path(quiz), :flash => { :success_messages => full_quiz_uploader.success_messages }
       else
         # Excel upload failed.
-        render :json => { :message => "InValid",:error => full_quiz_uploader.error_messages.to_s }
+        redirect_to  quiz_path(quiz), :flash => { :error_messages => full_quiz_uploader.error_messages }
       end
       
     else
