@@ -92,12 +92,13 @@ class SectionsController < ApplicationController
   # DELETE /sections/1.json
   def destroy
     
+    load_quiz
     load_section
     
     @section.destroy
 
     respond_to do |format|
-      format.html { redirect_to sections_url, notice: 'Section was successfully deleted.' }
+      format.html { redirect_to quiz_path(@quiz), notice: 'Section was successfully deleted.' }
       format.json { head :no_content }
     end
   end
