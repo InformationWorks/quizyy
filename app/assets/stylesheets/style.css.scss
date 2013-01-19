@@ -194,6 +194,17 @@
 #admin-content{
   margin-top: 55px;
 }
+
+#loading{
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  background-image:image-url('loader.gif');
+  z-index: 3000;
+  width:64px;
+  height: 64px;
+}
+
 #calculator{
   position: absolute;
   top:400px;
@@ -257,9 +268,23 @@
   }
 }
 #test-content{
+  .selectable tr.current{background: $grey;}
+  .selectable tr.current.ui-selected { background: $light-blue; color: white; }
+  .selectable .ui-selecting { background: $light-grey; }
+  .selectable .ui-selected { background: $light-blue; color: white; }
+  .selectable { width: 100%; }
+  .selectable tr { margin: 3px; padding: 0.4em; cursor: pointer;}
+  .review{
+    width:70%;
+    margin: 0px auto;
+    margin-top: 180px;
+  }
   p{
     line-height: 25px;
     text-align: justify;
+  }
+  .qc p{
+    text-align: center;
   }
   .section-exit-info{
     margin: 0 auto;
@@ -513,6 +538,9 @@ hr.blue{
 
 @media (max-width: 767px){
   #test-content {
+    .review{
+      margin-top: 210px;
+    }
     .single {
       margin-top: 300px;
     }
@@ -553,6 +581,9 @@ hr.blue{
   #test-content {
     .left-pane,.right-pane{
       top: 250px;
+    }
+    .review{
+      margin-top: 210px;
     }
     .single{
       width: 70%;

@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="span4 pull-left align-left">
+        <h4><%= @name %></h4>
+
+        <h2>Section <%= @section_index %> of 4</h2>
+    </div>
+    <div class="pull-right align-right">
+        <button id="btn-return" class="win-command">
+            <span class="win-commandimage win-commandring">&#xe05d;</span>
+            <span class="win-label">Back</span>
+        </button>
+        <button id="btn-go-to-q" class="win-command">
+            <span class="win-commandimage win-commandring">&#xe020;</span>
+            <span class="win-label">Go To Question</span>
+        </button>
+    </div>
+</div>
+<hr>
+<div class="row align-center">
+    <div class="span3 pull-right align-right">
+        <p class="lead">
+            <button class="btn" id="btn-hide-time">Hide Time</button>
+            <div id="timer">1:00:00</div>
+        </p>
+    </div>
+</div>

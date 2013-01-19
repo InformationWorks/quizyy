@@ -16,7 +16,7 @@
         </div>
     <% end %>
     <% if @quantity_a and @quantity_b :%>
-        <div class="row-fluid">
+        <div class="qc row-fluid">
             <div class="span6 align-center">
                 <h3>Quantity A</h3>
                 <p><%= @quantity_a %></p>

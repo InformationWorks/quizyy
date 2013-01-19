@@ -7,7 +7,7 @@ Gre340.module "TestCenter.Layout",  (TestCenterLayout, Gre340, Backbone, Marione
     regions:
       actionbar: '#action-bar'
       content: '#test-content'
-      no_internet: '#no-internet-error'
+      loading: '#loading-wrapper'
   )
 
   TestCenterLayout.addInitializer ->

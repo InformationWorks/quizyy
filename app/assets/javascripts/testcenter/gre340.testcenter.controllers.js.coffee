@@ -22,12 +22,15 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       @totalSeconds = null
       @connection = true
       @noInternetErrorShown = false
+      @loadingView = new @Views.LoadingView()
     start:() ->
-    #have moved quiz fetch to attempt:reset event
-    #so we only load quiz once we find the current attempt
-    #TODO we should show a loading image when starting the controller
       console.log 'start question controller called'
+      @attempt.fetch()
       @isStarted = true
+    showLoading:() ->
+      Gre340.TestCenter.Layout.layout.loading.show(@loadingView)
+    hideLoading:() ->
+      Gre340.TestCenter.Layout.layout.loading.close()
     checkPrerequisite:()->      
       if !@attempt.isComplete() and @checkTimeAvailable() 
         true 
@@ -47,16 +50,20 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         async: false
     lostConnection:()->
       @connection = false
+      $('#action-bar').addClass('no-connection')
       $('#action-bar').addClass('no-bk')
       $('#no-internet-error').modal('show')
     gotConnection:()->
       @connection = true
       @noInternetErrorShown = false
-      $('#action-bar').removeClass('no-bk')
+      if $('#action-bar').hasClass('no-connection')
+        $('#action-bar').removeClass('no-connection')
+        $('#action-bar').removeClass('no-bk')
       $('#no-internet-error').modal('hide')
     submitQuiz:()->
       Gre340.vent.trigger("submit:current:attempt")
     showQuestion:(question)->
+      @showLoading()
       if @checkPrerequisite()
         if !@quiz 
           @loadQuiz()
@@ -78,7 +85,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
             Gre340.TestCenter.Layout.layout.content.show(new @Views.QuestionSingleView(model: question))
         @updateTimer(@totalSeconds)
         @updateServerTimeWithInterval()
+      @hideLoading()
     showQuestionById:(questionId)->
+      @showLoading()
       if @checkPrerequisite()
         if !@quiz 
           @loadQuiz()
@@ -87,6 +96,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
           @showQuestion(question)
     showQuestionByNumber:(sectionNumber,questionNumber)->
       console.log 'show question by number called'
+      @showLoading()
       if @checkPrerequisite()
         if !@quiz 
           @loadQuiz()
@@ -109,6 +119,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
     startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
+      @showLoading()
       if @checkPrerequisite()
         if !@quiz 
           @loadQuiz()
@@ -136,8 +147,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
               @showSectionActionBar()
               Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionInfoView(model: section))
         @totalSeconds = @attempt.get('current_time') if @totalSeconds == null
-
+        @hideLoading()
     startSectionByNumber:(sectionNumber,questionNumber) ->
+      @showLoading()
       if @checkPrerequisite()
         if !@quiz 
           @loadQuiz()
@@ -146,6 +158,7 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
           @startSection(section,questionNumber)
 
     startNextSection: ()->
+      @showLoading()
       @submitSection(@currentSection)
       @resetTotalSeconds()
       if @currentSectionCollection.next(@currentSection)
@@ -258,7 +271,9 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         @lostConnection()
     checkTimeAvailable:() ->
       if @totalSeconds == 0 then false else true
-  
+    showReviewSection:()->
+      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.ReviewActionBarView(model: @quiz, section_index: @sectionNumber))
+      Gre340.TestCenter.Layout.layout.content.show(new @Views.ReviewView(section_id:@currentSection.get('id'),attempt_id:@attempt.get('id'),current_question_number: @currentQuestion.get('sequence_no')))
   #-----------------------Events Listening------------------------------
 
   Gre340.vent.on "show:question", ->
@@ -325,7 +340,10 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
         qc.startSection(Controllers.questionController.getCurrentSectionCollection().first(),null)
       else
         qc.showQuizError()
-      
+  Gre340.vent.on "show:review:section", ->
+    controller = Controllers.questionController
+    Gre340.Routing.showRoute('test_center','section',controller.sectionNumber,'review')
+    controller.showReviewSection()    
   Gre340.vent.on 'no:internet:error:shown', ->
     controller = Controllers.questionController
     controller.noInternetErrorShown = true

@@ -52,6 +52,23 @@ module Api
           end
         end
       end
+
+      def get_questions_status
+        @section_id = params[:section_id]
+        @attempt_details = AttemptDetail.where(:attempt_id => params[:attempt_id])
+        @questions = Question.select("id,sequence_no").where(:section_id => @section_id)
+        @questionsWithStatus = []
+        @questions.each do |question|
+          if @attempt_details.where("question_id = ? and (option_id IS NOT NULL or user_input IS NOT NULL)", question.id).length>0
+            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Answered"]
+          else
+            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Not Answered"]
+          end
+        end
+        respond_to do |format| 
+          format.json {render :json => @questionsWithStatus }
+        end
+      end
     end
   end
 end

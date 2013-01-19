@@ -72,6 +72,7 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
       @get('sections')
     getCurrentQuestionCollection: ->
       @currentQuestionCollection
+  
   Data.Models.Attempt = Backbone.Model.extend
     urlRoot: '/api/v1/attempts'
     initialize:(options)->
@@ -100,7 +101,6 @@ Gre340.module "TestCenter.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
   
   Data.addInitializer ->
     Data.currentAttempt = new Data.Models.Attempt()
-    Data.currentAttempt.fetch()
     Data.currentQuiz = new Data.Models.Quiz()
     Gre340.vent.on 'attempt:changed', (attempt) ->
       Data.currentQuiz.url = '/api/v1/quizzes/'+attempt.get('quiz_id')+'.json'

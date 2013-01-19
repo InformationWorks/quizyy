@@ -1,0 +1,3 @@
+<td><%=@sequence_no%></td>
+<td><%=@status%></td>
+<td></td>

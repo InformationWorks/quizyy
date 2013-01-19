@@ -1,11 +1,16 @@
+<div id="loading-test">
+</div>
 <div id="action-bar">
 </div>
 <div id="test-content" class="container">
 </div>
-<input type="hidden" id="calculator"/>
-<div id="no-internet-error" class="modal hide fade" data-backdrop="static" data-keyboard="false">
-<h4 class="modal-header">Oh snap! Could not connect to Internet.</h4>
-<div class="modal-body">
-    <p>We have saved all your responses so far. You can safely exit the test and resume it later when Internet is available. Thank You.</p>
+<div id="loading-wrapper">
 </div>
-<div>
+<input type="hidden" id="calculator"/>
+
+<div id="no-internet-error" class="modal hide fade" data-backdrop="static" data-keyboard="false">
+	<h4 class="modal-header">Oh snap! Could not connect to Internet.</h4>
+	<div class="modal-body">
+    	<p>We have saved all your responses so far. You can safely exit the test and resume it later when Internet is available. Thank You.</p>
+	</div>
+</div>

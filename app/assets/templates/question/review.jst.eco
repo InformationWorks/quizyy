@@ -1,0 +1,33 @@
+<div class="review">
+<p>
+	Below is the list of questions in the current section. The question you were on is higlighted. Questions you have seen are labeled <em>Answered</em>, <em>Incomplete</em>, or <em>Not Answered</em>. A question us labeled <em>Incomplete</em> if the question requires you to select a certain number of answer choices and you have selected more or fewer than that number. Question you have marked are indicated with a <span></span>
+	<br/>
+	To return to the question you were on, click <em>Return</em>.
+	<br/>
+	To go to a different question, click on that question to highlight it, then click <em>Go To Question</em>
+</p>
+<div class="selectable">
+<table id="left" class="table pull-left" style="width: 45%; margin-left:20px;">
+	<thead>
+		<tr class="cancel">
+			<td>Question Number</td>
+			<td>Status</td>
+			<td>Marked</td>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+<table id="right" class="table pull-left" style="width: 45%;margin-left:20px;">
+	<thead>
+		<tr class="cancel">
+			<td>Question Number</td>
+			<td>Status</td>
+			<td>Marked</td>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+</div>
+</div>

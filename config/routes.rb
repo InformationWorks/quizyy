@@ -23,6 +23,7 @@ GremastersWeb::Application.routes.draw do
   end
   #api routes.
   get "api/v1/attempt_details" => "api/v1/attempt_details#index"
+  get "api/v1/attempt_details/questions_status" => "api/v1/attempt_details#get_questions_status"
   post "api/v1/attempts/update_time" => "api/v1/attempts#update_time" 
   post "api/v1/visits/create" => "api/v1/visits#create"
   post "api/v1/visits/set_end_time" => "api/v1/visits#set_end_time"  
