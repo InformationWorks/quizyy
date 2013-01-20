@@ -236,12 +236,16 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     events:
       'click #btn-continue': 'showNextSection'
       'click #btn-return': 'showQuestion'
+      'click #btn-review': 'showReview'
     showNextSection:(event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:next:section'
     showQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:question'
+    showReview:(event)->
+      event.preventDefault()
+      Gre340.vent.trigger 'show:review:section'
 
   Views.NoQuizInProgress = Marionette.ItemView.extend
     template: 'no-attempt-error'
@@ -280,7 +284,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       'click #btn-go-to-q': 'goToQuestion'
     returnSection:(event) ->
       event.preventDefault()
-      window.history.back()
+      question_number =  $('.current')[0].attributes['data-value'].value
+      Gre340.Routing.showRouteWithTrigger('test_center','section',@section_index,'question',question_number)
     goToQuestion:(event)->
       event.preventDefault()
       if $('.ui-selected').length > 0
