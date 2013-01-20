@@ -15,13 +15,13 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       @attempt_details.url =  '/api/v1/attempt_details'
       @attempt_details.fetch(data: $.param({ attempt_id: Gre340.request('currentAttemptId'), question_id: @model.get('id')}), async: false )
       @listenTo Gre340.vent, "mark:question:toggle", ()->
-        currentState = @$('#marked').val()
+        currentState = $('#marked').val()
         if currentState == "true"
-          @$('#marked').val(false)
+          $('#marked').val(false)
           $('#btn-mark').children(":first").html('<span class="win-commandimage win-commandring">&#xe071;</span>')
           @model.set('marked',false)
         else
-          @$('#marked').val(true)
+          $('#marked').val(true)
           #show marked icon on button
           $('#btn-mark').children(":first").html('<span class="win-commandimage win-commandring">&#xe070;</span>')
           @model.set('marked',true)
@@ -54,15 +54,20 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         @qtype = 'mcq'
         'option/mcq'
     saveUserResponse:(event)->
-      if @qtype != 'mcq'
+      if @qtype == 'ne' or @qtype == 'none'
         type = "text"  
       else
         type= "notext"
-      options = new Backbone.Model(option for option in $('#options form').serializeArray())
+      
+      if @qtype=='none'
+        options = $('.sentence.selected').attr('data-index')
+      else
+        options = new Backbone.Model(option for option in $('#options form').serializeArray())
       Gre340.vent.trigger "save:attempt:details",type,options,@model
     onRender:()->
       marked = if @attempt_details.length>0 then @attempt_details.first().get('marked') else false
       Views.toggleMarkQuestion(marked)
+      @model.set('marked',marked)
       if @qtype != 'ne'
         $('#calculator').calculator
           showOn: 'operator'
@@ -112,6 +117,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       @optionsRegion.show(new Views.OptionsView(model: @model))
 
   Views.QuestionTwoPaneView = Marionette.Layout.extend
+    initialize:->
     template: 'question/twopane'
     tagName: "div"
     className: "row"
@@ -131,6 +137,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         @attempt_details.fetch(data: $.param({ attempt_id: Gre340.request('currentAttemptId'), question_id: @model.get('id')}), async: false )
         marked = if @attempt_details.length>0 then @attempt_details.first().get('marked') else false
         Views.toggleMarkQuestion(marked)
+        @model.set('marked',marked)
         @selected_sentence = null
         if @attempt_details.length > 0
           @selected_sentence = @attempt_details.first().get('user_input')
@@ -146,16 +153,12 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
               passage_with_sentences = passage_with_sentences+'<span class="sentence" data-index='+'"'+i+'">'+ sentence + '.</span>'
             i++
         @$('.passage').html(passage_with_sentences)
-      else
-        @optionsRegion.show(new Views.OptionsView(model: @model))
+      @optionsRegion.show(new Views.OptionsView(model: @model))
     saveSentenceSelection:(event)->
       @$('.sentence').removeClass('selected')
       @$(event.currentTarget).addClass('selected')
       sentence_index = event.currentTarget.attributes['data-index'].value
-      attempt_details = new Backbone.Model({'attempt_details':{'question_id': @model.get('id'), 'user_input': sentence_index}})
-      attempt_details.url = '/api/v1/attempt_details'
-      attempt_details.save()
-
+      Gre340.vent.trigger "save:attempt:details","text",sentence_index,@model
   Views.SectionInfoView = Marionette.ItemView.extend
     template: 'question/section'
     tagName: "div"

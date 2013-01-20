@@ -23,6 +23,3 @@
 <section id="options">
 </section>
 </div>
-<% if @type=='sip': %>
-    <input type="hidden" name="marked" id="marked" value="false"/>
-<% end %>
