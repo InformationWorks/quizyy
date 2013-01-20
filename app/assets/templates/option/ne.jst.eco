@@ -20,3 +20,4 @@
         </div>
     </div>
 </form>
+<input type="hidden" name="marked" id="marked" value="false"/>

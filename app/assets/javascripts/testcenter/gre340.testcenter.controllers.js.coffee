@@ -1,4 +1,4 @@
-Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionette, $, _) ->
+ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionette, $, _) ->
   #TODO Review code for efficiency
   #TODO Write Tests
   class QuestionController
@@ -351,7 +351,13 @@ Gre340.module "TestCenter.Controllers", (Controllers, Gre340, Backbone, Marionet
     controller = Controllers.questionController
     Gre340.Routing.showRoute('test_center','section',controller.sectionNumber,'exit')
     controller.exitSection()
-  
+  Gre340.vent.on "save:attempt:details", (type,options,model) ->
+    if type == 'text'
+      attempt_details = new Backbone.Model({'attempt_details':{'question_id': model.get('id'), 'user_input': options, 'marked': model.get('marked')}})
+    else
+      attempt_details = new Backbone.Model({'attempt_details':{'question_id': model.get('id'), 'options': options,'marked': model.get('marked')}})
+    attempt_details.url = '/api/v1/attempt_details'
+    attempt_details.save()
   #---------------------request handlers--------------------------
   Gre340.reqres.addHandler "currentAttemptId", ()->
     Controllers.questionController.attempt.get('id')

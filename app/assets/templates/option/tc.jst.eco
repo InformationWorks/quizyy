@@ -75,3 +75,4 @@
         </div>
     <% end %>
 </form>
+<input type="hidden" name="marked" id="marked" value="false"/>

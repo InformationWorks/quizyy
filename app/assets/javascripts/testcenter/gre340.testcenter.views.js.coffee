@@ -1,13 +1,10 @@
 Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
-  Views.saveAttemptDetails=(event,model)->
-    options = new Backbone.Model(option for option in $('#options form').serializeArray())
-    if event.currentTarget.type == 'text'
-      attempt_details = new Backbone.Model({'attempt_details':{'question_id': model.get('id'), 'user_input': options}})
+  Views.toggleMarkQuestion = (marked)->
+    $('#marked').val(marked)
+    if marked
+      $('#btn-mark').children(":first").html('<span class="win-commandimage win-commandring">&#xe070;</span>')
     else
-      attempt_details = new Backbone.Model({'attempt_details':{'question_id': model.get('id'), 'options': options}})
-    attempt_details.url = '/api/v1/attempt_details'
-    attempt_details.save()
-
+      $('#btn-mark').children(":first").html('<span class="win-commandimage win-commandring">&#xe071;</span>')
   Views.OptionsView = Marionette.ItemView.extend
     initialize:(options)->
       question_type = @model.get('type_code')
@@ -17,6 +14,18 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       @attempt_details = new Backbone.Collection()
       @attempt_details.url =  '/api/v1/attempt_details'
       @attempt_details.fetch(data: $.param({ attempt_id: Gre340.request('currentAttemptId'), question_id: @model.get('id')}), async: false )
+      @listenTo Gre340.vent, "mark:question:toggle", ()->
+        currentState = $('#marked').val()
+        if currentState == "true"
+          $('#marked').val(false)
+          $('#btn-mark').children(":first").html('<span class="win-commandimage win-commandring">&#xe071;</span>')
+          @model.set('marked',false)
+        else
+          $('#marked').val(true)
+          #show marked icon on button
+          $('#btn-mark').children(":first").html('<span class="win-commandimage win-commandring">&#xe070;</span>')
+          @model.set('marked',true)
+        @saveUserResponse()   
     templateHelpers: ->
       oneRightAnswer: @oneRightAnswer
       attempt_details: @attempt_details
@@ -45,41 +54,53 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         @qtype = 'mcq'
         'option/mcq'
     saveUserResponse:(event)->
-      Views.saveAttemptDetails(event,@model)
+      if @qtype == 'ne' or @qtype == 'none'
+        type = "text"  
+      else
+        type= "notext"
+      
+      if @qtype=='none'
+        options = $('.sentence.selected').attr('data-index')
+      else
+        options = new Backbone.Model(option for option in $('#options form').serializeArray())
+      Gre340.vent.trigger "save:attempt:details",type,options,@model
     onRender:()->
-        if @qtype != 'ne'
-          $('#calculator').calculator
-            showOn: 'operator'
-            layout: [$.calculator.CLOSE,'MRMCM+M-MS', '_7_8_9_/CA',
-              '_4_5_6_*CE', '_1_2_3_-SR', '+-_0_._+_=']
-            closeText: 'X'
-          $('#btn-calc').click =>
-            $('#calculator').calculator('show')
-            $('.calculator-popup').css
-              position: 'absolute'
-              top: '400px'
-              width: 'auto'
-              left: '100px'
-              display: 'block'
-            $('.calculator-popup').draggable()
-        else
-          @$('input[type=text]').calculator
-            showOn: 'operator'
-            layout: [$.calculator.CLOSE,'MRMCM+M-MS', '_7_8_9_/CA',
-              '_4_5_6_*CE', '_1_2_3_-SR', '+-_0_._+_=',$.calculator.USE]
-            closeText: 'X'
-            useText: 'Transfer Display'
-          selectedInput = null
-          @$('input[type=text]').focus ->
-            selectedInput = @
-          $('#btn-calc').click =>
-            if @$('input[type=text]').length > 1 and selectedInput != null
-              $(selectedInput).calculator('show')
-            else if @$('input[type=text]').length > 1 and selectedInput == null
-              @$('input[type=text]').first().calculator('show')
-            else
-              @$('input[type=text]').calculator('show')
-            $('.calculator-popup').draggable()
+      marked = if @attempt_details.length>0 then @attempt_details.first().get('marked') else false
+      Views.toggleMarkQuestion(marked)
+      @model.set('marked',marked)
+      if @qtype != 'ne'
+        $('#calculator').calculator
+          showOn: 'operator'
+          layout: [$.calculator.CLOSE,'MRMCM+M-MS', '_7_8_9_/CA',
+            '_4_5_6_*CE', '_1_2_3_-SR', '+-_0_._+_=']
+          closeText: 'X'
+        $('#btn-calc').click =>
+          $('#calculator').calculator('show')
+          $('.calculator-popup').css
+            position: 'absolute'
+            top: '400px'
+            width: 'auto'
+            left: '100px'
+            display: 'block'
+          $('.calculator-popup').draggable()
+      else
+        @$('input[type=text]').calculator
+          showOn: 'operator'
+          layout: [$.calculator.CLOSE,'MRMCM+M-MS', '_7_8_9_/CA',
+            '_4_5_6_*CE', '_1_2_3_-SR', '+-_0_._+_=',$.calculator.USE]
+          closeText: 'X'
+          useText: 'Transfer Display'
+        selectedInput = null
+        @$('input[type=text]').focus ->
+          selectedInput = @
+        $('#btn-calc').click =>
+          if @$('input[type=text]').length > 1 and selectedInput != null
+            $(selectedInput).calculator('show')
+          else if @$('input[type=text]').length > 1 and selectedInput == null
+            @$('input[type=text]').first().calculator('show')
+          else
+            @$('input[type=text]').calculator('show')
+          $('.calculator-popup').draggable()
   Views.QuestionSingleView = Marionette.Layout.extend
     template: 'question/single'
     tagName: "div"
@@ -96,6 +117,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       @optionsRegion.show(new Views.OptionsView(model: @model))
 
   Views.QuestionTwoPaneView = Marionette.Layout.extend
+    initialize:->
     template: 'question/twopane'
     tagName: "div"
     className: "row"
@@ -109,9 +131,13 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       $('body').addClass('fill')
     onRender:()->
       if /SIP/i.test @model.get('type_code')
+        @model.set('type','sip')  
         @attempt_details = new Backbone.Collection()
         @attempt_details.url =  '/api/v1/attempt_details'
         @attempt_details.fetch(data: $.param({ attempt_id: Gre340.request('currentAttemptId'), question_id: @model.get('id')}), async: false )
+        marked = if @attempt_details.length>0 then @attempt_details.first().get('marked') else false
+        Views.toggleMarkQuestion(marked)
+        @model.set('marked',marked)
         @selected_sentence = null
         if @attempt_details.length > 0
           @selected_sentence = @attempt_details.first().get('user_input')
@@ -127,16 +153,12 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
               passage_with_sentences = passage_with_sentences+'<span class="sentence" data-index='+'"'+i+'">'+ sentence + '.</span>'
             i++
         @$('.passage').html(passage_with_sentences)
-      else
-        @optionsRegion.show(new Views.OptionsView(model: @model))
+      @optionsRegion.show(new Views.OptionsView(model: @model))
     saveSentenceSelection:(event)->
       @$('.sentence').removeClass('selected')
       @$(event.currentTarget).addClass('selected')
       sentence_index = event.currentTarget.attributes['data-index'].value
-      attempt_details = new Backbone.Model({'attempt_details':{'question_id': @model.get('id'), 'user_input': sentence_index}})
-      attempt_details.url = '/api/v1/attempt_details'
-      attempt_details.save()
-
+      Gre340.vent.trigger "save:attempt:details","text",sentence_index,@model
   Views.SectionInfoView = Marionette.ItemView.extend
     template: 'question/section'
     tagName: "div"
@@ -165,6 +187,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       'click #btn-prev': 'showPrevQuestion'
       'click #btn-exit-section': 'exitSection'
       'click #btn-review': 'showReview'
+      'click #btn-mark': 'toggleMarkQuestion'
       'click #btn-quit':'quitQuiz'
       'click #show-alert-quit-quiz': 'removeBackgroundFromActionBar'
       'click .close-alert-quit-quiz': 'addBackgroundToActionBar'
@@ -188,6 +211,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     addBackgroundToActionBar:(event) ->
       event.preventDefault()
       $('#action-bar').removeClass('no-bk')
+    toggleMarkQuestion:(event)->
+      Gre340.vent.trigger 'mark:question:toggle'
   Views.SectionActionBarView = Marionette.ItemView.extend
     template: 'section-actionbar'
     model:'Gre340.TestCenter.Data.Models.Quiz'
@@ -211,12 +236,16 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     events:
       'click #btn-continue': 'showNextSection'
       'click #btn-return': 'showQuestion'
+      'click #btn-review': 'showReview'
     showNextSection:(event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:next:section'
     showQuestion: (event) ->
       event.preventDefault()
       Gre340.vent.trigger 'show:question'
+    showReview:(event)->
+      event.preventDefault()
+      Gre340.vent.trigger 'show:review:section'
 
   Views.NoQuizInProgress = Marionette.ItemView.extend
     template: 'no-attempt-error'
@@ -255,7 +284,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       'click #btn-go-to-q': 'goToQuestion'
     returnSection:(event) ->
       event.preventDefault()
-      window.history.back()
+      question_number =  $('.current')[0].attributes['data-value'].value
+      Gre340.Routing.showRouteWithTrigger('test_center','section',@section_index,'question',question_number)
     goToQuestion:(event)->
       event.preventDefault()
       if $('.ui-selected').length > 0
@@ -266,13 +296,13 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     template:'question/review-question-row'
     tagName: 'tr'
     initialize:(options)->
-      @removeFullHeight()
       @current_question_number = options.current_question_number
       $(@el).attr 'data-value', @model.get('sequence_no')
       if @current_question_number==@model.get("sequence_no") 
         $(@el).addClass('current')
   Views.ReviewView = Marionette.CompositeView.extend
     initialize:(options)->
+      @removeFullHeight()
       @section_id = options.section_id
       @attempt_id = options.attempt_id
       @current_question_number = options.current_question_number

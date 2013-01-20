@@ -5,28 +5,31 @@ module Api
         #TODO remove current_attempt dependency
         question_id = params[:attempt_details][:question_id]
         options = params[:attempt_details][:options]
+        marked = params[:attempt_details][:marked]
         #if options are not sent means the question is TC or SIP in which user provide input
         if options.nil?
           user_input = params[:attempt_details][:user_input]
         end
         begin
           AttemptDetail.destroy_all(:attempt_id => current_attempt.id,:question_id => question_id)
-          unless options.nil?
+          if (!options.nil? and options.empty?) or (!user_input.nil? and user_input.empty?)
+              AttemptDetail.create(:attempt_id=>current_attempt.id,:question_id=>question_id,:marked=>marked||false)
+          elsif !options.nil?
             options.each do |option|
-              AttemptDetail.create(:attempt_id=>current_attempt.id,:question_id=>question_id,:option_id=>option[1][:value])
+              AttemptDetail.create(:attempt_id=>current_attempt.id,:question_id=>question_id,:option_id=>option[1][:value],:marked=>marked||false)
             end
           else
             combined_input = []
             input_str = nil
             #a hash is sent for text completion type question and a string for select in passage
-            if user_input.is_a?(Hash)
+            if user_input.is_a?(Hash) and !user_input.empty?
               user_input.each {|input| combined_input << input[1][:value]}
               input_str = user_input.inject([]) {|combined_input,input| combined_input << input[1][:value]}.join(',')
             elsif user_input.is_a?(String)
               input_str = user_input
             end
 
-            AttemptDetail.create(:attempt_id=>current_attempt.id,:question_id=>question_id,:user_input=>input_str)
+            AttemptDetail.create(:attempt_id=>current_attempt.id,:question_id=>question_id,:user_input=>input_str,:marked=>marked||false)
           end
           respond_to do |format|
             format.json { render :json => {:success=>true} }
@@ -60,9 +63,11 @@ module Api
         @questionsWithStatus = []
         @questions.each do |question|
           if @attempt_details.where("question_id = ? and (option_id IS NOT NULL or user_input IS NOT NULL)", question.id).length>0
-            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Answered"]
+            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Answered", :marked=>@attempt_details.where("question_id = ?", question.id).first().marked]
+          elsif @attempt_details.where("question_id = ?", question.id).length>0
+            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Not Answered",:marked=>@attempt_details.where("question_id = ?", question.id).first().marked]
           else
-            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Not Answered"]
+            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Not Answered",:marked=>false]
           end
         end
         respond_to do |format| 
