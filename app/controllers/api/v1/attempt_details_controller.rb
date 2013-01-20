@@ -63,9 +63,11 @@ module Api
         @questionsWithStatus = []
         @questions.each do |question|
           if @attempt_details.where("question_id = ? and (option_id IS NOT NULL or user_input IS NOT NULL)", question.id).length>0
-            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Answered"]
+            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Answered", :marked=>@attempt_details.where("question_id = ?", question.id).first().marked]
+          elsif @attempt_details.where("question_id = ?", question.id).length>0
+            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Not Answered",:marked=>@attempt_details.where("question_id = ?", question.id).first().marked]
           else
-            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Not Answered"]
+            @questionsWithStatus << Hash[:id=> question.id,:sequence_no=>question.sequence_no,:status=>"Not Answered",:marked=>false]
           end
         end
         respond_to do |format| 

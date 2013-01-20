@@ -1,3 +1,6 @@
 <td><%=@sequence_no%></td>
 <td><%=@status%></td>
-<td></td>
+<td><% if @marked: %> 
+		<span class="icon-checkmark"></span>	
+	<% end %> 
+</td>
