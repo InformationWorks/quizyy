@@ -1,0 +1,52 @@
+<% content_for :admin_content do %>
+
+<!-- Data block -->
+<article class="data-block">
+    <div class="data-container">
+        <header>
+            <h2><span class="awe-tasks"></span> Students</h2>
+            <ul class="data-header-actions">
+                <%= link_to(new_quiz_path,:class => "btn btn-primary") do %>
+                 Upload Students
+                <% end %>
+            </ul>
+        </header>
+        <section class="tab-content">
+            <!-- Tab #static -->
+            <div class="tab-pane active" id="static">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Credits</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <% @students.each do |student| %>
+                          <tr>
+                            <td>
+                                <%= student.full_name %>
+                            </td>
+                            <td>
+                                <%= student.credits %>
+                            </td>
+                            <td class="toolbar">
+                              
+                            </td>
+                          </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+        </section>
+        
+    </div>
+</article>
+<!-- /Data block -->
+
+<br />
+
+<% end %>
+
+<%= render 'admins/admin_base' %>

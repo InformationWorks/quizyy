@@ -123,6 +123,9 @@ GremastersWeb::Application.routes.draw do
   match 'post_to_zaakpay' => 'checkout#post_to_zaakpay'
   match 'post_existing_order_to_zaakpay' => 'checkout#post_existing_order_to_zaakpay'
   match 'z_response'      => 'checkout#z_response'
+  
+  # Students routes.
+  resources :students, :only => [:index]
 
   root :to => "landings#index"
   # Devise routes.
