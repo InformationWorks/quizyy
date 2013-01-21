@@ -6,6 +6,9 @@
         <header>
             <h2><span class="awe-tasks"></span> Students</h2>
             <ul class="data-header-actions">
+                <%= link_to(new_student_path,:class => "btn btn-primary") do %>
+                 Add Student
+                <% end %>
                 <%= link_to(new_quiz_path,:class => "btn btn-primary") do %>
                  Upload Students
                 <% end %>
@@ -19,6 +22,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Credits</th>
+                            <th>Confirmed</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -31,6 +35,9 @@
                             </td>
                             <td>
                                 <%= student.credits %>
+                            </td>
+                            <td>
+                                <%= student.confirmed? ? "Yes" : "No"  %>
                             </td>
                             <td class="toolbar">
                               

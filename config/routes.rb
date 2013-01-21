@@ -130,7 +130,7 @@ GremastersWeb::Application.routes.draw do
   match 'z_response'      => 'checkout#z_response'
   
   # Students routes.
-  resources :students, :only => [:index]
+  resources :students, :only => [:index,:new,:create]
 
   root :to => "landings#index"
   # Devise routes.

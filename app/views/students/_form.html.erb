@@ -1,0 +1,72 @@
+<% content_for :admin_content do %>
+
+<!-- Data block -->
+<article class="data-block">
+    <div class="data-container">
+        <header>
+            <h2><%= yield :student_form_title %></h2>
+            <ul class="data-header-actions">
+                <%= link_to(students_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+                 Cancel
+                <% end %>   
+            </ul>
+        </header>
+        <section class="tab-content">
+            
+            <!-- Form starts here -->
+            <div class="span11" style="margin-left: 15px;">
+                  <%= form_for(@student, url: students_url) do |f| %>
+                  <% if @student.errors.any? %>
+                  
+                    <div class="alert alert-error">
+                        <button class="close" data-dismiss="alert"></button>
+                        <strong><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved!</strong>
+                        <br />
+                        <br /> 
+                        <ul>
+                          <% @student.errors.full_messages.each do |msg| %>
+                            <li><%= msg %></li>
+                          <% end %>
+                        </ul>
+                    </div>
+                  <% end %>
+                
+                    <div class="control-group">
+                        <label class="control-label" for="input"><%= f.label :full_name %></label>
+                        <div class="controls">
+                            <%= f.text_field :full_name, :class => "input-xlarge" %>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input"><%= f.label :email %></label>
+                        <div class="controls">
+                            <%= f.text_field :email, :class => "input-xlarge" %>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input"><%= f.label :credits %></label>
+                        <div class="controls">
+                            <%= select_tag(:credits_to_add, options_for_select(['0','1000',
+                                                                           '1500',
+                                                                           '2000'], '0')) %>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <%= f.submit "Create Student", :class => "btn btn-info" %>
+                    </div>
+                <% end %>
+            </div>
+            <!-- Form ends here -->
+        </section>
+    </div>
+</article>
+<!-- /Data block -->
+
+<br />
+
+<% end %>
+
+<%= render 'admins/admin_base' %>

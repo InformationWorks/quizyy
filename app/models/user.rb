@@ -50,6 +50,11 @@ class User < ActiveRecord::Base
     
   end
   
+  # Devise password required override.
+  def password_required?
+    super if confirmed?
+  end
+  
   # Devise confirmable password match.  
   def password_match?
     self.errors[:password] << "can't be blank" if password.blank?
