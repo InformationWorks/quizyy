@@ -16,6 +16,7 @@
 //= require jquery_ujs
 //= require libs/jquery-ui-1.9.2.custom.min
 //= require libs/modernizr.custom
+//= require libs/d3.min
 //= require bootstrap
 //= require backbone/json2
 //= require backbone/underscore

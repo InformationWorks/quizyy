@@ -135,9 +135,10 @@
           else
             @currentSection = section
             @sectionNumber = section.get('sequence_no')
+            @currentQuestionCollection = section.get('questions')
             #if we have recived a questionNumber than the user should see a question else we show section start information
             if questionNumber?
-              @currentQuestionCollection = section.get('questions')
+              @currentQuestion = @currentQuestionCollection.where(sequence_no: parseInt(questionNumber))[0]
               Gre340.Routing.showRoute('test_center','section',@sectionNumber,'question',questionNumber)
               @showQuestion(@currentQuestion)   
             else
