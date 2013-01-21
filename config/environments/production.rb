@@ -69,7 +69,7 @@ GremastersWeb::Application.configure do
   # Heroku subdomain to avoid below error.
   # ActionView::Template::Error (Missing host to link to! 
   # Please provide the :host parameter, set default_url_options[:host], or set :only_path to true):
-  config.action_mailer.default_url_options = { :host => 'gre340-staging.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => ENV['GRE340_HOST'] }
    
 end
 
