@@ -131,6 +131,7 @@ GremastersWeb::Application.routes.draw do
   
   # Students routes.
   resources :students, :only => [:index,:new,:create]
+  match '/students/upload_via_excel' => "students#upload_via_excel", via: [:post], :as => "upload_students_via_excel"
 
   root :to => "landings#index"
   # Devise routes.

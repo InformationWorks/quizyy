@@ -9,12 +9,21 @@
                 <%= link_to(new_student_path,:class => "btn btn-primary") do %>
                  Add Student
                 <% end %>
-                <%= link_to(new_quiz_path,:class => "btn btn-primary") do %>
-                 Upload Students
-                <% end %>
             </ul>
         </header>
         <section class="tab-content">
+            
+            <div class="control-group">
+                <h3>Upload Students</h3>
+                    <div style="float: middle;height:118px;" class="table table-bordered">
+                        <%= form_for "",:url => upload_students_via_excel_path, :method => :post, :html => { :multipart => true } do |fe| %> 
+                        <%= fe.file_field :students_excel,:class => "form_fields" %> <br /> <br />
+                        <%= fe.submit "Upload Students",:confirm => "Are you sure you want to overwrite existing questions?", :method => :post, :data => { :confirm => 'This will delete current questions for this quiz. Are you sure you want to upload new questions?' },
+                                        :class => "btn btn-inverse",:style => "float:left;margin-left: 20px;margin-top:-5px" %>
+                        <% end %>
+                    </div>
+            </div>
+            
             <!-- Tab #static -->
             <div class="tab-pane active" id="static">
                 <table class="table table-hover">
