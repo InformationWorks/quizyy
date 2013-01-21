@@ -1,0 +1,5 @@
+<h1>ProgressReport#show</h1>
+<% @report.each do |name,value| %>
+	<h3><%=value[:section_name]%></h3>
+    <p><%= value[:correct] %> / <%=  value[:total] %></p>
+<% end %>
