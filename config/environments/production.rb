@@ -65,6 +65,11 @@ GremastersWeb::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  
+  # Heroku subdomain to avoid below error.
+  # ActionView::Template::Error (Missing host to link to! 
+  # Please provide the :host parameter, set default_url_options[:host], or set :only_path to true):
+  config.action_mailer.default_url_options = { :host => 'gre340-staging.herokuapp.com' }
    
 end
 
