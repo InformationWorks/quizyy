@@ -65,18 +65,14 @@ GremastersWeb::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-  
-  # Heroku support : http://goo.gl/02SlZ
-  config.action_mailer.default_url_options = { :host => ENV['GRE340_HOST'] }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :domain               => 'gmail.com',
-    :user_name            => ENV['GMAIL_SMTP_USER'],
-    :password             => ENV['GMAIL_SMTP_PASSWORD'],
-    :authentication       => 'plain',
-    :enable_starttls_auto => true  
-  }
    
 end
+
+ActionMailer::Base.smtp_settings = {
+  :address        => "smtp.sendgrid.net",
+  :port           => "25",
+  :authentication => :plain,
+  :user_name      => ENV['SENDGRID_USERNAME'],
+  :password       => ENV['SENDGRID_PASSWORD'],
+  :domain         => 'heroku.com'
+}
