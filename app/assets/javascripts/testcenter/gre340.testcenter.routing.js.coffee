@@ -1,5 +1,4 @@
 Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone, Marionette, $, _) ->
-
   Router = Backbone.Router.extend(
     routes:
       'homes/index': 'goToAvailableTest'

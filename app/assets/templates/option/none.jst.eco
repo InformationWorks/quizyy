@@ -1,0 +1,3 @@
+<% if /SIP/i.test @type_code: %>
+    <input type="hidden" name="marked" id="marked" value="false"/>
+<% end %>
