@@ -87,11 +87,16 @@ GremastersWeb::Application.routes.draw do
   match "homes/reset_user_quizzes" => "homes#reset_user_quizzes", via: [:delete], :as => "reset_user_quizzes"
 
 
-  devise_for :users,  :controllers => { :registrations => "users/registrations" } do
+  devise_for :users,  :controllers => { :registrations => "users/registrations", :confirmations => 'confirmations' } do
 
     #get "/", :to => "devise/sessions#new"
 
   end
+  
+  devise_scope :user do
+    post "/confirm" => "confirmations#confirm"
+  end
+  
   get "test_center/error"
   # Users::Controllers actions
   match "users/profiles/update_profile_pic" => "users/profiles#update_profile_pic", via: [:post], :as => "update_profile_pic"

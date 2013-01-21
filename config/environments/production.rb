@@ -66,3 +66,14 @@ GremastersWeb::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 end
+
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings = {
+   :tls => true,
+   :address => "smtp.gmail.com",
+   :port => 587,
+   :authentication => :login,
+   :domain => ENV['GMAIL_SMTP_USER'],
+   :user_name => ENV['GMAIL_SMTP_USER'],
+   :password => ENV['GMAIL_SMTP_PASSWORD']
+}
