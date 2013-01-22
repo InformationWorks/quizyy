@@ -20,6 +20,7 @@
 						<tr>
 							<th>Code</th>
 							<th>Name</th>
+							<th>SectionType</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -29,6 +30,7 @@
 						  <tr>
 						    <td><%= category.code %></td>
 						    <td><%= category.name %></td>
+						    <td><%= category.section_type.name %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
 						    	<%= link_to(category, :class => "btn") do %>
