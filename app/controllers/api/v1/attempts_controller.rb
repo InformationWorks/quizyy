@@ -9,7 +9,7 @@ module Api
       end
       def update
         @attempt = Attempt.find(params[:id])
-        if @attempt.update_attributes(params[:attempt].except(:current_time))
+        if @attempt.update_attributes(params[:attempt].except(:current_time,:score,:report))
           if params[:attempt][:completed]
             @attempt.calculate_score
           end
