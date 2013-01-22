@@ -1,11 +1,29 @@
 
 <%= render 'store_header' %>
 
+<div id="content" class="span12">
+  
+  	
+  <% if current_user.purchased_full_quizzes.count == 0 %>
+	<%= render "full_quiz_pack_selection"%>
+  <% end %>
+	
+  <%= render "timed_quiz_buy_extra"%>
+  
+  <% if current_user.purchased_full_quizzes.count != 0 %>
+	<div class="span3">
+    <div class="metro pull-right">
+      <%= link_to(show_cart_path, :class => "tile app bg-color-green") do %>
+         <div class="image-wrapper">
+          <span class="icon icon-cart"></span>
+        </div>
+        <div class="app-label">Cart</div>
+        <div class="app-count"><%= @cart.cart_items.count %></div>
+      <% end %>
+    </div>
+  	</div>
+  	<% end %>
+  	
+</div> 
 
-<% if current_user.purchased_full_quizzes.count == 0 %>
-	<div id="content"> 
-		<%= render "full_quiz_pack_selection"%>
-	</div>
-<% else %>
-	<%= render "timed_quiz_buy_extra"%>
-<% end %>  
+	 

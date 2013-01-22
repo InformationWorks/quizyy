@@ -1,77 +1,85 @@
-<div id="full-test-pack-selection">
-      <header class="title">Select Your Pack</header>
-      <div class="span12">
-        <div class="row">
-          <div class="span3 pack-tile light-grey">
-          	<%= form_for @package_1, :url => add_package_to_user_path(@package_1) do |f| %>
-            <h2><%= @package_1.name %></h2>
-            <hr>
-            <p><strong><%= @package_1.quizzes.count %></strong> full length tests</p>
-            <p><strong><%= @package_1.quizzes.count * 4 %></strong> sections</p>
-            <p><strong><%= @package_1.quizzes.count * 80 %></strong> questions</p>
-            <div class="prize">
-              <hr>
-              <div class="actions hide" style="float:left">
-               <%= f.submit "Buy", :class => 'btn buy-btn' %>
-              </div>
-                <p class="lead">&#x20b9; <%= @package_1.price %></p>
-              </div>
-              <% end %>
+  <div class="span12">
+  
+  <div id="full-test-pack-selection">
+  
+  <section class="category-section first">
+	<h2>Full-length packages</h2>
+  </section>
+  
+  <br />
+  <hr>
+  <br />
+    <section class="category-section first">
+      <div class="span4 pack-tile light-grey">
+      	<%= form_for @package_1, :url => add_package_to_user_path(@package_1) do |f| %>
+        <h2><%= @package_1.name %></h2>
+        <hr>
+        <p><strong><%= @package_1.quizzes.count %></strong> full length tests</p>
+        <p><strong><%= @package_1.quizzes.count * 4 %></strong> sections</p>
+        <p><strong><%= @package_1.quizzes.count * 80 %></strong> questions</p>
+        <div class="prize">
+          <hr>
+          <div class="actions hide" style="float:left">
+           <%= f.submit "Buy", :class => 'btn buy-btn' %>
           </div>
-          <div class="span4 pack-tile light-grey blue-border">
-            <%= form_for @package_2, :url => add_package_to_user_path(@package_2) do |f| %>
-            <h2><%= @package_2.name %></h2>
-            <hr>
-            <p><strong><%= @package_2.quizzes.count %></strong> full length tests</p>
-            <p><strong><%= @package_2.quizzes.count * 4 %></strong> sections</p>
-            <p><strong><%= @package_2.quizzes.count * 80 %></strong> questions</p>
-            <div class="prize">
-              <hr>
-              <div class="actions hide" style="float:left">
-               <%= f.submit "Buy", :class => 'btn buy-btn' %>
-              </div>
-              <p class="lead">&#x20b9; <%= @package_2.price %></p>
-            </div>
-            <% end %>
+            <p class="lead">&#x20b9; <%= @package_1.price %></p>
           </div>
-          <div class="span4 pack-tile ">
-            <%= form_for @package_3, :url => add_package_to_user_path(@package_3) do |f| %>
-            <h2><%= @package_3.name %></h2>
-            <hr class="blue">
-            <p><strong><%= @package_3.quizzes.count %></strong> full length tests</p>
-            <p><strong><%= @package_3.quizzes.count * 4 %></strong> sections</p>
-            <p><strong><%= @package_3.quizzes.count * 80 %></strong> questions</p>
-            <div class="prize">
-              <hr class="blue">
-              <div class="actions hide" style="float:left">
-               <%= f.submit "Buy", :class => 'btn buy-btn' %>
-              </div>
-              <p class="lead">&#x20b9; <%= @package_3.price %></p>
-            </div>
-            <% end %>
-          </div>
-          <div class="span2">
-            <div class="metro pull-right">
-            <%= link_to(show_cart_path, :class => "tile app bg-color-green") do %>
-                 <div class="image-wrapper">
-                  <span class="icon icon-cart"></span>
-                </div>
-                <div class="app-label">Cart</div>
-                <div class="app-count"><%= @cart.cart_items.count %></div>
-			<% end %>
-            </div>
-          </div>
-        </div>
+          <% end %>
       </div>
+      <div class="span4 pack-tile light-grey blue-border">
+        <%= form_for @package_2, :url => add_package_to_user_path(@package_2) do |f| %>
+        <h2><%= @package_2.name %></h2>
+        <hr>
+        <p><strong><%= @package_2.quizzes.count %></strong> full length tests</p>
+        <p><strong><%= @package_2.quizzes.count * 4 %></strong> sections</p>
+        <p><strong><%= @package_2.quizzes.count * 80 %></strong> questions</p>
+        <div class="prize">
+          <hr>
+          <div class="actions hide" style="float:left">
+           <%= f.submit "Buy", :class => 'btn buy-btn' %>
+          </div>
+          <p class="lead">&#x20b9; <%= @package_2.price %></p>
+        </div>
+        <% end %>
+      </div>
+      <div class="span4 pack-tile ">
+        <%= form_for @package_3, :url => add_package_to_user_path(@package_3) do |f| %>
+        <h2><%= @package_3.name %></h2>
+        <hr class="blue">
+        <p><strong><%= @package_3.quizzes.count %></strong> full length tests</p>
+        <p><strong><%= @package_3.quizzes.count * 4 %></strong> sections</p>
+        <p><strong><%= @package_3.quizzes.count * 80 %></strong> questions</p>
+        <div class="prize">
+          <hr class="blue">
+          <div class="actions hide" style="float:left">
+           <%= f.submit "Buy", :class => 'btn buy-btn' %>
+          </div>
+          <p class="lead">&#x20b9; <%= @package_3.price %></p>
+        </div>
+        <% end %>
+      </div>
+    </section>
+    <div class="span3">
+    <div class="metro pull-right">
+      <%= link_to(show_cart_path, :class => "tile app bg-color-green") do %>
+         <div class="image-wrapper">
+          <span class="icon icon-cart"></span>
+        </div>
+        <div class="app-label">Cart</div>
+        <div class="app-count"><%= @cart.cart_items.count %></div>
+      <% end %>
     </div>
+  	</div>
+</div>
+</div>
     
-		<script>
-            $('.pack-tile').on({
-                mouseenter:function () {
-                    $(this).find('.actions').show();
-                },
-                mouseleave:function () {
-                    $(this).find('.actions').hide();
-                }
-            });
-        </script>
+<script>
+    $('.pack-tile').on({
+        mouseenter:function () {
+            $(this).find('.actions').show();
+        },
+        mouseleave:function () {
+            $(this).find('.actions').hide();
+        }
+    });
+</script>
