@@ -3,4 +3,6 @@ class SectionType < ActiveRecord::Base
   
   validates :name,:instruction, :presence => true
   validates :name, :uniqueness => true
+  
+  has_many :categories
 end

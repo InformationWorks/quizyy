@@ -46,16 +46,24 @@ student2_user.save!
 
 User.update_all ["confirmed_at = ?", Time.now]
 
+# Generate SectionTypes.  
+["Verbal", "Quant"].each do | section_type_name |
+  SectionType.find_or_create_by_name_and_instruction(section_type_name,"Total Questions: 20 & Total Time: 30 minutes")
+end
+
+verbal_section_type = SectionType.find_by_name("Verbal")
+quant_section_type = SectionType.find_by_name("Quant")
+
 # Generate Categories.
-[ { :code => "RC", :name => "Reading Comprehension"}, 
-  { :code => "TC", :name => "Text Completion"},
-  { :code => "SE", :name => "Sentence Equivalence"},
-  { :code => "QC", :name => "Quantitative Comparison"},
-  { :code => "MCQ", :name => "Multiple choice"},
-  { :code => "NE", :name => "Numeric Entry"},
-  { :code => "DI-MCQ", :name => "Data Interpretation-Multiple choice"},
-  { :code => "DI-NE", :name => "Data Interpretation-Numeric Entry"},].each do |category|
-  Category.find_or_create_by_code_and_name(category[:code],category[:name])
+[ { :code => "RC", :name => "Reading Comprehension", :section_type_id => verbal_section_type.id}, 
+  { :code => "TC", :name => "Text Completion", :section_type_id => verbal_section_type.id},
+  { :code => "SE", :name => "Sentence Equivalence", :section_type_id => verbal_section_type.id},
+  { :code => "QC", :name => "Quantitative Comparison", :section_type_id => quant_section_type.id},
+  { :code => "MCQ", :name => "Multiple choice", :section_type_id => quant_section_type.id},
+  { :code => "NE", :name => "Numeric Entry", :section_type_id => quant_section_type.id},
+  { :code => "DI-MCQ", :name => "Data Interpretation-Multiple choice", :section_type_id => quant_section_type.id},
+  { :code => "DI-NE", :name => "Data Interpretation-Numeric Entry", :section_type_id => quant_section_type.id}].each do |category|
+  Category.find_or_create_by_code_and_name_and_section_type_id(category[:code],category[:name],category[:section_type_id])
 end
 
 # Generate Topics.
@@ -119,11 +127,6 @@ end
 # Generate QuitTypes.
 ["FullQuiz", "CategoryQuiz", "TopicQuiz"].each do | quiz_type_name |
   QuizType.find_or_create_by_name(quiz_type_name)
-end
-
-# Generate SectionTypes.  
-["Verbal", "Quant"].each do | section_type_name |
-  SectionType.find_or_create_by_name_and_instruction(section_type_name,"Total Questions: 20 & Total Time: 30 minutes")
 end
   
 full_quiz_type_id = QuizType.find_by_name("FullQuiz").id
