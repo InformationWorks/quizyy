@@ -34,7 +34,7 @@ GremastersWeb::Application.routes.draw do
   # Admin routes.
   get "admins/home"
 
-  resources :progress_report, :only=>[:index,:show] do
+  resources :reports, :only=>[:index,:show] do
   end
    # Package routes.
   resources :packages do
