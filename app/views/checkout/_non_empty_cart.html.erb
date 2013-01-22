@@ -42,6 +42,9 @@
 			    		<td>
 				    		<%= cart_item.package.name %>
 				    		<span class="label label-success">Package</span>
+				    		<br />
+				    		<%= link_to( "Delete"  , cart_item_path(:id => cart_item.id,:back_controller => "checkout",:back_action => "show_cart") ,
+	  						:method => "delete") %>
 				    	</td>
 				    	<td style="text-align: right">
 				    		<%= "\u20B9 " + cart_item.package.price.to_s %>

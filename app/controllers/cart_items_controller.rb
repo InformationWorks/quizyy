@@ -26,7 +26,8 @@ class CartItemsController < ApplicationController
       cart_item = @cart.cart_items.where(:package_id => package.id).first
       
       if cart_item == nil
-        @cart.cart_items.create(:package_id => package.id)  
+        CartItem.delete_all(["cart_id = ? AND (package_id IS NOT NULL)", @cart.id])
+        @cart.cart_items.create(:package_id => package.id)
       else
         # If already exists, save to modify updated_at.
         cart_item.save!
