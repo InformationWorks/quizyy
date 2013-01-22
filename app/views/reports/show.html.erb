@@ -6,9 +6,9 @@
         function drawChart() {
             var sectionData = google.visualization.arrayToDataTable([
                 ['Section', 'Your score', 'Highest score yet'],
-                <% @full_report[:section_report].map do |key,value| %>
+                <% @full_report['section_report'].each do |key,value| %>
                 <% percent = ((value[:correct]*100)/20) %>
-                ['<%=value[:section_name]%>',<%= percent %>,90]<%= "," unless key == @full_report[:section_report].keys.last %>
+                ['<%=value[:section_name]%>',<%= percent %>,90]<%= "," unless key == @full_report['section_report'].keys.last %>
                 <% end %>
             ]);
 
@@ -25,7 +25,7 @@
 <% end %>
 <div id="quiz_result">
   <div class="span12">
-    <h1>Test Results - <%= @full_report[:total_score][:correct]%>/<%=@full_report[:total_score][:total]%></h1>
+    <h1>Test Results - <%= @full_report['total_score'][:correct]%>/<%=@full_report['total_score'][:total]%></h1>
     <hr>
     <div class="row-fluid">
       <h2>Quiz Section</h2>
@@ -33,7 +33,7 @@
       <div class="span4">
         <table class="table">
           <tbody>
-          <% @full_report[:section_report].each do |key,value| %>
+          <% @full_report['section_report'].each do |key,value| %>
               <tr>
                 <td><h3><%=value[:section_name]%></h3></td>
                 <td><p><%= value[:correct] %> / <%=  value[:total] %></p> </td>
@@ -50,7 +50,7 @@
       <hr>
       <table class="table">
         <tbody>
-        <% @full_report[:type_report].each do |name,value| %>
+        <% @full_report['type_report'].each do |name,value| %>
             <tr>
               <td><h3><%= name  %></h3></td>
               <td><p><%= value %></p></td>

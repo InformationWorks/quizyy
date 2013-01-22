@@ -10,6 +10,9 @@ module Api
       def update
         @attempt = Attempt.find(params[:id])
         if @attempt.update_attributes(params[:attempt].except(:current_time))
+          if params[:attempt][:completed]
+            @attempt.calculate_score
+          end
           respond_with @attempt
         end
       end
