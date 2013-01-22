@@ -48,6 +48,6 @@ class Attempt < ActiveRecord::Base
   end
 
   def get_with_highest_score
-    attempt_with_highest_score = Attempt.joins(:quiz).where('quizzes.quiz_type_id=? and attempts.quiz_id=?',self.quiz.quiz_type_id,self.quiz_id).order('score  DESC').first()
+    attempt_with_highest_score = Attempt.joins(:quiz).where('quizzes.quiz_type_id=? and attempts.quiz_id=? and score IS NOT NULL',self.quiz.quiz_type_id,self.quiz_id).order('score  DESC').first()
   end
 end
