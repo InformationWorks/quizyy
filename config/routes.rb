@@ -1,5 +1,9 @@
 GremastersWeb::Application.routes.draw do
 
+  get "progress_report/index"
+
+  get "progress_report/show"
+
   get "transactions/index"
 
   ### API routes go here.
@@ -30,7 +34,9 @@ GremastersWeb::Application.routes.draw do
   # Admin routes.
   get "admins/home"
 
-  # Package routes.
+  resources :reports, :only=>[:index,:show] do
+  end
+   # Package routes.
   resources :packages do
     member do
        match 'destroy_quiz_from_package/:quiz_id', to: 'packages#destroy_quiz_from_package', via: [:delete], as: 'destroy_quiz_from'

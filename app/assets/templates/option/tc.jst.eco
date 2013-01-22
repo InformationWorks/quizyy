@@ -1,16 +1,23 @@
 <form>
-    <% first = @options[0..2] %>
-    <% if @options.length is 6: %>
+    <% if @options.length <= 5: %>
+        <% first = @options %>
+    <% else: %>
+        <% first = @options[0..2] %>
+    <% end %>
+    <% if @options.length >= 6: %>
         <% second = @options[3..5] %>
     <% end %>
     <% if @options.length is 9: %>
        <% third = @options[6..8] %>
     <% end %>
-
+    <% if first.length is 3: %>
     <div class="control-group pull-left" style="margin-right: 10px;">
         <div class="controls">
             <label>(i)</label>
-            <select name="option1" multiple="multiple">
+    <% else: %>
+    <div class="control-group align-center">
+    <% end %>
+            <select name="option1" multiple="multiple" <% if first.length is 5: %> style="height: 130px;" <%end%> >
                 <% for option in first: %>
                     <% if @attempt_details.length > 0: %>
                         <% _.each @attempt_details.models, (attempt) -> %>

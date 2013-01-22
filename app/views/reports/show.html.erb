@@ -1,0 +1,64 @@
+<% content_for :head do %>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script> \
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var sectionData = google.visualization.arrayToDataTable([
+                ['Section', 'Your score', 'Highest score yet'],
+                <% @full_report['section_report'].each do |key,value| %>
+                <% percent = ((value[:correct]*100)/value[:total]) %>
+                <% highest_percent = @full_report[:highest_attempt]['section_report'][key.to_s.to_sym][:correct] * 100 / @full_report[:highest_attempt]['section_report'][key][:total]%>
+                ['<%=value[:section_name]%>',<%= percent %>,<%=highest_percent%>]<%= "," unless key == @full_report['section_report'].keys.last %>
+                <% end %>
+            ]);
+
+            var options = {
+                colors: ['#2f87ed','#d3d3d3'],
+                hAxis:  {maxValue:100,minValue:0}
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+            chart.draw(sectionData, options);
+        }
+    </script>
+
+<% end %>
+<div id="quiz_result">
+  <div class="span12">
+    <h1>Test Results - <%= @full_report['total_score'][:correct]%>/<%=@full_report['total_score'][:total]%></h1>
+    <hr>
+    <div class="row-fluid">
+      <h2>Quiz Section</h2>
+      <hr>
+      <div class="span4">
+        <table class="table">
+          <tbody>
+          <% @full_report['section_report'].each do |key,value| %>
+              <tr>
+                <td><h3><%=value[:section_name]%></h3></td>
+                <td><p><%= value[:correct] %> / <%=  value[:total] %></p> </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div id="chart_div" class="span7" style="height: 200px;"></div>
+    </div>
+    <div class="row-fluid">
+      <hr>
+      <h2>Question Types</h2>
+      <hr>
+      <table class="table">
+        <tbody>
+        <% @full_report['type_report'].each do |name,value| %>
+            <tr>
+              <td><h3><%= name  %></h3></td>
+              <td><p><%= value %></p></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

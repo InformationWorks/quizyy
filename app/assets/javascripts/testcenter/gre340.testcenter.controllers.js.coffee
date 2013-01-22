@@ -25,7 +25,8 @@
       @loadingView = new @Views.LoadingView()
     start:() ->
       console.log 'start question controller called'
-      @attempt.fetch()
+      @attempt.fetch
+        async: false
       @isStarted = true
     showLoading:() ->
       Gre340.TestCenter.Layout.layout.loading.show(@loadingView)
@@ -62,6 +63,7 @@
       $('#no-internet-error').modal('hide')
     submitQuiz:()->
       Gre340.vent.trigger("submit:current:attempt")
+      window.location.href = '/reports/'+@attempt.get('quiz_id')
     showQuestion:(question)->
       @showLoading()
       if @checkPrerequisite()
@@ -135,9 +137,10 @@
           else
             @currentSection = section
             @sectionNumber = section.get('sequence_no')
+            @currentQuestionCollection = section.get('questions')
             #if we have recived a questionNumber than the user should see a question else we show section start information
             if questionNumber?
-              @currentQuestionCollection = section.get('questions')
+              @currentQuestion = @currentQuestionCollection.where(sequence_no: parseInt(questionNumber))[0]
               Gre340.Routing.showRoute('test_center','section',@sectionNumber,'question',questionNumber)
               @showQuestion(@currentQuestion)   
             else
