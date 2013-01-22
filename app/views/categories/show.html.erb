@@ -36,7 +36,7 @@
 				<div class="control-group">
 					<label class="control-label" for="input">Section Type</label>
 					<div class="controls">
-						<p><%= @category.section_type.name %></p>
+						<p><%= @category.section_type ? @category.section_type.name : "N/A" %></p>
 					</div>
 				</div>
 				

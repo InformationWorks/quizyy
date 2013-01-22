@@ -30,7 +30,7 @@
 						  <tr>
 						    <td><%= category.code %></td>
 						    <td><%= category.name %></td>
-						    <td><%= category.section_type.name %></td>
+						    <td><%= category.section_type ? category.section_type.name : "N/A" %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
 						    	<%= link_to(category, :class => "btn") do %>
