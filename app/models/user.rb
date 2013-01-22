@@ -126,7 +126,7 @@ class User < ActiveRecord::Base
   # Return true if user has the quiz in his cart.
   def has_quiz_in_cart?(quiz_id)
     
-    if get_cart_item_id(quiz_id) == -1
+    if get_cart_item_id_for_quiz(quiz_id) == -1
       return false
     else
       return true
@@ -136,7 +136,7 @@ class User < ActiveRecord::Base
   
   # Return cart_item id for a user's quiz.
   # -1 if cart_item does not exist for a quiz.
-  def get_cart_item_id(quiz_id)
+  def get_cart_item_id_for_quiz(quiz_id)
     cart = Cart.where(:user_id => self.id).first
      
     if cart == nil
@@ -144,6 +144,26 @@ class User < ActiveRecord::Base
     else
       
       cart_item = cart.cart_items.where(:quiz_id => quiz_id).first 
+      
+      if cart_item == nil
+        return -1
+      else
+        return cart_item.id
+      end
+      
+    end
+  end
+  
+  # Return cart_item id for a user's package.
+  # -1 if cart_item does not exist for a package.
+  def get_cart_item_id_for_package(package_id)
+    cart = Cart.where(:user_id => self.id).first
+     
+    if cart == nil
+      return -1
+    else
+      
+      cart_item = cart.cart_items.where(:package_id => package_id).first 
       
       if cart_item == nil
         return -1

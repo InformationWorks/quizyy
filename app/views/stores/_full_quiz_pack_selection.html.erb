@@ -18,10 +18,19 @@
         <p><strong><%= @package_1.quizzes.count * 80 %></strong> questions</p>
         <div class="prize">
           <hr>
-          <div class="actions hide" style="float:left">
-           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_1.id,:back_controller => "checkout",:back_action => "show_cart") ,
-					:method => "post", :disable_with => 'adding to cart...' ) %>
-          </div>
+          
+          	<% cart_item_id = current_user.get_cart_item_id_for_package(@package_1.id) %>  	
+  			<% if cart_item_id != -1 %>
+      		<div>
+		    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
+					:method => "delete", :disable_with => 'removing from cart...' ) %>
+      		</div>
+      		<% else %>
+      			<div class="actions hide" style="float:left">
+		           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_1.id,:back_controller => "checkout",:back_action => "show_cart") ,
+							:method => "post", :disable_with => 'adding to cart...' ) %>
+		         </div>
+      		<% end %>
           
             <p class="lead">&#x20b9; <%= @package_1.price %></p>
           </div>
@@ -34,10 +43,20 @@
         <p><strong><%= @package_2.quizzes.count * 80 %></strong> questions</p>
         <div class="prize">
           <hr>
-          <div class="actions hide" style="float:left">
-           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_2.id,:back_controller => "checkout",:back_action => "show_cart") ,
-					:method => "post", :disable_with => 'adding to cart...' ) %>
-          </div>
+          
+            <% cart_item_id = current_user.get_cart_item_id_for_package(@package_2.id) %>  	
+  			<% if cart_item_id != -1 %>
+      		<div>
+		    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
+					:method => "delete", :disable_with => 'removing from cart...' ) %>
+      		</div>
+      		<% else %>
+      			<div class="actions hide" style="float:left">
+		           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_2.id,:back_controller => "checkout",:back_action => "show_cart") ,
+							:method => "post", :disable_with => 'adding to cart...' ) %>
+		         </div>
+      		<% end %>
+          
           <p class="lead">&#x20b9; <%= @package_2.price %></p>
         </div>
       </div>
@@ -49,10 +68,20 @@
         <p><strong><%= @package_3.quizzes.count * 80 %></strong> questions</p>
         <div class="prize">
           <hr class="blue">
-          <div class="actions hide" style="float:left">
-           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_2.id,:back_controller => "checkout",:back_action => "show_cart") ,
-					:method => "post", :disable_with => 'adding to cart...' ) %>
-          </div>
+          	
+          	<% cart_item_id = current_user.get_cart_item_id_for_package(@package_3.id) %>  	
+  			<% if cart_item_id != -1 %>
+      		<div>
+		    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
+					:method => "delete", :disable_with => 'removing from cart...' ) %>
+      		</div>
+      		<% else %>
+      			<div class="actions hide" style="float:left">
+		           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_3.id,:back_controller => "checkout",:back_action => "show_cart") ,
+							:method => "post", :disable_with => 'adding to cart...' ) %>
+		         </div>
+      		<% end %>
+      		
           <p class="lead">&#x20b9; <%= @package_3.price %></p>
         </div>
       </div>

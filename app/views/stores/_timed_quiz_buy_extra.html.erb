@@ -25,7 +25,7 @@
   						:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
           	</div>
             
-            <% cart_item_id = current_user.get_cart_item_id(quiz.id) %>  	
+            <% cart_item_id = current_user.get_cart_item_id_for_quiz(quiz.id) %>  	
           	<% if cart_item_id != -1 %>
           		<div>
   			    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
@@ -75,7 +75,7 @@
 					:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id) ) %>
       	</div>
         
-        <% cart_item_id = current_user.get_cart_item_id(quiz.id) %>  	
+        <% cart_item_id = current_user.get_cart_item_id_for_quiz(quiz.id) %>  	
       	<% if cart_item_id != -1 %>
       		<div>
 		    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
