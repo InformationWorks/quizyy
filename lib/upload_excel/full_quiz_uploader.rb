@@ -444,7 +444,11 @@ module UploadExcel
         end
         
       elsif question.type == Type.find_by_code("V-SIP")
-        # No options
+        # Option with 0 based answer sentence index.
+        option = row[7].to_s.strip
+        option_int = option.to_i - 1
+        options << (Option.new :content => (option == "" ? nil : option_int),:correct => true,:sequence_no => 1)
+        
       elsif question.type == Type.find_by_code("V-TC-1")
         
         option = row[8].to_s.strip
