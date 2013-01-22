@@ -8,8 +8,21 @@ class QuizUser < ActiveRecord::Base
   # :paused => Quiz started but not completed.
   # :completed => Quiz completed.
   def status
-    # TODO: Insert code here for detecting the status of a quiz.
-    return :new
+    attempts = Attempt.where(:quiz_id => self.quiz_id,:user_id => self.user_id)
+    
+    if attempts.count == 0
+      return :new
+    else
+      # iterate through attempts and return :compelted if
+      # any attempt with completed => true is encountered.
+      # else return :paused
+      attempts.each do |attempt|
+        if attempt.completed
+          return :completed
+        end
+      end
+      return :paused
+    end
   end
   
 end
