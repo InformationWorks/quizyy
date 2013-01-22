@@ -7,8 +7,9 @@
             var sectionData = google.visualization.arrayToDataTable([
                 ['Section', 'Your score', 'Highest score yet'],
                 <% @full_report['section_report'].each do |key,value| %>
-                <% percent = ((value[:correct]*100)/20) %>
-                ['<%=value[:section_name]%>',<%= percent %>,90]<%= "," unless key == @full_report['section_report'].keys.last %>
+                <% percent = ((value[:correct]*100)/value[:total]) %>
+                <% highest_percent = @full_report[:highest_attempt]['section_report'][key.to_s.to_sym][:correct] * 100 / @full_report[:highest_attempt]['section_report'][key][:total]%>
+                ['<%=value[:section_name]%>',<%= percent %>,<%=highest_percent%>]<%= "," unless key == @full_report['section_report'].keys.last %>
                 <% end %>
             ]);
 

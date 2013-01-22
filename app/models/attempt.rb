@@ -19,7 +19,7 @@ class Attempt < ActiveRecord::Base
     types = Type.all()
     section_report ={}
     type_report = Hash[ types.map{|t| [t.code.to_sym,0]} ]
-    questions_have_no_options = %w('V-SIP','Q-NE-1','Q-NE-2','Q-DI-NE-1','Q-DI-NE-2')
+    questions_have_no_options = %w(V-SIP Q-NE-1 Q-NE-2 Q-DI-NE-1 Q-DI-NE-2)
     total_correct = 0
     total_question = 0
     sections.each do |section|
@@ -35,7 +35,7 @@ class Attempt < ActiveRecord::Base
         if user_answers!="" and correct_answers == user_answers
           correct +=1
           total_correct+=1
-          type_report[question.type.code.to_sym] =+ 1
+          type_report[question.type.code.to_sym] += 1
         end
         total_question += 1
       end
@@ -47,4 +47,7 @@ class Attempt < ActiveRecord::Base
     self
   end
 
+  def get_with_highest_score
+    attempt_with_highest_score = Attempt.joins(:quiz).where('quizzes.quiz_type_id=? and attempts.quiz_id=?',self.quiz.quiz_type_id,self.quiz_id).order('score  DESC').first()
+  end
 end
