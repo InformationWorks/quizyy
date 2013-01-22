@@ -11,7 +11,6 @@
   <br />
     <section class="category-section first">
       <div class="span4 pack-tile light-grey">
-      	<%= form_for @package_1, :url => add_package_to_user_path(@package_1) do |f| %>
         <h2><%= @package_1.name %></h2>
         <hr>
         <p><strong><%= @package_1.quizzes.count %></strong> full length tests</p>
@@ -20,14 +19,14 @@
         <div class="prize">
           <hr>
           <div class="actions hide" style="float:left">
-           <%= f.submit "Buy", :class => 'btn buy-btn' %>
+           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_1.id,:back_controller => "checkout",:back_action => "show_cart") ,
+					:method => "post", :disable_with => 'adding to cart...' ) %>
           </div>
+          
             <p class="lead">&#x20b9; <%= @package_1.price %></p>
           </div>
-          <% end %>
       </div>
       <div class="span4 pack-tile light-grey blue-border">
-        <%= form_for @package_2, :url => add_package_to_user_path(@package_2) do |f| %>
         <h2><%= @package_2.name %></h2>
         <hr>
         <p><strong><%= @package_2.quizzes.count %></strong> full length tests</p>
@@ -36,14 +35,13 @@
         <div class="prize">
           <hr>
           <div class="actions hide" style="float:left">
-           <%= f.submit "Buy", :class => 'btn buy-btn' %>
+           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_2.id,:back_controller => "checkout",:back_action => "show_cart") ,
+					:method => "post", :disable_with => 'adding to cart...' ) %>
           </div>
           <p class="lead">&#x20b9; <%= @package_2.price %></p>
         </div>
-        <% end %>
       </div>
       <div class="span4 pack-tile ">
-        <%= form_for @package_3, :url => add_package_to_user_path(@package_3) do |f| %>
         <h2><%= @package_3.name %></h2>
         <hr class="blue">
         <p><strong><%= @package_3.quizzes.count %></strong> full length tests</p>
@@ -52,11 +50,11 @@
         <div class="prize">
           <hr class="blue">
           <div class="actions hide" style="float:left">
-           <%= f.submit "Buy", :class => 'btn buy-btn' %>
+           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_2.id,:back_controller => "checkout",:back_action => "show_cart") ,
+					:method => "post", :disable_with => 'adding to cart...' ) %>
           </div>
           <p class="lead">&#x20b9; <%= @package_3.price %></p>
         </div>
-        <% end %>
       </div>
     </section>
     <div class="span3">
