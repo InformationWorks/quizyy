@@ -25,7 +25,8 @@
       @loadingView = new @Views.LoadingView()
     start:() ->
       console.log 'start question controller called'
-      @attempt.fetch()
+      @attempt.fetch
+        async: false
       @isStarted = true
     showLoading:() ->
       Gre340.TestCenter.Layout.layout.loading.show(@loadingView)
@@ -62,6 +63,7 @@
       $('#no-internet-error').modal('hide')
     submitQuiz:()->
       Gre340.vent.trigger("submit:current:attempt")
+      window.location.href = '/progress_report/'+@attempt.get('quiz_id')
     showQuestion:(question)->
       @showLoading()
       if @checkPrerequisite()

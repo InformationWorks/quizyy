@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130120201643) do
+ActiveRecord::Schema.define(:version => 20130122191725) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "actor_id"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20130120201643) do
     t.datetime "updated_at",                             :null => false
     t.integer  "current_section_id"
     t.integer  "current_time"
+    t.integer  "score"
   end
 
   add_index "attempts", ["quiz_id"], :name => "index_attempts_on_quiz_id"
@@ -274,8 +275,8 @@ ActiveRecord::Schema.define(:version => 20130120201643) do
     t.integer  "question_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "start"
     t.integer  "end"
+    t.integer  "start"
   end
 
 end

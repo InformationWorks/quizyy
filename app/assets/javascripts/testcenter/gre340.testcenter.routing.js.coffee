@@ -40,8 +40,9 @@ Gre340.module "Routing.TestCenterRouting", (TestCenterRouting, Gre340, Backbone,
 
     showReport:()->
       q = Gre340.TestCenter.Controllers.questionController
+      if !q.isStarted
+        q.start()
       q.submitQuiz()
-      alert 'The test has been submitted.'
     goToAvailableTest: () ->
       @stopAllModules()
       if !Modernizr.mq("screen and (min-width: 1200px)")
