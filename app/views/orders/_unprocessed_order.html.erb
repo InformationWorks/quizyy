@@ -78,7 +78,35 @@
   <div class="span3">
     <div class="metro pull-right">
       
-      <%= form_tag("/post_to_zaakpay", :method => "post") do %>
+      <%= form_tag("/process_payment", :method => "post") do %>
+      
+      	<%= label_tag :pay_by %>
+      
+	      <% if current_user.credits >= total %>
+	      	
+	      	 <div class="control-group">
+		        <div class="controls">
+		            <%= select_tag(:payment_method, options_for_select([ 
+		            				['Available Credits ' + "\u20B9 " + current_user.credits.to_s,0] ,
+									['Credit/Debit Card', 1],
+									['Netbanking', 3]
+									], '0')) %>
+		        </div>
+		     </div>
+	      	
+	      <% else %>
+	      
+	      	<div class="control-group">
+		        <div class="controls">
+		            <%= select_tag(:payment_method, options_for_select([
+		            				['Credit/Debit Card', 1],
+									['Netbanking', 3]
+									], '1')) %>
+		        </div>
+		     </div>
+	      
+	      <% end %>
+      
 		<input type="hidden" name="amount" value="<%= (total * 100).to_i %>" /> 
 		<input type="hidden" name="buyerAddress" value="A/31 Avdhoot Society" /> 
 		<input type="hidden" name="buyerCity" value="bharuch" /> 
@@ -109,8 +137,7 @@
 		<input type="hidden" name="shipToPhoneNumber" value="" /> 
 		<input type="hidden" name="shipToPincode" value="" /> 
 		<input type="hidden" name="shipToState" value="" /> 
-		<input type="hidden" name="txnDate" value="<%= Time.current.strftime("%Y-%m-%d").to_s %>" /> 
-		<input type="hidden" name="txnType" value="2" /> 
+		<input type="hidden" name="txnDate" value="<%= Time.current.strftime("%Y-%m-%d").to_s %>" />
 		<input type="hidden" name="zpPayOption" value="1" />
 		<% if total == 0 %>
 			<%= submit_tag "Add to account", :class => "tile app bg-color-green" %>
