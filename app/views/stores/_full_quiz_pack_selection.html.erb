@@ -52,13 +52,13 @@
           </div>
           <div class="span2">
             <div class="metro pull-right">
-              <a class="tile app bg-color-green" href="#">
+            <%= link_to(show_cart_path, :class => "tile app bg-color-green") do %>
                  <div class="image-wrapper">
                   <span class="icon icon-cart"></span>
                 </div>
                 <div class="app-label">Cart</div>
                 <div class="app-count"><%= @cart.cart_items.count %></div>
-              </a>
+			<% end %>
             </div>
           </div>
         </div>
