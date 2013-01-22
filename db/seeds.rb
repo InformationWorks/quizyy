@@ -44,6 +44,8 @@ student2_user = User.create!(:full_name => 'Student Two', :email => 'student2@gr
 student2_user.roles << student_role
 student2_user.save!
 
+User.update_all ["confirmed_at = ?", Time.now]
+
 # Generate Categories.
 [ { :code => "RC", :name => "Reading Comprehension"}, 
   { :code => "TC", :name => "Text Completion"},
