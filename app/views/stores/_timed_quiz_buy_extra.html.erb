@@ -57,7 +57,7 @@
 <hr>
 <!-- show only three per row -->
 <div class="row">
-  <% category_or_topic.quizzes.where('quizzes.timed = true').order("id ASC").first(3).each do |quiz| %>
+  <% category_or_topic.scoped_timed_quizzes(current_user).order("id ASC").first(3).each do |quiz| %>
   <div class="span2 quiz-tile">
     <img src="http://placehold.it/150x100"/>
     <div class="caption">

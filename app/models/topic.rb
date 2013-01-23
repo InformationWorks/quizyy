@@ -31,4 +31,28 @@ class Topic < ActiveRecord::Base
     end
   }
   
+  def scoped_timed_quizzes(user)
+    if user == nil 
+      self.quizzes.where('quizzes.timed = true AND quizzes.approved = true')
+    elsif user.role?(:super_admin) || user.role?(:admin) 
+      self.quizzes.where('quizzes.timed = true AND quizzes.published = true')
+    elsif user.role?(:publisher)
+      self.quizzes.where('quizzes.timed = true AND quizzes.approved = true')
+    else
+      self.quizzes.where('quizzes.timed = true AND quizzes.approved = true')
+    end
+  end
+  
+  def scoped_practice_quizzes(user)
+    if user == nil 
+      self.quizzes.where('quizzes.timed = false AND quizzes.approved = true')
+    elsif user.role?(:super_admin) || user.role?(:admin) 
+      self.quizzes.where('quizzes.timed = false AND quizzes.published = true')
+    elsif user.role?(:publisher)
+      self.quizzes.where('quizzes.timed = false AND quizzes.approved = true')
+    else
+      self.quizzes.where('quizzes.timed = false AND quizzes.approved = true')
+    end
+  end
+  
 end
