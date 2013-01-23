@@ -7,9 +7,9 @@
             var sectionData = google.visualization.arrayToDataTable([
                 ['Section', 'Your score', 'Highest score yet'],
                 <% @full_report['section_report'].each do |key,value| %>
-                <% percent = ((value['correct']*100)/value['total']) %>
-                <% highest_percent = @full_report[:highest_attempt]['section_report'][key.to_s]['correct'] * 100 / @full_report[:highest_attempt]['section_report'][key]['total']%>
-                ['<%=value['section_name']%>',<%= percent %>,<%=highest_percent%>]<%= "," unless key == @full_report['section_report'].keys.last %>
+                    <% percent = ((value['correct']*100)/value['total']) %>
+                    <% highest_percent = @full_report['highest_attempt']['section_report'][key]['correct'] * 100 / @full_report['highest_attempt']['section_report'][key]['total']%>
+                    ['<%=value['section_name']%>',<%= percent %>,<%=highest_percent%>]<%= "," unless key == @full_report['section_report'].keys.last %>
                 <% end %>
             ]);
 
@@ -26,11 +26,30 @@
 <% end %>
 <div id="quiz_result">
   <div class="span12">
-    <h1>Test Results - <%= @full_report['total_score']['correct']%>/<%=@full_report['total_score']['total']%></h1>
+    <h3>Test Results</h3>
+    <div class="row-fluid">
+    <div class="span12">
+      <div class="row-fluid">
+        <div class="span4">
+          <h1><%= total_scaled_score(@full_report['total_score']['correct'] * 100 /@full_report['total_score']['total'])%> / 340</h1>
+        </div>
+        <div class="span6 align-left">
+          <ul class="inline">
+            <% @full_report['main_section_report'].each do |key,value| %>
+                <li><h3 class="lead"><%=key%></h3></li>
+                <li><h3><%= section_scaled_score(value['correct'] * 100 / value['total'])%> / 170</h3></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+   </div>
+
     <hr>
     <div class="row-fluid">
       <h2>Quiz Section</h2>
       <hr>
+
       <div class="span4">
         <table class="table">
           <tbody>
