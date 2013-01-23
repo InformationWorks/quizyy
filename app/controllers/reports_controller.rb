@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
     #TODO create view for category test report
     if Quiz.find(@quiz_id).quiz_type.name == "FullQuiz"
       @attempt = Attempt.find_by_quiz_id_and_user_id(@quiz_id,current_user.id)
-      @full_report = @attempt[:report].nil? ? @attempt[:report].each{|k,v| @attempt[:report][k] = eval(v)} : @attempt.calculate_score()[:report].each{|k,v| @attempt[:report][k] = eval(v)}
+      @full_report = @attempt[:report].nil? ? @attempt.calculate_score()[:report].each{|k,v| @attempt[:report][k] = eval(v)} : @attempt[:report].each{|k,v| @attempt[:report][k] = eval(v)}
       section_types = SectionType.all()
       categories = Category.all()
       main_section_report = Hash[section_types.map{|t| [t.name, Hash['correct' => 0,'total' =>0 ]]}]
