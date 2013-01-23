@@ -223,7 +223,8 @@ CREATE TABLE categories (
     code character varying(255),
     name character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    section_type_id integer
 );
 
 
@@ -826,8 +827,8 @@ CREATE TABLE visits (
     question_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    "end" integer,
-    start integer
+    start integer,
+    "end" integer
 );
 
 
@@ -1252,6 +1253,13 @@ CREATE INDEX index_carts_on_user_id ON carts USING btree (user_id);
 
 
 --
+-- Name: index_categories_on_section_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_categories_on_section_type_id ON categories USING btree (section_type_id);
+
+
+--
 -- Name: index_options_on_question_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1477,10 +1485,6 @@ INSERT INTO schema_migrations (version) VALUES ('20130109220635');
 
 INSERT INTO schema_migrations (version) VALUES ('20130110172903');
 
-INSERT INTO schema_migrations (version) VALUES ('20130111132359');
-
-INSERT INTO schema_migrations (version) VALUES ('20130111132439');
-
 INSERT INTO schema_migrations (version) VALUES ('20130111164433');
 
 INSERT INTO schema_migrations (version) VALUES ('20130111171611');
@@ -1506,6 +1510,8 @@ INSERT INTO schema_migrations (version) VALUES ('20130115102326');
 INSERT INTO schema_migrations (version) VALUES ('20130119094552');
 
 INSERT INTO schema_migrations (version) VALUES ('20130120201643');
+
+INSERT INTO schema_migrations (version) VALUES ('20130122181334');
 
 INSERT INTO schema_migrations (version) VALUES ('20130122191725');
 

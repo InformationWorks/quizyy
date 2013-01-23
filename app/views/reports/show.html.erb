@@ -7,9 +7,9 @@
             var sectionData = google.visualization.arrayToDataTable([
                 ['Section', 'Your score', 'Highest score yet'],
                 <% @full_report['section_report'].each do |key,value| %>
-                <% percent = ((value[:correct]*100)/value[:total]) %>
-                <% highest_percent = @full_report[:highest_attempt]['section_report'][key.to_s.to_sym][:correct] * 100 / @full_report[:highest_attempt]['section_report'][key][:total]%>
-                ['<%=value[:section_name]%>',<%= percent %>,<%=highest_percent%>]<%= "," unless key == @full_report['section_report'].keys.last %>
+                <% percent = ((value['correct']*100)/value['total']) %>
+                <% highest_percent = @full_report[:highest_attempt]['section_report'][key.to_s]['correct'] * 100 / @full_report[:highest_attempt]['section_report'][key]['total']%>
+                ['<%=value['section_name']%>',<%= percent %>,<%=highest_percent%>]<%= "," unless key == @full_report['section_report'].keys.last %>
                 <% end %>
             ]);
 
@@ -26,7 +26,7 @@
 <% end %>
 <div id="quiz_result">
   <div class="span12">
-    <h1>Test Results - <%= @full_report['total_score'][:correct]%>/<%=@full_report['total_score'][:total]%></h1>
+    <h1>Test Results - <%= @full_report['total_score']['correct']%>/<%=@full_report['total_score']['total']%></h1>
     <hr>
     <div class="row-fluid">
       <h2>Quiz Section</h2>
@@ -36,8 +36,8 @@
           <tbody>
           <% @full_report['section_report'].each do |key,value| %>
               <tr>
-                <td><h3><%=value[:section_name]%></h3></td>
-                <td><p><%= value[:correct] %> / <%=  value[:total] %></p> </td>
+                <td><h3><%=value['section_name']%></h3></td>
+                <td><p><%= value['correct'] %> / <%=  value['total'] %></p> </td>
               </tr>
           <% end %>
           </tbody>

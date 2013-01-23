@@ -18,7 +18,7 @@ class Attempt < ActiveRecord::Base
     sections = Section.with_all_association_data.find_all_by_quiz_id(self.quiz_id)
     types = Type.all()
     section_report ={}
-    type_report = Hash[ types.map{|t| [t.code.to_sym,0]} ]
+    type_report = Hash[ types.map{|t| [t.code,0]} ]
     questions_have_no_options = %w(V-SIP Q-NE-1 Q-NE-2 Q-DI-NE-1 Q-DI-NE-2)
     total_correct = 0
     total_question = 0
@@ -35,13 +35,13 @@ class Attempt < ActiveRecord::Base
         if user_answers!="" and correct_answers == user_answers
           correct +=1
           total_correct+=1
-          type_report[question.type.code.to_sym] += 1
+          type_report[question.type.code] += 1
         end
         total_question += 1
       end
-      section_report[section.id.to_s.to_sym] = {section_name: section.name,section_type: section.section_type.name,correct: correct,total: section.questions.length}
+      section_report[section.id.to_s] = {'section_name' => section.name,'section_type'=> section.section_type.name,'correct'=> correct,'total'=> section.questions.length}
     end
-    self.report = Hash[section_report: section_report,type_report: type_report, total_score: {correct: total_correct,total: total_question}]
+    self.report = Hash['section_report' => section_report, 'type_report'=> type_report, 'total_score'=> {'correct' => total_correct,'total' => total_question}]
     self.score = total_correct*100/total_question
     self.save
     self
