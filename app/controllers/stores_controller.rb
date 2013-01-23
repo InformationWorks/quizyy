@@ -14,29 +14,28 @@ class StoresController < ApplicationController
     
     # Fetch categories & topics that have atleast one quiz.
     # TODO: .where("quizzes.approved = true")
-    @categories = Category.joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true').order('id ASC')
-    @topics = Topic.joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true').order('id ASC')
+    @categories = Category.joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true').order('name ASC')
+    @topics = Topic.joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true').order('name ASC')
     
     # Merge categories & topics in the same list.
-    # TODO: Implement sorting
     @categories_and_topics = []
     @categories_and_topics +=  @categories
     @categories_and_topics +=  @topics
+    @categories_and_topics.sort! { |a,b| a.name.downcase <=> b.name.downcase }
   end
 
   def practice_tests
    
-    # Fetch categories & topics that have atleast one quiz.
+    # Fetch categories & topics that have at-least one quiz.
     # TODO: .where("quizzes.approved = true")
-    @categories = Category.joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0")
-    @topics = Topic.joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0")
+    @categories = Category.joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false').order('name ASC')
+    @topics = Topic.joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false').order('name ASC')
     
     # Merge categories & topics in the same list.
-    # TODO: Implement sorting
     @categories_and_topics = []
     @categories_and_topics +=  @categories
     @categories_and_topics +=  @topics
-    
+    @categories_and_topics.sort! { |a,b| a.name.downcase <=> b.name.downcase }
   end
   
   # Once the user has purchased a package add the quizzes from the 
