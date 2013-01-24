@@ -7,9 +7,9 @@
             var sectionData = google.visualization.arrayToDataTable([
                 ['Section', 'Your score', 'Highest score yet'],
                 <% @full_report['section_report'].each do |key,value| %>
-                <% percent = ((value[:correct]*100)/value[:total]) %>
-                <% highest_percent = @full_report[:highest_attempt]['section_report'][key.to_s.to_sym][:correct] * 100 / @full_report[:highest_attempt]['section_report'][key][:total]%>
-                ['<%=value[:section_name]%>',<%= percent %>,<%=highest_percent%>]<%= "," unless key == @full_report['section_report'].keys.last %>
+                    <% percent = ((value['correct']*100)/value['total']) %>
+                    <% highest_percent = @full_report['highest_attempt']['section_report'][key]['correct'] * 100 / @full_report['highest_attempt']['section_report'][key]['total']%>
+                    ['<%=value['section_name']%>',<%= percent %>,<%=highest_percent%>]<%= "," unless key == @full_report['section_report'].keys.last %>
                 <% end %>
             ]);
 
@@ -26,7 +26,24 @@
 <% end %>
 <div id="quiz_result">
   <div class="span12">
-    <h1>Test Results - <%= @full_report['total_score'][:correct]%>/<%=@full_report['total_score'][:total]%></h1>
+    <h3>Test Results</h3>
+    <div class="row-fluid">
+    <div class="span12">
+      <div class="row-fluid">
+        <div class="span4">
+          <h1><%= total_scaled_score(@full_report['total_score']['correct'] * 100 /@full_report['total_score']['total'])%> / 340</h1>
+        </div>
+        <div class="span6 align-left">
+          <ul class="inline">
+            <% @full_report['main_section_report'].each do |key,value| %>
+                <li><h3 class="lead"><%=key%></h3></li>
+                <li><h3><%= section_scaled_score(value['correct'] * 100 / value['total'])%> / 170</h3></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+   </div>
     <hr>
     <div class="row-fluid">
       <h2>Quiz Section</h2>
@@ -36,8 +53,8 @@
           <tbody>
           <% @full_report['section_report'].each do |key,value| %>
               <tr>
-                <td><h3><%=value[:section_name]%></h3></td>
-                <td><p><%= value[:correct] %> / <%=  value[:total] %></p> </td>
+                <td><h3><%=value['section_name']%></h3></td>
+                <td><p><%= value['correct'] %> / <%=  value['total'] %></p> </td>
               </tr>
           <% end %>
           </tbody>
@@ -49,16 +66,17 @@
       <hr>
       <h2>Question Types</h2>
       <hr>
-      <table class="table">
+      <table class="span6 table">
         <tbody>
-        <% @full_report['type_report'].each do |name,value| %>
+        <% @full_report['category_report'].each do |code,value| %>
             <tr>
-              <td><h3><%= name  %></h3></td>
-              <td><p><%= value %></p></td>
+              <td><h3><%=value['name']%></h3></td>
+              <td><p><%= value['correct'] %> / <%= value['total'] %></p></td>
             </tr>
         <% end %>
         </tbody>
       </table>
+
     </div>
   </div>
 </div>
