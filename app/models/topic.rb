@@ -2,8 +2,9 @@ class Topic < ActiveRecord::Base
   attr_accessible :name
   has_many :quizzes
   
-  validates :name, :presence => true
+  validates :name, :slug, :presence => true
   validates :name, :uniqueness => true
+  before_validation :generate_slug
   
   # Select topics that have at-least 1 timed quiz associated to them.
   scope :with_timed_quiz_for_user, lambda { |user|
@@ -53,6 +54,14 @@ class Topic < ActiveRecord::Base
     else
       self.quizzes.where('quizzes.timed = false AND quizzes.approved = true')
     end
+  end
+  
+  def to_param
+    slug
+  end
+  
+  def generate_slug
+    self.slug = name.parameterize
   end
   
 end

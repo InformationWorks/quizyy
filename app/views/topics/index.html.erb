@@ -19,6 +19,7 @@
 					<thead>
 						<tr>
 							<th>Name</th>
+							<th>Slug</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -27,6 +28,7 @@
 						<% @topics.each do |topic| %>
 						  <tr>
 						    <td><%= topic.name %></td>
+						    <td><%= topic.slug %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
 						    	<%= link_to(topic, :class => "btn") do %>

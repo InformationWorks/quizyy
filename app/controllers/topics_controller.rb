@@ -1,7 +1,8 @@
 class TopicsController < ApplicationController
   
   before_filter :authenticate_user!
-  load_and_authorize_resource
+  before_filter :load_topic, :only => [ :show, :edit, :update, :destroy ]
+  load_and_authorize_resource :find_by => :slug
   
   # GET /topics
   # GET /topics.json
@@ -17,8 +18,6 @@ class TopicsController < ApplicationController
   # GET /topics/1
   # GET /topics/1.json
   def show
-    @topic = Topic.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @topic }
@@ -38,7 +37,6 @@ class TopicsController < ApplicationController
 
   # GET /topics/1/edit
   def edit
-    @topic = Topic.find(params[:id])
   end
 
   # POST /topics
@@ -60,8 +58,6 @@ class TopicsController < ApplicationController
   # PUT /topics/1
   # PUT /topics/1.json
   def update
-    @topic = Topic.find(params[:id])
-
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
         format.html { redirect_to @topic, notice: 'Topic was successfully updated.' }
@@ -76,7 +72,7 @@ class TopicsController < ApplicationController
   # DELETE /topics/1
   # DELETE /topics/1.json
   def destroy
-    @topic = Topic.find(params[:id])
+    
     @topic.destroy
 
     respond_to do |format|
@@ -84,4 +80,11 @@ class TopicsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+  
+  def load_topic
+    @topic = Topic.find_by_slug!(params[:id])
+  end
+  
 end
