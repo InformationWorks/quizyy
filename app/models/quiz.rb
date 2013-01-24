@@ -25,4 +25,16 @@ class Quiz < ActiveRecord::Base
   scope :unpublished, :conditions => { :published => false }
   scope :not_in_account_of_user, lambda { |user| {:conditions => ["id not in (?)", user.quizzes.pluck('quizzes.id')]} }
   
+  def self.scoped_timed_full_quizzes(user)
+    if user == nil 
+      Quiz.full.timed.approved
+    elsif user.role?(:super_admin) || user.role?(:admin) 
+      Quiz.full.timed.published
+    elsif user.role?(:publisher)
+      Quiz.full.timed.published
+    else
+      Quiz.full.timed.approved
+    end
+  end
+  
 end

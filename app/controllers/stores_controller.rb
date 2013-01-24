@@ -9,7 +9,7 @@ class StoresController < ApplicationController
     @package_2 = Package.find_by_position(2)
     @package_3 = Package.find_by_position(3)
     
-    @full_length_quizzes = Quiz.full.timed.not_in_account_of_user(current_user).order('id ASC').first(3)
+    @full_length_quizzes = Quiz.scoped_timed_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC').first(3)
     @full_length_quizzes += current_user.quizzes.full.timed
     
     # Fetch categories & topics that have atleast one quiz.
