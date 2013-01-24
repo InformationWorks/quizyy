@@ -1,7 +1,8 @@
 class CategoriesController < ApplicationController
   
   before_filter :authenticate_user!
-  load_and_authorize_resource
+  before_filter :load_category, :only => [ :show, :edit, :update, :destroy ]
+  load_and_authorize_resource :find_by => :slug
   
   # GET /categories
   # GET /categories.json
@@ -17,8 +18,6 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
-    @category = Category.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @category }
@@ -38,7 +37,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
-    @category = Category.find(params[:id])
+    
   end
 
   # POST /categories
@@ -60,8 +59,6 @@ class CategoriesController < ApplicationController
   # PUT /categories/1
   # PUT /categories/1.json
   def update
-    @category = Category.find(params[:id])
-
     respond_to do |format|
       if @category.update_attributes(params[:category])
         format.html { redirect_to @category, notice: 'Category was successfully updated.' }
@@ -76,7 +73,7 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
-    @category = Category.find(params[:id])
+    
     @category.destroy
 
     respond_to do |format|
@@ -84,4 +81,11 @@ class CategoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+  
+  def load_category
+    @category = Category.find_by_slug!(params[:id])
+  end
+  
 end
