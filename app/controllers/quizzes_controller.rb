@@ -1,7 +1,8 @@
 class QuizzesController < ApplicationController
   
   before_filter :authenticate_user!
-  load_and_authorize_resource
+  before_filter :load_quiz, :only => [ :show, :edit, :update, :destroy ]
+  load_and_authorize_resource :find_by => :slug
   
   include UploadExcel
   
@@ -22,8 +23,6 @@ class QuizzesController < ApplicationController
 
   # GET /quizzes/1
   def show
-    @quiz = Quiz.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
     end
@@ -42,7 +41,6 @@ class QuizzesController < ApplicationController
 
   # GET /quizzes/1/edit
   def edit
-    @quiz = Quiz.find(params[:id])
   end
 
   # POST /quizzes
@@ -69,7 +67,6 @@ class QuizzesController < ApplicationController
   # PUT /quizzes/1
   # PUT /quizzes/1.json
   def update
-    @quiz = Quiz.find(params[:id])
     
     # If quiz type is "FullQuiz" then category_id & topic_id should be nil
     # Step 1: Remove category_id & topic_id from params hash
@@ -96,7 +93,7 @@ class QuizzesController < ApplicationController
   # DELETE /quizzes/1
   # DELETE /quizzes/1.json
   def destroy
-    @quiz = Quiz.find(params[:id])
+    
     @quiz.destroy
 
     respond_to do |format|
@@ -108,7 +105,7 @@ class QuizzesController < ApplicationController
   # Upload full legth test excel
   def upload_full_excel
     
-    quiz = Quiz.find(params[:id])
+    quiz = Quiz.find_by_slug!(params[:id])
     
     full_quiz_uploader = FullQuizUploader.new(getWorkbookFromParams(params),quiz)
     
@@ -134,7 +131,7 @@ class QuizzesController < ApplicationController
   # Upload multiple images associated with the quiz.
   def question_images_upload
     
-    @quiz = Quiz.find(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:quiz_id])
     
     begin
       quiz_question_images = params[:quiz][:quiz_question_images]
@@ -154,7 +151,7 @@ class QuizzesController < ApplicationController
   
   def publish
     
-    @quiz = Quiz.find(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:quiz_id])
     @quiz.published = true
     @quiz.publisher_id = current_user.id
     @quiz.published_at = DateTime.now
@@ -166,7 +163,7 @@ class QuizzesController < ApplicationController
   
   def unpublish
     
-    @quiz = Quiz.find(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:quiz_id])
     @quiz.published = false
     @quiz.publisher_id = current_user.id
     @quiz.published_at = DateTime.now
@@ -178,7 +175,7 @@ class QuizzesController < ApplicationController
   
   def approve
     
-    @quiz = Quiz.find(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:quiz_id])
     @quiz.approved = true
     @quiz.approver_id = current_user.id
     @quiz.approved_at = DateTime.now
@@ -190,7 +187,7 @@ class QuizzesController < ApplicationController
   
   def reject
     
-    @quiz = Quiz.find(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:quiz_id])
     @quiz.published = false
     @quiz.approver_id = current_user.id
     @quiz.approved_at = DateTime.now
@@ -202,7 +199,7 @@ class QuizzesController < ApplicationController
   
   def unapprove
     
-    @quiz = Quiz.find(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:quiz_id])
     @quiz.approved = false
     @quiz.approver_id = current_user.id
     @quiz.approved_at = DateTime.now
@@ -215,7 +212,7 @@ class QuizzesController < ApplicationController
   # Action to delete all the images.
   def question_images_delete_all
     
-    @quiz = Quiz.find(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:quiz_id])
     
     begin
       uploader = QuizQuestionImagesUploader.new
@@ -232,16 +229,20 @@ class QuizzesController < ApplicationController
   
   private
   
-    # Return the workbook object from the uploaded file and
-    # remove the file once the object is retrived.
-    def getWorkbookFromParams(_params)
-      quiz_file = _params[:quiz][:full_quiz_excel]
-      file = FullQuizFileUploader.new
-      file.quiz_id = _params[:id]
-      file.store!(quiz_file)
-      book = Spreadsheet.open Rails.root.join('tmp/uploads').join"#{file.store_path}"
-      file.delete_file
-      return book
-    end
+  # Return the workbook object from the uploaded file and
+  # remove the file once the object is retrived.
+  def getWorkbookFromParams(_params)
+    quiz_file = _params[:quiz][:full_quiz_excel]
+    file = FullQuizFileUploader.new
+    file.quiz_id = _params[:id]
+    file.store!(quiz_file)
+    book = Spreadsheet.open Rails.root.join('tmp/uploads').join"#{file.store_path}"
+    file.delete_file
+    return book
+  end
+  
+  def load_quiz
+    @quiz = Quiz.find_by_slug!(params[:id])
+  end
   
 end
