@@ -131,13 +131,13 @@ class QuizzesController < ApplicationController
   # Upload multiple images associated with the quiz.
   def question_images_upload
     
-    @quiz = Quiz.find_by_slug!(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:id])
     
     begin
       quiz_question_images = params[:quiz][:quiz_question_images]
       quiz_question_images.each do |quiz_question_image|
         file = QuizQuestionImagesUploader.new
-        file.quiz_id = params[:quiz_id]
+        file.quiz_id = @quiz.id
         file.store!(quiz_question_image)
       end
     rescue Exception => e
@@ -151,7 +151,7 @@ class QuizzesController < ApplicationController
   
   def publish
     
-    @quiz = Quiz.find_by_slug!(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:id])
     @quiz.published = true
     @quiz.publisher_id = current_user.id
     @quiz.published_at = DateTime.now
@@ -163,7 +163,7 @@ class QuizzesController < ApplicationController
   
   def unpublish
     
-    @quiz = Quiz.find_by_slug!(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:id])
     @quiz.published = false
     @quiz.publisher_id = current_user.id
     @quiz.published_at = DateTime.now
@@ -175,7 +175,7 @@ class QuizzesController < ApplicationController
   
   def approve
     
-    @quiz = Quiz.find_by_slug!(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:id])
     @quiz.approved = true
     @quiz.approver_id = current_user.id
     @quiz.approved_at = DateTime.now
@@ -187,7 +187,7 @@ class QuizzesController < ApplicationController
   
   def reject
     
-    @quiz = Quiz.find_by_slug!(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:id])
     @quiz.published = false
     @quiz.approver_id = current_user.id
     @quiz.approved_at = DateTime.now
@@ -199,7 +199,7 @@ class QuizzesController < ApplicationController
   
   def unapprove
     
-    @quiz = Quiz.find_by_slug!(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:id])
     @quiz.approved = false
     @quiz.approver_id = current_user.id
     @quiz.approved_at = DateTime.now
@@ -212,11 +212,11 @@ class QuizzesController < ApplicationController
   # Action to delete all the images.
   def question_images_delete_all
     
-    @quiz = Quiz.find_by_slug!(params[:quiz_id])
+    @quiz = Quiz.find_by_slug!(params[:id])
     
     begin
       uploader = QuizQuestionImagesUploader.new
-      uploader.quiz_id = params[:quiz_id]
+      uploader.quiz_id = @quiz.id
       logger.info(uploader.delete_all_images)
     rescue Exception => e
       redirect_to @quiz, notice: "Images could not be deleted."

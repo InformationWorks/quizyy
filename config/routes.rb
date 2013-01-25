@@ -47,6 +47,8 @@ GremastersWeb::Application.routes.draw do
   # Store routes.
   match "timed_tests" => "stores#timed_tests", via: [:get], :as => "timed_tests"
   match "practice_tests" => "stores#practice_tests", via: [:get], :as => "practice_tests"
+  match "timed_tests/:quiz_slug" => "stores#show_timed_test", via: [:get], :as => "show_timed_test"
+  match "practice_tests/:quiz_slug" => "stores#show_practice_test", via: [:get], :as => "show_practice_test"
 
   # Quiz routes.
   # Sections sub-routes
@@ -59,16 +61,16 @@ GremastersWeb::Application.routes.draw do
         resources :options
       end    
     end
-    post 'question_images_upload'
-    post 'question_images_delete_all'
     member do
-       post 'upload_full_excel'
+      post 'question_images_upload'
+      post 'question_images_delete_all'
+      post 'upload_full_excel'
+      post 'publish'
+      post 'unpublish'
+      post 'approve'
+      post 'unapprove'
+      post 'reject'
     end
-    post 'publish'
-    post 'unpublish'
-    post 'approve'
-    post 'unapprove'
-    post 'reject'
   end
 
   resources :section_types

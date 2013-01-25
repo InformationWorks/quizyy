@@ -38,4 +38,12 @@ class StoresController < ApplicationController
     @categories_and_topics.sort! { |a,b| a.name.downcase <=> b.name.downcase }
   end
   
+  def show_timed_test
+    @quiz = Quiz.find_by_slug!(params[:quiz_slug])
+  end
+  
+  def show_practice_test
+    @quiz = Quiz.find_by_slug!(params[:quiz_slug])
+  end
+  
 end
