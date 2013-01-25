@@ -49,12 +49,14 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
+    load_quiz_and_section
+    
     @question = Question.new(params[:question])
-    @question.section_id = params[:section_id]
+    @question.section_id = @section.id
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to [@question.section.quiz,@question.section,@question], notice: 'Question was successfully created.' }
+        format.html { redirect_to quiz_section_question_path(@question.section.quiz,@question.section,@question.sequence_no), notice: 'Question was successfully created.' }
         format.json { render json: [@question.section.quiz,@question.section,@question], status: :created, location: @question }
       else
         format.html { render action: "new" }
@@ -84,12 +86,13 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1.json
   def destroy
     
+    load_quiz_and_section
     load_question
     
     @question.destroy
 
     respond_to do |format|
-      format.html { redirect_to questions_url }
+      format.html { redirect_to quiz_section_path(@quiz,@section), notice: 'Question was successfully deleted.'  }
       format.json { head :no_content }
     end
   end
@@ -106,7 +109,7 @@ class QuestionsController < ApplicationController
   end
   
   def load_question
-    @question = Question.find(params[:id])
+    @question = Question.find_by_sequence_no(params[:id])
   end
   
 end
