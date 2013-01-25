@@ -50,12 +50,14 @@ class OptionsController < ApplicationController
   # POST /options.json
   def create
     
+    load_quiz_section_and_question
+    
     @option = Option.new(params[:option])
-    @option.question_id = params[:question_id]
+    @option.question_id = @question.id
 
     respond_to do |format|
       if @option.save
-        format.html { redirect_to [@option.question.section.quiz,@option.question.section,@option.question], notice: 'Option was successfully created.' }
+        format.html { redirect_to quiz_section_question_path(@quiz,@section,@question.sequence_no), notice: 'Option was successfully created.' }
         format.json { render json: [@option.question.section.quiz,@option.question.section,@option.question,@option], status: :created, location: @option }
       else
         format.html { render action: "new" }
@@ -73,7 +75,7 @@ class OptionsController < ApplicationController
 
     respond_to do |format|
       if @option.update_attributes(params[:option])
-        format.html { redirect_to [@quiz,@section,@question], notice: 'Option was successfully updated.' }
+        format.html { redirect_to quiz_section_question_path(@quiz,@section,@question.sequence_no), notice: 'Option was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -85,29 +87,30 @@ class OptionsController < ApplicationController
   # DELETE /options/1
   # DELETE /options/1.json
   def destroy
-
+  
+    load_quiz_section_and_question
     load_option
 
     @option.destroy
 
     respond_to do |format|
-      format.html { redirect_to options_url }
+      format.html { redirect_to quiz_section_question_path(@quiz,@section,@question.sequence_no), notice: "Option deleted successfully." }
       format.json { head :no_content }
     end
   end
 
   def load_quiz_section_and_question
-    @quiz = Quiz.find params[:quiz_id]
-    @section = Section.find params[:section_id]
-    @question = Question.find params[:question_id]
+    @quiz = Quiz.find_by_slug!(params[:quiz_id])
+    @section = @quiz.sections.find_by_slug!(params[:section_id])
+    @question = @section.questions.find_by_sequence_no(params[:question_id])
   end
 
   def load_options
-    @options = Option.where(:question_id => params[:question_id])
+    @options = @question.options
   end
 
   def load_option
-    @option = Option.find(params[:id])
+    @option = @question.options.find_by_sequence_no(params[:id])
   end
 
 end

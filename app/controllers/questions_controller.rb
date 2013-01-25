@@ -101,15 +101,15 @@ class QuestionsController < ApplicationController
 
   def load_quiz_and_section
     @quiz = Quiz.find_by_slug!(params[:quiz_id])
-    @section = Section.find_by_slug!(params[:section_id])
+    @section = @quiz.sections.find_by_slug!(params[:section_id])
   end
   
   def load_questions
-    @questions = Question.where(:section_id => @section.id)
+    @questions = @section.questions
   end
   
   def load_question
-    @question = Question.find_by_sequence_no(params[:id])
+    @question = @section.questions.find_by_sequence_no(params[:id])
   end
   
 end

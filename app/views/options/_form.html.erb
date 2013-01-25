@@ -6,7 +6,7 @@
 		<header>
 			<h2><%= yield :option_form_title %></h2>
 			<ul class="data-header-actions">
-				<%= link_to(quiz_section_question_path(@quiz,@section,@question),:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				<%= link_to(quiz_section_question_path(@quiz,@section,@question.sequence_no),:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
 				 Cancel
 				<% end %>	
 			</ul>
@@ -15,7 +15,7 @@
 			
 			<!-- Form starts here -->
 			<div class="span11" style="margin-left: 15px;">
-				  <%= form_for([@quiz,@section,@question,@option]) do |f| %>
+				  <%= form_for(@option, :url => quiz_section_question_options_path(@quiz,@section,@question.sequence_no)) do |f| %>
 				  <% if @option.errors.any? %>
 				  
 				  	<div class="alert alert-error">
