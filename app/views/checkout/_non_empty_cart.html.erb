@@ -2,14 +2,14 @@
   	<div class="span8">
 	<section class="category-section first">
     <h2>Shopping Cart</h2>
-    <%= link_to "continue shopping", stores_timed_tests_path, :class => "pull-right" %>
+    <%= link_to "continue shopping",timed_tests_path, :class => "pull-right" %>
     <hr>
     
     <% total = 0.0 %>
     <% if @cart.cart_items.count == 0 %>
     	<!-- show empty cart message -->
     	<h4>Your cart is empty. Get tests from the 
-    		<%= link_to(stores_timed_tests_path) do %>
+    		<%= link_to(timed_tests_path) do %>
     		 Store.
     		<% end %>
     	</h4>
