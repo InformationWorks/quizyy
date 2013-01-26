@@ -143,9 +143,6 @@ GEM
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
-    rack-pjax (0.7.0)
-      nokogiri (~> 1.5)
-      rack (~> 1.3)
     rack-ssl (1.3.2)
       rack
     rack-test (0.6.2)
@@ -250,7 +247,6 @@ DEPENDENCIES
   jquery-turbolinks
   mini_magick
   pg
-  rack-pjax
   rails (= 3.2.6)
   rb-fsevent (= 0.9.1)
   rmagick

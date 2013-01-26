@@ -11,7 +11,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require libs/jquery.pjax
 //= require turbolinks
 //= require jquery.turbolinks
 //= require jquery_ujs
