@@ -39,7 +39,7 @@ class CartItemsController < ApplicationController
     # Go back to the controller => action from which cart item was created.
     flash[:notice] = "#{entity} added to cart successfully."
     redirect_to :controller => params[:back_controller], :action => params[:back_action]
-    
+
   end
    
   def destroy

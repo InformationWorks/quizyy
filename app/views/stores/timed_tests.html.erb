@@ -13,6 +13,7 @@
   <% if current_user.purchased_full_quizzes.count != 0 %>
 	<div class="span3">
     <div class="metro pull-right">
+    <div data-pjax-container>
       <%= link_to(show_cart_path, :class => "tile app bg-color-green") do %>
          <div class="image-wrapper">
           <span class="icon icon-cart"></span>
@@ -20,6 +21,7 @@
         <div class="app-label">Cart</div>
         <div class="app-count"><%= @cart.cart_items.count %></div>
       <% end %>
+    </div>
     </div>
   	</div>
   	<% end %>

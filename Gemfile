@@ -19,6 +19,7 @@ gem 'turbolinks'
 gem 'fog', '~> 1.3.1'
 gem 'jbuilder'
 gem 'activerecord-postgres-hstore'
+gem "rack-pjax"
 
 # Gems used only for assets and not required
 # in production environments by default.

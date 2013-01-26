@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require libs/jquery.pjax
 //= require turbolinks
 //= require jquery.turbolinks
 //= require jquery_ujs
@@ -36,9 +37,9 @@
 //= require ./testcenter/gre340.testcenter.controllers
 //= require tinymce
 //= require jquery-fileupload/basic
-//= require homes
 //= require practice_tests
 //= require libs/jquery.calculator
+//= require_tree .
 
 Backbone.Marionette.Renderer.render = function(template, data){
     if (!JST[template]) throw "Template '" + template + "' not found!";
