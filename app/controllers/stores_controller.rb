@@ -37,31 +37,31 @@ class StoresController < ApplicationController
     @categories_and_topics +=  @topics
     @categories_and_topics.sort! { |a,b| a.name.downcase <=> b.name.downcase }
   end
-  
+
   def add_cart_item
-    
+
     begin
-    
+
       if params[:quiz_id]
         # Add quiz to cart.
         quiz = Quiz.find(params[:quiz_id])
-        
+
         cart_item = @cart.cart_items.where(:quiz_id => quiz.id).first
-        
+
         if cart_item == nil
-          @cart.cart_items.create(:quiz_id => quiz.id)  
+          @cart.cart_items.create(:quiz_id => quiz.id)
         else
           # If already exists, save to modify updated_at.
           cart_item.save!
         end
-        
+
         entity = "Test"
       elsif params[:package_id]
         # Add package to cart.
         package = Package.find(params[:package_id])
-        
+
         cart_item = @cart.cart_items.where(:package_id => package.id).first
-        
+
         if cart_item == nil
           CartItem.delete_all(["cart_id = ? AND (package_id IS NOT NULL)", @cart.id])
           @cart.cart_items.create(:package_id => package.id)
@@ -69,46 +69,46 @@ class StoresController < ApplicationController
           # If already exists, save to modify updated_at.
           cart_item.save!
         end
-        
+
         entity = "Package"
       end
-      
+
       respond_to do |format|
-        format.json { render :json => {:success=>true, :message => "#{entity} added to cart successfully."} }
+        format.json { render :json => {:data=>cart_item,:success=>true, :message => "#{entity} added to cart successfully."} }
       end
-      
+
     rescue Exception => ex
       respond_to do |format|
-       format.json { render :json => {:success=>false, :message => ex.message} }
+       format.json { render :json => {:data=>cart_item,:success=>false, :message => ex.message} }
      end
     end
 
   end
-   
+
   def destroy_cart_item
-    
+
    begin
-    
+
      cart_item = CartItem.find(params[:id])
-      
+
      if cart_item.package_id == nil
        entity = "Test"
      elsif cart_item.quiz_id == nil
        entity = "Package"
      end
-      
+
      cart_item.destroy
-      
+
      respond_to do |format|
-       format.json { render :json => {:success=>true, :message => "#{entity} removed from cart."} }
+       format.json { render :json => {:data=>cart_item,:success=>true, :message => "#{entity} removed from cart."} }
      end
-    
+
    rescue Exception => ex
      respond_to do |format|
-       format.json { render :json => {:success=>false, :message => ex.message} }
+       format.json { render :json => {:data=>cart_item,:success=>false, :message => ex.message} }
      end
    end
-    
+
   end
   
 end

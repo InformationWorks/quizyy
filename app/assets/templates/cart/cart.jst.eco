@@ -1,0 +1,9 @@
+<h3>Shopping Cart</h3>
+<p>Total Quizzes: <%=@count%></p>
+<table class="table">
+    <thead>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<a href="#" class="btn btn-success">Proceed to checkout</a>
