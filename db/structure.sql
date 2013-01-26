@@ -827,8 +827,8 @@ CREATE TABLE visits (
     question_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    start integer,
-    "end" integer
+    "end" integer,
+    start integer
 );
 
 
@@ -1484,6 +1484,10 @@ INSERT INTO schema_migrations (version) VALUES ('20130107191645');
 INSERT INTO schema_migrations (version) VALUES ('20130109220635');
 
 INSERT INTO schema_migrations (version) VALUES ('20130110172903');
+
+INSERT INTO schema_migrations (version) VALUES ('20130111132359');
+
+INSERT INTO schema_migrations (version) VALUES ('20130111132439');
 
 INSERT INTO schema_migrations (version) VALUES ('20130111164433');
 
