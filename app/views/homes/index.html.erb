@@ -95,20 +95,18 @@
       </div>
       <div id="section2" class="metro-section tile-span-2">
         <div class="row">
-          <a class="tile app bg-color-green" href="#">
-            <div class="image-wrapper">
-              <span class="icon icon-cart"></span>
-            </div>
-            <div class="app-label">Store</div>
-            <div class="app-count">12</div>
-          </a>
-          <a class="tile app" href="#">
+          <%= link_to stores_timed_tests_path, :class=>"tile app bg-color-green" do%>
+              <div class="image-wrapper">
+                <span class="icon icon-cart"></span>
+              </div>
+              <div class="app-label">Store</div>
+          <% end %>
+          <%= link_to reports_path, :class=>"tile app" do%>
             <div class="image-wrapper">
               <span class="icon icon-stats-up"></span>
             </div>
             <div class="app-label">Reports</div>
-            <div class="app-count">12</div>
-          </a>
+          <% end %>
         </div>
       </div>
 
