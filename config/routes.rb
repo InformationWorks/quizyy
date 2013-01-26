@@ -47,6 +47,8 @@ GremastersWeb::Application.routes.draw do
   # Store routes.
   get "stores/timed_tests"
   get "stores/practice_tests"
+  match "stores/add_cart_item" => "stores#add_cart_item", via: [:post], :as => "add_cart_item"
+  match "stores/destroy_cart_item/:id" => "stores#destroy_cart_item", via: [:delete], :as => "destroy_cart_item"
 
   # Quiz routes.
   # Sections sub-routes
