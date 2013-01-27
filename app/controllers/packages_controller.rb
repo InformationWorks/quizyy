@@ -54,7 +54,7 @@ class PackagesController < ApplicationController
 
     respond_to do |format|
       if @package.save
-        format.html { redirect_to @package, notice: 'Package was successfully created.' }
+        format.html { redirect_to packages_path, notice: 'Package was successfully created.' }
         format.json { render json: @package, status: :created, location: @package }
       else
         format.html { render action: "new" }
@@ -68,7 +68,7 @@ class PackagesController < ApplicationController
   def update
     respond_to do |format|
       if @package.update_attributes(params[:package])
-        format.html { redirect_to @package, notice: 'Package was successfully updated.' }
+        format.html { redirect_to packages_path, notice: 'Package was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

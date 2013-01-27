@@ -37,7 +37,7 @@
 						    <td><%= package.position.to_s %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
-						    	<%= link_to(package, :class => "btn") do %>
+						    	<%= link_to(package_path(package), :class => "btn") do %>
 						    	  <span class="awe-eye-open"></span>
 						    	<% end %>
 						    	<%= link_to(edit_package_path(package), :class => "btn") do %>

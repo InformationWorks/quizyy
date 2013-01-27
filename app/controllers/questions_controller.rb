@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
   # GET /questions.json
   def index
     
+    load_quiz_and_section
     load_questions
 
     respond_to do |format|
@@ -69,6 +70,7 @@ class QuestionsController < ApplicationController
   # PUT /questions/1.json
   def update
     
+    load_quiz_and_section
     load_question
 
     respond_to do |format|
