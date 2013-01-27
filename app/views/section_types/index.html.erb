@@ -19,7 +19,7 @@
 					<thead>
 						<tr>
 							<th>Name</th>
-							<th>Instruction</th>
+							<th>Slug</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -28,7 +28,7 @@
 						<% @section_types.each do |section_type| %>
 						  <tr>
 						    <td><%= section_type.name %></td>
-						    <td><%= section_type.instruction %></td>
+						    <td><%= section_type.slug %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
 						    	<%= link_to(section_type, :class => "btn") do %>
@@ -37,7 +37,7 @@
 						    	<%= link_to(edit_section_type_path(section_type), :class => "btn") do %>
 						    	  <span class="awe-wrench"></span>
 						    	<% end %>
-						    	<%= link_to(section_type, method: :delete, data: { confirm: 'Are you sure you want to delete this package?' }, :class => "btn") do %>
+						    	<%= link_to(section_type, method: :delete, data: { confirm: 'Are you sure you want to delete this section type?' }, :class => "btn") do %>
 						    	  <span class="awe-remove"></span>
 						    	<% end %>
 						      </div>
