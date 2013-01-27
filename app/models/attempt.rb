@@ -3,7 +3,47 @@ class Attempt < ActiveRecord::Base
   belongs_to :user
   belongs_to :quiz
   attr_accessible :user_id, :quiz_id, :completed, :current_question_id,:current_section_id, :is_current,:current_time
+  scope :all_score_for_user, (
+    lambda do |user_id|
+      includes(:quiz).merge(Quiz.full).where('score IS NOT NULL and attempts.user_id =?',user_id).select(:score) unless user_id.nil?
+    end
+  )
+  scope :all_reports_for_user, (
+    lambda do |user_id|
+      includes(:quiz).merge(Quiz.full).where('score IS NOT NULL and attempts.user_id =?',user_id).select(:report).all() unless user_id.nil?
+    end
+  )
 
+  def self.max_score_for_user(user_id)
+    all_score_for_user(user_id).maximum(:score).to_f
+  end
+
+  def self.avg_score_for_user(user_id)
+    all_score_for_user(user_id).average(:score).to_f
+  end
+
+  def self.section_scores_for_user(user_id)
+    reports = all_reports_for_user(user_id)
+    reports.each do |model|
+      model[:report].each{|k,v| model[:report][k] = eval(v)}
+    end
+    section_scores = reports.inject(Hash[:verbal=>{:avg=>0,:max=>0},:quant=>{:avg=>0,:max=>0}]) do |section_scores,model|
+      @v_score,@v_total,@q_score,@q_total = 0,0,0,0
+
+      model[:report]['section_report'].each do |k,v|
+        @v_score += v['correct'] if v['section_type'] == 'Verbal'
+        @v_total += v['total'] if v['section_type'] == 'Verbal'
+        @q_score += v['correct'] if v['section_type'] == 'Quant'
+        @q_total += v['total'] if v['section_type'] == 'Quant'
+      end
+      section_scores[:verbal][:avg] = (section_scores[:verbal][:avg].to_f+(@v_score.to_f/@v_total.to_f))/2.0
+      section_scores[:quant][:avg] = (section_scores[:quant][:avg].to_f+(@q_score.to_f/@q_total.to_f))/2.0
+      section_scores[:verbal][:max] = section_scores[:verbal][:max].to_f < (@v_score.to_f/@v_total.to_f) ?  (@v_score.to_f/@v_total.to_f) : section_scores[:verbal][:max]
+      section_scores[:quant][:max] = section_scores[:quant][:max].to_f < (@q_score.to_f/@q_total.to_f) ?  (@q_score.to_f/@q_total.to_f) : section_scores[:quant][:max]
+      section_scores
+    end
+    section_scores
+  end
   def set_attempt_as_current
     Attempt.where("user_id = ?",self.user.id).each do |attempt|
       attempt.is_current = false
@@ -43,7 +83,7 @@ class Attempt < ActiveRecord::Base
       section_report[section.id.to_s] = {'section_name' => section.name,'section_type'=> section.section_type.name,'correct'=> correct,'total'=> section.questions.length}
     end
     self.report = Hash['section_report' => section_report, 'type_report'=> type_report, 'total_score'=> {'correct' => total_correct,'total' => total_question}]
-    self.score = total_correct*100/total_question
+    self.score = total_correct.to_f*100/total_question.to_f if total_question>0
     self.save
     self
   end
@@ -51,4 +91,5 @@ class Attempt < ActiveRecord::Base
   def get_with_highest_score
     attempt_with_highest_score = Attempt.joins(:quiz).where('quizzes.quiz_type_id=? and attempts.quiz_id=? and score IS NOT NULL',self.quiz.quiz_type_id,self.quiz_id).order('score  DESC').first()
   end
+
 end

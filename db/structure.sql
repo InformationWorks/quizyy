@@ -126,7 +126,7 @@ CREATE TABLE attempts (
     updated_at timestamp without time zone NOT NULL,
     current_section_id integer,
     "current_time" integer,
-    score integer,
+    score double precision,
     report hstore
 );
 
@@ -1524,3 +1524,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130122195815');
 INSERT INTO schema_migrations (version) VALUES ('20130122200106');
 
 INSERT INTO schema_migrations (version) VALUES ('20130122201245');
+
+INSERT INTO schema_migrations (version) VALUES ('20130127142907');

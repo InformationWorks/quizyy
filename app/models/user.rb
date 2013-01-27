@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  
   delegate :can?, :cannot?, :to => :ability
   
   # Include default devise modules. Others available are:
@@ -85,27 +84,27 @@ class User < ActiveRecord::Base
   end
 
   def verbal_average
-    return 120
+    (Attempt.section_scores_for_user(self.id)[:verbal][:avg].to_f * 170).to_i
   end
   
   def verbal_highest
-    return 130
+    (Attempt.section_scores_for_user(self.id)[:verbal][:max].to_f * 170).to_i
   end
   
   def quant_highest
-    return 150
+    (Attempt.section_scores_for_user(self.id)[:quant][:max].to_f * 170).to_i
   end
  
   def quant_average
-    return 140
+    (Attempt.section_scores_for_user(self.id)[:quant][:avg].to_f * 170).to_i
   end
   
   def overall_average
-    return 320
+    (Attempt.avg_score_for_user(self.id).to_f * 340/100).to_i
   end
   
   def overall_highest
-    return 340
+    (Attempt.max_score_for_user(self.id).to_f * 340/100).to_i
   end
   
   def areas_of_improvement  
