@@ -1,7 +1,8 @@
 class SectionTypesController < ApplicationController
   
   before_filter :authenticate_user!
-  load_and_authorize_resource
+  before_filter :load_section_type, :only => [ :show, :edit, :update, :destroy ]
+  load_and_authorize_resource :find_by => :slug
   
   # GET /section_types
   # GET /section_types.json
@@ -17,8 +18,6 @@ class SectionTypesController < ApplicationController
   # GET /section_types/1
   # GET /section_types/1.json
   def show
-    @section_type = SectionType.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @section_type }
@@ -38,7 +37,6 @@ class SectionTypesController < ApplicationController
 
   # GET /section_types/1/edit
   def edit
-    @section_type = SectionType.find(params[:id])
   end
 
   # POST /section_types
@@ -60,8 +58,6 @@ class SectionTypesController < ApplicationController
   # PUT /section_types/1
   # PUT /section_types/1.json
   def update
-    @section_type = SectionType.find(params[:id])
-
     respond_to do |format|
       if @section_type.update_attributes(params[:section_type])
         format.html { redirect_to @section_type, notice: 'Section type was successfully updated.' }
@@ -76,7 +72,7 @@ class SectionTypesController < ApplicationController
   # DELETE /section_types/1
   # DELETE /section_types/1.json
   def destroy
-    @section_type = SectionType.find(params[:id])
+    
     @section_type.destroy
 
     respond_to do |format|
@@ -84,4 +80,11 @@ class SectionTypesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+  
+  def load_section_type
+    @section_type = SectionType.find_by_slug!(params[:id])
+  end
+  
 end

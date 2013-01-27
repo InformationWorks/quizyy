@@ -45,10 +45,12 @@ GremastersWeb::Application.routes.draw do
   match "packages/:id/add_quiz_to_package" => "packages#add_quiz_to_package", via: [:put], :as => "add_quiz_to_package"
   
   # Store routes.
-  get "stores/timed_tests"
-  get "stores/practice_tests"
+  match "timed_tests" => "stores#timed_tests", via: [:get], :as => "timed_tests"
+  match "practice_tests" => "stores#practice_tests", via: [:get], :as => "practice_tests"
   match "stores/add_cart_item" => "stores#add_cart_item", via: [:post], :as => "add_cart_item"
   match "stores/destroy_cart_item/:id" => "stores#destroy_cart_item", via: [:delete], :as => "destroy_cart_item"
+  match "timed_tests/:quiz_slug" => "stores#show_timed_test", via: [:get], :as => "show_timed_test"
+  match "practice_tests/:quiz_slug" => "stores#show_practice_test", via: [:get], :as => "show_practice_test"
 
   # Quiz routes.
   # Sections sub-routes
@@ -61,16 +63,18 @@ GremastersWeb::Application.routes.draw do
         resources :options
       end    
     end
-    post 'question_images_upload'
-    post 'question_images_delete_all'
     member do
-       post 'upload_full_excel'
+      post 'upload_question_images'
+      post 'delete_question_images'
+      post 'upload_full_excel'
+      post 'upload_verbal_excel'
+      post 'upload_quant_excel'
+      post 'publish'
+      post 'unpublish'
+      post 'approve'
+      post 'unapprove'
+      post 'reject'
     end
-    post 'publish'
-    post 'unpublish'
-    post 'approve'
-    post 'unapprove'
-    post 'reject'
   end
 
   resources :section_types

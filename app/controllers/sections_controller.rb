@@ -1,7 +1,7 @@
 class SectionsController < ApplicationController
   
   before_filter :authenticate_user!
-  load_and_authorize_resource
+  load_and_authorize_resource :find_by => :slug
   
   # GET /sections
   # GET /sections.json
@@ -20,6 +20,7 @@ class SectionsController < ApplicationController
   # GET /sections/1.json
   def show
     
+    load_quiz
     load_section
     
     respond_to do |format|
@@ -57,8 +58,10 @@ class SectionsController < ApplicationController
   # POST /sections.json
   def create
     
+    @quiz = Quiz.find_by_slug!(params[:quiz_id])
+    
     @section = Section.new(params[:section])
-    @section.quiz_id = params[:quiz_id]
+    @section.quiz_id = @quiz.id
     
     respond_to do |format|
       if @section.save
@@ -106,15 +109,15 @@ class SectionsController < ApplicationController
   private
 
   def load_quiz
-    @quiz = Quiz.find params[:quiz_id]
+    @quiz = Quiz.find_by_slug!(params[:quiz_id])
   end
   
   def load_sections
-    @sections = Section.where(:quiz_id => params[:quiz_id])
+    @sections = @quiz.sections
   end
   
   def load_section
-    @section = Section.find(params[:id])
+    @section = @quiz.sections.find_by_slug!(params[:id])
   end
   
 end

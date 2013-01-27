@@ -5,8 +5,10 @@ class Package < ActiveRecord::Base
   attr_accessible :desc, :name, :price, :position
   
   include ActiveModel::Validations
-  validates :name,:position,:desc, :presence => true
+  validates :name,:slug,:position,:desc, :presence => true
   validate :position_cannot_be_repeated
+  validates :name, :uniqueness => true
+  before_validation :generate_slug
   
   has_many :package_quizzes
   has_many :quizzes, :through => :package_quizzes
@@ -28,6 +30,14 @@ class Package < ActiveRecord::Base
       end
     end
     
+  end
+  
+  def to_param
+    slug
+  end
+  
+  def generate_slug
+    self.slug = name.parameterize
   end
   
 end

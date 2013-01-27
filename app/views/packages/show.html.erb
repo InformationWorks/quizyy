@@ -18,7 +18,7 @@
 		<section class="tab-content">
 			
 			<!-- Form starts here -->
-			<div class="span11" style="margin-left: 15px;">
+			<div class="span8" style="margin-left: 15px;">
 				  
 				  	<div class="control-group">
 						<label class="control-label" for="input">Name</label>
@@ -67,7 +67,7 @@
 								    <td><%= link_to quiz.name, quiz_path(quiz) %></td>
 								    <td class="toolbar">
 								      <div class="btn-group">
-								      	<%= link_to(destroy_quiz_from_package_path(@package,quiz), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn") do %>
+								      	<%= link_to(destroy_quiz_from_package_path(@package,quiz.id), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn") do %>
 								      	  <span class="awe-remove"></span>
 								      	<% end %>
 								      </div>

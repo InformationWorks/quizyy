@@ -35,8 +35,8 @@ Gre340.module "Routing", (Routing, Gre340, Backbone, Marionette, $, _) ->
   Router = Backbone.Router.extend(
     routes:
       'homes/index': 'goToAvailableTest'
-      'stores/timed_tests': 'initCart'
-      'stores/practice_tests': 'initCart'
+      'timed_tests': 'initCart'
+      'practice_tests': 'initCart'
       'test_center/error': 'showError'
       'test_center/index?quiz_id=:id': 'showIndex'
       'test_center/section/:sindex/question/:qindex': 'showQuestion'

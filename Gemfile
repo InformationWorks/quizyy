@@ -36,18 +36,12 @@ group :assets do
 end
 
 # Gems required for testing go here.
-# Guard and Spork setup referenced from http://ruby.railstutorial.org/chapters/static-pages#sec-advanced_setup
-group :development, :test do
-  gem 'rspec-rails', '2.11.0'
-  gem 'guard-rspec', '1.2.1'
-  gem 'guard-spork', '1.2.0'
-  gem 'spork', '0.9.2'
-end
-
+# http://railscasts.com/episodes/275-how-i-test?view=asciicast
+gem "rspec-rails", :group => [:test, :development]
 group :test do
-  gem 'capybara', '1.1.2'
-  gem 'rb-fsevent', '0.9.1', :require => false
-  gem 'growl', '1.0.3'
+  gem "factory_girl_rails"
+  gem "capybara"
+  gem "guard-rspec"
 end
 
 # To use ActiveModel has_secure_password
