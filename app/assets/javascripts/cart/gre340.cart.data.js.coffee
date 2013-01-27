@@ -3,7 +3,9 @@ Gre340.module "Cart.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
   Data.Collections = {}
 
   Data.Models.CartItem = Backbone.Model.extend
-    url:'/cart_items'
+    urlRoot:'/cart_items'
+    parse : (response)->
+      JSON.parse(response.data)
     initialize:(options)->
 
   Data.Collections.Cart = Backbone.Collection.extend

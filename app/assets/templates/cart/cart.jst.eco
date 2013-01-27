@@ -1,5 +1,4 @@
 <h3>Shopping Cart</h3>
-<p>Total Quizzes: <%=@count%></p>
 <table class="table">
     <thead>
     </thead>

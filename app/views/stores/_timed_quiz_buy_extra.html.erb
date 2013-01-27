@@ -25,16 +25,13 @@
   						:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id),:class=>'btn btn-primary') %>
                 <% cart_item_id = current_user.get_cart_item_id_for_quiz(quiz.id) %>
           	    <% if cart_item_id != -1 %>
-  			    	<%= link_to( cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
-  						:method => "delete", :disable_with => 'removing from cart...', :disabled => current_user.has_purchased_quiz?(quiz.id),:class=>'btn',:title=>'Remove from Cart', :id=>'remove-item-btn' ) do %>
-                        <span class="icon-remove"></span>
-                    <%end%>
+                    <a href="#" rel="tooltip" class="btn remove-cart-btn" title="Remove from Cart" data-disabled-with="removing.." data-value="<%=quiz.id%>" data-id="<%= cart_item_id %>">
+                      <span class="icon-remove"></span>
+                    </a>
           	    <% else %>
-  			    	<%= link_to( cart_items_path(:quiz_id => quiz.id,:back_controller => "stores",:back_action => "timed_tests") ,
-  						:method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id),:class=>'btn',:title=>'Add to Cart',:id=>'add-item-btn' ) do %>
-                        <span class="icon-plus"></span>
-                    <% end %>
-                    <a href="#" class="btn btn-primary add-cart-btn" data-value="<%=quiz.id%>">add</a>
+                    <a href="#" rel="tooltip" class="btn add-cart-btn" title="Add to Cart" data-disabled-with="adding.." data-value="<%=quiz.id%>">
+                      <span class="icon-plus"></span>
+                    </a>
           	    <% end %>
               </div>
           <% end %>

@@ -2,6 +2,5 @@ Gre340.module "Cart.Controllers", (Controllers, Gre340, Backbone, Marionette, $,
   class CartsController
     constructor:()->
 
-
   Controllers.addInitializer ->
     Controllers.questionController = new CartsController()
