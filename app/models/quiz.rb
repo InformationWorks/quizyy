@@ -8,6 +8,7 @@ class Quiz < ActiveRecord::Base
   before_validation :generate_slug
   
   has_many :sections
+  has_many :questions, :through => :sections
   
   has_many :quiz_users
   has_many :users, :through => :quiz_users

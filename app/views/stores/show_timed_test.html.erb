@@ -1,1 +1,74 @@
-<%= @quiz.name %>
+<div id="content" class="span12">
+  <div class="span8">
+    <section class="category-section first">
+    <h2><%= @quiz.name %></h2>
+    
+    <% if current_user.has_purchased_quiz?(@quiz.id) %>
+        <% status = @quiz.quiz_users.where(:quiz_id => @quiz.id,:user_id => current_user.id).first.status %>
+        <% if status == :new %>
+            <% span_class = "label label-success"  %>
+            <% li_class = "mediumListIconTextItem new"  %>
+            <% command_btn_image = "" %>
+            <% action_text = "Start" %>
+        <% elsif status == :paused %>
+            <% span_class = "label label-warning"  %>
+            <% li_class = "mediumListIconTextItem pause"  %>
+            <% command_btn_image = "" %>
+            <% action_text = "Start" %>
+        <% elsif status == :completed %>
+            <% span_class = "label label-inverse"  %>
+            <% li_class = "mediumListIconTextItem complete"  %>
+            <% command_btn_image = "" %>
+            <% action_text = "Review" %>
+        <% end %>
+        
+        <span class="label label-success"><%= status.to_s %></span>
+        <br />
+        <%= "\u20B9 " + @quiz.price.to_s %>
+        <div class="command-btn pull-right">
+        <button class="win-command">
+          <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
+          <span class="win-label"><%= action_text %></span>
+        </button>
+        </div>
+    <% else %>
+        <%= "\u20B9 " + @quiz.price.to_s %>
+        <a href="stores/cart" style="float: right;height: 55px;width: 100px;padding-top: 35px;color: white;font-size: 25px;" class="btn btn-success" id="">Buy</a>
+    <% end %>
+    
+    <hr>
+    <!-- show only three per row -->
+    <div class="row">
+      <div class="span6 quiz-tile">
+      
+      <i class="icon-tag pull-left"></i>
+      <p style="margin-top: 5px;margin-left: 25px;">
+          <% if @quiz.category_id != nil %>
+            <%= @quiz.category.name %> test
+          <% elsif @quiz.topic_id != nil %>
+            <%= @quiz.topic.name %> test
+          <% else %>
+            Full-length test
+          <% end %>
+      </p>
+        
+      <i class="icon-tag pull-left"></i>
+      <p style="margin-top: 5px;margin-left: 25px;"><%= pluralize(@quiz.questions.count, 'Question') %></p>
+      
+      <i class="icon-tag pull-left"></i>
+      <p style="margin-top: 5px;margin-left: 25px;"><%= pluralize(section_count = @quiz.sections.count, 'Section') %></p>
+      
+      <i class="icon-tag pull-left"></i>
+      <p style="margin-top: 5px;margin-left: 25px;"><%= pluralize(@quiz.sections.verbal.count, 'Verbal Section') %></p>
+      
+      <i class="icon-tag pull-left"></i>
+      <p style="margin-top: 5px;margin-left: 25px;"><%= pluralize(@quiz.sections.quant.count, 'Quant Section') %></p>
+      
+      <i class="icon-tag pull-left"></i>
+      <p style="margin-top: 5px;margin-left: 25px;"><%= pluralize(section_count * 30, 'Minutes') %></p>
+        
+      </div>
+    </div>
+    </section>
+   </div> 
+</div>

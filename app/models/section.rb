@@ -8,6 +8,9 @@ class Section < ActiveRecord::Base
   validates :name, :sequence_no, :quiz_id, :section_type_id , :slug, :presence => true
   before_validation :generate_slug
   
+  scope :verbal, :conditions => { :section_type_id => ( SectionType.find_by_name("Verbal") != nil ? SectionType.find_by_name("Verbal").id : -1 ) }
+  scope :quant, :conditions => { :section_type_id => ( SectionType.find_by_name("Quant") != nil ? SectionType.find_by_name("Quant").id : -1 ) }
+  
   def to_param
     slug
   end
