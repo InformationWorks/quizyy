@@ -28,7 +28,7 @@
         
         <div class="command-btn pull-right">
             <% if status == :completed  %>
-                <%= link_to('/reports/'+ @quiz.id.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
+                <%= link_to('/reports/'+ @quiz.slug.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
                     <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
                     <span class="win-label"><%= action_text %></span>
                 <% end %>

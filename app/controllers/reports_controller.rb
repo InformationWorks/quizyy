@@ -6,7 +6,10 @@ class ReportsController < ApplicationController
   end
 
   def show
-    @quiz_id = params[:id]
+    
+    @quiz = current_user.quizzes.find_by_slug!(params[:id])    
+    
+    @quiz_id = @quiz.id
     #TODO create view for category test report
     if Quiz.find(@quiz_id).quiz_type.name == "FullQuiz"
       @attempt = Attempt.find_by_quiz_id_and_user_id(@quiz_id,current_user.id)
