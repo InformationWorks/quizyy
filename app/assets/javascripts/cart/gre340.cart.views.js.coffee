@@ -12,8 +12,6 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       @collection.reset($('#cart-wrapper').data('cart'),{silent:false})
       Gre340.vent.on "add:cart:item", @addItemToCart, @
       Gre340.vent.on "remove:cart:item",@removeItemFromCart,@
-      Gre340.vent.on "cart:close",()=>
-        @close()
     events:
       'click .remove-cart-side-btn': 'removeItemFromCartEvent'
     template: 'cart/cart'
@@ -30,7 +28,7 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       if @collection.length == 0
         $('#proceed-checkout-btn')[0].remove() if $('#proceed-checkout-btn').length > 0
       else
-        $(@el).append('<a href="cart" class="btn btn-success" id="proceed-checkout-btn">Proceed to checkout</a>') if $('#proceed-checkout-btn').length == 0
+        $(@el).append('<a href="stores/cart" class="btn btn-success" id="proceed-checkout-btn">Proceed to checkout</a>') if $('#proceed-checkout-btn').length == 0
     onRender:()->
       @collectionChanged()
     addItemToCart:(quiz_id,el)->
@@ -81,6 +79,4 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
 
     $('body').tooltip
       selector: '[rel=tooltip]'
-
-  Views.addFinalizer ->
-    Gre340.vent.trigger "cart:close"
+      placement: 'bottom'

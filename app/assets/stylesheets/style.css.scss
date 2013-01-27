@@ -187,7 +187,13 @@
 .content {
   margin-top: 20px;
 }
-
+#cart-wrapper{
+  position: fixed;
+  min-width: 200px;
+  top:10px;
+  right:50px;
+  z-index:2999;
+}
 #content{
   margin-top: 70px;
 }

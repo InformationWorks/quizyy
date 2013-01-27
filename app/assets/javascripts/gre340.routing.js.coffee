@@ -51,7 +51,6 @@ Gre340.module "Routing", (Routing, Gre340, Backbone, Marionette, $, _) ->
       Gre340.TestCenter = Gre340.module("TestCenter");
       Gre340.Cart = Gre340.module("Cart")
       Gre340.TestCenter.start()
-      Gre340.Cart.stop()
     showIndex: ->
       Gre340.Cart.stop()
       if !Gre340.TestCenter.Controllers.questionController.isStarted
