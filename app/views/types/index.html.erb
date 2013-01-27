@@ -21,6 +21,7 @@
 							<th>Code</th>
 							<th>Category</th>
 							<th>Name</th>
+							<th>Slug</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -31,9 +32,10 @@
 						  	<td><%= type.code %></td>
 						  	<td><%= type.category.name %></td>
 						    <td><%= type.name %></td>
+						    <td><%= type.slug %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
-						    	<%= link_to(type, :class => "btn") do %>
+						    	<%= link_to(type_path(type), :class => "btn") do %>
 						    	  <span class="awe-eye-open"></span>
 						    	<% end %>
 						    	<%= link_to(edit_type_path(type), :class => "btn") do %>

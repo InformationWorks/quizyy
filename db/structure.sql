@@ -753,7 +753,8 @@ CREATE TABLE types (
     code character varying(255),
     name character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying(255)
 );
 
 
@@ -1448,6 +1449,13 @@ CREATE INDEX index_types_on_category_id ON types USING btree (category_id);
 
 
 --
+-- Name: index_types_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_types_on_slug ON types USING btree (slug);
+
+
+--
 -- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1580,3 +1588,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130124103847');
 INSERT INTO schema_migrations (version) VALUES ('20130125223704');
 
 INSERT INTO schema_migrations (version) VALUES ('20130127065706');
+
+INSERT INTO schema_migrations (version) VALUES ('20130127142507');

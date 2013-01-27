@@ -1,7 +1,8 @@
 class TypesController < ApplicationController
 
   before_filter :authenticate_user!
-  load_and_authorize_resource
+  before_filter :load_type, :only => [ :show, :edit, :update, :destroy ]
+  load_and_authorize_resource :find_by => :slug
 
   # GET /types
   # GET /types.json
@@ -17,8 +18,6 @@ class TypesController < ApplicationController
   # GET /types/1
   # GET /types/1.json
   def show
-    @type = Type.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @type }
@@ -38,7 +37,6 @@ class TypesController < ApplicationController
 
   # GET /types/1/edit
   def edit
-    @type = Type.find(params[:id])
   end
 
   # POST /types
@@ -48,7 +46,7 @@ class TypesController < ApplicationController
 
     respond_to do |format|
       if @type.save
-        format.html { redirect_to @type, notice: 'Type was successfully created.' }
+        format.html { redirect_to type_path(@type), notice: 'Type was successfully created.' }
         format.json { render json: @type, status: :created, location: @type }
       else
         format.html { render action: "new" }
@@ -60,8 +58,6 @@ class TypesController < ApplicationController
   # PUT /types/1
   # PUT /types/1.json
   def update
-    @type = Type.find(params[:id])
-
     respond_to do |format|
       if @type.update_attributes(params[:type])
         format.html { redirect_to @type, notice: 'Type was successfully updated.' }
@@ -76,7 +72,7 @@ class TypesController < ApplicationController
   # DELETE /types/1
   # DELETE /types/1.json
   def destroy
-    @type = Type.find(params[:id])
+    
     @type.destroy
 
     respond_to do |format|
@@ -84,4 +80,11 @@ class TypesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+  
+  def load_type
+    @type = Type.find_by_slug!(params[:id])
+  end
+  
 end
