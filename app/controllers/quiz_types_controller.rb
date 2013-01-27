@@ -1,7 +1,8 @@
 class QuizTypesController < ApplicationController
   
   before_filter :authenticate_user!
-  load_and_authorize_resource
+  before_filter :load_quiz_type, :only => [ :show, :edit, :update, :destroy ]
+  load_and_authorize_resource :find_by => :slug
   
   # GET /quiz_types
   # GET /quiz_types.json
@@ -17,8 +18,6 @@ class QuizTypesController < ApplicationController
   # GET /quiz_types/1
   # GET /quiz_types/1.json
   def show
-    @quiz_type = QuizType.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @quiz_type }
@@ -38,7 +37,6 @@ class QuizTypesController < ApplicationController
 
   # GET /quiz_types/1/edit
   def edit
-    @quiz_type = QuizType.find(params[:id])
   end
 
   # POST /quiz_types
@@ -60,8 +58,6 @@ class QuizTypesController < ApplicationController
   # PUT /quiz_types/1
   # PUT /quiz_types/1.json
   def update
-    @quiz_type = QuizType.find(params[:id])
-
     respond_to do |format|
       if @quiz_type.update_attributes(params[:quiz_type])
         format.html { redirect_to @quiz_type, notice: 'Quiz type was successfully updated.' }
@@ -76,7 +72,7 @@ class QuizTypesController < ApplicationController
   # DELETE /quiz_types/1
   # DELETE /quiz_types/1.json
   def destroy
-    @quiz_type = QuizType.find(params[:id])
+    
     @quiz_type.destroy
 
     respond_to do |format|
@@ -84,4 +80,11 @@ class QuizTypesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+  
+  def load_quiz_type
+    @quiz_type = QuizType.find_by_slug!(params[:id])
+  end  
+  
 end

@@ -434,7 +434,8 @@ CREATE TABLE quiz_types (
     id integer NOT NULL,
     name character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying(255)
 );
 
 
@@ -1323,6 +1324,13 @@ CREATE INDEX index_questions_on_type_id ON questions USING btree (type_id);
 
 
 --
+-- Name: index_quiz_types_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_quiz_types_on_slug ON quiz_types USING btree (slug);
+
+
+--
 -- Name: index_quiz_users_on_quiz_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1590,3 +1598,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130125223704');
 INSERT INTO schema_migrations (version) VALUES ('20130127065706');
 
 INSERT INTO schema_migrations (version) VALUES ('20130127142507');
+
+INSERT INTO schema_migrations (version) VALUES ('20130127144155');

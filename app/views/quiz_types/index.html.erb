@@ -29,7 +29,7 @@
 						    <td><%= quiz_type.name %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
-						    	<%= link_to(quiz_type, :class => "btn") do %>
+						    	<%= link_to(quiz_type_path(quiz_type), :class => "btn") do %>
 						    	  <span class="awe-eye-open"></span>
 						    	<% end %>
 						    	<%= link_to(edit_quiz_type_path(quiz_type), :class => "btn") do %>
