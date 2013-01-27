@@ -25,15 +25,26 @@
         <span class="label label-success"><%= status.to_s %></span>
         <br />
         <%= "\u20B9 " + @quiz.price.to_s %>
+        
         <div class="command-btn pull-right">
-        <button class="win-command">
-          <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
-          <span class="win-label"><%= action_text %></span>
-        </button>
+            <% if status == :completed  %>
+                <%= link_to('/reports/'+ @quiz.id.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
+                    <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
+                    <span class="win-label"><%= action_text %></span>
+                <% end %>
+            <%else%>
+                <%= link_to('/test_center/index?quiz_id='+@quiz.id.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
+                    <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
+                    <span class="win-label"><%= action_text %></span>
+                <% end %>
+            <% end %>
         </div>
+        
     <% else %>
         <%= "\u20B9 " + @quiz.price.to_s %>
-        <a href="stores/cart" style="float: right;height: 55px;width: 100px;padding-top: 35px;color: white;font-size: 25px;" class="btn btn-success" id="">Buy</a>
+        <%= link_to( "Buy"  , cart_items_path(:quiz_id => @quiz.id,:back_controller => "checkout",:back_action => "show_cart") ,
+                        :method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(@quiz.id), :class => "btn btn-success", :style => "float: right;height: 55px;width: 100px;padding-top: 35px;color: white;font-size: 25px;") %>
+        
     <% end %>
     
     <hr>

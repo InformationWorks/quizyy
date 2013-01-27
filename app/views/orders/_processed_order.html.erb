@@ -20,9 +20,7 @@
 			  <tr>
 		    	<% if cart_item.quiz_id != nil %>
 		    		<td>
-		    			<%= link_to() do %>
-			    			<%= cart_item.quiz.name %>
-			    		<% end %>
+			    		<%= link_to cart_item.quiz.name, show_practice_test_path(:quiz_slug => cart_item.quiz.slug) %>
 			    		<br />
 			    		<span class="label">Test</span>
 			    		<br />

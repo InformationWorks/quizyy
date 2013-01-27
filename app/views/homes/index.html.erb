@@ -165,6 +165,7 @@
       		    <% action_text = "Review" %>
       		<% end %>
 
+           <%= link_to(show_practice_test_path(:quiz_slug => full_quiz.slug), :style => "color:black") do %>     
       		<li class= "<%= li_class %>">
 	          <small><%= status %></small>
 	          <div class="mediumListIconTextItem-Detail">
@@ -183,9 +184,9 @@
                         <span class="win-label"><%= action_text %></span>
                     <% end %>
                 <% end %>
-
 	          </div>
 	        </li>
+	        <% end %>
       	<% end %>
 
       </ul>
@@ -214,6 +215,7 @@
       		    <% action_text = "Review" %>
       		<% end %>
 
+            <%= link_to(show_practice_test_path(:quiz_slug => category_topic_quiz.slug), :style => "color:black") do %>
       		<li class= "<%= li_class %>">
 	          <small><%= status %></small>
 	          <div class="mediumListIconTextItem-Detail">
@@ -227,6 +229,7 @@
 	            </button>
 	          </div>
 	        </li>
+	        <% end %>
       		<% end %>
 
                 </ul>
