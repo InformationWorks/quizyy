@@ -31,13 +31,13 @@
     <div class="span12">
       <div class="row-fluid">
         <div class="span4">
-          <h1><%= total_scaled_score(@full_report['total_score']['correct'].to_f * 100 /@full_report['total_score']['total'].to_f)%> / 340</h1>
+          <h1><%= total_scaled_score(@full_report['total_score']['correct'].to_f/@full_report['total_score']['total'].to_f)%> / 340</h1>
         </div>
         <div class="span6 align-left">
           <ul class="inline">
             <% @full_report['main_section_report'].each do |key,value| %>
                 <li><h3 class="lead"><%=key%></h3></li>
-                <li><h3><%= section_scaled_score(value['correct'].to_f * 100 / value['total'].to_f)%> / 170</h3></li>
+                <li><h3><%= section_scaled_score(value['correct'].to_f/value['total'].to_f)%> / 170</h3></li>
             <% end %>
           </ul>
         </div>

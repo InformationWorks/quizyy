@@ -5,12 +5,12 @@ class Attempt < ActiveRecord::Base
   attr_accessible :user_id, :quiz_id, :completed, :current_question_id,:current_section_id, :is_current,:current_time
   scope :all_score_for_user, (
     lambda do |user_id|
-      includes(:quiz).merge(Quiz.full).where('score IS NOT NULL and attempts.user_id =?',user_id).select(:score) unless user_id.nil?
+      includes(:quiz).merge(Quiz.full).where('score IS NOT NULL and attempts.completed = true and attempts.user_id =?',user_id).select(:score) unless user_id.nil?
     end
   )
   scope :all_reports_for_user, (
     lambda do |user_id|
-      includes(:quiz).merge(Quiz.full).where('score IS NOT NULL and attempts.user_id =?',user_id).select(:report).all() unless user_id.nil?
+      includes(:quiz).merge(Quiz.full).where('score IS NOT NULL and attempts.completed = true and attempts.user_id =?',user_id).select(:report).all() unless user_id.nil?
     end
   )
 
@@ -27,21 +27,22 @@ class Attempt < ActiveRecord::Base
     reports.each do |model|
       model[:report].each{|k,v| model[:report][k] = eval(v)}
     end
+    section_types = SectionType.all()
     section_scores = reports.inject(Hash[:verbal=>{:avg=>0,:max=>0},:quant=>{:avg=>0,:max=>0}]) do |section_scores,model|
-      @v_score,@v_total,@q_score,@q_total = 0,0,0,0
+      main_section_report = Hash[section_types.map{|t| [t.name, Hash['correct' => 0,'total' =>0 ]]}]
 
       model[:report]['section_report'].each do |k,v|
-        @v_score += v['correct'] if v['section_type'] == 'Verbal'
-        @v_total += v['total'] if v['section_type'] == 'Verbal'
-        @q_score += v['correct'] if v['section_type'] == 'Quant'
-        @q_total += v['total'] if v['section_type'] == 'Quant'
+        main_section_report[v['section_type']]['correct'] += v['correct']
+        main_section_report[v['section_type']]['total'] += v['total']
       end
-      section_scores[:verbal][:avg] = (section_scores[:verbal][:avg].to_f+(@v_score.to_f/@v_total.to_f))/2.0
-      section_scores[:quant][:avg] = (section_scores[:quant][:avg].to_f+(@q_score.to_f/@q_total.to_f))/2.0
-      section_scores[:verbal][:max] = section_scores[:verbal][:max].to_f < (@v_score.to_f/@v_total.to_f) ?  (@v_score.to_f/@v_total.to_f) : section_scores[:verbal][:max]
-      section_scores[:quant][:max] = section_scores[:quant][:max].to_f < (@q_score.to_f/@q_total.to_f) ?  (@q_score.to_f/@q_total.to_f) : section_scores[:quant][:max]
+      section_scores[:verbal][:avg] += (main_section_report['Verbal']['correct'].to_f*170/main_section_report['Verbal']['total'])
+      section_scores[:quant][:avg] += (main_section_report['Quant']['correct']*170/main_section_report['Quant']['total'])
+      section_scores[:verbal][:max] = section_scores[:verbal][:max] < (main_section_report['Verbal']['correct'].to_f/main_section_report['Verbal']['total'].to_f) ?  (main_section_report['Verbal']['correct'].to_f/main_section_report['Verbal']['total'].to_f) : section_scores[:verbal][:max]
+      section_scores[:quant][:max] = section_scores[:quant][:max]< (main_section_report['Quant']['correct'].to_f/main_section_report['Quant']['total'].to_f) ?  (main_section_report['Quant']['correct'].to_f/main_section_report['Quant']['total'].to_f) : section_scores[:quant][:max]
       section_scores
     end
+    section_scores[:verbal][:avg] /= section_scores.length
+    section_scores[:quant][:avg] /= section_scores.length
     section_scores
   end
   def set_attempt_as_current

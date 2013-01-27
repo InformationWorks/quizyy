@@ -1,8 +1,8 @@
 module ReportsHelper
-  def total_scaled_score(score_in_percent)
-    ((340 * score_in_percent)/100).to_i
+  def total_scaled_score(raw_score)
+    (340 * raw_score).to_i
   end
-  def section_scaled_score(score_in_percent)
-    ((170 * score_in_percent)/100).to_i
+  def section_scaled_score(raw_score)
+    (170 * raw_score).to_i
   end
 end
