@@ -23,6 +23,9 @@ class QuizzesController < ApplicationController
 
   # GET /quizzes/1
   def show
+    
+    @upload_path = upload_excel_path    
+    
     respond_to do |format|
       format.html # show.html.erb
     end
@@ -124,6 +127,58 @@ class QuizzesController < ApplicationController
     else
       # Invalid Excel
       render :json => { :message => "InValid",:error => full_quiz_uploader.error_messages.to_s }
+    end
+    
+  end
+  
+  # Upload verbal test excel
+  def upload_verbal_excel
+    
+    quiz = Quiz.find_by_slug!(params[:id])
+    
+    verbal_quiz_uploader = VerbalQuizUploader.new(getWorkbookFromParams(params),quiz)
+    
+    if verbal_quiz_uploader.validate_excel_workbook
+      # Valid Excel
+      
+      if verbal_quiz_uploader.execute_excel_upload
+        # Excel upload executed successfully.
+        #render :json => { :message => "Valid and uploaded correctly",:success => full_quiz_uploader.success_messages.to_s }
+        redirect_to  quiz_path(quiz), :flash => { :success_messages => verbal_quiz_uploader.success_messages }
+      else
+        # Excel upload failed.
+        redirect_to  quiz_path(quiz), :flash => { :error_messages => verbal_quiz_uploader.error_messages }
+      end
+      
+    else
+      # Invalid Excel
+      render :json => { :message => "InValid",:error => verbal_quiz_uploader.error_messages.to_s }
+    end
+    
+  end
+  
+  # Upload quant test excel
+  def upload_quant_excel
+    
+    quiz = Quiz.find_by_slug!(params[:id])
+    
+    quant_quiz_uploader = QuantQuizUploader.new(getWorkbookFromParams(params),quiz)
+    
+    if quant_quiz_uploader.validate_excel_workbook
+      # Valid Excel
+      
+      if quant_quiz_uploader.execute_excel_upload
+        # Excel upload executed successfully.
+        #render :json => { :message => "Valid and uploaded correctly",:success => full_quiz_uploader.success_messages.to_s }
+        redirect_to  quiz_path(quiz), :flash => { :success_messages => quant_quiz_uploader.success_messages }
+      else
+        # Excel upload failed.
+        redirect_to  quiz_path(quiz), :flash => { :error_messages => quant_quiz_uploader.error_messages }
+      end
+      
+    else
+      # Invalid Excel
+      render :json => { :message => "InValid",:error => quant_quiz_uploader.error_messages.to_s }
     end
     
   end
@@ -243,6 +298,25 @@ class QuizzesController < ApplicationController
   
   def load_quiz
     @quiz = Quiz.find_by_slug!(params[:id])
+  end
+  
+  def upload_excel_path
+    if @quiz.category_id != nil
+      if @quiz.category.section_type.name == "Verbal"
+        upload_path = upload_verbal_excel_quiz_path(@quiz)
+      else
+        upload_path = upload_quant_excel_quiz_path(@quiz)
+      end
+    elsif @quiz.topic_id != nil
+      if @quiz.topic.section_type.name == "Verbal"
+        upload_path = upload_verbal_excel_quiz_path(@quiz)
+      else
+        upload_path = upload_quant_excel_quiz_path(@quiz)
+      end
+    else
+      upload_path = upload_full_excel_quiz_path(@quiz)
+    end
+    upload_path
   end
   
 end

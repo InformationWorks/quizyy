@@ -62,9 +62,11 @@ GremastersWeb::Application.routes.draw do
       end    
     end
     member do
-      post 'question_images_upload'
-      post 'question_images_delete_all'
+      post 'upload_question_images'
+      post 'delete_question_images'
       post 'upload_full_excel'
+      post 'upload_verbal_excel'
+      post 'upload_quant_excel'
       post 'publish'
       post 'unpublish'
       post 'approve'

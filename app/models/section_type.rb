@@ -5,4 +5,5 @@ class SectionType < ActiveRecord::Base
   validates :name, :uniqueness => true
   
   has_many :categories
+  has_many :topics
 end

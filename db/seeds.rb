@@ -93,7 +93,14 @@ end
 "Measures of Dispersion",
 "Frequency Distribution",
 "Advanced Statistics"].each do |topic_name|
-  Topic.find_or_create_by_name topic_name
+  topic = Topic.find_by_name(topic_name) 
+  
+  if(!topic)
+    topic = Topic.create(:name => topic_name)
+    topic.section_type_id = quant_section_type.id
+    topic.save!
+  end
+  
 end
 
 # Generate Types.
