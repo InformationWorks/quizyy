@@ -616,7 +616,8 @@ CREATE TABLE section_types (
     name character varying(255),
     instruction text,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying(255)
 );
 
 
@@ -1401,6 +1402,13 @@ CREATE INDEX index_role_users_on_user_id ON role_users USING btree (user_id);
 
 
 --
+-- Name: index_section_types_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_section_types_on_slug ON section_types USING btree (slug);
+
+
+--
 -- Name: index_sections_on_quiz_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1600,3 +1608,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130127065706');
 INSERT INTO schema_migrations (version) VALUES ('20130127142507');
 
 INSERT INTO schema_migrations (version) VALUES ('20130127144155');
+
+INSERT INTO schema_migrations (version) VALUES ('20130127144813');
