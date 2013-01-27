@@ -119,18 +119,17 @@ module UploadExcel
         
       end
       
-      @success_messages << ("#{@sections.count.to_s} sections uploaded.")
-      @success_messages << ("section 1 #{@questions[0].count.to_s} Questions uploaded")
-      @success_messages << ("section 2 #{@questions[1].count.to_s} Questions uploaded")
-      @success_messages << ("section 3 #{@questions[2].count.to_s} Questions uploaded")
-      @success_messages << ("section 4 #{@questions[3].count.to_s} Questions uploaded")
-      
       # Save the objects stored in the array.
       if !save_objects_to_db
         @error_messages << "Saving objects to db failed"
         return false
       end
       
+      @success_messages << ("#{@sections.count.to_s} sections uploaded.")
+      @success_messages << ("section 1 #{@questions[0].count.to_s} Questions uploaded")
+      @success_messages << ("section 2 #{@questions[1].count.to_s} Questions uploaded")
+      @success_messages << ("section 3 #{@questions[2].count.to_s} Questions uploaded")
+      @success_messages << ("section 4 #{@questions[3].count.to_s} Questions uploaded")
       @success_messages << "All Sections, Questions & Options saved successfully."
       
       return true

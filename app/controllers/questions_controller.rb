@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
   # GET /questions.json
   def index
     
+    load_quiz_and_section
     load_questions
 
     respond_to do |format|
@@ -49,12 +50,14 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
+    load_quiz_and_section
+    
     @question = Question.new(params[:question])
-    @question.section_id = params[:section_id]
+    @question.section_id = @section.id
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to [@question.section.quiz,@question.section,@question], notice: 'Question was successfully created.' }
+        format.html { redirect_to quiz_section_question_path(@question.section.quiz,@question.section,@question.sequence_no), notice: 'Question was successfully created.' }
         format.json { render json: [@question.section.quiz,@question.section,@question], status: :created, location: @question }
       else
         format.html { render action: "new" }
@@ -67,6 +70,7 @@ class QuestionsController < ApplicationController
   # PUT /questions/1.json
   def update
     
+    load_quiz_and_section
     load_question
 
     respond_to do |format|
@@ -84,12 +88,13 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1.json
   def destroy
     
+    load_quiz_and_section
     load_question
     
     @question.destroy
 
     respond_to do |format|
-      format.html { redirect_to questions_url }
+      format.html { redirect_to quiz_section_path(@quiz,@section), notice: 'Question was successfully deleted.'  }
       format.json { head :no_content }
     end
   end
@@ -97,16 +102,16 @@ class QuestionsController < ApplicationController
   private
 
   def load_quiz_and_section
-    @quiz = Quiz.find params[:quiz_id]
-    @section = Section.find params[:section_id]
+    @quiz = Quiz.find_by_slug!(params[:quiz_id])
+    @section = @quiz.sections.find_by_slug!(params[:section_id])
   end
   
   def load_questions
-    @questions = Question.where(:section_id => params[:section_id])
+    @questions = @section.questions
   end
   
   def load_question
-    @question = Question.find(params[:id])
+    @question = @section.questions.find_by_sequence_no(params[:id])
   end
   
 end

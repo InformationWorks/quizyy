@@ -36,16 +36,12 @@
 	            <b class="caret"></b>
 	          </a>
 				<ul class="dropdown-menu">
+					<li><%= link_to "Test Hub",homes_index_path,:"data-no-turbolink" => true %></li>
+	                <li><%= link_to "Store", timed_tests_path,:"data-no-turbolink" => true %></li>
+	                <li><%= link_to "My Orders", orders_path,:"data-no-turbolink" => true %></li>
 					<% if current_user.can? :administer, :app %>
-                      <li><%= link_to "Test Hub",homes_index_path,:"data-no-turbolink" => true %></li>
-                      <li><%= link_to "Store", stores_timed_tests_path,:"data-no-turbolink" => true %></li>
-                      <li><%= link_to "My Orders", orders_path,:"data-no-turbolink" => true %></li>
-	                  <li><%= link_to "Admin", admins_home_path,:"data-no-turbolink"=>true%></li>
-	                <% else %>
-                      <li><%= link_to "Test Hub",homes_index_path%></li>
-                      <li><%= link_to "Store", stores_timed_tests_path %></li>
-                      <li><%= link_to "My Orders", orders_path %></li>
-                    <% end %>
+	                	<li><%= link_to "Admin", admins_home_path,:"data-no-turbolink"=>true%></li>
+	            	<% end %>
 	            	<li class="divider"></li>
 	            	<li><%= link_to 'Logout', destroy_user_session_url, :method => 'delete' %></li>
 	            </ul>

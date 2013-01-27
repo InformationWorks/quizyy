@@ -3,6 +3,10 @@ class Quiz < ActiveRecord::Base
   belongs_to :category
   belongs_to :topic
   attr_accessible :name, :random, :quiz_type_id, :category_id, :topic_id,:desc
+  
+  validates :name,:desc,:slug,:price, :presence => true
+  before_validation :generate_slug
+  
   has_many :sections
   
   has_many :quiz_users
@@ -14,7 +18,7 @@ class Quiz < ActiveRecord::Base
   belongs_to :publisher, :class_name => "User"
   belongs_to :approver, :class_name => "User"
   
-  scope :full, :conditions => { :quiz_type_id => QuizType.find_by_name("FullQuiz").id }
+  scope :full, :conditions => { :quiz_type_id => ( QuizType.find_by_name("FullName") != nil ? QuizType.find_by_name("FullQuiz").id : -1 ) }
   scope :timed, :conditions => { :timed => true }
   scope :practice, :conditions => { :timed => false }
   scope :free, :conditions => { :price => 0 }
@@ -35,6 +39,14 @@ class Quiz < ActiveRecord::Base
     else
       Quiz.full.timed.approved
     end
+  end
+  
+  def to_param
+    slug
+  end
+  
+  def generate_slug
+    self.slug = name.parameterize
   end
   
 end

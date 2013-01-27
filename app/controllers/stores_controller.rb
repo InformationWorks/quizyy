@@ -111,4 +111,12 @@ class StoresController < ApplicationController
 
   end
   
+  def show_timed_test
+    @quiz = Quiz.find_by_slug!(params[:quiz_slug])
+  end
+  
+  def show_practice_test
+    @quiz = Quiz.find_by_slug!(params[:quiz_slug])
+  end
+  
 end

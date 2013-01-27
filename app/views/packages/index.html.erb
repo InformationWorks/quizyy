@@ -20,6 +20,7 @@
 						<tr>
 							<th>Name</th>
 							<th>Desc</th>
+							<th>Slug</th>
 							<th>Price</th>
 							<th>Position</th>
 							<th></th>
@@ -31,11 +32,12 @@
 						  <tr>
 						    <td><%= package.name %></td>
 						    <td><%= package.desc %></td>
+						    <td><%= package.slug %></td>
 						    <td><%= package.price %></td>
 						    <td><%= package.position.to_s %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
-						    	<%= link_to(package, :class => "btn") do %>
+						    	<%= link_to(package_path(package), :class => "btn") do %>
 						    	  <span class="awe-eye-open"></span>
 						    	<% end %>
 						    	<%= link_to(edit_package_path(package), :class => "btn") do %>

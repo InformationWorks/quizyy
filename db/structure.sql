@@ -224,7 +224,8 @@ CREATE TABLE categories (
     name character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    section_type_id integer
+    section_type_id integer,
+    slug character varying(255)
 );
 
 
@@ -357,7 +358,8 @@ CREATE TABLE packages (
     price numeric,
     "position" integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying(255)
 );
 
 
@@ -432,7 +434,8 @@ CREATE TABLE quiz_types (
     id integer NOT NULL,
     name character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying(255)
 );
 
 
@@ -508,7 +511,8 @@ CREATE TABLE quizzes (
     published_at timestamp without time zone,
     approved boolean DEFAULT false,
     approver_id integer,
-    approved_at timestamp without time zone
+    approved_at timestamp without time zone,
+    slug character varying(255)
 );
 
 
@@ -612,7 +616,8 @@ CREATE TABLE section_types (
     name character varying(255),
     instruction text,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying(255)
 );
 
 
@@ -647,7 +652,8 @@ CREATE TABLE sections (
     section_type_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    display_text text
+    display_text text,
+    slug character varying(255)
 );
 
 
@@ -678,7 +684,9 @@ CREATE TABLE topics (
     id integer NOT NULL,
     name character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying(255),
+    section_type_id integer
 );
 
 
@@ -747,7 +755,8 @@ CREATE TABLE types (
     code character varying(255),
     name character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying(255)
 );
 
 
@@ -1260,6 +1269,13 @@ CREATE INDEX index_categories_on_section_type_id ON categories USING btree (sect
 
 
 --
+-- Name: index_categories_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_categories_on_slug ON categories USING btree (slug);
+
+
+--
 -- Name: index_options_on_question_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1281,6 +1297,13 @@ CREATE INDEX index_package_quizzes_on_quiz_id ON package_quizzes USING btree (qu
 
 
 --
+-- Name: index_packages_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_packages_on_slug ON packages USING btree (slug);
+
+
+--
 -- Name: index_questions_on_section_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1299,6 +1322,13 @@ CREATE INDEX index_questions_on_topic_id ON questions USING btree (topic_id);
 --
 
 CREATE INDEX index_questions_on_type_id ON questions USING btree (type_id);
+
+
+--
+-- Name: index_quiz_types_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_quiz_types_on_slug ON quiz_types USING btree (slug);
 
 
 --
@@ -1344,6 +1374,13 @@ CREATE INDEX index_quizzes_on_quiz_type_id ON quizzes USING btree (quiz_type_id)
 
 
 --
+-- Name: index_quizzes_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_quizzes_on_slug ON quizzes USING btree (slug);
+
+
+--
 -- Name: index_quizzes_on_topic_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1365,6 +1402,13 @@ CREATE INDEX index_role_users_on_user_id ON role_users USING btree (user_id);
 
 
 --
+-- Name: index_section_types_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_section_types_on_slug ON section_types USING btree (slug);
+
+
+--
 -- Name: index_sections_on_quiz_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1376,6 +1420,27 @@ CREATE INDEX index_sections_on_quiz_id ON sections USING btree (quiz_id);
 --
 
 CREATE INDEX index_sections_on_section_type_id ON sections USING btree (section_type_id);
+
+
+--
+-- Name: index_sections_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_sections_on_slug ON sections USING btree (slug);
+
+
+--
+-- Name: index_topics_on_section_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_topics_on_section_type_id ON topics USING btree (section_type_id);
+
+
+--
+-- Name: index_topics_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_topics_on_slug ON topics USING btree (slug);
 
 
 --
@@ -1397,6 +1462,13 @@ CREATE INDEX index_transactions_on_user_id ON transactions USING btree (user_id)
 --
 
 CREATE INDEX index_types_on_category_id ON types USING btree (category_id);
+
+
+--
+-- Name: index_types_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_types_on_slug ON types USING btree (slug);
 
 
 --
@@ -1524,3 +1596,21 @@ INSERT INTO schema_migrations (version) VALUES ('20130122195815');
 INSERT INTO schema_migrations (version) VALUES ('20130122200106');
 
 INSERT INTO schema_migrations (version) VALUES ('20130122201245');
+
+INSERT INTO schema_migrations (version) VALUES ('20130124103136');
+
+INSERT INTO schema_migrations (version) VALUES ('20130124103205');
+
+INSERT INTO schema_migrations (version) VALUES ('20130124103820');
+
+INSERT INTO schema_migrations (version) VALUES ('20130124103847');
+
+INSERT INTO schema_migrations (version) VALUES ('20130125223704');
+
+INSERT INTO schema_migrations (version) VALUES ('20130127065706');
+
+INSERT INTO schema_migrations (version) VALUES ('20130127142507');
+
+INSERT INTO schema_migrations (version) VALUES ('20130127144155');
+
+INSERT INTO schema_migrations (version) VALUES ('20130127144813');

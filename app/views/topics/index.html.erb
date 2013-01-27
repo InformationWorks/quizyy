@@ -19,6 +19,8 @@
 					<thead>
 						<tr>
 							<th>Name</th>
+							<th>SectionType</th>
+							<th>Slug</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -27,6 +29,8 @@
 						<% @topics.each do |topic| %>
 						  <tr>
 						    <td><%= topic.name %></td>
+						    <td><%= topic.section_type.name %></td>
+						    <td><%= topic.slug %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
 						    	<%= link_to(topic, :class => "btn") do %>
@@ -35,7 +39,7 @@
 						    	<%= link_to(edit_topic_path(topic), :class => "btn") do %>
 						    	  <span class="awe-wrench"></span>
 						    	<% end %>
-						    	<%= link_to(topic, method: :delete, data: { confirm: 'Are you sure you want to delete this package?' }, :class => "btn") do %>
+						    	<%= link_to(topic, method: :delete, data: { confirm: 'Are you sure you want to delete this topic?' }, :class => "btn") do %>
 						    	  <span class="awe-remove"></span>
 						    	<% end %>
 						      </div>
