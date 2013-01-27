@@ -1,0 +1,21 @@
+<div id="content">
+<h2>List of Completed Quizzes</h2>
+<table class="table span6">
+  <thead>
+    <tr>
+      <td>Quiz</td>
+      <td>Total Score</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @attempts.each do |attempt| %>
+      <tr>
+      <td><%= attempt.quiz.name %></td>
+      <td><%= total_scaled_score(attempt[:report]['total_score']['correct'].to_f/attempt[:report]['total_score']['total'].to_f)%> / 340</td>
+      <td><a href="/reports/<%=attempt.quiz.id%>" data-no-turbolink>show report</a></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

@@ -172,10 +172,18 @@
 	            <h6><%= full_quiz.desc %></h6>
 	          </div>
 	          <div class="command-btn pull-right">
-                <%= link_to('/test_center/index?quiz_id='+full_quiz.id.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
-                    <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
-                    <span class="win-label"><%= action_text %></span>
+                <% if status == :completed  %>
+                    <%= link_to('/reports/'+full_quiz.id.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
+                        <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
+                        <span class="win-label"><%= action_text %></span>
+                    <% end %>
+                <%else%>
+                    <%= link_to('/test_center/index?quiz_id='+full_quiz.id.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
+                        <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
+                        <span class="win-label"><%= action_text %></span>
+                    <% end %>
                 <% end %>
+
 	          </div>
 	        </li>
       	<% end %>
