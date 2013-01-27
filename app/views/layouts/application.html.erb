@@ -20,7 +20,7 @@
 <!-- Navigation bar -->
 <header id="nav-bar" class="container-fluid">
   <div class="row-fluid">
-    <div class="span8">
+    <div class="span11">
       <div id="header-container">
 
         <a class="pull-left" href="/"><%= image_tag("gre340-02.png",:width=> 85, :height => 70)%></a>
@@ -58,6 +58,17 @@
 	          <input type="text" class="search-query" placeholder="Search">
 	        </form>
 	      </div>
+            <div id="top-info" class="pull-right">
+              <a href="#" class="pull-left">
+                <div class="top-info-block">
+                  <h3>Credits <%= current_user.credits %></h3>
+                </div>
+              </a>
+              <hr class="separator pull-left">
+              <a id="settings" class="pull-left" href="/stores/cart">
+                <h3>Cart (<%=@cart.cart_items.length %>)</h3>
+              </a>
+            </div>
       <% end %>
     </div>
   </div>

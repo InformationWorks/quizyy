@@ -1,7 +1,6 @@
 class CartItemsController < ApplicationController
-  
   before_filter :authenticate_user!
-  before_filter :initialize_cart
+
   
   def create
    begin

@@ -190,8 +190,8 @@
 #cart-wrapper{
   position: fixed;
   min-width: 200px;
-  top:10px;
-  right:50px;
+  top: 95px;
+  right: 40px;
   z-index:2999;
 }
 #content{
@@ -523,6 +523,10 @@ hr.blue{
   }
 }
 @media (max-width: 979px) and (min-width: 768px){
+  #cart-wrapper{
+    top:105px;
+    right: 10px;
+  }
   #test-content {
     .left-pane,.right-pane{
       top: 210px;
@@ -545,6 +549,14 @@ hr.blue{
 }
 
 @media (max-width: 767px){
+  #cart-wrapper{
+    position: relative;
+    min-width: 200px;
+    margin-top: -20px;
+    margin-bottom: 110px;
+    margin-left: 50px;
+    z-index: 0;
+  }
   #test-content {
     .review{
       margin-top: 210px;
@@ -583,6 +595,14 @@ hr.blue{
 }
 
 @media (max-width: 480px){
+  #cart-wrapper{
+    position: relative;
+    min-width: 200px;
+    margin-top: 10px;
+    margin-bottom: 100px;
+    margin-left: 50px;
+    z-index: 0;
+  }
   .container-fluid{
     padding: 0px;
   }

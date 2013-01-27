@@ -29,13 +29,6 @@
             <%= form_tag("/users/profiles/update_profile_pic", :multipart => true) do %>
 			  <input id="profile_pic_uploader" type="file" name="profile_pic_file" style="display:none;" />
 			<% end %>
-			
-			<div class="row-fluid">
-			  <h2>Credits</h2>
-              <div class="span3">
-                <em class="lead"><%= current_user.credits %></em>
-              </div>
-            </div>
 
           </div>
           <!-- TODO: This needs to be uncommented when we have enough data for suggesting areas of improvement.  
