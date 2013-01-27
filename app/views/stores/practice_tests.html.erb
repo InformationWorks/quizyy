@@ -52,15 +52,6 @@
     </section>
     <% end %>
   </div>
-  <div class="span3">
-    <div class="metro pull-right" data-pjax-container>
-      <%= link_to(show_cart_path, :class => "tile app bg-color-green") do %>
-         <div class="image-wrapper">
-          <span class="icon icon-cart"></span>
-        </div>
-        <div class="app-label">Cart</div>
-        <div class="app-count"><%= @cart.cart_items.count %></div>
-      <% end %>
-    </div>
-  </div>
+  <%= content_tag "div", id: "cart-wrapper",class: "span3 well", data: { cart: @cart.cart_items.to_json(:include => :quiz) } do%>
+  <% end %>
 </div>

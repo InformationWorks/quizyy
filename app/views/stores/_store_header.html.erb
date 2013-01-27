@@ -6,15 +6,15 @@
   <ul class="nav nav-pills pull-left">
   	
   	<% if @current_action == "timed_tests" %>
-  		<li class="active"><%= link_to "Timed Tests", stores_timed_tests_path %></li>
+  		<li class="active"><%= link_to "Timed Tests", stores_timed_tests_path, :'data-no-turbolink' => true %></li>
   	<% else %>
-  		<li ><%= link_to "Timed Tests", stores_timed_tests_path %></li>
+  		<li ><%= link_to "Timed Tests", stores_timed_tests_path, :'data-no-turbolink' => true %></li>
   	<% end %>
   	
   	<% if @current_action == "practice_tests" %>
-  		<li class="active"><%= link_to "Practice Tests", stores_practice_tests_path %></li>
+  		<li class="active"><%= link_to "Practice Tests", stores_practice_tests_path, :'data-no-turbolink' => true %></li>
   	<% else %>
-  		<li><%= link_to "Practice Tests", stores_practice_tests_path %></li>
+  		<li><%= link_to "Practice Tests", stores_practice_tests_path, :'data-no-turbolink' => true %></li>
   	<% end %>
   
   </ul>

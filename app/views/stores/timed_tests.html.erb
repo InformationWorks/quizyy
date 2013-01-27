@@ -12,17 +12,8 @@
   
   <% if current_user.purchased_full_quizzes.count != 0 %>
     <%= content_tag "div", id: "cart-wrapper",class: "span3 well", data: { cart: @cart.cart_items.to_json(:include => :quiz) } do%>
-    <div class="metro pull-right">
-      <%= link_to(show_cart_path, :class => "tile app bg-color-green") do %>
-         <div class="image-wrapper">
-          <span class="icon icon-cart"></span>
-        </div>
-        <div class="app-label">Cart</div>
-        <div class="app-count"><%= @cart.cart_items.count %></div>
-      <% end %>
-    </div>
   	<% end %>
-  	<% end %>
+  <% end %>
   	
 </div> 
 

@@ -3,23 +3,36 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     model: 'Gre340.Cart.Data.Models.CardItem'
     template: 'cart/cart-item'
     tagName: "tr"
-
+  Views.CartEmpty = Marionette.ItemView.extend
+    template: 'cart/empty'
+    tagName: 'td'
   Views.Cart = Marionette.CompositeView.extend
     initialize:(options) ->
       @collection = Gre340.Cart.Data.cart
       @collection.reset($('#cart-wrapper').data('cart'),{silent:false})
       Gre340.vent.on "add:cart:item", @addItemToCart, @
       Gre340.vent.on "remove:cart:item",@removeItemFromCart,@
+      Gre340.vent.on "cart:close",()=>
+        @close()
+    events:
+      'click .remove-cart-side-btn': 'removeItemFromCartEvent'
     template: 'cart/cart'
     templateHelpers:->
       'count': @collection.length
     itemView: Views.CartItemView
     itemViewContainer: "tbody"
+    emptyView: Views.CartEmpty
     collection: @collection
     collectionEvents:
-      "reset": "collectionChanged"
-    collectionChanged:()->
-      console.log 'reset'
+      "add": "collectionChanged"
+      "remove": 'collectionChanged'
+    collectionChanged:(event)->
+      if @collection.length == 0
+        $('#proceed-checkout-btn')[0].remove() if $('#proceed-checkout-btn').length > 0
+      else
+        $(@el).append('<a href="cart" class="btn btn-success" id="proceed-checkout-btn">Proceed to checkout</a>') if $('#proceed-checkout-btn').length == 0
+    onRender:()->
+      @collectionChanged()
     addItemToCart:(quiz_id,el)->
       cartItem = new Gre340.Cart.Data.Models.CartItem
         quiz_id:quiz_id
@@ -35,6 +48,9 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
           else
             alert 'An error occured while adding the quiz to cart. Please try again later.'
         error:@handleErrors
+    removeItemFromCartEvent:(event)->
+      event.preventDefault()
+      @removeItemFromCart($(event.currentTarget).data('id'),$(".remove-cart-btn[data-id='"+$(event.currentTarget).data('id')+"']"))
     removeItemFromCart:(model_id,el)->
       @collection.get(model_id).destroy
         params:
@@ -51,6 +67,7 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         error:@handleErrors
     handleError: (entry, response) ->
       alert 'Some error occured. Please try again later.'
+
   Views.addInitializer ->
     Views.cartView = new Views.Cart()
     Gre340.Cart.Layout.layout.cart.show(Views.cartView)
@@ -64,3 +81,6 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
 
     $('body').tooltip
       selector: '[rel=tooltip]'
+
+  Views.addFinalizer ->
+    Gre340.vent.trigger "cart:close"

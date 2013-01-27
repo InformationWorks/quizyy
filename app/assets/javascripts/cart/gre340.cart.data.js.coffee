@@ -14,4 +14,6 @@ Gre340.module "Cart.Data", (Data, Gre340, Backbone, Marionette, $, _) ->
 
   Data.addInitializer ->
     Data.cart = new Data.Collections.Cart
-
+  Data.addFinalizer ->
+    Data.cart.reset()
+    Data.cart = null

@@ -35,7 +35,8 @@ Gre340.module "Routing", (Routing, Gre340, Backbone, Marionette, $, _) ->
   Router = Backbone.Router.extend(
     routes:
       'homes/index': 'goToAvailableTest'
-      'stores/*anything': 'initCart'
+      'stores/timed_tests': 'initCart'
+      'stores/practice_tests': 'initCart'
       'test_center/error': 'showError'
       'test_center/index?quiz_id=:id': 'showIndex'
       'test_center/section/:sindex/question/:qindex': 'showQuestion'
@@ -48,22 +49,28 @@ Gre340.module "Routing", (Routing, Gre340, Backbone, Marionette, $, _) ->
 
     before:(route) ->
       Gre340.TestCenter = Gre340.module("TestCenter");
+      Gre340.Cart = Gre340.module("Cart")
       Gre340.TestCenter.start()
+      Gre340.Cart.stop()
     showIndex: ->
+      Gre340.Cart.stop()
       if !Gre340.TestCenter.Controllers.questionController.isStarted
         Gre340.TestCenter.Controllers.questionController.start()
       Gre340.Routing.showRoute('/test_center/index')
     showQuestion: (sectionNumber,questionNumber) ->
+      Gre340.Cart.stop()
       if !Gre340.TestCenter.Controllers.questionController.isStarted
         Gre340.TestCenter.Controllers.questionController.start()
       q = Gre340.TestCenter.Controllers.questionController
       q.showQuestionByNumber(sectionNumber,questionNumber)
     showSection: (sectionNumber) ->
+      Gre340.Cart.stop()
       if !Gre340.TestCenter.Controllers.questionController.isStarted
         Gre340.TestCenter.Controllers.questionController.start()
       q = Gre340.TestCenter.Controllers.questionController
       q.startSectionByNumber(sectionNumber,null)
     exitSection: (sectionNumber) ->
+      Gre340.Cart.stop()
       if !Gre340.TestCenter.Controllers.questionController.isStarted
         Gre340.TestCenter.Controllers.questionController.start()
       q = Gre340.TestCenter.Controllers.questionController
@@ -83,8 +90,8 @@ Gre340.module "Routing", (Routing, Gre340, Backbone, Marionette, $, _) ->
       if !Modernizr.mq("screen and (min-width: 1200px)")
         scrollToElement("#available-tests")
     initCart:()->
+      Gre340.Cart.start()
       Gre340.TestCenter.stop()
-      console.log 'cart initiaze'
   )
 
   Routing.addInitializer ->
