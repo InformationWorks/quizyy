@@ -69,12 +69,13 @@ class ApplicationController < ActionController::Base
   # processed and a new cart should be used for future processing. User will be 
   # shown a orders page to check status of the created orders.
   def initialize_cart
-    if @cart == nil
-      @cart = Cart.joins("left join orders o on carts.id = o.cart_id").where("o.id is null AND carts.user_id = ?", current_user.id).first
+    unless current_user.nil?
       if @cart == nil
-        @cart = Cart.create(:user_id => current_user.id)
+        @cart = Cart.joins("left join orders o on carts.id = o.cart_id").where("o.id is null AND carts.user_id = ?", current_user.id).first
+        if @cart == nil
+          @cart = Cart.create(:user_id => current_user.id)
+        end
       end
     end
   end
-  
 end
