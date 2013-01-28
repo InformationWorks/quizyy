@@ -20,7 +20,7 @@
 <!-- Navigation bar -->
 <header id="nav-bar" class="container-fluid">
   <div class="row-fluid">
-    <div class="span8">
+    <div class="span11">
       <div id="header-container">
 
         <a class="pull-left" href="/"><%= image_tag("gre340-02.png",:width=> 85, :height => 70)%></a>
@@ -37,6 +37,7 @@
 	          </a>
 				<ul class="dropdown-menu">
 					<li><%= link_to "Test Hub",homes_index_path,:"data-no-turbolink" => true %></li>
+                    <li><%= link_to "Reports", reports_path,:"data-no-turbolink" => true %></li>
 	                <li><%= link_to "Store", timed_tests_path,:"data-no-turbolink" => true %></li>
 	                <li><%= link_to "My Orders", orders_path,:"data-no-turbolink" => true %></li>
 	                <li><%= link_to "My Reports", reports_path,:"data-no-turbolink" => true %></li>
@@ -58,6 +59,17 @@
 	          <input type="text" class="search-query" placeholder="Search">
 	        </form>
 	      </div>
+            <div id="top-info" class="pull-right">
+              <a href="#" class="pull-left">
+                <div class="top-info-block">
+                  <h3>Credits (<span style='font-family: "Open Sans";'>&#x20b9;</span> <%= current_user.credits %>)</h3>
+                </div>
+              </a>
+              <hr class="separator pull-left">
+              <a id="settings" class="pull-left" href="/stores/cart">
+                <h3>Cart (<%=@cart.cart_items.length %>)</h3>
+              </a>
+            </div>
       <% end %>
     </div>
   </div>
