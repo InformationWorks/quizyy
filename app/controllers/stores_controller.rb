@@ -119,4 +119,38 @@ class StoresController < ApplicationController
     @quiz = Quiz.find_by_slug!(params[:quiz_slug])
   end
   
+  def category_timed_tests
+    @category = Category.find_by_slug!(params[:category_slug])
+    
+    @quizzes = @category.scoped_timed_quizzes(current_user).order("id ASC")
+  end
+  
+  def topic_timed_tests
+    @topic = Topic.find_by_slug!(params[:topic_slug])
+    
+    @quizzes = @topic.scoped_timed_quizzes(current_user).order("id ASC")
+  end
+  
+  def category_practice_tests
+    @category = Category.find_by_slug!(params[:category_slug])
+    
+    @quizzes = @category.scoped_practice_quizzes(current_user).order("id ASC")
+  end
+  
+  def topic_practice_tests
+    @topic = Topic.find_by_slug!(params[:topic_slug])
+    
+    @quizzes = @topic.scoped_practice_quizzes(current_user).order("id ASC")
+  end
+  
+  def full_practice_tests
+    @quizzes = Quiz.scoped_practice_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC')
+    @quizzes += current_user.quizzes.full.timed
+  end
+  
+  def full_timed_tests
+    @quizzes = Quiz.scoped_timed_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC')
+    @quizzes += current_user.quizzes.full.timed
+  end
+  
 end

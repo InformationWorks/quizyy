@@ -4,7 +4,9 @@
 <section class="category-section first">
 <% if current_user.purchased_full_quizzes.count != 0 %>
 <h2>Full length tests</h2>
-<a href="#" class="pull-right"><h4>more</h4></a>
+<%= link_to(full_timed_tests_path, :class => "pull-right") do %>
+<h4>more</h4>
+<% end %>
 <hr>
 <!-- show only three per row -->
     <div class="row">
@@ -52,7 +54,16 @@
 <section class="category-section">	
 <% end %>
 <h2><%= category_or_topic.name %></h2>
-<a href="#" class="pull-right"><h4>more</h4></a>
+<% if category_or_topic.class.name == "Category" %>
+<%= link_to(category_timed_tests_path(category_or_topic.slug), :class => "pull-right") do %>
+<h4>more</h4>
+<% end %>
+<% else %>
+<%= link_to(topic_timed_tests_path(category_or_topic.slug), :class => "pull-right") do %>
+<h4>more</h4>
+<% end %>
+<% end %>
+
 <hr>
 <!-- show only three per row -->
 <div class="row">
