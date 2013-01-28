@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
 
   def show
     
-    @quiz = current_user.quizzes.find_by_slug!(params[:id])
+    @quiz = current_user.quizzes.find_by_slug(params[:id])
 
     if @quiz == nil
       @quiz = current_user.quizzes.find(params[:id])
