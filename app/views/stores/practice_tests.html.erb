@@ -31,6 +31,15 @@
           </h3>
           <p><%= quiz.desc %></p>
           <p><%= (quiz.price == 0) ? "Free" : "\u20B9 " + quiz.price.to_s %></p> 
+          <p>
+              <% if quiz.approved == false %>
+                <% if quiz.published == false %>
+                   <span class="label label-warning">Unpublished</span>
+                <% else %>
+                   <span class="label label-important">Awaiting Approval</span>
+                <% end %>
+              <% end %>
+          </p>
           
           <% if current_user.has_purchased_quiz?(quiz.id) %>
           	<div>
