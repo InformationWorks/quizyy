@@ -43,8 +43,8 @@ class Attempt < ActiveRecord::Base
       section_scores[:quant][:max] = section_scores[:quant][:max] < q_score ? q_score : section_scores[:quant][:max]
       section_scores
     end
-    section_scores[:verbal][:avg] /= reports.length
-    section_scores[:quant][:avg] /= reports.length
+    section_scores[:verbal][:avg] /= reports.length unless reports.length == 0
+    section_scores[:quant][:avg] /= reports.length  unless reports.length == 0
     section_scores
   end
   def set_attempt_as_current
