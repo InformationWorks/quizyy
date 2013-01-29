@@ -599,6 +599,39 @@ ALTER SEQUENCE roles_id_seq OWNED BY roles.id;
 
 
 --
+-- Name: scaled_scores; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE scaled_scores (
+    id integer NOT NULL,
+    value integer,
+    verbal_score integer,
+    quant_score integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: scaled_scores_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE scaled_scores_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: scaled_scores_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE scaled_scores_id_seq OWNED BY scaled_scores.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -976,6 +1009,13 @@ ALTER TABLE ONLY roles ALTER COLUMN id SET DEFAULT nextval('roles_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY scaled_scores ALTER COLUMN id SET DEFAULT nextval('scaled_scores_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY section_types ALTER COLUMN id SET DEFAULT nextval('section_types_id_seq'::regclass);
 
 
@@ -1147,6 +1187,14 @@ ALTER TABLE ONLY role_users
 
 ALTER TABLE ONLY roles
     ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: scaled_scores_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY scaled_scores
+    ADD CONSTRAINT scaled_scores_pkey PRIMARY KEY (id);
 
 
 --
@@ -1612,3 +1660,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130127142907');
 INSERT INTO schema_migrations (version) VALUES ('20130127144155');
 
 INSERT INTO schema_migrations (version) VALUES ('20130127144813');
+
+INSERT INTO schema_migrations (version) VALUES ('20130129100743');

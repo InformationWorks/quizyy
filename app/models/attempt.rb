@@ -15,11 +15,11 @@ class Attempt < ActiveRecord::Base
   )
 
   def self.max_score_for_user(user_id)
-    all_score_for_user(user_id).maximum(:score).to_f
+    all_score_for_user(user_id).maximum(:score)
   end
 
   def self.avg_score_for_user(user_id)
-    all_score_for_user(user_id).average(:score).to_f
+    all_score_for_user(user_id).average(:score)
   end
 
   def self.section_scores_for_user(user_id)
@@ -35,14 +35,16 @@ class Attempt < ActiveRecord::Base
         main_section_report[v['section_type']]['correct'] += v['correct']
         main_section_report[v['section_type']]['total'] += v['total']
       end
-      section_scores[:verbal][:avg] += (main_section_report['Verbal']['correct'].to_f*170/main_section_report['Verbal']['total'])
-      section_scores[:quant][:avg] += (main_section_report['Quant']['correct']*170/main_section_report['Quant']['total'])
-      section_scores[:verbal][:max] = section_scores[:verbal][:max] < (main_section_report['Verbal']['correct'].to_f/main_section_report['Verbal']['total'].to_f) ?  (main_section_report['Verbal']['correct'].to_f/main_section_report['Verbal']['total'].to_f) : section_scores[:verbal][:max]
-      section_scores[:quant][:max] = section_scores[:quant][:max]< (main_section_report['Quant']['correct'].to_f/main_section_report['Quant']['total'].to_f) ?  (main_section_report['Quant']['correct'].to_f/main_section_report['Quant']['total'].to_f) : section_scores[:quant][:max]
+      v_score = ScaledScore.convert(:verbal,main_section_report['Verbal']['correct'].to_f*100/main_section_report['Verbal']['total'])
+      q_score = ScaledScore.convert(:quant,main_section_report['Quant']['correct']*100/main_section_report['Quant']['total'])
+      section_scores[:verbal][:avg] += v_score
+      section_scores[:quant][:avg] += q_score
+      section_scores[:verbal][:max] = section_scores[:verbal][:max] < v_score ?  v_score : section_scores[:verbal][:max]
+      section_scores[:quant][:max] = section_scores[:quant][:max] < q_score ? q_score : section_scores[:quant][:max]
       section_scores
     end
-    section_scores[:verbal][:avg] /= section_scores.length
-    section_scores[:quant][:avg] /= section_scores.length
+    section_scores[:verbal][:avg] /= reports.length
+    section_scores[:quant][:avg] /= reports.length
     section_scores
   end
   def set_attempt_as_current
@@ -61,6 +63,8 @@ class Attempt < ActiveRecord::Base
     section_report ={}
     type_report = Hash[ types.map{|t| [t.code,Hash['correct'=>0,'total'=>0,'category_code'=> t.category.code, 'category_name' => t.category.name]]}]
     questions_have_no_options = %w(V-SIP Q-NE-1 Q-NE-2 Q-DI-NE-1 Q-DI-NE-2)
+    section_types = SectionType.all()
+    main_section_report = Hash[section_types.map{|t| [t.name, Hash['correct' => 0,'total' =>0 ]]}]
     total_correct = 0
     total_question = 0
     sections.each do |section|
@@ -81,16 +85,21 @@ class Attempt < ActiveRecord::Base
         type_report[question.type.code]['total'] += 1
         total_question += 1
       end
+      main_section_report[section.section_type.name]['correct'] += correct
+      main_section_report[section.section_type.name]['total'] += section.questions.length
       section_report[section.id.to_s] = {'section_name' => section.name,'section_type'=> section.section_type.name,'correct'=> correct,'total'=> section.questions.length}
     end
-    self.report = Hash['section_report' => section_report, 'type_report'=> type_report, 'total_score'=> {'correct' => total_correct,'total' => total_question}]
-    self.score = total_correct.to_f*100/total_question.to_f if total_question>0
+    self.report = Hash['main_section_report' => main_section_report,'section_report' => section_report, 'type_report'=> type_report, 'total_score'=> {'correct' => total_correct,'total' => total_question}]
+    self.score = 0
+    main_section_report.each do |key,value|
+        self.score += ScaledScore.convert(key.downcase.to_sym,value['correct']*100/value['total'])
+    end
     self.save
     self
   end
 
   def get_with_highest_score
-    attempt_with_highest_score = Attempt.joins(:quiz).where('quizzes.quiz_type_id=? and attempts.quiz_id=? and score IS NOT NULL',self.quiz.quiz_type_id,self.quiz_id).order('score  DESC').first()
+    Attempt.joins(:quiz).where('quizzes.quiz_type_id=? and attempts.quiz_id=? and score IS NOT NULL',self.quiz.quiz_type_id,self.quiz_id).order('score  DESC').first()
   end
 
 end
