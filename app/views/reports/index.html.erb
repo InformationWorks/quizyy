@@ -15,7 +15,7 @@
     <% @attempts.each do |attempt| %>
       <tr>
       <td><%= attempt.quiz.name %></td>
-      <td><%= total_scaled_score(attempt[:report]['total_score']['correct'].to_f/attempt[:report]['total_score']['total'].to_f)%> / 340</td>
+      <td><%= attempt.score.to_i() %> / 340</td>
       <td><a href="/reports/<%=attempt.quiz.slug%>" data-no-turbolink>show report</a></td>
       </tr>
     <% end %>

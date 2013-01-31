@@ -541,3 +541,137 @@ end
   package_quiz.package_id = package_3.id
   package_quiz.save!
 end
+
+(130..170).each do |index|
+  scaled_score = ScaledScore.new
+  scaled_score.value = index
+  case index
+    when 130
+      scaled_score.verbal_score = 0
+      scaled_score.quant_score = 0
+    when 131
+      scaled_score.verbal_score = 1
+      scaled_score.quant_score = 1
+    when 132
+      scaled_score.verbal_score = 1
+      scaled_score.quant_score = 1
+    when 133
+      scaled_score.verbal_score = 1
+      scaled_score.quant_score = 1
+    when 134
+      scaled_score.verbal_score = 2
+      scaled_score.quant_score = 1
+    when 135
+      scaled_score.verbal_score = 3
+      scaled_score.quant_score = 2
+    when 136
+      scaled_score.verbal_score = 4
+      scaled_score.quant_score = 3
+    when 137
+      scaled_score.verbal_score = 5
+      scaled_score.quant_score = 4
+    when 138
+      scaled_score.verbal_score = 6
+      scaled_score.quant_score = 5
+    when 139
+      scaled_score.verbal_score = 8
+      scaled_score.quant_score = 7
+    when 140
+      scaled_score.verbal_score = 10
+      scaled_score.quant_score = 9
+    when 141
+      scaled_score.verbal_score = 12
+      scaled_score.quant_score = 11
+    when 142
+      scaled_score.verbal_score = 15
+      scaled_score.quant_score = 14
+    when 143
+      scaled_score.verbal_score = 18
+      scaled_score.quant_score = 17
+    when 144
+      scaled_score.verbal_score = 21
+      scaled_score.quant_score = 20
+    when 145
+      scaled_score.verbal_score = 24
+      scaled_score.quant_score = 23
+    when 146
+      scaled_score.verbal_score = 28
+      scaled_score.quant_score = 27
+    when 147
+      scaled_score.verbal_score = 32
+      scaled_score.quant_score = 31
+    when 148
+      scaled_score.verbal_score = 36
+      scaled_score.quant_score = 35
+    when 149
+      scaled_score.verbal_score = 40
+      scaled_score.quant_score = 39
+    when 150
+      scaled_score.verbal_score = 44
+      scaled_score.quant_score = 43
+    when 151
+      scaled_score.verbal_score = 49
+      scaled_score.quant_score = 14
+    when 152
+      scaled_score.verbal_score = 53
+      scaled_score.quant_score = 52
+    when 153
+      scaled_score.verbal_score = 57
+      scaled_score.quant_score = 56
+    when 154
+      scaled_score.verbal_score = 61
+      scaled_score.quant_score = 60
+    when 155
+      scaled_score.verbal_score = 65
+      scaled_score.quant_score = 64
+    when 156
+      scaled_score.verbal_score = 69
+      scaled_score.quant_score = 68
+    when 157
+      scaled_score.verbal_score = 73
+      scaled_score.quant_score = 71
+    when 158
+      scaled_score.verbal_score = 77
+      scaled_score.quant_score = 74
+    when 159
+      scaled_score.verbal_score = 80
+      scaled_score.quant_score = 77
+    when 160
+      scaled_score.verbal_score = 83
+      scaled_score.quant_score = 81
+    when 161
+      scaled_score.verbal_score = 86
+      scaled_score.quant_score = 83
+    when 162
+      scaled_score.verbal_score = 89
+      scaled_score.quant_score = 86
+    when 163
+      scaled_score.verbal_score = 91
+      scaled_score.quant_score = 88
+    when 164
+      scaled_score.verbal_score = 93
+      scaled_score.quant_score = 90
+    when 165
+      scaled_score.verbal_score = 95
+      scaled_score.quant_score = 92
+    when 166
+      scaled_score.verbal_score = 96
+      scaled_score.quant_score = 94
+    when 167
+      scaled_score.verbal_score = 97
+      scaled_score.quant_score = 96
+    when 168
+      scaled_score.verbal_score = 98
+      scaled_score.quant_score = 97
+    when 169
+      scaled_score.verbal_score = 99
+      scaled_score.quant_score = 98
+    when 170
+      scaled_score.verbal_score = 99
+      scaled_score.quant_score = 99
+    else
+      scaled_score.verbal_score = 0
+      scaled_score.quant_score = 0
+  end
+  scaled_score.save!
+end

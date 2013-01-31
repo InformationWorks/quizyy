@@ -88,11 +88,11 @@ class User < ActiveRecord::Base
   end
   
   def verbal_highest
-    (Attempt.section_scores_for_user(self.id)[:verbal][:max] * 170).to_i
+    (Attempt.section_scores_for_user(self.id)[:verbal][:max]).to_i
   end
   
   def quant_highest
-    (Attempt.section_scores_for_user(self.id)[:quant][:max] * 170).to_i
+    (Attempt.section_scores_for_user(self.id)[:quant][:max]).to_i
   end
  
   def quant_average
@@ -100,11 +100,11 @@ class User < ActiveRecord::Base
   end
   
   def overall_average
-    (Attempt.avg_score_for_user(self.id).to_f * 340/100).to_i
+    Attempt.avg_score_for_user(self.id).to_i
   end
   
   def overall_highest
-    (Attempt.max_score_for_user(self.id).to_f * 340/100).to_i
+    Attempt.max_score_for_user(self.id).to_i
   end
   
   def areas_of_improvement  

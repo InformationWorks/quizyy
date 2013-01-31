@@ -63,7 +63,7 @@
       $('#no-internet-error').modal('hide')
     submitQuiz:()->
       Gre340.vent.trigger("submit:current:attempt")
-      window.location.href = '/reports/'+@attempt.get('quiz_id')
+      window.location.href = '/reports/'+@quiz.get('slug')
     showQuestion:(question)->
       @showLoading()
       if @checkPrerequisite()

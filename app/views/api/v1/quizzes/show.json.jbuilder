@@ -3,6 +3,7 @@
   json.id @quiz.id
   json.name @quiz.name
   json.desc @quiz.desc
+  json.slug @quiz.slug
   json.quiz_type_id @quiz.quiz_type_id
   json.quiz_type_name @quiz.quiz_type ? @quiz.quiz_type.name : nil
   json.category_id @quiz.category_id

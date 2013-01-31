@@ -1,3 +1,6 @@
+<% content_for :nav_menu_header do %>
+    Orders
+<% end %>
 <% if @order.responseCode == 100 %>
 	<%= render 'processed_order' %>
 <% else %>
