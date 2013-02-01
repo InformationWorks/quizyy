@@ -1,12 +1,12 @@
 /** resets **/
 body {
   background: white;
-  font-family: "myriad-pro","Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 100;
+  font-family: "Roboto","Open Sans", Helvetica, Arial, sans-serif;
+  font-weight: 300;
   font-size: 16px; }
 
 p {
-  font-family: "myriad-pro","Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font-family: "Roboto","Open Sans", Helvetica, Arial, sans-serif; }
 
 h1,
 h2,
@@ -22,16 +22,8 @@ button,
 select,
 textarea {
   font-size: 16px;
-  font-weight: 100;
+  font-weight: 300;
   line-height: 20px; }
-
-input,
-button,
-select,
-textarea {
-  font-family: "museo-sans","Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 100;
-  font-size: 16px; }
 
 label.checkbox input[type="checkbox"] ~ span.metro-checkbox::after {
   font-family: none; }
@@ -135,6 +127,10 @@ label.checkbox input[type="checkbox"] ~ span.metro-checkbox::after {
   border: 1px solid #2f87ed; }
 
 /** content styles **/
+#sidebar {
+  position: fixed;
+  top: 100px; }
+
 .marketing {
   text-align: center;
   color: #5A5A5A;
