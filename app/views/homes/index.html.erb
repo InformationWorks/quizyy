@@ -7,13 +7,13 @@
   <div class="metro span12">
     <div id="metrosections" class="metro-sections">
 
-      <div id="section1" class="metro-section tile-span-6">
+      <div id="section1" class="metro-section tile-span-4">
         <div class="row">
           <h2><%= @first_name%></h2>
           <h4><%= @last_name%></h4>
         </div>
         <div class="row">
-          <div class="span3" id = '<%= current_user.id %>' >
+          <div class="span4" id = '<%= current_user.id %>' >
             <div class="square image">
 
               <% if current_user.profile_image_url.to_s != "" %>
@@ -43,7 +43,7 @@
             <% end %>
           </div>
           -->
-          <div class="span3">
+          <div class="span4">
 
             <div class="row-fluid">
               <h2>Verbal</h2>
@@ -71,7 +71,7 @@
             </div>
 
           </div>
-          <div class="span2">
+          <div class="span3">
             <div class="row-fluid">
               <h1><%= current_user.overall_highest %></h1>
               <small>highest</small><span> / 340</span>
@@ -83,6 +83,7 @@
             <div class="row">
             </div>
           </div>
+
         </div>
 
       </div>

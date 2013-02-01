@@ -509,9 +509,17 @@
 hr.blue{
   border: 1px solid $other-blue;
 }
+  .metro .metro-sections .metro-section.tile-span-4 {
+    width: 540px;
+    margin-left: 0;
+  }
 
 /*Responsive rules*/
 @media (min-width: 1200px){
+  .metro .metro-sections .metro-section.tile-span-4 {
+    width: 640px;
+    margin-left: 0;
+  }
   #test-content {
     .left-pane,.right-pane{
       top: 220px;
@@ -549,6 +557,10 @@ hr.blue{
 }
 
 @media (max-width: 767px){
+  .metro .metro-sections .metro-section.tile-span-4 {
+    width: 540px;
+    margin-left: 0;
+  }
   #cart-wrapper{
     position: relative;
     min-width: 200px;
@@ -752,6 +764,7 @@ footer {
 
   @media (max-width: 979px) {
 
+
     .container.navbar-wrapper {
       margin-bottom: 0;
       width: auto;
@@ -784,7 +797,6 @@ footer {
 
 
   @media (max-width: 767px) {
-
     .navbar-inner {
       margin: -20px;
     }
