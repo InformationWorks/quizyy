@@ -509,10 +509,16 @@
 hr.blue{
   border: 1px solid $other-blue;
 }
-  .metro .metro-sections .metro-section.tile-span-4 {
-    width: 540px;
-    margin-left: 0;
-  }
+.metro .metro-sections .metro-section.tile-span-4 {
+  width: 540px;
+  margin-left: 0;
+}
+#sidebar{
+  position: fixed;
+  top:100px;
+  height: 600px;
+  overflow-y: scroll;
+}
 
 /*Responsive rules*/
 @media (min-width: 1200px){

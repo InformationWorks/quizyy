@@ -1,5 +1,4 @@
 GremastersWeb::Application.routes.draw do
-
   get "progress_report/index"
 
   get "progress_report/show"
@@ -35,6 +34,9 @@ GremastersWeb::Application.routes.draw do
   get "admins/home"
 
   resources :reports, :only=>[:index,:show] do
+  end
+
+  resources :reviews, :only=>[:show] do
   end
    # Package routes.
   resources :packages do
