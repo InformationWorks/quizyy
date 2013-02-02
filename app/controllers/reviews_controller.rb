@@ -27,13 +27,12 @@ class ReviewsController < ApplicationController
           end
           question.options.each do |option|
             if !questions_have_no_options.include?(question.type.code)
-              if attempt_details.find_all{ |a| a.option_id==option.id }
+              if attempt_details.find_all{ |a| a.option_id==option.id }.length > 0
                 option[:selected_by_user] = true
               else
                 option[:selected_by_user] = false
               end
             end
-            option[:selected_by_user] = false
           end
 
           question[:user_answers] = user_answers

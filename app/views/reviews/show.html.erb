@@ -53,11 +53,18 @@
               <% if question.option_type == :mcq %>
                   <div class="options">
                     <% question.options.each do |option| %>
-                        <% if option.selected_by_user %>
+                        <% if option.selected_by_user && option.correct %>
                             <label class="checkbox">
                               <input type="checkbox" name="option" checked value="<%= option.id %>">
                               <span class="metro-checkbox"><%= option.content %></span>
-                              <span class="label label-info">your answer</span></option>
+                              <span class="label label-success">correct answer</span>
+                              <span class="label label-info">your answer</span>
+                            </label>
+                        <% elsif option.selected_by_user %>
+                            <label class="checkbox">
+                              <input type="checkbox" name="option" checked value="<%= option.id %>">
+                              <span class="metro-checkbox"><%= option.content %></span>
+                              <span class="label label-important">your answer</span></option>
                             </label>
                         <% elsif option.correct %>
                             <label class="checkbox">
@@ -102,8 +109,10 @@
                           <% if first.length == 5 %> style="height: 130px;"
                           <% end %> >
                     <% first.each do |option| %>
-                        <% if option.selected_by_user %>
-                            <option value="<%= option.id %>"  style="background-color: #1e90ff;"><%= option.content %></option>
+                        <% if option.selected_by_user && option.correct %>
+                            <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %></option>
+                        <% elsif option.selected_by_user %>
+                            <option value="<%= option.id %>"  style="background-color: #ff0016;"><%= option.content %></option>
                         <% elsif option.correct %>
                             <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %></option>
                         <% else %>
@@ -121,8 +130,10 @@
                       <label>(ii)</label>
                       <select name="option2" multiple="multiple" disabled="true">
                         <% second.each do |option| %>
-                            <% if option.selected_by_user %>
-                                <option value="<%= option.id %>"  style="background-color: #1e90ff;"><%= option.content %>
+                            <% if option.selected_by_user && option.correct %>
+                                <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %></option>
+                            <% elsif option.selected_by_user %>
+                                <option value="<%= option.id %>"  style="background-color: #ff0016;"><%= option.content %>
                                   <span class="label label-info">your answer</span></option>
                             <% elsif option.correct %>
                                 <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %>
@@ -144,8 +155,10 @@
                       <label>(iii)</label>
                       <select name="option3" multiple="multiple" disabled="true">
                         <% third.each do |option| %>
-                            <% if option.selected_by_user %>
-                                <option value="<%= option.id %>" style="background-color: #1e90ff;"><%= option.content %>
+                            <% if option.selected_by_user && option.correct %>
+                                <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %></option>
+                            <% elsif option.selected_by_user %>
+                                <option value="<%= option.id %>" style="background-color: #ff0016;"><%= option.content %>
                                   <span class="label label-info">your answer</span></option>
                             <% elsif option.correct %>
                                 <option value="<%= option.id %>" style="background-color: #32cd32;"><%= option.content %>
