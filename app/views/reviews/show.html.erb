@@ -1,64 +1,167 @@
 <% content_for :footer do %>
     <script type="text/javascript">
-      $("body").scrollspy({
-      });
-      $("#sidebar li").on('activate',function(event){
-         $('#sidebar').scrollTop(event.target.offsetTop);
-      });
+        $("body").scrollspy({
+        });
+        $("#sidebar li").on('activate', function (event) {
+            $('#sidebar').scrollTop(event.target.offsetTop);
+        });
     </script>
 <% end %>
 <div id="content" class="row">
-<div class="span3">
+  <div class="span3">
     <ul id="sidebar" class="nav nav-list">
-    <% @sections.each do |section| %>
-        <li class="nav-header"><%= section.name %></li>
-        <% section.questions.each do |question| %>
-            <li><a href="#<%=question.id%>">
-              <% if question.correct %>
-                <i aria-hidden="true" class="icon-checkmark" style="color:green;"></i>
-              <%else%>
-                <i aria-hidden="true" class="icon-cancel-2" style="color:red;"></i>
-              <%end%>
-              &nbsp;<%= question.sequence_no %>
-            </a>
-            </li>
-        <% end %>
-    <% end %>
-    </ul>
-</div>
-<div class="questions span7">
-  <h3>Quiz Review</h3>
-
-  <h2>Full Length 101</h2>
-  <% @sections.each do |section| %>
-      <% section.questions.each do |question| %>
-          <div id="<%=question.id%>" style="padding-top: 100px;">
-            <% if question.sequence_no == 1%>
-                <h3><%= section.name %></h3>
-                <hr>
-            <%end%>
-            <h3>Question <%= question.sequence_no %></h3>
-
-            <div class="instruction">
-              <p class="lead">Instruction</p>
-
-              <p><%= question.instruction %></p>
-            </div>
-            <div class="question">
-              <p class="lead">Question</p>
-
-              <p><%= question.que_text %></p>
-            </div>
-            <div class="options">
-              <% question.options.each do |option| %>
-                  <label class="checkbox">
-                    <input type="checkbox" name="option" value="<%= option.id %>">
-                    <span class="metro-checkbox"><%= option.content %></span>
-                  </label>
-              <% end %>
-            </div>
-          </div>
+      <% @sections.each do |section| %>
+          <li class="nav-header"><%= section.name %></li>
+          <% section.questions.each do |question| %>
+              <li><a href="#<%= question.id %>">
+                <% if question.correct %>
+                    <i aria-hidden="true" class="icon-checkmark" style="color:green;"></i>
+                <% else %>
+                    <i aria-hidden="true" class="icon-cancel-2" style="color:red;"></i>
+                <% end %>
+                &nbsp;<%= question.sequence_no %>
+              </a>
+              </li>
+          <% end %>
       <% end %>
-  <% end %>
-</div>
+    </ul>
+  </div>
+  <div class="questions span8">
+    <h3>Quiz Review</h3>
+
+    <h2>Full Length 101</h2>
+    <% @sections.each do |section| %>
+        <% section.questions.each do |question| %>
+            <div id="<%= question.id %>" style="padding-top: 100px;">
+              <% if question.sequence_no == 1 %>
+                  <h3><%= section.name %></h3>
+                  <hr>
+              <% end %>
+              <h3>Question <%= question.sequence_no %></h3>
+
+              <div class="instruction">
+                <p class="lead">Instruction</p>
+
+                <p><%= question.instruction %></p>
+              </div>
+              <div class="question">
+                <p class="lead">Question</p>
+
+                <p><%= question.que_text %></p>
+              </div>
+              <form>
+              <% if question.option_type == :mcq %>
+                  <div class="options">
+                    <% question.options.each do |option| %>
+                        <% if option.selected_by_user %>
+                            <label class="checkbox">
+                              <input type="checkbox" name="option" checked value="<%= option.id %>">
+                              <span class="metro-checkbox"><%= option.content %></span>
+                              <span class="label label-info">your answer</span></option>
+                            </label>
+                        <% elsif option.correct %>
+                            <label class="checkbox">
+                              <input type="checkbox" name="option" checked value="<%= option.id %>">
+                              <span class="metro-checkbox"><%= option.content %></span>
+                              <span class="label label-success">correct answer</span></option>
+                            </label>
+                        <% else %>
+                            <label class="checkbox">
+                              <input type="checkbox" name="option" value="<%= option.id %>">
+                              <span class="metro-checkbox"><%= option.content %></span>
+                            </label>
+                        <% end %>
+
+                    <% end %>
+                  </div>
+              <% elsif question.option_type == :ne %>
+                  <% ans = question.options.first%>
+                      <%= ans %>
+              <% elsif question.option_type == :sip %>
+
+              <% elsif question.option_type == :tc %>
+                  <% if question.options.length <= 5 %>
+                      <% first = question.options %>
+                  <% else %>
+                      <% first = question.options[0..2] %>
+                  <% end %>
+                  <% if question.options.length >= 6 %>
+                      <% second = question.options[3..5] %>
+                  <% end %>
+                  <% if question.options.length == 9 %>
+                      <% third = question.options[6..8] %>
+                  <% end %>
+                  <% if first.length == 3 %>
+                      <div class="control-group pull-left" style="margin-right: 10px;">
+                        <div class="controls">
+                          <label>(i)</label>
+                  <% else %>
+                      <div class="control-group align-center">
+                  <% end %>
+                  <select name="option1" multiple="multiple"
+                          <% if first.length == 5 %> style="height: 130px;"
+                          <% end %> >
+                    <% first.each do |option| %>
+                        <% if option.selected_by_user %>
+                            <option value="<%= option.id %>" selected style="background-color: #1e90ff;"><%= option.content %></option>
+                        <% elsif option.correct %>
+                            <option value="<%= option.id %>" selected style="background-color: #32cd32;"><%= option.content %></option>
+                        <% else %>
+                            <option value="<%= option.id %>"><%= option.content %></option>
+                        <% end %>
+                    <% end %>
+                  </select>
+                  </div>
+                  </div>
+              <% end %>
+
+              <% if second %>
+                  <div class="control-group pull-left" style="margin-right: 10px;">
+                    <div class="controls">
+                      <label>(ii)</label>
+                      <select name="option2" multiple="multiple">
+                        <% second.each do |option| %>
+                            <% if option.selected_by_user %>
+                                <option value="<%= option.id %>" selected style="background-color: #1e90ff;"><%= option.content %>
+                                  <span class="label label-info">your answer</span></option>
+                            <% elsif option.correct %>
+                                <option value="<%= option.id %>" selected style="background-color: #32cd32;"><%= option.content %>
+                                  <span class="label label-success">correct answer</span></option>
+                            <% else %>
+                                <option value="<%= option.id %>"><%= option.content %></option>
+                            <% end %>
+                        <% end %>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="clearfix"></div>
+              <% end %>
+
+              <% if third %>
+                  <div class="control-group pull-left" style="margin-right: 10px;">
+                    <div class="controls">
+                      <label>(iii)</label>
+                      <select name="option3" multiple="multiple">
+                        <% third.each do |option| %>
+                            <% if option.selected_by_user %>
+                                <option value="<%= option.id %>" selected style="background-color: #1e90ff;"><%= option.content %>
+                                  <span class="label label-info">your answer</span></option>
+                            <% elsif option.correct %>
+                                <option value="<%= option.id %>" selected style="background-color: #32cd32;"><%= option.content %>
+                                  <span class="label label-success">correct answer</span></option>
+                            <% else %>
+                                <option value="<%= option.id %>"><%= option.content %></option>
+                            <% end %>
+                        <% end %>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+              <% end %>
+              </form>
+        <% end %>
+        <%end%>
+
+   </div>
 </div>
