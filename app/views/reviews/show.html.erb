@@ -3,40 +3,28 @@
       $("body").scrollspy({
       });
       $("#sidebar li").on('activate',function(event){
-
+         $('#sidebar').scrollTop(event.target.offsetTop);
       });
     </script>
 <% end %>
 <div id="content" class="row">
 <div class="span3">
-  <div id="sidebar" class="accordion">
+    <ul id="sidebar" class="nav nav-list">
     <% @sections.each do |section| %>
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#sidebar" href="#<%=section.slug%>">
-              <%= section.name %>
+        <li class="nav-header"><%= section.name %></li>
+        <% section.questions.each do |question| %>
+            <li><a href="#<%=question.id%>">
+              <% if question.correct %>
+                <i aria-hidden="true" class="icon-checkmark" style="color:green;"></i>
+              <%else%>
+                <i aria-hidden="true" class="icon-cancel-2" style="color:red;"></i>
+              <%end%>
+              &nbsp;<%= question.sequence_no %>
             </a>
-          </div>
-          <div id="<%=section.slug%>" class="accordion-body collapse in">
-            <div class="accordion-inner">
-              <ul class="nav nav-list">
-                <% section.questions.each do |question| %>
-                    <li><a href="#<%=question.id%>">
-                      <% if question.correct %>
-                        <i aria-hidden="true" class="icon-checkmark" style="color:green;"></i>
-                      <%else%>
-                        <i aria-hidden="true" class="icon-cancel-2" style="color:red;"></i>
-                      <%end%>
-                      &nbsp;<%= question.sequence_no %>
-                    </a>
-                    </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        </div>
+            </li>
+        <% end %>
     <% end %>
-  </div>
+    </ul>
 </div>
 <div class="questions span7">
   <h3>Quiz Review</h3>
@@ -45,6 +33,10 @@
   <% @sections.each do |section| %>
       <% section.questions.each do |question| %>
           <div id="<%=question.id%>" style="padding-top: 100px;">
+            <% if question.sequence_no == 1%>
+                <h3><%= section.name %></h3>
+                <hr>
+            <%end%>
             <h3>Question <%= question.sequence_no %></h3>
 
             <div class="instruction">
