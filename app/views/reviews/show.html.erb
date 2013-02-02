@@ -98,14 +98,14 @@
                   <% else %>
                       <div class="control-group align-center">
                   <% end %>
-                  <select name="option1" multiple="multiple"
+                  <select name="option1" multiple="multiple" disabled="true"
                           <% if first.length == 5 %> style="height: 130px;"
                           <% end %> >
                     <% first.each do |option| %>
                         <% if option.selected_by_user %>
-                            <option value="<%= option.id %>" selected style="background-color: #1e90ff;"><%= option.content %></option>
+                            <option value="<%= option.id %>"  style="background-color: #1e90ff;"><%= option.content %></option>
                         <% elsif option.correct %>
-                            <option value="<%= option.id %>" selected style="background-color: #32cd32;"><%= option.content %></option>
+                            <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %></option>
                         <% else %>
                             <option value="<%= option.id %>"><%= option.content %></option>
                         <% end %>
@@ -116,16 +116,16 @@
               <% end %>
 
               <% if second %>
-                  <div class="control-group pull-left" style="margin-right: 10px;">
+                  <div class="control-group pull-left" style="margin-right: 10px;" >
                     <div class="controls">
                       <label>(ii)</label>
-                      <select name="option2" multiple="multiple">
+                      <select name="option2" multiple="multiple" disabled="true">
                         <% second.each do |option| %>
                             <% if option.selected_by_user %>
-                                <option value="<%= option.id %>" selected style="background-color: #1e90ff;"><%= option.content %>
+                                <option value="<%= option.id %>"  style="background-color: #1e90ff;"><%= option.content %>
                                   <span class="label label-info">your answer</span></option>
                             <% elsif option.correct %>
-                                <option value="<%= option.id %>" selected style="background-color: #32cd32;"><%= option.content %>
+                                <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %>
                                   <span class="label label-success">correct answer</span></option>
                             <% else %>
                                 <option value="<%= option.id %>"><%= option.content %></option>
@@ -142,13 +142,13 @@
                   <div class="control-group pull-left" style="margin-right: 10px;">
                     <div class="controls">
                       <label>(iii)</label>
-                      <select name="option3" multiple="multiple">
+                      <select name="option3" multiple="multiple" disabled="true">
                         <% third.each do |option| %>
                             <% if option.selected_by_user %>
-                                <option value="<%= option.id %>" selected style="background-color: #1e90ff;"><%= option.content %>
+                                <option value="<%= option.id %>" style="background-color: #1e90ff;"><%= option.content %>
                                   <span class="label label-info">your answer</span></option>
                             <% elsif option.correct %>
-                                <option value="<%= option.id %>" selected style="background-color: #32cd32;"><%= option.content %>
+                                <option value="<%= option.id %>" style="background-color: #32cd32;"><%= option.content %>
                                   <span class="label label-success">correct answer</span></option>
                             <% else %>
                                 <option value="<%= option.id %>"><%= option.content %></option>
