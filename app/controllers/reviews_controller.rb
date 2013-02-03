@@ -36,10 +36,12 @@ class ReviewsController < ApplicationController
           end
 
           question[:user_answers] = user_answers
+          question[:attempted] = true
+          question[:correct] = false
           if user_answers!="" and correct_answers == user_answers
             question[:correct] = true
-          else
-            question[:correct] = false
+          elsif user_answers == ""
+            question[:attempted] = false
           end
           if question.type.code =~ numericEqRegEx
             question[:option_type] = :ne

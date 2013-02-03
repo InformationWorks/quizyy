@@ -15,9 +15,9 @@
           <% section.questions.each do |question| %>
               <li><a href="#<%= question.id %>">
                 <% if question.correct %>
-                    <i aria-hidden="true" class="icon-checkmark" style="color:green;"></i>
+                    <i aria-hidden="true" class="icon-checkmark" style="color:#468847;"></i>
                 <% else %>
-                    <i aria-hidden="true" class="icon-cancel-2" style="color:red;"></i>
+                    <i aria-hidden="true" class="icon-cancel-2" style="color:#b94a48;"></i>
                 <% end %>
                 &nbsp;<%= question.sequence_no %>
               </a>
@@ -37,7 +37,7 @@
                   <h3><%= section.name %></h3>
                   <hr>
               <% end %>
-              <h3>Question <%= question.sequence_no %></h3>
+              <h3>Question <%= question.sequence_no %> <% if question.correct %> <span class="label label-success">you got it right :-)</span><%elsif !question.attempted %> <span class="label label-important">you didn't answer <% else %><span class="label label-important">your got it wrong</span> <% end %></h3>
 
               <div class="instruction">
                 <p class="lead">Instruction</p>
@@ -82,8 +82,12 @@
                     <% end %>
                   </div>
               <% elsif question.option_type == :ne %>
-                  <% ans = question.options.first%>
-                      <%= ans %>
+                  <% ans = question.user_answers.sub ',','/' %>
+                  <% if question.correct %>
+                      <%= ans %> <span class="label label-info">your answer</span> <span class="label label-success">correct answer</span>
+                  <% else %>
+                        <% if question.attempted %> <%= ans %> <span class="label label-important">your answer</span> <% end %> <%=  question.options.first.content.sub ',','/' %> <span class="label label-success">correct answer</span>
+                  <% end %>
               <% elsif question.option_type == :sip %>
 
               <% elsif question.option_type == :tc %>
@@ -110,11 +114,11 @@
                           <% end %> >
                     <% first.each do |option| %>
                         <% if option.selected_by_user && option.correct %>
-                            <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %></option>
+                            <option value="<%= option.id %>"  style="background-color: #468847; color: white;"><%= option.content %></option>
                         <% elsif option.selected_by_user %>
-                            <option value="<%= option.id %>"  style="background-color: #ff0016;"><%= option.content %></option>
+                            <option value="<%= option.id %>"  style="background-color: #b94a48; color: white;"><%= option.content %></option>
                         <% elsif option.correct %>
-                            <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %></option>
+                            <option value="<%= option.id %>"  style="background-color: #468847; color: white;"><%= option.content %></option>
                         <% else %>
                             <option value="<%= option.id %>"><%= option.content %></option>
                         <% end %>
@@ -131,12 +135,12 @@
                       <select name="option2" multiple="multiple" disabled="true">
                         <% second.each do |option| %>
                             <% if option.selected_by_user && option.correct %>
-                                <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %></option>
+                                <option value="<%= option.id %>"  style="background-color: #468847; color: white;"><%= option.content %></option>
                             <% elsif option.selected_by_user %>
-                                <option value="<%= option.id %>"  style="background-color: #ff0016;"><%= option.content %>
+                                <option value="<%= option.id %>"  style="background-color: #b94a48; color: white;"><%= option.content %>
                                   <span class="label label-info">your answer</span></option>
                             <% elsif option.correct %>
-                                <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %>
+                                <option value="<%= option.id %>"  style="background-color: #468847; color: white;"><%= option.content %>
                                   <span class="label label-success">correct answer</span></option>
                             <% else %>
                                 <option value="<%= option.id %>"><%= option.content %></option>
@@ -156,12 +160,12 @@
                       <select name="option3" multiple="multiple" disabled="true">
                         <% third.each do |option| %>
                             <% if option.selected_by_user && option.correct %>
-                                <option value="<%= option.id %>"  style="background-color: #32cd32;"><%= option.content %></option>
+                                <option value="<%= option.id %>"  style="background-color: #468847; color: white;"><%= option.content %></option>
                             <% elsif option.selected_by_user %>
-                                <option value="<%= option.id %>" style="background-color: #ff0016;"><%= option.content %>
+                                <option value="<%= option.id %>" style="background-color: #b94a48; color: white;"><%= option.content %>
                                   <span class="label label-info">your answer</span></option>
                             <% elsif option.correct %>
-                                <option value="<%= option.id %>" style="background-color: #32cd32;"><%= option.content %>
+                                <option value="<%= option.id %>" style="background-color: #468847; color: white;"><%= option.content %>
                                   <span class="label label-success">correct answer</span></option>
                             <% else %>
                                 <option value="<%= option.id %>"><%= option.content %></option>

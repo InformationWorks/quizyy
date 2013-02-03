@@ -17,6 +17,7 @@
       <td><%= attempt.quiz.name %></td>
       <td><%= attempt.score.to_i() %> / 340</td>
       <td><a href="/reports/<%=attempt.quiz.slug%>" data-no-turbolink>show report</a></td>
+      <td><a href="/reviews/<%=attempt.quiz.slug %>">view solution</a></td>
       </tr>
     <% end %>
   </tbody>
