@@ -5,9 +5,7 @@ class Topic < ActiveRecord::Base
   validates :name, :slug, :presence => true
   validates :name, :uniqueness => true
   before_validation :generate_slug
-  
   belongs_to :section_type
-  
   # Select topics that have at-least 1 timed quiz associated to them.
   scope :with_timed_quiz_for_user, lambda { |user|
     if user == nil 
@@ -33,30 +31,30 @@ class Topic < ActiveRecord::Base
       joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false AND quizzes.approved = true')
     end
   }
-  
-  def scoped_timed_quizzes(user)
-    if user == nil 
-      self.quizzes.where('quizzes.timed = true AND quizzes.approved = true')
-    elsif user.role?(:super_admin) || user.role?(:admin) 
-      self.quizzes.where('quizzes.timed = true AND quizzes.published = true')
+
+  scope :timed_quizzes, lambda {|user|
+    if user == nil
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
+    elsif user.role?(:super_admin) || user.role?(:admin)
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.published = true')
     elsif user.role?(:publisher)
-      self.quizzes.where('quizzes.timed = true AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
     else
-      self.quizzes.where('quizzes.timed = true AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
     end
-  end
-  
-  def scoped_practice_quizzes(user)
-    if user == nil 
-      self.quizzes.where('quizzes.timed = false AND quizzes.approved = true')
-    elsif user.role?(:super_admin) || user.role?(:admin) 
-      self.quizzes.where('quizzes.timed = false AND quizzes.published = true')
+  }
+
+  scope :practice_quizzes, lambda {|user|
+    if user == nil
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
+    elsif user.role?(:super_admin) || user.role?(:admin)
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.published = true')
     elsif user.role?(:publisher)
-      self.quizzes.where('quizzes.timed = false AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
     else
-      self.quizzes.where('quizzes.timed = false AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
     end
-  end
+  }
   
   def to_param
     slug

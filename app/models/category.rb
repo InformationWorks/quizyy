@@ -13,7 +13,7 @@ class Category < ActiveRecord::Base
   scope :with_timed_quiz_for_user, lambda { |user|
     if user == nil 
       joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true AND quizzes.approved = true')
-    elsif user.role?(:super_admin) || user.role?(:admin) 
+    elsif user.role?(:super_admin) || user.role?(:admin)
       joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true AND quizzes.published = true')
     elsif user.role?(:publisher)
       joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true AND quizzes.published = true')
@@ -24,9 +24,9 @@ class Category < ActiveRecord::Base
   
   # Select categories that have at-least 1 practice quiz associated to them.
   scope :with_practice_quiz_for_user, lambda { |user|
-    if user == nil 
+    if user == nil
       joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false AND quizzes.approved = true')
-    elsif user.role?(:super_admin) || user.role?(:admin) 
+    elsif user.role?(:super_admin) || user.role?(:admin)
       joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false AND quizzes.published = true')
     elsif user.role?(:publisher)
       joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false AND quizzes.published = true')
@@ -35,29 +35,29 @@ class Category < ActiveRecord::Base
     end
   }
   
-  def scoped_timed_quizzes(user)
-    if user == nil 
-      self.quizzes.where('quizzes.timed = true AND quizzes.approved = true')
-    elsif user.role?(:super_admin) || user.role?(:admin) 
-      self.quizzes.where('quizzes.timed = true AND quizzes.published = true')
+  scope :timed_quizzes, lambda {|user|
+    if user == nil
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
+    elsif user.role?(:super_admin) || user.role?(:admin)
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.published = true')
     elsif user.role?(:publisher)
-      self.quizzes.where('quizzes.timed = true AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
     else
-      self.quizzes.where('quizzes.timed = true AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
     end
-  end
+  }
   
-  def scoped_practice_quizzes(user)
-    if user == nil 
-      self.quizzes.where('quizzes.timed = false AND quizzes.approved = true')
-    elsif user.role?(:super_admin) || user.role?(:admin) 
-      self.quizzes.where('quizzes.timed = false AND quizzes.published = true')
+  scope :practice_quizzes, lambda {|user|
+    if user == nil
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
+    elsif user.role?(:super_admin) || user.role?(:admin)
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.published = true')
     elsif user.role?(:publisher)
-      self.quizzes.where('quizzes.timed = false AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
     else
-      self.quizzes.where('quizzes.timed = false AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
     end
-  end
+  }
   
   def to_param
     slug

@@ -11,8 +11,8 @@
 <!-- show only three per row -->
     <div class="row">
       <% @full_length_quizzes.first(3).each do |quiz| %>
-      <div class="span2 quiz-tile">
-        <img src="http://placehold.it/150x100"/>
+        <div class="span2 quiz-tile">
+        <%= render :partial => "flip", :locals => {:word => quiz.word}  %>
         <div class="caption">
           <h3>
               <%= link_to quiz.name, show_timed_test_path(:quiz_slug => quiz.slug) %>
@@ -77,9 +77,9 @@
 <hr>
 <!-- show only three per row -->
 <div class="row">
-  <% category_or_topic.scoped_timed_quizzes(current_user).order("id ASC").first(3).each do |quiz| %>
+  <% category_or_topic.quizzes[0..2].each do |quiz| %>
   <div class="span2 quiz-tile">
-    <img src="http://placehold.it/150x100"/>
+    <%= render :partial => "flip", :locals => {:word => quiz.word}  %>
     <div class="caption">
       <h3><%= link_to quiz.name, show_timed_test_path(:quiz_slug => quiz.slug) %></h3>
       <p><%= quiz.desc %></p>

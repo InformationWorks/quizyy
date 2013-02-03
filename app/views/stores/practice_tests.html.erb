@@ -24,7 +24,7 @@
     <div class="row">
       <% category_or_topic.scoped_practice_quizzes(current_user).order("id ASC").first(3).each do |quiz| %>
       <div class="span2 quiz-tile">
-        <img src="http://placehold.it/150x100"/>
+        <%= render "flip" %>
         <div class="caption">
           <h3>
               <%= link_to quiz.name, show_practice_test_path(:quiz_slug => quiz.slug) %>

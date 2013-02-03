@@ -249,6 +249,38 @@ ALTER SEQUENCE categories_id_seq OWNED BY categories.id;
 
 
 --
+-- Name: dictionaries; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE dictionaries (
+    id integer NOT NULL,
+    word character varying(255),
+    meaning text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: dictionaries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE dictionaries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: dictionaries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE dictionaries_id_seq OWNED BY dictionaries.id;
+
+
+--
 -- Name: options; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -939,6 +971,13 @@ ALTER TABLE ONLY categories ALTER COLUMN id SET DEFAULT nextval('categories_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY dictionaries ALTER COLUMN id SET DEFAULT nextval('dictionaries_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY options ALTER COLUMN id SET DEFAULT nextval('options_id_seq'::regclass);
 
 
@@ -1107,6 +1146,14 @@ ALTER TABLE ONLY carts
 
 ALTER TABLE ONLY categories
     ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dictionaries_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY dictionaries
+    ADD CONSTRAINT dictionaries_pkey PRIMARY KEY (id);
 
 
 --
@@ -1662,3 +1709,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130127144155');
 INSERT INTO schema_migrations (version) VALUES ('20130127144813');
 
 INSERT INTO schema_migrations (version) VALUES ('20130129100743');
+
+INSERT INTO schema_migrations (version) VALUES ('20130203154706');
