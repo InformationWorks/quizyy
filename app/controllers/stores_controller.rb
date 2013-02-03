@@ -11,10 +11,7 @@ class StoresController < ApplicationController
     
     @full_length_quizzes = Quiz.scoped_timed_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC').first(3)
     @full_length_quizzes += current_user.quizzes.full.timed
-    dictionary = Dictionary.all().shuffle()
-    @full_length_quizzes.each do |quiz|
-      quiz.word = dictionary.pop()
-    end
+    load_words_for_quizzes(@full_length_quizzes)
 
     # Fetch categories & topics that have atleast one quiz.
     # TODO: .where("quizzes.approved = true")
@@ -28,9 +25,7 @@ class StoresController < ApplicationController
     @categories_and_topics +=  @topics
     @categories_and_topics.sort! { |a,b| a.name.downcase <=> b.name.downcase }
     @categories_and_topics.each do |category_and_topic|
-      category_and_topic.quizzes.each do |quiz|
-        quiz.word = dictionary.pop()
-      end
+      load_words_for_quizzes(category_and_topic.quizzes)
     end
 
 
@@ -51,11 +46,8 @@ class StoresController < ApplicationController
     @categories_and_topics +=  @categories
     @categories_and_topics +=  @topics
     @categories_and_topics.sort! { |a,b| a.name.downcase <=> b.name.downcase }
-    dictionary = Dictionary.all().shuffle()
     @categories_and_topics.each do |category_and_topic|
-      category_and_topic.quizzes.each do |quiz|
-        quiz.word = dictionary.pop()
-      end
+      load_words_for_quizzes(category_and_topic.quizzes)
     end
   end
   
@@ -69,36 +61,46 @@ class StoresController < ApplicationController
   
   def category_timed_tests
     @category = Category.find_by_slug!(params[:category_slug])
-    
-    @quizzes = @category.scoped_timed_quizzes(current_user).order("id ASC")
+    @quizzes = Category.timed_quizzes(current_user).order("id ASC").where("categories.id = ?",@category.id).quizzes
+    @quizzes = load_words_for_quizzes(@quizzes)
   end
   
   def topic_timed_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
-    
-    @quizzes = @topic.scoped_timed_quizzes(current_user).order("id ASC")
+    @quizzes = Topic.timed_quizzes(current_user).order("id ASC").where("topics.id IN (?)",@topics).quizzes
+    @quizzes = load_words_for_quizzes(@quizzes)
   end
   
   def category_practice_tests
     @category = Category.find_by_slug!(params[:category_slug])
-    
-    @quizzes = @category.scoped_practice_quizzes(current_user).order("id ASC")
+    @quizzes = Category.practice_quizzes(current_user).order("id ASC").where("categories.id = ?",@category.id).quizzes
+    @quizzes = load_words_for_quizzes(@quizzes)
   end
   
   def topic_practice_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
-    
-    @quizzes = @topic.scoped_practice_quizzes(current_user).order("id ASC")
+    @quizzes = Topic.practice_quizzes(current_user).order("id ASC").where("topics.id IN (?)",@topics).quizzes
+    @quizzes = load_words_for_quizzes(@quizzes)
   end
   
   def full_practice_tests
     @quizzes = Quiz.scoped_practice_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC')
     @quizzes += current_user.quizzes.full.timed
+    @quizzes = load_words_for_quizzes(@quizzes)
   end
   
   def full_timed_tests
     @quizzes = Quiz.scoped_timed_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC')
     @quizzes += current_user.quizzes.full.timed
+    @quizzes = load_words_for_quizzes(@quizzes)
   end
-  
+
+  private
+  def load_words_for_quizzes(quizzes)
+    dictionary = Dictionary.all().shuffle()
+    quizzes.each do |quiz|
+      quiz.word = dictionary.pop()
+    end
+    quizzes
+  end
 end
