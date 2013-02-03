@@ -61,26 +61,43 @@ class StoresController < ApplicationController
   
   def category_timed_tests
     @category = Category.find_by_slug!(params[:category_slug])
-    @quizzes = Category.timed_quizzes(current_user).order("id ASC").where("categories.id = ?",@category.id).quizzes
-    @quizzes = load_words_for_quizzes(@quizzes)
+    @quizzes = Category.timed_quizzes(current_user).order("quizzes.id ASC").where("categories.id = ?",@category.id).first()
+    if @category
+      @quizzes = load_words_for_quizzes(@category.quizzes)
+    else
+      @quizzes = []
+    end
   end
   
   def topic_timed_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
-    @quizzes = Topic.timed_quizzes(current_user).order("id ASC").where("topics.id IN (?)",@topics).quizzes
+    @quizzes = Topic.timed_quizzes(current_user).order("quizzes.id ASC").where("topics.id IN (?)",@topics).first()
     @quizzes = load_words_for_quizzes(@quizzes)
+    if @topic
+      @quizzes = load_words_for_quizzes(@topic.quizzes)
+    else
+      @quizzes = []
+    end
   end
   
   def category_practice_tests
     @category = Category.find_by_slug!(params[:category_slug])
-    @quizzes = Category.practice_quizzes(current_user).order("id ASC").where("categories.id = ?",@category.id).quizzes
-    @quizzes = load_words_for_quizzes(@quizzes)
+    @category = Category.practice_quizzes(current_user).order("quizzes.id ASC").where("categories.id = ?",@category.id).first()
+    if @category
+      @quizzes = load_words_for_quizzes(@category.quizzes)
+    else
+      @quizzes = []
+    end
   end
   
   def topic_practice_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
-    @quizzes = Topic.practice_quizzes(current_user).order("id ASC").where("topics.id IN (?)",@topics).quizzes
-    @quizzes = load_words_for_quizzes(@quizzes)
+    @topic = Topic.practice_quizzes(current_user).order("quizzes.id ASC").where("topics.id IN (?)",@topics).first()
+    if @topic
+      @quizzes = load_words_for_quizzes(@topic.quizzes)
+    else
+      @quizzes = []
+    end
   end
   
   def full_practice_tests
