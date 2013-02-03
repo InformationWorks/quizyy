@@ -16,9 +16,9 @@ class StoresController < ApplicationController
     # Fetch categories & topics that have atleast one quiz.
     # TODO: .where("quizzes.approved = true")
     @categories = Category.with_timed_quiz_for_user(current_user).order('categories.name ASC').collect{|c| c.id}
-    @categories = Category.timed_quizzes(current_user).where("categories.id IN (?)",@categories)
+    @categories = Category.timed_quizzes(current_user,@categories)
     @topics = Topic.with_timed_quiz_for_user(current_user).order('topics.name ASC').collect{|c| c.id}
-    @topics = Topic.timed_quizzes(current_user).where("topics.id IN (?)",@topics)
+    @topics = Topic.timed_quizzes(current_user,@topics)
     # Merge categories & topics in the same list.
     @categories_and_topics = []
     @categories_and_topics +=  @categories
@@ -36,9 +36,9 @@ class StoresController < ApplicationController
     # Fetch categories & topics that have at-least one quiz.
     # TODO: .where("quizzes.approved = true")
     @categories = Category.with_practice_quiz_for_user(current_user).order('name ASC').collect{|c| c.id}
-    @categories = Category.timed_quizzes(current_user).where("categories.id IN (?)",@categories)
+    @categories = Category.timed_quizzes(current_user,@categories)
     @topics = Topic.with_practice_quiz_for_user(current_user).order('name ASC').collect{|t| t.id}
-    @topics = Topic.practice_quizzes(current_user).where("topics.id IN (?)",@topics)
+    @topics = Topic.practice_quizzes(current_user,@topics)
 
 
     # Merge categories & topics in the same list.
@@ -61,7 +61,7 @@ class StoresController < ApplicationController
   
   def category_timed_tests
     @category = Category.find_by_slug!(params[:category_slug])
-    @quizzes = Category.timed_quizzes(current_user).order("quizzes.id ASC").where("categories.id = ?",@category.id).first()
+    @category = Category.timed_quizzes(current_user,@category.id).order("quizzes.id ASC").first()
     if @category
       @quizzes = load_words_for_quizzes(@category.quizzes)
     else
@@ -71,7 +71,7 @@ class StoresController < ApplicationController
   
   def topic_timed_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
-    @quizzes = Topic.timed_quizzes(current_user).order("quizzes.id ASC").where("topics.id = ?",@topic.id).first()
+    @topic = Topic.timed_quizzes(current_user,@topic.id).order("quizzes.id ASC").first()
     if @topic
       @quizzes = load_words_for_quizzes(@topic.quizzes)
     else
@@ -81,7 +81,7 @@ class StoresController < ApplicationController
   
   def category_practice_tests
     @category = Category.find_by_slug!(params[:category_slug])
-    @category = Category.practice_quizzes(current_user).order("quizzes.id ASC").where("categories.id = ?",@category.id).first()
+    @category = Category.practice_quizzes(current_user,@category.id).order("quizzes.id ASC").first()
     if @category
       @quizzes = load_words_for_quizzes(@category.quizzes)
     else
@@ -91,7 +91,7 @@ class StoresController < ApplicationController
   
   def topic_practice_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
-    @topic = Topic.practice_quizzes(current_user).order("quizzes.id ASC").where("topics.id = ?",@topic.id).first()
+    @topic = Topic.practice_quizzes(current_user,@topic.id).order("quizzes.id ASC").first()
     if @topic
       @quizzes = load_words_for_quizzes(@topic.quizzes)
     else

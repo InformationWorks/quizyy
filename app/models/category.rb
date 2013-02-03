@@ -35,27 +35,27 @@ class Category < ActiveRecord::Base
     end
   }
   
-  scope :timed_quizzes, lambda {|user|
+  scope :timed_quizzes, lambda {|user,category_ids|
     if user == nil
-      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE')
+      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
     elsif user.role?(:super_admin) || user.role?(:admin)
-      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.published IS TRUE')
+      includes(:quizzes).where('quizzes.timed IS TRUE AND categories.id IN (?)', category_ids)
     elsif user.role?(:publisher)
-      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE')
+      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
     else
-      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE')
+      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
     end
   }
   
-  scope :practice_quizzes, lambda {|user|
+  scope :practice_quizzes, lambda {|user,category_ids|
     if user == nil
-      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE')
+      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
     elsif user.role?(:super_admin) || user.role?(:admin)
-      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.published IS TRUE')
+      includes(:quizzes).where('quizzes.timed IS FALSE AND categories.id IN (?)', category_ids)
     elsif user.role?(:publisher)
-      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE')
+      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
     else
-      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE')
+      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
     end
   }
   

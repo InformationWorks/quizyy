@@ -32,27 +32,27 @@ class Topic < ActiveRecord::Base
     end
   }
 
-  scope :timed_quizzes, lambda {|user|
+  scope :timed_quizzes, lambda {|user,topic_ids|
     if user == nil
-      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true AND topics.id in (?)', topic_ids)
     elsif user.role?(:super_admin) || user.role?(:admin)
-      includes(:quizzes).where('quizzes.timed = true AND quizzes.published = true')
+      includes(:quizzes).where('quizzes.timed = true AND topics.id in (?)', topic_ids)
     elsif user.role?(:publisher)
-      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true AND topics.id in (?)', topic_ids)
     else
-      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true AND topics.id in (?)', topic_ids)
     end
   }
 
-  scope :practice_quizzes, lambda {|user|
+  scope :practice_quizzes, lambda {|user,topic_ids|
     if user == nil
-      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true AND topics.id in (?)', topic_ids)
     elsif user.role?(:super_admin) || user.role?(:admin)
-      includes(:quizzes).where('quizzes.timed = false AND quizzes.published = true')
+      includes(:quizzes).where('quizzes.timed = false AND topics.id in (?)', topic_ids)
     elsif user.role?(:publisher)
-      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true AND topics.id in (?)', topic_ids)
     else
-      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true AND topics.id in (?)', topic_ids)
     end
   }
   
