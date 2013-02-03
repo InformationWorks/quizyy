@@ -37,25 +37,25 @@ class Category < ActiveRecord::Base
   
   scope :timed_quizzes, lambda {|user|
     if user == nil
-      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE')
     elsif user.role?(:super_admin) || user.role?(:admin)
-      includes(:quizzes).where('quizzes.timed = true AND quizzes.published = true')
+      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.published IS TRUE')
     elsif user.role?(:publisher)
-      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE')
     else
-      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE')
     end
   }
   
   scope :practice_quizzes, lambda {|user|
     if user == nil
-      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE')
     elsif user.role?(:super_admin) || user.role?(:admin)
-      includes(:quizzes).where('quizzes.timed = false AND quizzes.published = true')
+      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.published IS TRUE')
     elsif user.role?(:publisher)
-      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE')
     else
-      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true')
+      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE')
     end
   }
   

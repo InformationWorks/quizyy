@@ -71,8 +71,7 @@ class StoresController < ApplicationController
   
   def topic_timed_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
-    @quizzes = Topic.timed_quizzes(current_user).order("quizzes.id ASC").where("topics.id IN (?)",@topics).first()
-    @quizzes = load_words_for_quizzes(@quizzes)
+    @quizzes = Topic.timed_quizzes(current_user).order("quizzes.id ASC").where("topics.id = ?",@topic.id).first()
     if @topic
       @quizzes = load_words_for_quizzes(@topic.quizzes)
     else
@@ -92,7 +91,7 @@ class StoresController < ApplicationController
   
   def topic_practice_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
-    @topic = Topic.practice_quizzes(current_user).order("quizzes.id ASC").where("topics.id IN (?)",@topics).first()
+    @topic = Topic.practice_quizzes(current_user).order("quizzes.id ASC").where("topics.id = ?",@topic.id).first()
     if @topic
       @quizzes = load_words_for_quizzes(@topic.quizzes)
     else
@@ -115,9 +114,13 @@ class StoresController < ApplicationController
   private
   def load_words_for_quizzes(quizzes)
     dictionary = Dictionary.all().shuffle()
-    quizzes.each do |quiz|
-      quiz.word = dictionary.pop()
+    if quizzes
+      quizzes.each do |quiz|
+        quiz.word = dictionary.pop()
+      end
+      quizzes
+    else
+      []
     end
-    quizzes
   end
 end
