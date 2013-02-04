@@ -1,12 +1,3 @@
-<% content_for :footer do %>
-    <script type="text/javascript">
-        $("body").scrollspy({
-        });
-        $("#sidebar li").on('activate', function (event) {
-            $('#sidebar').scrollTop(event.target.offsetTop);
-        });
-    </script>
-<% end %>
 <div id="content" class="row">
   <div class="span3">
     <ul id="sidebar" class="nav nav-list">
