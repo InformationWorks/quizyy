@@ -524,8 +524,73 @@ hr.blue{
   overflow-y: scroll;
 }
 
-/*Responsive rules*/
-@media (min-width: 1200px){
+button[type="submit"], input[type="submit"] {
+  background-clip: border-box;
+  background-color: $blue;
+  border-color: transparent;
+  color: white;
+}
+
+button[type="submit"]:hover, input[type="submit"]:hover {
+  background-clip: border-box;
+  background-color: $other-blue;
+  border-color: transparent;
+  color: white;
+}
+
+button.win-command {
+  background-color: transparent;
+  border-color: transparent;
+}
+button.win-command:hover{
+  background-color: transparent;
+}
+
+.category-section{
+  margin-top: 30px;
+}
+.category-section.first{
+  margin-top: 0px;
+}
+
+.category-section .quiz-tile{
+  margin-top: 20px;
+  min-height: 250px;
+  padding: 10px;
+  border: 1px solid white;
+  &:hover{
+    border: 1px solid $other-blue;
+  }
+}
+
+.buy-btn{
+  background: $other-blue;
+  border: 1px solid $other-blue;
+  color: white;
+  &:hover{
+    border: 1px solid $other-blue;
+    color: black;
+  }
+}
+  
+h3.admin {
+  font-size: 16.95px;
+}
+footer {
+  text-align: center;
+  padding: 30px 0;
+  margin-top: 70px;
+  border-top: 1px solid #e5e5e5;
+  background-color: #f5f5f5;
+}
+.footer-links li{
+    display: inline;
+    padding: 0 2px;
+}
+
+  /* RESPONSIVE CSS
+  -------------------------------------------------- */
+  @media (min-width: 1200px){
   .metro .metro-sections .metro-section.tile-span-4 {
     width: 640px;
     margin-left: 0;
@@ -668,189 +733,4 @@ hr.blue{
   .span6 {
     width: 550px;
   }
-}
-
-
-button[type="submit"], input[type="submit"] {
-  background-clip: border-box;
-  background-color: $blue;
-  border-color: transparent;
-  color: white;
-}
-
-button[type="submit"]:hover, input[type="submit"]:hover {
-  background-clip: border-box;
-  background-color: $other-blue;
-  border-color: transparent;
-  color: white;
-}
-
-button.win-command {
-  background-color: transparent;
-  border-color: transparent;
-}
-button.win-command:hover{
-  background-color: transparent;
-}
-/* Carousel base class */
-.carousel {
-  margin-bottom: 60px;
-}
-
-.carousel .container {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.carousel-control {
-  background-color: transparent;
-  border: 0;
-  font-size: 120px;
-  margin-top: 0;
-  text-shadow: 0 1px 1px rgba(0,0,0,.4);
-}
-
-.carousel .item {
-  height: 500px;
-}
-.carousel img {
-  min-width: 100%;
-  height: 500px;
-}
-
-.carousel-caption {
-  background-color: transparent;
-  position: static;
-  max-width: 550px;
-  padding: 0 20px;
-  margin-bottom: 100px;
-}
-.carousel-caption h1,
-.carousel-caption .lead {
-  margin: 0;
-  line-height: 1.25;
-  color: #fff;
-  text-shadow: 0 1px 1px rgba(0,0,0,.4);
-}
-.carousel-caption .btn {
-  margin-top: 10px;
-}
-
-.category-section{
-  margin-top: 30px;
-}
-.category-section.first{
-  margin-top: 0px;
-}
-
-.category-section .quiz-tile{
-  margin-top: 20px;
-  min-height: 250px;
-  padding: 10px;
-  border: 1px solid white;
-  &:hover{
-    border: 1px solid $other-blue;
-  }
-}
-
-.buy-btn{
-  background: $other-blue;
-  border: 1px solid $other-blue;
-  color: white;
-  &:hover{
-    border: 1px solid $other-blue;
-    color: black;
-  }
-}
-footer {
-  text-align: center
-}
-
-
-  /* RESPONSIVE CSS
-  -------------------------------------------------- */
-
-  @media (max-width: 979px) {
-
-
-    .container.navbar-wrapper {
-      margin-bottom: 0;
-      width: auto;
-    }
-    .navbar-inner {
-      border-radius: 0;
-      margin: -20px 0;
-    }
-
-    .carousel .item {
-      height: 500px;
-    }
-    .carousel img {
-      width: auto;
-      height: 500px;
-    }
-
-    .featurette {
-      height: auto;
-      padding: 0;
-    }
-    .featurette-image.pull-left,
-    .featurette-image.pull-right {
-      display: block;
-      float: none;
-      max-width: 40%;
-      margin: 0 auto 20px;
-    }
-  }
-
-
-  @media (max-width: 767px) {
-    .navbar-inner {
-      margin: -20px;
-    }
-
-    .carousel {
-      margin-left: -20px;
-      margin-right: -20px;
-    }
-    .carousel .container {
-
-    }
-    .carousel .item {
-      height: 300px;
-    }
-    .carousel img {
-      height: 300px;
-    }
-    .carousel-caption {
-      width: 65%;
-      padding: 0 70px;
-      margin-bottom: 40px;
-    }
-    .carousel-caption h1 {
-      font-size: 30px;
-    }
-    .carousel-caption .lead,
-    .carousel-caption .btn {
-      font-size: 18px;
-    }
-
-    .marketing .span4 + .span4 {
-      margin-top: 40px;
-    }
-
-    .featurette-heading {
-      font-size: 30px;
-    }
-    .featurette .lead {
-      font-size: 18px;
-      line-height: 1.5;
-    }
-
-  }
-  
-h3.admin {
-  font-size: 16.95px;
 }
