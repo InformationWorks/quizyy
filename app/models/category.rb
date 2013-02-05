@@ -16,7 +16,7 @@ class Category < ActiveRecord::Base
     elsif user.role?(:super_admin) || user.role?(:admin)
       joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true AND quizzes.published = true')
     elsif user.role?(:publisher)
-      joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true AND quizzes.published = true')
+      joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true')
     else
       joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true AND quizzes.approved = true')
     end
@@ -29,7 +29,7 @@ class Category < ActiveRecord::Base
     elsif user.role?(:super_admin) || user.role?(:admin)
       joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false AND quizzes.published = true')
     elsif user.role?(:publisher)
-      joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false AND quizzes.published = true')
+      joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false')
     else
       joins(:quizzes).group("categories.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false AND quizzes.approved = true')
     end
@@ -39,9 +39,9 @@ class Category < ActiveRecord::Base
     if user == nil
       includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
     elsif user.role?(:super_admin) || user.role?(:admin)
-      includes(:quizzes).where('quizzes.timed IS TRUE AND categories.id IN (?)', category_ids)
+      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.published IS TRUE AND categories.id IN (?)', category_ids)
     elsif user.role?(:publisher)
-      includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
+      includes(:quizzes).where('quizzes.timed IS TRUE AND categories.id IN (?)', category_ids)
     else
       includes(:quizzes).where('quizzes.timed IS TRUE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
     end
@@ -51,9 +51,9 @@ class Category < ActiveRecord::Base
     if user == nil
       includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
     elsif user.role?(:super_admin) || user.role?(:admin)
-      includes(:quizzes).where('quizzes.timed IS FALSE AND categories.id IN (?)', category_ids)
+      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.published IS TRUE AND categories.id IN (?)', category_ids)
     elsif user.role?(:publisher)
-      includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
+      includes(:quizzes).where('quizzes.timed IS FALSE AND categories.id IN (?)', category_ids)
     else
       includes(:quizzes).where('quizzes.timed IS FALSE AND quizzes.approved IS TRUE AND categories.id IN (?)', category_ids)
     end

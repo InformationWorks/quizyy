@@ -38,7 +38,7 @@ class Quiz < ActiveRecord::Base
     elsif user.role?(:super_admin) || user.role?(:admin) 
       Quiz.full.timed.published
     elsif user.role?(:publisher)
-      Quiz.full.timed.published
+      Quiz.full.timed
     else
       Quiz.full.timed.approved
     end

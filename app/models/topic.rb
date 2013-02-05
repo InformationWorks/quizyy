@@ -13,7 +13,7 @@ class Topic < ActiveRecord::Base
     elsif user.role?(:super_admin) || user.role?(:admin) 
       joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true AND quizzes.published = true')
     elsif user.role?(:publisher)
-      joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true AND quizzes.published = true')
+      joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true')
     else
       joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = true AND quizzes.approved = true')
     end
@@ -26,7 +26,7 @@ class Topic < ActiveRecord::Base
     elsif user.role?(:super_admin) || user.role?(:admin) 
       joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false AND quizzes.published = true')
     elsif user.role?(:publisher)
-      joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false AND quizzes.published = true')
+      joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false')
     else
       joins(:quizzes).group("topics.id HAVING count(quizzes.id) > 0").where('quizzes.timed = false AND quizzes.approved = true')
     end
@@ -36,9 +36,9 @@ class Topic < ActiveRecord::Base
     if user == nil
       includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true AND topics.id in (?)', topic_ids)
     elsif user.role?(:super_admin) || user.role?(:admin)
-      includes(:quizzes).where('quizzes.timed = true AND topics.id in (?)', topic_ids)
+      includes(:quizzes).where('quizzes.timed = true AND quizzes.published = true AND topics.id in (?)', topic_ids)
     elsif user.role?(:publisher)
-      includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true AND topics.id in (?)', topic_ids)
+      includes(:quizzes).where('quizzes.timed = true AND topics.id in (?)', topic_ids)
     else
       includes(:quizzes).where('quizzes.timed = true AND quizzes.approved = true AND topics.id in (?)', topic_ids)
     end
@@ -48,9 +48,9 @@ class Topic < ActiveRecord::Base
     if user == nil
       includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true AND topics.id in (?)', topic_ids)
     elsif user.role?(:super_admin) || user.role?(:admin)
-      includes(:quizzes).where('quizzes.timed = false AND topics.id in (?)', topic_ids)
+      includes(:quizzes).where('quizzes.timed = false AND quizzes.published = true AND topics.id in (?)', topic_ids)
     elsif user.role?(:publisher)
-      includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true AND topics.id in (?)', topic_ids)
+      includes(:quizzes).where('quizzes.timed = false AND topics.id in (?)', topic_ids)
     else
       includes(:quizzes).where('quizzes.timed = false AND quizzes.approved = true AND topics.id in (?)', topic_ids)
     end
