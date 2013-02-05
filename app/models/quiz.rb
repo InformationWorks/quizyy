@@ -20,6 +20,8 @@ class Quiz < ActiveRecord::Base
   belongs_to :approver, :class_name => "User"
   
   scope :full, :conditions => { :quiz_type_id => ( QuizType.find_by_name("FullQuiz") != nil ? QuizType.find_by_name("FullQuiz").id : -1 ) }
+  scope :category, :conditions => { :quiz_type_id => ( QuizType.find_by_name("CategoryQuiz") != nil ? QuizType.find_by_name("CategoryQuiz").id : -1 ) }
+  scope :topic, :conditions => { :quiz_type_id => ( QuizType.find_by_name("TopicQuiz") != nil ? QuizType.find_by_name("TopicQuiz").id : -1 ) }
   scope :timed, :conditions => { :timed => true }
   scope :practice, :conditions => { :timed => false }
   scope :free, :conditions => { :price => 0 }

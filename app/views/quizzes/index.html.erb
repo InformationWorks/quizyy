@@ -15,140 +15,31 @@
 			<!-- Tab #static -->
 			<div class="tab-pane active" id="static">
 				<h3><span class="awe-edit"></span> Full Tests</h3>				
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						<% @full_quizzes.each do |quiz| %>
-						  <tr>
-						    <td>
-						    	<%= quiz.name %>
-						    	<% if quiz.approved %>
-						    		<span class="label label-success">In-Store</span>
-						    	<% elsif quiz.published %>
-						    		<span class="label label-warning">Awaiting approval</span>
-								<% else %>
-						    		<span class="label label-error">Unpublished</span>						    		
-						    	<% end %>
-						    </td>
-						    <td class="toolbar">
-						      <div class="btn-group">
-						    	<%= link_to(quiz, :class => "btn") do %>
-						    	  <span class="awe-eye-open"></span>
-						    	<% end %>
-						    	<%= link_to(edit_quiz_path(quiz), :class => "btn") do %>
-						    	  <span class="awe-wrench"></span>
-						    	<% end %>
-						    	<%= link_to(quiz, method: :delete, data: { confirm: 'Are you sure you want to delete this quiz' }, :class => "btn") do %>
-						    	  <span class="awe-remove"></span>
-						    	<% end %>
-						      </div>
-						    </td>
-						  </tr>
-						<% end %>
-					</tbody>
-				</table>
+				
+				<%= render :partial => "quiz_table", :locals => { :table_type => "full_timed" }  %>
+				
+				<%= render :partial => "quiz_table", :locals => { :table_type => "full_practice" }  %>
+			</div>	
 		</section>
 		
 		<section class="tab-content">
 			<!-- Tab #static -->
 			<div class="tab-pane active" id="static">
 				<h3><span class="awe-edit"></span> Category Tests</h3>
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Category</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						<% @category_quizzes.each do |quiz| %>
-						  <tr>
-						    <td>
-						    	<%= quiz.name %>
-						    	<% if quiz.approved %>
-						    		<span class="label label-success">In-Store</span>
-						    	<% elsif quiz.published %>
-						    		<span class="label label-warning">Awaiting approval</span>
-								<% else %>
-						    		<span class="label label-error">Unpublished</span>						    		
-						    	<% end %>
-						    </td>
-						    <td>
-						    	<%= quiz.category ? quiz.category.name : "" %>
-						    </td>
-						    <td class="toolbar">
-						      <div class="btn-group">
-						    	<%= link_to(quiz, :class => "btn") do %>
-						    	  <span class="awe-eye-open"></span>
-						    	<% end %>
-						    	<%= link_to(edit_quiz_path(quiz), :class => "btn") do %>
-						    	  <span class="awe-wrench"></span>
-						    	<% end %>
-						    	<%= link_to(quiz, method: :delete, data: { confirm: 'Are you sure you want to delete this quiz' }, :class => "btn") do %>
-						    	  <span class="awe-remove"></span>
-						    	<% end %>
-						      </div>
-						    </td>
-						  </tr>
-						<% end %>
-					</tbody>
-				</table>
+				<%= render :partial => "quiz_table", :locals => { :table_type => "category_timed" }  %>
+                
+                <%= render :partial => "quiz_table", :locals => { :table_type => "category_practice" }  %>
+			</div>	
 		</section>
 		
 		<section class="tab-content">
 			<!-- Tab #static -->
 			<div class="tab-pane active" id="static">
 				<h3><span class="awe-edit"></span> Topic Tests</h3>
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Topic</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						<% @topic_quizzes.each do |quiz| %>
-						  <tr>
-						    <td>
-						    	<%= quiz.name %>
-						    	<% if quiz.approved %>
-						    		<span class="label label-success">In-Store</span>
-						    	<% elsif quiz.published %>
-						    		<span class="label label-warning">Awaiting approval</span>
-								<% else %>
-						    		<span class="label label-error">Unpublished</span>						    		
-						    	<% end %>
-						    </td>
-						    <td>
-						    	<%= quiz.topic ? quiz.topic.name : "" %>
-						    </td>
-						    <td class="toolbar">
-						      <div class="btn-group">
-						    	<%= link_to(quiz, :class => "btn") do %>
-						    	  <span class="awe-eye-open"></span>
-						    	<% end %>
-						    	<%= link_to(edit_quiz_path(quiz), :class => "btn") do %>
-						    	  <span class="awe-wrench"></span>
-						    	<% end %>
-						    	<%= link_to(quiz, method: :delete, data: { confirm: 'Are you sure you want to delete this quiz' }, :class => "btn") do %>
-						    	  <span class="awe-remove"></span>
-						    	<% end %>
-						      </div>
-						    </td>
-						  </tr>
-						<% end %>
-					</tbody>
-				</table>
+				<%= render :partial => "quiz_table", :locals => { :table_type => "topic_timed" }  %>
+                
+                <%= render :partial => "quiz_table", :locals => { :table_type => "topic_practice" }  %>
+            </div>
 		</section>
 		
 		

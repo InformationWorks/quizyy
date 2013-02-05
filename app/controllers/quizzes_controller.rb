@@ -10,10 +10,18 @@ class QuizzesController < ApplicationController
   # GET /quizzes.json
   def index
     
-    @quizzes = Quiz.all
-    @full_quizzes = Quiz.where(:quiz_type_id => QuizType.find_by_name("FullQuiz"))
-    @category_quizzes = Quiz.where(:quiz_type_id => QuizType.find_by_name("CategoryQuiz"))
-    @topic_quizzes = Quiz.where(:quiz_type_id => QuizType.find_by_name("TopicQuiz"))
+    ####
+    # TODO: It might be more efficient to load all the quizzes in memory first
+    # and then construct different arrays instead of using multiple queries.
+    ####
+    @full_timed_quizzes = Quiz.full.timed
+    @full_practice_quizzes = Quiz.full.practice
+    
+    @category_timed_quizzes = Quiz.category.timed
+    @category_practice_quizzes = Quiz.category.practice
+    
+    @topic_timed_quizzes = Quiz.topic.timed
+    @topic_practice_quizzes = Quiz.topic.practice
 
     respond_to do |format|
       format.html # index.html.erb
