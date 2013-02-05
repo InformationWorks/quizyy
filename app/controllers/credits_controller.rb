@@ -21,6 +21,14 @@ class CreditsController < ApplicationController
     activity_log.action = "AddCredit"
     activity_log.target_id = @user.id
     activity_log.activity = "added #{params[:credits_to_add]} to #{@user.full_name}'s account."
+    
+    if params[:credits_add_desc_dropdown] == "Custom"
+      desc = params[:custom_desc_add]
+    else
+      desc = params[:credits_add_desc_dropdown]
+    end
+    
+    activity_log.desc = desc
     activity_log.save!
     
     redirect_to new_credit_path(@user.id), notice: "Credit added successfully."
@@ -35,6 +43,7 @@ class CreditsController < ApplicationController
     
     if @user.credits < 0
       redirect_to new_credit_path(@user.id), notice: "Credit can't go below 0."
+      return
     end
     
     @user.save!
@@ -45,6 +54,15 @@ class CreditsController < ApplicationController
     activity_log.action = "RemoveCredit"
     activity_log.target_id = @user.id
     activity_log.activity = "removed #{params[:credits_to_add]} credits from #{@user.full_name}'s account."
+    
+    if params[:credits_remove_desc_dropdown] == "Custom"
+      desc = params[:custom_desc_remove]
+    else
+      desc = params[:credits_remove_desc_dropdown]
+    end
+    
+    activity_log.desc = desc
+    
     activity_log.save!
     
     redirect_to new_credit_path(@user.id), notice: "Credit removed successfully."

@@ -53,7 +53,8 @@ CREATE TABLE activity_logs (
     activity text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    target_id integer
+    target_id integer,
+    "desc" character varying(255)
 );
 
 
@@ -1711,3 +1712,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130127144813');
 INSERT INTO schema_migrations (version) VALUES ('20130129100743');
 
 INSERT INTO schema_migrations (version) VALUES ('20130203154706');
+
+INSERT INTO schema_migrations (version) VALUES ('20130205180303');
