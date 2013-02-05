@@ -27,6 +27,30 @@ class CreditsController < ApplicationController
     
   end
   
+  def remove_credits
+    
+    # Add credit to the user account.
+    @user = User.find(params[:user_id])
+    @user.credits -= params[:credits_to_remove].to_i
+    
+    if @user.credits < 0
+      redirect_to new_credit_path(@user.id), notice: "Credit can't go below 0."
+    end
+    
+    @user.save!
+    
+    # Log the "AddCredit" activity in ActivityLog.
+    activity_log = ActivityLog.new
+    activity_log.actor_id = current_user.id
+    activity_log.action = "RemoveCredit"
+    activity_log.target_id = @user.id
+    activity_log.activity = "removed #{params[:credits_to_add]} credits from #{@user.full_name}'s account."
+    activity_log.save!
+    
+    redirect_to new_credit_path(@user.id), notice: "Credit removed successfully."
+    
+  end
+  
   def activity_log
     @activity_logs = ActivityLog.order("updated_at desc").all
   end
