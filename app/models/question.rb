@@ -8,6 +8,10 @@ class Question < ActiveRecord::Base
   attr_accessible :di_location, :header, :instruction, :option_set_count, :passage, :quantity_a, :quantity_b, :que_image, :que_text, :sequence_no, :sol_image, :sol_text,:type_id,:topic_id
   has_many :options,:dependent => :destroy
   
+  def to_param
+    sequence_no
+  end
+  
   def que_image_url
     
     if ( self.que_image == nil )
