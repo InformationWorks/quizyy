@@ -12,7 +12,20 @@ class StoresController < ApplicationController
     @full_length_quizzes = Quiz.scoped_timed_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC').first(3)
     @full_length_quizzes += current_user.quizzes.full.timed
     load_words_for_quizzes(@full_length_quizzes)
-
+    
+    @store_category_entity_name_quizzes = Quiz.store_entity_name_quizzes("Category",true,current_user)
+    @store_topic_entity_name_quizzes = Quiz.store_entity_name_quizzes("Topic",true,current_user)
+    
+    @store_entity_name_quizzes = []
+    @store_entity_name_quizzes += @store_category_entity_name_quizzes
+    @store_entity_name_quizzes += @store_topic_entity_name_quizzes
+    
+    @store_entity_name_quizzes.each do |entity_name_quizzes|
+      load_words_for_quizzes(entity_name_quizzes[:quizzes])
+    end
+    
+    logger.info("STORE = " + @store_entity_name_quizzes.to_s)
+    
     # Fetch categories & topics that have atleast one quiz.
     # TODO: .where("quizzes.approved = true")
     @categories = Category.with_timed_quiz_for_user(current_user).order('categories.name ASC').collect{|c| c.id}

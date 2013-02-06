@@ -57,19 +57,19 @@
 </section>
 
 <!-- Category & Topic Tests -->
-<% @categories_and_topics.each_with_index do |category_or_topic,index| %>
+<% @store_entity_name_quizzes.each_with_index do |entity_name_quizzes,index| %>
 <% if index == 0 && current_user.purchased_full_quizzes.count != 0 %>
 <section class="category-section first">
 <% else %>
-<section class="category-section">	
+<section class="category-section">  
 <% end %>
-<h2><%= category_or_topic.name %></h2>
-<% if category_or_topic.class.name == "Category" %>
-<%= link_to(category_timed_tests_path(category_or_topic.slug), :class => "pull-right") do %>
+<h2><%= entity_name_quizzes[:name] %></h2>
+<% if entity_name_quizzes[:entity] == "Category" %>
+<%= link_to(category_timed_tests_path(entity_name_quizzes[:slug]), :class => "pull-right") do %>
 <h4>more</h4>
 <% end %>
 <% else %>
-<%= link_to(topic_timed_tests_path(category_or_topic.slug), :class => "pull-right") do %>
+<%= link_to(topic_timed_tests_path(entity_name_quizzes[:slug]), :class => "pull-right") do %>
 <h4>more</h4>
 <% end %>
 <% end %>
@@ -77,7 +77,7 @@
 <hr>
 <!-- show only three per row -->
 <div class="row">
-  <% category_or_topic.quizzes[0..2].each do |quiz| %>
+  <% entity_name_quizzes[:quizzes][0..2].each do |quiz| %>
   <div class="span2 quiz-tile">
     <%= render :partial => "flip", :locals => {:word => quiz.word}  %>
     <div class="caption">
@@ -121,5 +121,6 @@
 </section>
 
 <% end %>
+
 
 </div>

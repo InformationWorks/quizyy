@@ -52,4 +52,72 @@ class Quiz < ActiveRecord::Base
     self.slug = name.parameterize
   end
   
+  # Generate a array of special datastructure for store.
+  # structure: 
+  # { entity => string, name => string, slug => string , quizzes => array_of_quizzes }
+  def self.store_entity_name_quizzes(entity,timed,user)
+    
+    # Fetch the quizzes not owned by user first and then append owned quizzes.
+    if entity == "Category"
+      if timed
+        quizzes = Quiz.not_in_account_of_user(user).category.timed.order('id ASC')
+        quizzes += user.quizzes.category.timed
+      else
+        quizzes = Quiz.not_in_account_of_user(user).category.practice.order('id ASC')
+        quizzes += user.quizzes.category.practice
+      end
+      
+      # Club all quizzes based on categories.
+      # {  
+      #    "RC" => [ quiz1, quiz2 ],
+      #    "TC" => [ quiz3, quiz4]
+      # }
+      name_quizzes_hash = {}
+      name_slug_hash = {}
+      quizzes.each do |quiz|
+        if name_quizzes_hash[quiz.category.name] == nil
+          name_quizzes_hash[quiz.category.name] = []
+        end
+        name_quizzes_hash[quiz.category.name] << quiz
+        name_slug_hash[quiz.category.name] = quiz.category.slug
+      end
+    else
+      if timed
+        quizzes = Quiz.not_in_account_of_user(user).topic.timed.order('id ASC')
+        quizzes += user.quizzes.topic.timed
+      else
+        quizzes = Quiz.not_in_account_of_user(user).topic.practice.order('id ASC')
+        quizzes += user.quizzes.topic.practice
+      end
+      
+      # Club all quizzes based on topics.
+      # {  
+      #    "RC" => [ quiz1, quiz2 ],
+      #    "TC" => [ quiz3, quiz4]
+      # }
+      name_quizzes_hash = {}
+      name_slug_hash = {}
+      quizzes.each do |quiz|
+        if name_quizzes_hash[quiz.topic.name] == nil
+          name_quizzes_hash[quiz.topic.name] = []
+        end
+        name_quizzes_hash[quiz.topic.name] << quiz
+        name_slug_hash[quiz.topic.name] = quiz.topic.slug
+      end
+    end
+    
+    # Generate the special structure with entity
+    # [
+    # { "Category" , "RC" , [ quiz1, quiz2 ] }, 
+    # { "Category" , "TC" , [ quiz3, quiz4 ] } 
+    # ]
+    entity_name_quizzes = []
+    name_quizzes_hash.each do |name,quizzes_array|
+      entity_name_quizzes << { :entity => entity, :name => name, :slug => name_slug_hash[name] ,:quizzes => quizzes_array } 
+    end
+    
+    return entity_name_quizzes
+    
+  end
+  
 end
