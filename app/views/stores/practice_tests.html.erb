@@ -22,7 +22,7 @@
     <hr>
     <!-- show only three per row -->
     <div class="row">
-      <% category_or_topic.quizzes.each do |quiz| %>
+      <% category_or_topic.quizzes[0..2].each do |quiz| %>
       <div class="span2 quiz-tile">
 
         <%= render :partial => "flip", :locals => {:word => quiz.word}  %>
