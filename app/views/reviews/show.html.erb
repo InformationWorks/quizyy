@@ -1,3 +1,15 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("body").scrollspy({
+        offset: 300
+      });
+      return $("#sidebar li").on('activate', function(event) {
+        return $('#sidebar').scrollTop(event.target.offsetTop);
+      });
+    });
+  </script>
+<% end %> 
 <div id="content" class="row">
   <div class="span3">
     <ul id="sidebar" class="nav nav-list">
