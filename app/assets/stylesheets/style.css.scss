@@ -284,6 +284,11 @@
     }
   }
 }
+.blank{
+      width:200px;
+      border-bottom: 1px solid #777;
+      display: inline-block;
+  }
 #test-content{
   .selectable tr.current{background: $grey;}
   .selectable tr.current.ui-selected { background: $light-blue; color: white; }
@@ -319,11 +324,6 @@
     padding-bottom: 10px;
     text-align:justify;
     width: 100%;
-    .blank{
-      width:200px;
-      border-bottom: 1px solid #777;
-      display: inline-block;
-    }
   }
 
   .instruction{

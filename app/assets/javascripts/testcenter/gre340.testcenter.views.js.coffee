@@ -114,7 +114,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       $('body').removeClass('fill')
     onRender:()->
       if /<BLANK-[A-Z]*>/gi.test @$('.question').text()
-        @$('.question').html(@$('.question').text().replace(/<BLANK-[A-Z]*>/gi,'<div class="blank"></div>'))
+        @$('.question').html(@$('.question').text().replace(/<BLANK-[A-Z]*>/gi,'<span class="blank"></span>'))
       @optionsRegion.show(new Views.OptionsView(model: @model))
 
   Views.QuestionTwoPaneView = Marionette.Layout.extend

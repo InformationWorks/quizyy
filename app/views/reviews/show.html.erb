@@ -66,8 +66,9 @@
               <% end %>
               <div class="question">
                 <p class="lead">Question</p>
-
-                <p><%= question.que_text %></p>
+                <p>
+                <%= raw question.que_text.gsub!(/<BLANK-[A-Z]*>/i,'<span class="blank"></span>') %>
+                </p>
               </div>
               <form>
               <% if question.option_type == :mcq %>
