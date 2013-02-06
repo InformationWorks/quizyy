@@ -5,63 +5,41 @@ class StoresController < ApplicationController
   
   def timed_tests
 
+    # Get packages.
     @package_1 = Package.find_by_position(1)
     @package_2 = Package.find_by_position(2)
     @package_3 = Package.find_by_position(3)
     
+    # Get full-length quizzes.
     @full_length_quizzes = Quiz.scoped_timed_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC').first(3)
     @full_length_quizzes += current_user.quizzes.full.timed
     load_words_for_quizzes(@full_length_quizzes)
     
-    @store_category_entity_name_quizzes = Quiz.store_entity_name_quizzes("Category",true,current_user)
-    @store_topic_entity_name_quizzes = Quiz.store_entity_name_quizzes("Topic",true,current_user)
+    # generate store entities for timed.
+    generate_store_entities(true)
     
-    @store_entity_name_quizzes = []
-    @store_entity_name_quizzes += @store_category_entity_name_quizzes
-    @store_entity_name_quizzes += @store_topic_entity_name_quizzes
-    
-    @store_entity_name_quizzes.each do |entity_name_quizzes|
+    # Load words for each quiz.
+    @store_entities.each do |entity_name_quizzes|
       load_words_for_quizzes(entity_name_quizzes[:quizzes])
     end
     
-    logger.info("STORE = " + @store_entity_name_quizzes.to_s)
-    
-    # Fetch categories & topics that have atleast one quiz.
-    # TODO: .where("quizzes.approved = true")
-    @categories = Category.with_timed_quiz_for_user(current_user).order('categories.name ASC').collect{|c| c.id}
-    @categories = Category.timed_quizzes(current_user,@categories)
-    @topics = Topic.with_timed_quiz_for_user(current_user).order('topics.name ASC').collect{|c| c.id}
-    @topics = Topic.timed_quizzes(current_user,@topics)
-    # Merge categories & topics in the same list.
-    @categories_and_topics = []
-    @categories_and_topics +=  @categories
-    @categories_and_topics +=  @topics
-    @categories_and_topics.sort! { |a,b| a.name.downcase <=> b.name.downcase }
-    @categories_and_topics.each do |category_and_topic|
-      load_words_for_quizzes(category_and_topic.quizzes)
-    end
-
-
   end
 
   def practice_tests
    
-    # Fetch categories & topics that have at-least one quiz.
-    # TODO: .where("quizzes.approved = true")
-    @categories = Category.with_practice_quiz_for_user(current_user).order('name ASC').collect{|c| c.id}
-    @categories = Category.practice_quizzes(current_user,@categories)
-    @topics = Topic.with_practice_quiz_for_user(current_user).order('name ASC').collect{|t| t.id}
-    @topics = Topic.practice_quizzes(current_user,@topics)
-
-
-    # Merge categories & topics in the same list.
-    @categories_and_topics = []
-    @categories_and_topics +=  @categories
-    @categories_and_topics +=  @topics
-    @categories_and_topics.sort! { |a,b| a.name.downcase <=> b.name.downcase }
-    @categories_and_topics.each do |category_and_topic|
-      load_words_for_quizzes(category_and_topic.quizzes)
+    # generate store entities for practice.
+    generate_store_entities(false)
+    
+    # Load words for each quiz.
+    @store_entities.each do |entity_name_quizzes|
+      load_words_for_quizzes(entity_name_quizzes[:quizzes])
     end
+    
+    # Load words for each quiz.
+    @store_entities.each do |entity_name_quizzes|
+      load_words_for_quizzes(entity_name_quizzes[:quizzes])
+    end
+    
   end
   
   def show_timed_test
@@ -125,6 +103,26 @@ class StoresController < ApplicationController
   end
 
   private
+  
+  # Generate store entities
+  def generate_store_entities(timed)
+    
+    # Get array of category & topic structures.
+    # [ { entity => string, name => string, slug => string , quizzes => array_of_quizzes } ]
+    @store_category_entities = Quiz.store_entity_name_quizzes("Category",timed,current_user)
+    @store_topic_entities = Quiz.store_entity_name_quizzes("Topic",timed,current_user)
+    
+    # Combile category & topic array and sort them by name.
+    @store_entities = []
+    @store_entities += @store_category_entities
+    @store_entities += @store_topic_entities
+    @store_entities.sort! { |a,b| a[:name].downcase <=> b[:name].downcase }
+    
+    return @store_entities
+    
+  end
+  
+  # load words for each quiz.
   def load_words_for_quizzes(quizzes)
     dictionary = Dictionary.all().shuffle()
     if quizzes
