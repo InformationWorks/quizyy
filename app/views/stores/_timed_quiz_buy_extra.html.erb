@@ -4,7 +4,7 @@
 <section class="category-section first">
 <% if current_user.purchased_full_quizzes.count != 0 %>
 <h2>Full length tests</h2>
-<%= link_to(full_timed_tests_path, :class => "pull-right") do %>
+<%= link_to(show_all_full_timed_tests_path, :class => "pull-right") do %>
 <h4>more</h4>
 <% end %>
 <hr>
@@ -65,11 +65,11 @@
 <% end %>
 <h2><%= entity_name_quizzes[:name] %></h2>
 <% if entity_name_quizzes[:entity] == "Category" %>
-<%= link_to(category_timed_tests_path(entity_name_quizzes[:slug]), :class => "pull-right") do %>
+<%= link_to(category_all_timed_tests_path(entity_name_quizzes[:slug]), :class => "pull-right") do %>
 <h4>more</h4>
 <% end %>
 <% else %>
-<%= link_to(topic_timed_tests_path(entity_name_quizzes[:slug]), :class => "pull-right") do %>
+<%= link_to(topic_all_timed_tests_path(entity_name_quizzes[:slug]), :class => "pull-right") do %>
 <h4>more</h4>
 <% end %>
 <% end %>

@@ -52,6 +52,10 @@ class Quiz < ActiveRecord::Base
     self.slug = name.parameterize
   end
   
+  def store_detail_path
+    
+  end
+  
   # Generate a array of special datastructure for store.
   # structure: 
   # { entity => string, name => string, slug => string , quizzes => array_of_quizzes }

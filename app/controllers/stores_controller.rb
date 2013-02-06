@@ -3,6 +3,7 @@ class StoresController < ApplicationController
   before_filter :authenticate_user!
   before_filter :initialize_cart
   
+  # match "timed_tests" => "stores#timed_tests", via: [:get], :as => "timed_tests"
   def timed_tests
 
     # Get packages.
@@ -25,6 +26,7 @@ class StoresController < ApplicationController
     
   end
 
+  # match "practice_tests" => "stores#practice_tests", via: [:get], :as => "practice_tests"
   def practice_tests
    
     # generate store entities for practice.
@@ -42,6 +44,16 @@ class StoresController < ApplicationController
     
   end
   
+  # match "timed_tests/full_tests" => "stores#show_all_full_timed_tests", via: [:get], :as => "show_all_full_timed_tests"
+  def show_all_full_timed_tests
+    @quizzes = Quiz.scoped_timed_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC')
+    @quizzes += current_user.quizzes.full.timed
+    @quizzes = load_words_for_quizzes(@quizzes)
+    
+    @name = "Full length tests"
+    render "show_all_tests"
+  end
+  
   def show_timed_test
     @quiz = Quiz.find_by_slug!(params[:quiz_slug])
   end
@@ -50,56 +62,61 @@ class StoresController < ApplicationController
     @quiz = Quiz.find_by_slug!(params[:quiz_slug])
   end
   
-  def category_timed_tests
+  # match "timed_tests/categories/:category_slug" => "stores#category_all_timed_tests", via: [:get], :as => "category_all_timed_tests"
+  def category_all_timed_tests
     @category = Category.find_by_slug!(params[:category_slug])
     @category = Category.timed_quizzes(current_user,@category.id).order("quizzes.id ASC").first()
     if @category
       @quizzes = load_words_for_quizzes(@category.quizzes)
+      @name = @category.name
     else
       @quizzes = []
     end
+    
+    render "show_all_tests"
+    
   end
   
-  def topic_timed_tests
+  # match "timed_tests/topics/:topic_slug" => "stores#topic_all_timed_tests", via: [:get], :as => "topic_all_timed_tests"
+  def topic_all_timed_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
     @topic = Topic.timed_quizzes(current_user,@topic.id).order("quizzes.id ASC").first()
     if @topic
       @quizzes = load_words_for_quizzes(@topic.quizzes)
+      @name = @topic.name
     else
       @quizzes = []
     end
+    
+    render "show_all_tests"
   end
   
-  def category_practice_tests
+  # match "practice_tests/categories/:category_slug" => "stores#category_all_practice_tests", via: [:get], :as => "category_all_practice_tests"
+  def category_all_practice_tests
     @category = Category.find_by_slug!(params[:category_slug])
     @category = Category.practice_quizzes(current_user,@category.id).order("quizzes.id ASC").first()
     if @category
       @quizzes = load_words_for_quizzes(@category.quizzes)
+      @name = @category.name
     else
       @quizzes = []
     end
+    
+    render "show_all_tests"
   end
   
-  def topic_practice_tests
+  # match "practice_tests/topics/:topic_slug" => "stores#topic_all_practice_tests", via: [:get], :as => "topic_all_practice_tests"
+  def topic_all_practice_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
     @topic = Topic.practice_quizzes(current_user,@topic.id).order("quizzes.id ASC").first()
     if @topic
       @quizzes = load_words_for_quizzes(@topic.quizzes)
+      @name = @topic.name
     else
       @quizzes = []
     end
-  end
-  
-  def full_practice_tests
-    @quizzes = Quiz.scoped_practice_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC')
-    @quizzes += current_user.quizzes.full.timed
-    @quizzes = load_words_for_quizzes(@quizzes)
-  end
-  
-  def full_timed_tests
-    @quizzes = Quiz.scoped_timed_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC')
-    @quizzes += current_user.quizzes.full.timed
-    @quizzes = load_words_for_quizzes(@quizzes)
+    
+    render "show_all_tests"
   end
 
   private

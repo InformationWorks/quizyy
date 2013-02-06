@@ -47,17 +47,28 @@ GremastersWeb::Application.routes.draw do
   match "packages/:id/add_quiz_to_package" => "packages#add_quiz_to_package", via: [:put], :as => "add_quiz_to_package"
   
   # Store routes.
-  match "timed_tests/full_tests" => "stores#full_timed_tests", via: [:get], :as => "full_timed_tests"
+  ## Store route to show timed / practice tests. 
   match "timed_tests" => "stores#timed_tests", via: [:get], :as => "timed_tests"
   match "practice_tests" => "stores#practice_tests", via: [:get], :as => "practice_tests"
-  match "stores/add_cart_item" => "stores#add_cart_item", via: [:post], :as => "add_cart_item"
-  match "stores/destroy_cart_item/:id" => "stores#destroy_cart_item", via: [:delete], :as => "destroy_cart_item"
+  
+  ## Store route to show all full tests.
+  match "timed_tests/full_tests" => "stores#show_all_full_timed_tests", via: [:get], :as => "show_all_full_timed_tests"
+  
+  ## Store route to show all timed & practice tests for a category/topic
+  match "timed_tests/categories/:category_slug" => "stores#category_all_timed_tests", via: [:get], :as => "category_all_timed_tests"
+  match "timed_tests/topics/:topic_slug" => "stores#topic_all_timed_tests", via: [:get], :as => "topic_all_timed_tests"
+  match "practice_tests/categories/:category_slug" => "stores#category_all_practice_tests", via: [:get], :as => "category_all_practice_tests"
+  match "practice_tests/topics/:topic_slug" => "stores#topic_all_practice_tests", via: [:get], :as => "topic_all_practice_tests"
+  
+  ## Store route to show detailed view for a quiz
+  #match "timed_tests/full_tests/:quiz_slug" => "stores#show_full_timed_tests", via: [:get], :as => "full_timed_tests"
+  #match "timed_tests/categories/:category_slug/:quiz_slug" => "stores#category_timed_tests", via: [:get], :as => "category_timed_tests"
+  #match "timed_tests/topics/:topic_slug/:quiz_slug" => "stores#topic_timed_tests", via: [:get], :as => "topic_timed_tests"
+  #match "practice_tests/categories/:category_slug/:quiz_slug" => "stores#category_practice_tests", via: [:get], :as => "category_practice_tests"
+  #match "practice_tests/topics/:topic_slug/:quiz_slug" => "stores#topic_practice_tests", via: [:get], :as => "topic_practice_tests"
+  
   match "timed_tests/:quiz_slug" => "stores#show_timed_test", via: [:get], :as => "show_timed_test"
   match "practice_tests/:quiz_slug" => "stores#show_practice_test", via: [:get], :as => "show_practice_test"
-  match "timed_tests/categories/:category_slug" => "stores#category_timed_tests", via: [:get], :as => "category_timed_tests"
-  match "timed_tests/topics/:topic_slug" => "stores#topic_timed_tests", via: [:get], :as => "topic_timed_tests"
-  match "practice_tests/categories/:category_slug" => "stores#category_practice_tests", via: [:get], :as => "category_practice_tests"
-  match "practice_tests/topics/:topic_slug" => "stores#topic_practice_tests", via: [:get], :as => "topic_practice_tests"
 
   # Quiz routes.
   # Sections sub-routes
