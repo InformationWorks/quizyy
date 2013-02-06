@@ -159,7 +159,7 @@
       		    <% action_text = "Review" %>
       		<% end %>
 
-           <%= link_to(show_practice_test_path(:quiz_slug => full_quiz.slug), :style => "color:black") do %>     
+           <%= link_to(full_quiz.test_detail_path, :style => "color:black") do %>     
       		<li class= "<%= li_class %>">
 	          <small><%= status %></small>
 	          <div class="mediumListIconTextItem-Detail">
@@ -209,7 +209,7 @@
       		    <% action_text = "Review" %>
       		<% end %>
 
-            <%= link_to(show_practice_test_path(:quiz_slug => category_topic_quiz.slug), :style => "color:black") do %>
+            <%= link_to( category_topic_quiz.test_detail_path, :style => "color:black") do %>
       		<li class= "<%= li_class %>">
 	          <small><%= status %></small>
 	          <div class="mediumListIconTextItem-Detail">

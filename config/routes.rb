@@ -64,9 +64,6 @@ GremastersWeb::Application.routes.draw do
   match "timed_tests/topics/:topic_slug/:quiz_slug" => "stores#show_topic_timed_test", via: [:get], :as => "show_topic_timed_test"
   match "practice_tests/categories/:category_slug/:quiz_slug" => "stores#show_category_practice_test", via: [:get], :as => "show_category_practice_test"
   match "practice_tests/topics/:topic_slug/:quiz_slug" => "stores#show_topic_practice_test", via: [:get], :as => "show_topic_practice_test"
-  
-  match "timed_tests/:quiz_slug" => "stores#show_timed_test", via: [:get], :as => "show_timed_test"
-  match "practice_tests/:quiz_slug" => "stores#show_practice_test", via: [:get], :as => "show_practice_test"
 
   # Quiz routes.
   # Sections sub-routes

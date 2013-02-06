@@ -1,0 +1,21 @@
+<!-- Full length tests -->
+<section class="category-section first">
+<% if current_user.purchased_full_quizzes.count != 0 %>
+   
+  <!-- Title -->   
+  <h2>Full length tests</h2>
+  <%= link_to(show_all_full_timed_tests_path, :class => "pull-right") do %>
+    <h4>more</h4>
+  <% end %>
+      
+  <hr>
+  <!-- show only three per row -->
+  <div class="row">
+    <% @full_length_quizzes.first(3).each do |quiz| %>
+    
+      <%= render :partial => "quiz_block", :locals => { :quiz => quiz } %>
+    
+    <% end %>
+  </div>
+<% end %>
+</section>

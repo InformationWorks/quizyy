@@ -2,77 +2,9 @@
 
 <div id="content" class="span12">
   <div class="span8">
-  	<!-- Category & Topic Tests -->
-    <% @store_entities.each_with_index do |entity_name_quizzes,index| %>
-    <% if index == 0 && current_user.purchased_full_quizzes.count != 0 %>
-    <section class="category-section first">
-    <% else %>
-    <section class="category-section">  
-    <% end %>
-    <h2><%= entity_name_quizzes[:name] %></h2>
-    <% if entity_name_quizzes[:entity] == "Category" %>
-    <%= link_to(category_all_practice_tests_path(entity_name_quizzes[:slug]), :class => "pull-right") do %>
-    <h4>more</h4>
-    <% end %>
-    <% else %>
-    <%= link_to(topic_all_practice_tests_path(entity_name_quizzes[:slug]), :class => "pull-right") do %>
-    <h4>more</h4>
-    <% end %>
-    <% end %>
-    
-    <hr>
-    <!-- show only three per row -->
-    <div class="row">
-      <% entity_name_quizzes[:quizzes][0..2].each do |quiz| %>
-      <div class="span2 quiz-tile">
-        <%= render :partial => "flip", :locals => {:word => quiz.word}  %>
-        <div class="caption">
-          
-            <% if entity_name_quizzes[:entity] == "Category" %>
-              <h3><%= link_to quiz.name, show_category_practice_test_path(quiz.category.slug,quiz.slug) %></h3>    
-            <% else %>
-              <h3><%= link_to quiz.name, show_topic_practice_test_path(quiz.topic.slug,quiz.slug) %></h3>
-            <% end %>
-          
-          <p><%= quiz.desc %></p>
-          <p><%= (quiz.price == 0) ? "Free" : "\u20B9 " + quiz.price.to_s %></p>
-          <p>
-                  <% if quiz.approved == false %>
-                    <% if quiz.published == false %>
-                       <span class="label label-warning">Unpublished</span>
-                    <% else %>
-                       <span class="label label-important">Awaiting Approval</span>
-                    <% end %>
-                  <% end %>
-              </p>
-          
-          <% if current_user.has_purchased_quiz?(quiz.id) %>
-              <div>
-                <%= link_to( "Purchased" , "#" , :disabled => true ) %>
-              </div>
-          <% else %>
-              <div class="actions hide btn-group">
-                <%= link_to( "Buy"  , cart_items_path(:quiz_id => quiz.id,:back_controller => "checkout",:back_action => "show_cart") ,
-                             :method => "post", :disable_with => 'adding to cart...', :disabled => current_user.has_purchased_quiz?(quiz.id),:class=>'btn btn-primary') %>
-                <% cart_item_id = current_user.get_cart_item_id_for_quiz(quiz.id) %>
-                <% if cart_item_id != -1 %>
-                    <a href="#" rel="tooltip" class="btn remove-cart-btn" title="Remove from Cart" data-disabled-with="removing.." data-value="<%=quiz.id%>" data-id="<%= cart_item_id %>">
-                      <span class="icon-remove"></span>
-                    </a>
-                <% else %>
-                    <a href="#" rel="tooltip" class="btn add-cart-btn" title="Add to Cart" data-disabled-with="adding.." data-value="<%=quiz.id%>">
-                      <span class="icon-plus"></span>
-                    </a>
-                <% end %>
-              </div>
-          <% end %>
-        </div>
-      </div>
-      <% end %>
-    </div>
-    </section>
-    <% end %>
-
+      
+    <%= render :partial => "category_topic_quiz_group_block", :locals => { :store_entities => @store_entities } %>
+      
   </div>
   <%= content_tag "div", id: "cart-wrapper",class: "span3 well", data: { cart: @cart.cart_items.to_json(:include => :quiz) } do%>
   <% end %>
