@@ -54,12 +54,64 @@ class StoresController < ApplicationController
     render "show_all_tests"
   end
   
-  def show_timed_test
+  # match "timed_tests/full_tests/:quiz_slug" => "stores#show_full_timed_test", via: [:get], :as => "show_full_timed_test"
+  def show_full_timed_test
+    
     @quiz = Quiz.find_by_slug!(params[:quiz_slug])
+    
+    if (@quiz.timed != true || @quiz.quiz_type_id != QuizType.find_by_name("FullQuiz").id)
+      raise ActionController::RoutingError.new('Not Found')
+    else
+      render 'show_test_detail'
+    end
   end
   
-  def show_practice_test
+  # match "timed_tests/categories/:category_slug/:quiz_slug" => "stores#show_category_timed_test", via: [:get], :as => "show_category_timed_test"
+  def show_category_timed_test
+    
     @quiz = Quiz.find_by_slug!(params[:quiz_slug])
+    
+    if (@quiz.timed != true || @quiz.quiz_type_id != QuizType.find_by_name("CategoryQuiz").id)
+      raise ActionController::RoutingError.new('Not Found')
+    else
+      render 'show_test_detail'
+    end
+  end
+  
+  # match "timed_tests/topics/:topic_slug/:quiz_slug" => "stores#show_topic_timed_test", via: [:get], :as => "show_topic_timed_test"
+  def show_topic_timed_test
+    
+    @quiz = Quiz.find_by_slug!(params[:quiz_slug])
+    
+    if (@quiz.timed != true || @quiz.quiz_type_id != QuizType.find_by_name("TopicQuiz").id)
+      raise ActionController::RoutingError.new('Not Found')
+    else
+      render 'show_test_detail'
+    end  
+  end
+  
+  # match "practice_tests/categories/:category_slug/:quiz_slug" => "stores#show_category_practice_test", via: [:get], :as => "show_category_practice_test"
+  def show_category_practice_test
+    
+    @quiz = Quiz.find_by_slug!(params[:quiz_slug])
+    
+    if (@quiz.timed || @quiz.quiz_type_id != QuizType.find_by_name("CategoryQuiz").id)
+      raise ActionController::RoutingError.new('Not Found')
+    else
+      render 'show_test_detail'
+    end
+  end
+  
+  # match "practice_tests/topics/:topic_slug/:quiz_slug" => "stores#show_topic_practice_tests", via: [:get], :as => "show_topic_practice_tests"
+  def show_topic_practice_test
+    
+    @quiz = Quiz.find_by_slug!(params[:quiz_slug])
+    
+    if (@quiz.timed || @quiz.quiz_type_id != QuizType.find_by_name("TopicQuiz").id)
+      raise ActionController::RoutingError.new('Not Found')
+    else
+      render 'show_test_detail'
+    end
   end
   
   # match "timed_tests/categories/:category_slug" => "stores#category_all_timed_tests", via: [:get], :as => "category_all_timed_tests"

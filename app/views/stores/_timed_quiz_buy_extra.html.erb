@@ -15,7 +15,7 @@
         <%= render :partial => "flip", :locals => {:word => quiz.word}  %>
         <div class="caption">
           <h3>
-              <%= link_to quiz.name, show_timed_test_path(:quiz_slug => quiz.slug) %>
+              <%= link_to quiz.name, show_full_timed_test_path(:quiz_slug => quiz.slug) %>
           </h3>
           <p><%= quiz.desc %></p>
           <p><%= (quiz.price == 0) ? "Free" : "\u20B9 " + quiz.price.to_s %></p>
@@ -81,7 +81,13 @@
   <div class="span2 quiz-tile">
     <%= render :partial => "flip", :locals => {:word => quiz.word}  %>
     <div class="caption">
-      <h3><%= link_to quiz.name, show_timed_test_path(:quiz_slug => quiz.slug) %></h3>
+      
+      <% if entity_name_quizzes[:entity] == "Category" %>
+        <h3><%= link_to quiz.name, show_category_timed_test_path(quiz.category.slug,quiz.slug) %></h3>    
+      <% else %>
+        <h3><%= link_to quiz.name, show_topic_timed_test_path(quiz.topic.slug,quiz.slug) %></h3>
+      <% end %>
+      
       <p><%= quiz.desc %></p>
       <p><%= (quiz.price == 0) ? "Free" : "\u20B9 " + quiz.price.to_s %></p>
       <p>
