@@ -235,11 +235,16 @@
     width: 500px;
   }
 }
-
-#no-internet-error{
-  z-inder: 2999;
+#action-bar{
+  margin-top: 10px;
 }
-#action-bar.no-bk{
+#btn-hide-time{
+   background-color: #fff;
+   border: 2px solid #000;
+   border-radius: 0px;     
+   margin-right: 10px;
+}
+.action-bar-wrapper.no-bk{
   background-color: transparent !important;
   hr{
     display: none;
@@ -249,6 +254,9 @@
   }
 }
 
+#no-internet-error{
+  z-index: 2999;
+}
 .calculator-row .calculator-use {
   width: 100% !important;
 }

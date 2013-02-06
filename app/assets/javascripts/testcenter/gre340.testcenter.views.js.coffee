@@ -189,6 +189,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       'click #btn-review': 'showReview'
       'click #btn-mark': 'toggleMarkQuestion'
       'click #btn-quit':'quitQuiz'
+      'click #btn-hide-time': 'toogleTimer'
       'click #show-alert-quit-quiz': 'removeBackgroundFromActionBar'
       'click .close-alert-quit-quiz': 'addBackgroundToActionBar'
     showNextQuestion: (event) ->
@@ -207,12 +208,19 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       console.log 'comes here'
       window.location.href = '/homes/index';
     removeBackgroundFromActionBar: (event)->
-      $('#action-bar').addClass('no-bk')
+      $('.action-bar-wrapper').addClass('no-bk')
     addBackgroundToActionBar:(event) ->
       event.preventDefault()
-      $('#action-bar').removeClass('no-bk')
+      $('.action-bar-wrapper').removeClass('no-bk')
     toggleMarkQuestion:(event)->
       Gre340.vent.trigger 'mark:question:toggle'
+    toogleTimer:(event)->
+      timer = @$('#timer')
+      timer.toggle()
+      if timer.css('display') == 'block'
+        @$(event.currentTarget).text('Hide Time')
+      else
+        @$(event.currentTarget).text('Show Time')
   Views.SectionActionBarView = Marionette.ItemView.extend
     template: 'section-actionbar'
     model:'Gre340.TestCenter.Data.Models.Quiz'
