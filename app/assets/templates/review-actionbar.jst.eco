@@ -18,9 +18,8 @@
 <hr>
 <div class="row align-center">
     <div class="span3 pull-right align-right">
-        <p class="lead">
-            <button class="btn" id="btn-hide-time">Hide Time</button>
-            <div id="timer">1:00:00</div>
-        </p>
+        <div id="timer" class="pull-right">1:00:00</div>
+        <button class="btn-mini" id="btn-hide-time" class="pull-right">Hide Time</button>
+            
     </div>
 </div>

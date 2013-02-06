@@ -110,6 +110,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     initialize: (options) ->
       @removeFullHeight()
     removeFullHeight: ->
+      $('body').scrollTop(0)
       $('body').removeClass('fill')
     onRender:()->
       if /<BLANK-[A-Z]*>/gi.test @$('.question').text()
@@ -128,6 +129,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     initialize: (options) ->
       @makeFullHeight()
     makeFullHeight: ->
+      $('body').scrollTop(0)
       $('body').addClass('fill')
     onRender:()->
       if /SIP/i.test @model.get('type_code')
@@ -332,4 +334,5 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         filter:'tr'
         cancel: '.cancel'
     removeFullHeight: ->
+      $('body').scrollTop(0)
       $('body').removeClass('fill') 
