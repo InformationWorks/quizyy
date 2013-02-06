@@ -18,6 +18,14 @@ class StudentsController < AdminsController
 
     respond_to do |format|
       if @student.save
+        
+        # Log the "AddCredit" activity in ActivityLog.
+        ActivityLog.create(:actor_id => current_user.id,
+                            :action => "AddCredit",
+                            :target_id => @student.id,
+                            :activity => "added #{params[:credits_to_add]} to #{@student.full_name}'s new account.",
+                            :desc => "New student creation")
+        
         format.html { redirect_to students_path, notice: 'Student created successfully.' }
         format.json { render json: @student, status: :created, location: @student }
       else
