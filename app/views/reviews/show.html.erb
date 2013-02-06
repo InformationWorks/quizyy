@@ -1,3 +1,15 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("body").scrollspy({
+        offset: 300
+      });
+      return $("#sidebar li").on('activate', function(event) {
+        return $('#sidebar').scrollTop(event.target.offsetTop);
+      });
+    });
+  </script>
+<% end %> 
 <div id="content" class="row">
   <div class="span3">
     <ul id="sidebar" class="nav nav-list">
@@ -32,13 +44,31 @@
 
               <div class="instruction">
                 <p class="lead">Instruction</p>
-
                 <p><%= question.instruction %></p>
               </div>
+              <% if question.passage && question.passage.sub("-","").strip() != "" %>
+              <div class="passage" >
+                <a class="passage_show_link" href="#">show 
+                  <% if section.section_type.name =~ /verbal/i %>
+                  passage
+                  <% else %>
+                  data
+                  <% end %>
+                  </a>
+                <p class="passage_text" style="display:none;">
+                  <%= question.passage %>
+                  <% if question.que_image %>
+                    <br/>
+                    <img style="margin: 0 auto;" src="<%= question.que_image %>" alt=""/>
+                  <% end %>
+                </p>
+              </div>
+              <% end %>
               <div class="question">
                 <p class="lead">Question</p>
-
-                <p><%= question.que_text %></p>
+                <p>
+                <%= raw question.que_text.gsub!(/<BLANK-[A-Z]*>/i,'<span class="blank"></span>') %>
+                </p>
               </div>
               <form>
               <% if question.option_type == :mcq %>

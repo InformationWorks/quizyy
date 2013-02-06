@@ -1,6 +1,9 @@
 <div id="loading-test">
 </div>
-<div id="action-bar">
+<div class="action-bar-wrapper row-fluid">
+	<img src="/assets/gre340-02.png" width= 85 height=70 class="pull-left"/>
+	<div id="action-bar">
+	</div>
 </div>
 <div id="test-content" class="container">
 </div>

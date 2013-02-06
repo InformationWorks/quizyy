@@ -47,10 +47,9 @@
         <h2>Question <%=@question_number%> of <%=@total_questions%></h2>
     </div>
     <div class="span3 pull-right align-right">
-        <p class="lead">
-            <button class="btn" id="btn-hide-time">Hide Time</button>
-            <div id="timer">1:00:00</div>
-        </p>
+        <div id="timer" class="pull-right">1:00:00</div>
+        <button class="btn-mini pull-right" id="btn-hide-time">Hide Time</button>
+            
     </div>
 
 </div>

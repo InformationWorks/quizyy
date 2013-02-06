@@ -51,15 +51,15 @@
         async: false
     lostConnection:()->
       @connection = false
-      $('#action-bar').addClass('no-connection')
-      $('#action-bar').addClass('no-bk')
+      $('.action-bar-wrapper').addClass('no-connection')
+      $('.action-bar-wrapper').addClass('no-bk')
       $('#no-internet-error').modal('show')
     gotConnection:()->
       @connection = true
       @noInternetErrorShown = false
-      if $('#action-bar').hasClass('no-connection')
-        $('#action-bar').removeClass('no-connection')
-        $('#action-bar').removeClass('no-bk')
+      if $('.action-bar-wrapper').hasClass('no-connection')
+        $('.action-bar-wrapper').removeClass('no-connection')
+        $('.action-bar-wrapper').removeClass('no-bk')
       $('#no-internet-error').modal('hide')
     submitQuiz:()->
       Gre340.vent.trigger("submit:current:attempt")
