@@ -127,6 +127,7 @@ GremastersWeb::Application.routes.draw do
   match "credits/:user_id/new" => "credits#new", via: [:get], :as => "new_credit"
   match "credits/:user_id/create" => "credits#create", via: [:post], :as => "credits"
   match "credits/activity_log" => "credits#activity_log", via: [:get], :as => "credits_activity_log"
+  match "credits/:user_id/remove_credits" => "credits#remove_credits", via: [:delete], :as => "remove_credits"
 
   # Cart routes.
   resources :carts, :only => [:index]

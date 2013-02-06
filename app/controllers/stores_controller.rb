@@ -36,7 +36,7 @@ class StoresController < ApplicationController
     # Fetch categories & topics that have at-least one quiz.
     # TODO: .where("quizzes.approved = true")
     @categories = Category.with_practice_quiz_for_user(current_user).order('name ASC').collect{|c| c.id}
-    @categories = Category.timed_quizzes(current_user,@categories)
+    @categories = Category.practice_quizzes(current_user,@categories)
     @topics = Topic.with_practice_quiz_for_user(current_user).order('name ASC').collect{|t| t.id}
     @topics = Topic.practice_quizzes(current_user,@topics)
 

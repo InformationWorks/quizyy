@@ -28,20 +28,73 @@
 					<div class="controls">
 					<p>
 					<div class="input-append">
+					
+					    <h3>Add credits</h3>
+					    <br />
+						<%= form_tag(credits_path(@user.id), :method=>'post', :style => "") do %>
+						     <div class="control-group">
+                                <label class="control-label" for="input">Description</label>
+                                <div class="controls">
+                                    <%= select_tag(:credits_add_desc_dropdown, options_for_select(['Renaissance Student',
+                                                                           'Cash Received','Custom'])) %>
+                                </div>
+                            </div>
+                            <div class="control-group" id="credits_add_custom_desc">
+                                <label class="control-label" for="input">Custom Description</label>
+                                <div class="controls">
+                                    <input name="custom_desc_add" class="input-xxlarge" type="text">
+                                </div>
+                            </div>
+						    <div class="control-group">
+                                <label class="control-label" for="input">Credits to add</label>
+                                <div class="controls">
+                                    <% if current_user.role? :super_admin %>
+                                        <%= number_field_tag(:credits_to_add,nil, :in => 50..2000,:step => 50,:value => 50) %>
+                                    <% else %>
+                                        <%= select_tag(:credits_to_add, options_for_select(['1000',
+                                                                           '1500',
+                                                                           '2000'], '2000')) %>
+                                    <% end %>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <%= submit_tag 'Add Credits',:class => "btn" %>
+                            </div>
+						<% end %>
 						
-					<% if current_user.role? :super_admin %>
-						<%= form_tag(credits_path(@user.id), :method=>'post', :style => "background-color: transparent;border: 0px;" ) do %>
-							<%= number_field_tag(:credits_to_add,nil, :in => 50..2000,:step => 50,:value => 50) %>
-							<%= submit_tag 'Add Credits',:class => "btn" %>
-						<% end %>
-					<% else %>
-						<%= form_tag(credits_path(@user.id), :method=>'post', :style => "background-color: transparent;border: 0px;") do %>
-							<%= select_tag(:credits_to_add, options_for_select(['1000',
-                 													       '1500',
-                 													       '2000'], '2000')) %>
-                 			<%= submit_tag 'Add Credits',:class => "btn" %>
-						<% end %>
-					<% end %>
+						<h3>Remove credits</h3>
+                        <br />
+                        <%= form_tag(remove_credits_path(@user.id), :method=>'delete', :style => "") do %>
+                             <div class="control-group">
+                                <label class="control-label" for="input">Description</label>
+                                <div class="controls">
+                                    <%= select_tag(:credits_remove_desc_dropdown, options_for_select(['Manual Error',
+                                                                           'Payment Not Received','Custom'])) %>
+                                </div>
+                            </div>
+                            <div class="control-group" id="credits_remove_custom_desc">
+                                <label class="control-label" for="input">Custom Description</label>
+                                <div class="controls">
+                                    <input name="custom_desc_remove" class="input-xxlarge" type="text">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="input">Credits to add</label>
+                                <div class="controls">
+                                    <% if current_user.role? :super_admin %>
+                                        <%= number_field_tag(:credits_to_remove,nil, :in => 50..2000,:step => 50,:value => 50) %>
+                                    <% else %>
+                                        <%= select_tag(:credits_to_remove, options_for_select(['1000',
+                                                                           '1500',
+                                                                           '2000'], '2000')) %>
+                                    <% end %>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <%= submit_tag 'Remove Credits',:class => "btn" %>
+                            </div>
+                        <% end %>
+						
 					</div>
 					</p>
 					</div>

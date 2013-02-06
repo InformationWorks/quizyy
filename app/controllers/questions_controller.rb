@@ -52,8 +52,23 @@ class QuestionsController < ApplicationController
   def create
     load_quiz_and_section
     
+    que_image = params[:question].delete :que_image
+    sol_image = params[:question].delete :sol_image 
+    
+    # handle empty que_image
+    if que_image != nil && que_image.strip == ""
+      que_image = nil
+    end
+    
+    # handle empty que_image
+    if sol_image != nil && sol_image.strip == ""
+      sol_image = nil
+    end 
+    
     @question = Question.new(params[:question])
     @question.section_id = @section.id
+    @question.que_image = que_image
+    @question.sol_image = sol_image
 
     respond_to do |format|
       if @question.save
@@ -72,9 +87,26 @@ class QuestionsController < ApplicationController
     
     load_quiz_and_section
     load_question
+    
+    que_image = params[:question].delete :que_image
+    sol_image = params[:question].delete :sol_image 
+    
+    # handle empty que_image
+    if que_image != nil && que_image.strip == ""
+      que_image = nil
+    end
+    
+    # handle empty que_image
+    if sol_image != nil && sol_image.strip == ""
+      sol_image = nil
+    end
+    
+    @question.attributes = params[:question]
+    @question.que_image = que_image
+    @question.sol_image = sol_image
 
     respond_to do |format|
-      if @question.update_attributes(params[:question])
+      if @question.save
         format.html { redirect_to [@question.section.quiz,@question.section,@question], notice: 'Question was successfully updated.' }
         format.json { head :no_content }
       else

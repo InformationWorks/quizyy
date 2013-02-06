@@ -8,6 +8,13 @@
 			<br />
 			<span class="label"><%= @quiz.quiz_type.name %></span>
 			
+			<!-- Timed or Practice -->
+            <% if @quiz.timed %> 
+              <span class="label">Timed</span>
+            <% else %>
+              <span class="label">Practice</span>
+            <% end %>
+			
 			<!-- Category & Topic -->
 			<% if @quiz.category_id != nil %> 
 			  <span class="label"><%= @quiz.category.name %></span>

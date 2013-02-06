@@ -22,6 +22,7 @@
 							<th>Action</th>
 							<th>Target</th>
 							<th>Activity</th>
+							<th>Desc</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -39,6 +40,7 @@
 						    	<%= activity_log.target.full_name %>
 						    </td>
 						    <td><%= activity_log.activity %></td>
+						    <td><%= activity_log.desc %></td>
 						  </tr>
 						<% end %>
 					</tbody>

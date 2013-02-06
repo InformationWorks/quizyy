@@ -1,0 +1,77 @@
+<!-- Set values that need to be used for specific cases -->
+<% 
+
+if table_type == "full_timed"
+  @quizzes = @full_timed_quizzes
+  @name_header_label = "Timed"
+  @category_topic_header_label = ""
+elsif table_type == "full_practice"
+  @name_header_label = "Practice"
+  @quizzes = @full_practice_quizzes
+  @category_topic_header_label = ""
+elsif table_type == "category_timed"
+  @name_header_label = "Timed"
+  @quizzes = @category_timed_quizzes
+  @category_topic_header_label = "Category"
+elsif table_type == "category_practice"
+  @name_header_label = "Practice"        
+  @quizzes = @category_timed_quizzes
+  @category_topic_header_label = "Category"
+elsif table_type == "topic_timed"
+  @name_header_label = "Timed"
+  @quizzes = @topic_timed_quizzes
+  @category_topic_header_label = "Topic"
+elsif table_type == "topic_practice"
+  @name_header_label = "Practice"
+  @quizzes = @topic_practice_quizzes
+  @category_topic_header_label = "Topic"
+end
+
+%>
+    
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th><%= @name_header_label %></th>
+            <th><%= @category_topic_header_label %></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        <% @quizzes.each do |quiz| %>
+          <tr>
+            <td>
+                <%= quiz.name %>
+                <% if quiz.approved %>
+                    <span class="label label-success">In-Store</span>
+                <% elsif quiz.published %>
+                    <span class="label label-warning">Awaiting approval</span>
+                <% else %>
+                    <span class="label label-error">Unpublished</span>                                  
+                <% end %>
+            </td>
+            <td>
+                <% if table_type == "category_timed" || table_type == "category_practice" %>
+                <%= quiz.category ? quiz.category.name : "" %>
+                <% elsif table_type == "topic_timed" || table_type == "topic_practice" %>
+                <%= quiz.topic ? quiz.topic.name : "" %>
+                <% end %>
+            </td>
+            <td class="toolbar">
+              <div class="btn-group">
+                <%= link_to(quiz, :class => "btn") do %>
+                  <span class="awe-eye-open"></span>
+                <% end %>
+                <%= link_to(edit_quiz_path(quiz), :class => "btn") do %>
+                  <span class="awe-wrench"></span>
+                <% end %>
+                <%= link_to(quiz, method: :delete, data: { confirm: 'Are you sure you want to delete this quiz' }, :class => "btn") do %>
+                  <span class="awe-remove"></span>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+    </tbody>
+</table>

@@ -2,7 +2,7 @@ class Quiz < ActiveRecord::Base
   belongs_to :quiz_type
   belongs_to :category
   belongs_to :topic
-  attr_accessible :name, :random, :quiz_type_id, :category_id, :topic_id,:desc
+  attr_accessible :name, :timed, :random, :quiz_type_id, :category_id, :topic_id,:desc
   attr_accessor :word
   validates :name,:desc,:slug,:price, :presence => true
   before_validation :generate_slug
@@ -20,6 +20,8 @@ class Quiz < ActiveRecord::Base
   belongs_to :approver, :class_name => "User"
   
   scope :full, :conditions => { :quiz_type_id => ( QuizType.find_by_name("FullQuiz") != nil ? QuizType.find_by_name("FullQuiz").id : -1 ) }
+  scope :category, :conditions => { :quiz_type_id => ( QuizType.find_by_name("CategoryQuiz") != nil ? QuizType.find_by_name("CategoryQuiz").id : -1 ) }
+  scope :topic, :conditions => { :quiz_type_id => ( QuizType.find_by_name("TopicQuiz") != nil ? QuizType.find_by_name("TopicQuiz").id : -1 ) }
   scope :timed, :conditions => { :timed => true }
   scope :practice, :conditions => { :timed => false }
   scope :free, :conditions => { :price => 0 }
@@ -36,7 +38,7 @@ class Quiz < ActiveRecord::Base
     elsif user.role?(:super_admin) || user.role?(:admin) 
       Quiz.full.timed.published
     elsif user.role?(:publisher)
-      Quiz.full.timed.published
+      Quiz.full.timed
     else
       Quiz.full.timed.approved
     end
