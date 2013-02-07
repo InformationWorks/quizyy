@@ -17,7 +17,7 @@ class StoresController < ApplicationController
     load_words_for_quizzes(@full_length_quizzes)
     
     # generate store entities for timed.
-    generate_store_entities(true)
+    @store_entities = generate_store_entities(true)
     
     # Load words for each quiz.
     @store_entities.each do |entity_name_quizzes|
@@ -30,12 +30,7 @@ class StoresController < ApplicationController
   def practice_tests
    
     # generate store entities for practice.
-    generate_store_entities(false)
-    
-    # Load words for each quiz.
-    @store_entities.each do |entity_name_quizzes|
-      load_words_for_quizzes(entity_name_quizzes[:quizzes])
-    end
+    @store_entities = generate_store_entities(false)
     
     # Load words for each quiz.
     @store_entities.each do |entity_name_quizzes|
@@ -178,16 +173,16 @@ class StoresController < ApplicationController
     
     # Get array of category & topic structures.
     # [ { entity => string, name => string, slug => string , quizzes => array_of_quizzes } ]
-    @store_category_entities = Quiz.store_entity_name_quizzes("Category",timed,current_user)
-    @store_topic_entities = Quiz.store_entity_name_quizzes("Topic",timed,current_user)
+    store_category_entities = Quiz.store_entity_name_quizzes("Category",timed,current_user)
+    store_topic_entities = Quiz.store_entity_name_quizzes("Topic",timed,current_user)
     
     # Combile category & topic array and sort them by name.
-    @store_entities = []
-    @store_entities += @store_category_entities
-    @store_entities += @store_topic_entities
-    @store_entities.sort! { |a,b| a[:name].downcase <=> b[:name].downcase }
+    store_entities = []
+    store_entities += store_category_entities
+    store_entities += store_topic_entities
+    store_entities.sort! { |a,b| a[:name].downcase <=> b[:name].downcase }
     
-    return @store_entities
+    return store_entities
     
   end
   
