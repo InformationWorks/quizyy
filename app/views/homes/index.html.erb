@@ -233,7 +233,9 @@
   </div>
   </section>
   </div>
-  		<%= button_to "Reset user quizzes", { :action => "reset_user_quizzes" },
-          :confirm => "Are you sure you want to delete all the quizzes ?", :method => :delete %>
+	<% if current_user.role? :super_admin %>
+		<%= button_to "Reset user quizzes", { :action => "reset_user_quizzes" },
+      		:confirm => "Are you sure you want to delete all the quizzes ?", :method => :delete %>
+    <% end %>
   </div>
 </div>
