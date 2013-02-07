@@ -144,7 +144,7 @@ class QuizzesController < ApplicationController
     
     quiz = Quiz.find_by_slug!(params[:id])
     
-    verbal_quiz_uploader = VerbalQuizUploader.new(getWorkbookFromParams(params),quiz)
+    verbal_quiz_uploader = VerbalQuizUploader.new(getWorkbookFromParams(params),quiz,false)
     
     if verbal_quiz_uploader.validate_excel_workbook
       # Valid Excel
