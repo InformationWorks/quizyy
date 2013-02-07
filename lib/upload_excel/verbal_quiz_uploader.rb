@@ -37,7 +37,7 @@ module UploadExcel
       
       clear_quiz
       
-      @verbal_section, @questions, @options = @upload_helper.process_verbal_sheet(@verbal_sheet,@quiz)
+      @verbal_section, @questions, @options = @upload_helper.process_verbal_sheet(@verbal_sheet,@quiz,1)
       
       if !@dry_run
         # Save the objects stored in the array.

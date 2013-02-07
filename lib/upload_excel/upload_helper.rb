@@ -35,7 +35,7 @@ module UploadExcel
       end
       
       # Criteria 3
-      if !are_verbal_sheet_colums_valid?
+      if !are_verbal_sheet_colums_valid?(@workbook.worksheet 0)
         return false
       end
       
@@ -60,7 +60,7 @@ module UploadExcel
     # Process a verbal sheet.
     # return true is processing is successful.
     # return false for unexpected results.
-    def process_verbal_sheet(verbal_sheet,quiz)
+    def process_verbal_sheet(verbal_sheet,quiz,sequence_no)
       
       Rails.logger.info("IN create_verbal_questions")
       
@@ -70,7 +70,7 @@ module UploadExcel
     
       # Create the verbal section
       verbal_section = Section.new :name => verbal_sheet.name, 
-                                   :sequence_no => 1, 
+                                   :sequence_no => sequence_no, 
                                    :section_type_id => SectionType.find_by_name("Verbal").id
       verbal_section.quiz = quiz
       
@@ -107,7 +107,7 @@ module UploadExcel
       end
       
       # Criteria 3
-      if !are_quant_sheet_colums_valid?
+      if !are_quant_sheet_colums_valid?(@workbook.worksheet 0)
         return false
       end
       
@@ -132,7 +132,7 @@ module UploadExcel
     # Process a quant sheet.
     # return true is processing is successful.
     # return false for unexpected results.
-    def process_quant_sheet(quant_sheet,quiz)
+    def process_quant_sheet(quant_sheet,quiz,sequence_no)
       
       Rails.logger.info("IN create_verbal_questions")
       
@@ -142,7 +142,7 @@ module UploadExcel
       
       # Create the quant section
       quant_section = Section.new :name => quant_sheet.name, 
-                                   :sequence_no => 1, 
+                                   :sequence_no => sequence_no, 
                                    :section_type_id => SectionType.find_by_name("Quant").id
       quant_section.quiz = quiz
       
@@ -150,6 +150,63 @@ module UploadExcel
       create_quant_questions(quant_sheet,quant_section,questions,options)
         
       return quant_section,questions,options
+    end
+    
+    #############################################################################
+    #############################################################################
+    #----------------------------- FULL HELPERS---------------------------------#
+    #############################################################################
+    #############################################################################
+    
+    # Check if the excel file has the minimum required format. Further validation 
+    # will be carried out when processing the file.
+    #
+    # Criteria 1: There should be minimum 5 sheets
+    # Criteria 2: First 4 sheets should contain all of - "VERBAL-1","VERBAL-2","QUANT-1" and "QUANT-1".
+    # Criteria 3: DATA should be the last sheet.
+    # Criteria 4: Check if correct column names exist for the sheets.
+    # Criteria 5: Check if there are question # 1 - 20 on each sheet.
+    # Criteria 6: Check if Type column has valid entries & matching option set.
+    def validate_full_excel_workbook
+      
+      ## Criteria 1
+      if !workbook_has_5_sheets?((@workbook.worksheet 0),(@workbook.worksheet 1),(@workbook.worksheet 2),(@workbook.worksheet 3),(@workbook.worksheet 4))
+        return false
+      end
+       
+      ## Criteria 2
+      if !workbook_has_4_correct_sheets?((@workbook.worksheet 0),(@workbook.worksheet 1),(@workbook.worksheet 2),(@workbook.worksheet 3))
+        return false
+      end
+
+      ## Criteria 3
+      if !workbook_has_5th_data_sheet?((@workbook.worksheet 4))
+        return false
+      end
+  
+      sheets = []
+      sheets << (@workbook.worksheet 0) << (@workbook.worksheet 1) << (@workbook.worksheet 2) << (@workbook.worksheet 3)
+      ## Criteria 4
+      if !are_full_sheet_colums_valid?(sheets)
+        return false
+      end
+  
+      ## Criteria 5
+      if !are_que_numbers_correct?
+        return false
+      end
+        
+      ## Criteria 6
+      if !are_full_que_types_and_optionsets_valid?
+        return false
+      end
+      
+      ## Enter future validation criterias here ##
+      
+      Rails.logger.info("VALIDATION PASSED")
+      
+      return true
+      
     end
     
     private
@@ -197,7 +254,7 @@ module UploadExcel
     #############################################################################
     
     # Criteria 3: Check if correct column names exist for the verbal sheet.
-    def are_verbal_sheet_colums_valid?
+    def are_verbal_sheet_colums_valid?(sheet)
       
       (0..17).each do |i|
 
@@ -222,8 +279,8 @@ module UploadExcel
                        when i == 17 then "Option10"    
                        end
                        
-        if (@workbook.worksheet 0).row(0).at(i).to_s != correct_name
-          @error_messages << "Invalid Excel" << ("Sheet => #{(@workbook.worksheet 0).name},Incorrect Column # #{(i+1).to_s} => #{(@workbook.worksheet 0).row(0).at(i).to_s},Required Column => #{correct_name}")
+        if sheet.row(0).at(i).to_s != correct_name
+          @error_messages << "Invalid Excel" << ("Sheet => #{sheet.name},Incorrect Column # #{(i+1).to_s} => #{sheet.row(0).at(i).to_s},Required Column => #{correct_name}")
           return false
         end            
 
@@ -472,14 +529,14 @@ module UploadExcel
       
     end
     
-     #############################################################################
+    #############################################################################
     #############################################################################
     #------------------------ QUANT PRIVATES HELPERS----------------------------#
     #############################################################################
     #############################################################################
     
     # Criteria 3: Check if correct column names exist for the verbal sheet.
-    def are_quant_sheet_colums_valid?
+    def are_quant_sheet_colums_valid?(sheet)
       
       (0..23).each do |i|
             
@@ -510,8 +567,8 @@ module UploadExcel
                        when i == 23 then "Option10"    
                        end
                        
-        if (@workbook.worksheet 0).row(0).at(i).to_s != correct_name
-          @error_messages << ("Sheet => #{(@workbook.worksheet 0).name},Incorrect Column # #{(i+1).to_s} => #{(@workbook.worksheet 0).row(0).at(i).to_s},Required Column => #{correct_name}")
+        if sheet.row(0).at(i).to_s != correct_name
+          @error_messages << "Invalid Excel" << ("Sheet => #{sheet.name},Incorrect Column # #{(i+1).to_s} => #{sheet.row(0).at(i).to_s},Required Column => #{correct_name}")
           return false
         end            
 
@@ -680,6 +737,79 @@ module UploadExcel
       
       options[row_index-1] = curr_options
       
+    end
+    
+    #############################################################################
+    #############################################################################
+    #------------------------ FULL PRIVATES HELPERS-----------------------------#
+    #############################################################################
+    #############################################################################
+    
+    # Criteria 1: There should be minimum 5 sheets
+    def workbook_has_5_sheets?(sheet1,sheet2,sheet3,sheet4,sheet5)
+      
+      if ( sheet1 == nil || sheet2 == nil || sheet3 == nil || sheet4 == nil || sheet5 == nil )
+        @error_messages << "Invalid Excel" << "Minimum 5 sheets required."
+        return false 
+      end
+      
+      return true
+      
+    end
+    
+    # Criteria 2: First 4 sheets should contain all of - "VERBAL-1","VERBAL-2","QUANT-1" and "QUANT-1".
+    def workbook_has_4_correct_sheets?(sheet1,sheet2,sheet3,sheet4)
+      sheet_names = [] << sheet1.name << sheet2.name << sheet3.name << sheet4.name
+      
+      if ((sheet_names & [ "VERBAL-1", "VERBAL-2", "QUANT-1", "QUANT-2" ]).count != 4)
+        @error_messages << "Invalid Excel" << "First 4 sheets should contain all of : VERBAL-1, VERBAL-2, QUANT-1 and QUANT-2."
+        return false
+      end
+      
+      return true
+    end
+      
+    # Criteria 3: DATA should be the last sheet.
+    def workbook_has_5th_data_sheet?(sheet5)
+      if (sheet5.name != "DATA")
+        @error_messages << "Invalid Excel" << "Last data sheet should be DATA."
+        return false
+      end
+      
+      return true
+    end
+    
+    # Criteria 4: Check if correct column names exist for the sheets.
+    def are_full_sheet_colums_valid?(sheets)
+            
+      sheets.each do | sheet |
+          
+        if ( sheet.name == "VERBAL-1" || sheet.name == "VERBAL-2" )
+          
+          if !are_verbal_sheet_colums_valid?(sheet)
+            return false
+          end
+
+        elsif ( sheet.name == "QUANT-1" || sheet.name == "QUANT-2" )
+          
+          if !are_quant_sheet_colums_valid?(sheet)
+            return false
+          end
+                    
+        end
+        
+      end
+
+      return true
+      
+    end
+    
+    # Criteria 6: Check if Type column has valid entries & matching option set.
+    def are_full_que_types_and_optionsets_valid?
+      
+      # TODO: Return false if a invalid entry found.
+      
+      return true
     end
     
   end
