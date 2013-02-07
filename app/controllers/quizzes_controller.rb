@@ -160,7 +160,7 @@ class QuizzesController < ApplicationController
       
     else
       # Invalid Excel
-      render :json => { :message => "InValid",:error => verbal_quiz_uploader.error_messages.to_s }
+      redirect_to  quiz_path(quiz), :flash => { :error_messages => verbal_quiz_uploader.error_messages }
     end
     
   end
@@ -170,7 +170,7 @@ class QuizzesController < ApplicationController
     
     quiz = Quiz.find_by_slug!(params[:id])
     
-    quant_quiz_uploader = QuantQuizUploader.new(getWorkbookFromParams(params),quiz)
+    quant_quiz_uploader = QuantQuizUploader.new(getWorkbookFromParams(params),quiz,false)
     
     if quant_quiz_uploader.validate_excel_workbook
       # Valid Excel
@@ -186,7 +186,7 @@ class QuizzesController < ApplicationController
       
     else
       # Invalid Excel
-      render :json => { :message => "InValid",:error => quant_quiz_uploader.error_messages.to_s }
+      redirect_to  quiz_path(quiz), :flash => { :error_messages => quant_quiz_uploader.error_messages }
     end
     
   end
