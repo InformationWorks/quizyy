@@ -5,6 +5,13 @@ class ConfirmationsController < Devise::ConfirmationsController
   def show
     #@confirmation_token = params[:confirmation_token]
     self.resource = resource_class.find_by_confirmation_token(params[:confirmation_token])
+    
+    if resource == nil
+      flash[:error] = "Invalid confirmation link. Click here to resend confirmation instructions."
+      redirect_to landings_index_path
+      return
+    end
+    
     super if resource.confirmed? 
   end
 
