@@ -10,13 +10,13 @@ module OrdersHelper
         
         # Add credits to the user.
         user.add_credits(offer.credits,-1,"offer - " + offer.code,user.id,"Added credit after confirmation")
-        offer_messages << "Added #{offer.credits} credits for the offer #{offer.title}"
+        offer_messages << "Added #{offer.credits} credits for the offer - #{offer.title}"
         
       elsif offer.valid_for_user?(user)        
         
         # Add credits to the user.
         user.add_credits(offer.credits,-1,"offer - " + offer.code,user.id,"Added credit after confirmation")
-        offer_messages << "Added #{offer.credits} credits for the offer #{offer.title}"
+        offer_messages << "Added #{offer.credits} credits for the offer - #{offer.title}"
         
       end
         

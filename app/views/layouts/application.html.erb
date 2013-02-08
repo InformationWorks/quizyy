@@ -77,19 +77,26 @@
 <section class="content" role="main">
   <div class="container-fluid">
   <% if alert %>
-        <div class="alert">
-          <button type="button" class="close" data-dismiss="alert"></button>
-          <%= alert %>
-        </div>
+      <div class="alert" style="margin-top: 50px;margin-bottom: -50px;">
+        <button type="button" class="close" data-dismiss="alert"></button>
+        <%= alert %>
+      </div>
   <% elsif flash[:error] || flash[:warning] || flash[:notice] %>
-      <div class="alert alert-error">
+      <div class="alert alert-error" style="margin-top: 50px;margin-bottom: -50px;">
         <button type="button" class="close" data-dismiss="alert"></button>
         <%= flash[:error] || flash[:warning] || flash[:notice] %>
       </div>
   <% end %>
+  
+  <% if flash[:offer_messages] %>
+      <div class="alert" style="margin-top: 50px;margin-bottom: -50px;">
+        <button type="button" class="close" data-dismiss="alert"></button>
+        <%= flash[:offer_messages].html_safe %>
+      </div>
+  <% end %>
+  
   <%= yield %>
   </div>
-
 </section>
 <footer>
   <div class="container">

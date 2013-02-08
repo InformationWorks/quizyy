@@ -19,8 +19,8 @@ class ConfirmationsController < Devise::ConfirmationsController
       
       # Check for offers.
       offer_messages = OrdersHelper.after_confirmation_offers(self.resource)
-      
-      Rails.logger.info(offer_messages.to_s)
+           
+      flash[:offer_messages] = offer_messages.map{|s| "#{s}"}.join('<br /><br />')
       
       # Call overridden function.
       sign_in_and_redirect(resource_name, resource)
