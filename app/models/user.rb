@@ -187,6 +187,42 @@ class User < ActiveRecord::Base
     activity_log.activity = activity
   end
   
+  # Add quiz and log the activity.
+  def add_quiz(quiz,actor_id,action,target_id,activity)
+    
+    # Add quiz.
+    quiz_user = QuizUser.new
+    quiz_user.user_id = self.id
+    quiz_user.quiz_id = quiz.id
+    quiz_user.save!
+    
+    # Log the add credits activity.
+    activity_log = ActivityLog.new
+    activity_log.actor_id = actor_id
+    activity_log.action = action
+    activity_log.target_id = target_id
+    activity_log.activity = activity
+  end
+  
+  # Add package and log the activity.
+  def add_package(package,actor_id,action,target_id,activity)
+    
+    # Add package.
+    package.quizzes.pluck(:quiz_id).each do |quiz_id|
+      quiz_user = QuizUser.new
+      quiz_user.user_id = self.id
+      quiz_user.quiz_id = quiz_id
+      quiz_user.save!
+    end
+    
+    # Log the add credits activity.
+    activity_log = ActivityLog.new
+    activity_log.actor_id = actor_id
+    activity_log.action = action
+    activity_log.target_id = target_id
+    activity_log.activity = activity
+  end
+  
   private
   
   def ability

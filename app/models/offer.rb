@@ -3,7 +3,17 @@ class Offer < ActiveRecord::Base
   
   validates :active, :code, :credits, :desc, :global, :start, :stop, :title, :presence => true
   
+  has_many :offer_users
+  has_many :users, :through => :offer_users
+  
+  has_many :offer_items
+  has_many :quizzes, :through => :offer_items
+  
+  has_many :offer_items
+  has_many :packages, :through => :offer_items
+  
   scope :add_credits_on_confirm, :conditions => { :code => "add_credits_on_confirm" }
+  scope :add_items_on_confirm, :conditions => { :code => "add_items_on_confirm" }
     
   scope :active, lambda { 
     { :conditions => ["? BETWEEN start AND stop AND active = true",DateTime.now] } 

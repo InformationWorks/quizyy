@@ -282,6 +282,71 @@ ALTER SEQUENCE dictionaries_id_seq OWNED BY dictionaries.id;
 
 
 --
+-- Name: offer_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE offer_items (
+    id integer NOT NULL,
+    offer_id integer,
+    quiz_id integer,
+    package_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: offer_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE offer_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: offer_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE offer_items_id_seq OWNED BY offer_items.id;
+
+
+--
+-- Name: offer_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE offer_users (
+    id integer NOT NULL,
+    offer_id integer,
+    user_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: offer_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE offer_users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: offer_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE offer_users_id_seq OWNED BY offer_users.id;
+
+
+--
 -- Name: offers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1017,6 +1082,20 @@ ALTER TABLE ONLY dictionaries ALTER COLUMN id SET DEFAULT nextval('dictionaries_
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY offer_items ALTER COLUMN id SET DEFAULT nextval('offer_items_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY offer_users ALTER COLUMN id SET DEFAULT nextval('offer_users_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY offers ALTER COLUMN id SET DEFAULT nextval('offers_id_seq'::regclass);
 
 
@@ -1200,6 +1279,22 @@ ALTER TABLE ONLY categories
 
 ALTER TABLE ONLY dictionaries
     ADD CONSTRAINT dictionaries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: offer_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY offer_items
+    ADD CONSTRAINT offer_items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: offer_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY offer_users
+    ADD CONSTRAINT offer_users_pkey PRIMARY KEY (id);
 
 
 --
@@ -1422,6 +1517,41 @@ CREATE INDEX index_categories_on_section_type_id ON categories USING btree (sect
 --
 
 CREATE INDEX index_categories_on_slug ON categories USING btree (slug);
+
+
+--
+-- Name: index_offer_items_on_offer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_offer_items_on_offer_id ON offer_items USING btree (offer_id);
+
+
+--
+-- Name: index_offer_items_on_package_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_offer_items_on_package_id ON offer_items USING btree (package_id);
+
+
+--
+-- Name: index_offer_items_on_quiz_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_offer_items_on_quiz_id ON offer_items USING btree (quiz_id);
+
+
+--
+-- Name: index_offer_users_on_offer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_offer_users_on_offer_id ON offer_users USING btree (offer_id);
+
+
+--
+-- Name: index_offer_users_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_offer_users_on_user_id ON offer_users USING btree (user_id);
 
 
 --
@@ -1769,3 +1899,7 @@ INSERT INTO schema_migrations (version) VALUES ('20130203154706');
 INSERT INTO schema_migrations (version) VALUES ('20130205180303');
 
 INSERT INTO schema_migrations (version) VALUES ('20130208120336');
+
+INSERT INTO schema_migrations (version) VALUES ('20130208212447');
+
+INSERT INTO schema_migrations (version) VALUES ('20130208213101');
