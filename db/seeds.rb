@@ -675,7 +675,7 @@ end
   end
   scaled_score.save!
 end
-File.open(Rails.root.join("app/assets/files/gre-top-200-words.txt")) do |dictionary|
+File.open(Rails.root.join("app/assets/files/words.txt")) do |dictionary|
   dictionary.read.each_line do |record|
     word, meaning = record.chomp.split("\t")
     Dictionary.create!(:word => word, :meaning => meaning)
