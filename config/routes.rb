@@ -1,4 +1,6 @@
 GremastersWeb::Application.routes.draw do
+  resources :offers
+
   get "progress_report/index"
 
   get "progress_report/show"
