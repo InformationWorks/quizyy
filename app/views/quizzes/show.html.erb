@@ -204,9 +204,25 @@
 				</div>
 				
 				<div class="control-group">
-				<h3>Upload</h3>
+				<h3>Upload Quiz - DRY RUN</h3>
 				    <div style="float: middle;height:118px;" class="table table-bordered">
-						<%= form_for @quiz, :url => @upload_path, :method => :post, :html => { :multipart => true } do |fe| %> 
+						<%= form_for @quiz, :url => @upload_path, :method => :post, :html => { :multipart => true } do |fe| %>
+						<%= fe.hidden_field :dry_run , :value=> "true" %> 
+						<%= fe.file_field :full_quiz_excel,:class => "form_fields" %> <br /> <br />
+						<%= fe.submit "Upload Questions",:confirm => "Are you sure you want to overwrite existing questions?", :method => :post, :data => { :confirm => 'This will delete current questions for this quiz. Are you sure you want to upload new questions?' },
+						                :class => "btn btn-inverse",:style => "float:left;margin-left: 20px;margin-top:-5px" %> 
+						<div style="margin-top: 0px;float: left;margin-left: 15px;">
+						        This will show you if there will be any error while uploading.
+						</div>
+						<% end %>
+					</div>
+				</div>
+				
+				<div class="control-group">
+				<h3>Upload Quiz</h3>
+				    <div style="float: middle;height:118px;" class="table table-bordered">
+						<%= form_for @quiz, :url => @upload_path, :method => :post, :html => { :multipart => true } do |fe| %>
+						<%= fe.hidden_field :dry_run , :value=> "false" %> 
 						<%= fe.file_field :full_quiz_excel,:class => "form_fields" %> <br /> <br />
 						<%= fe.submit "Upload Questions",:confirm => "Are you sure you want to overwrite existing questions?", :method => :post, :data => { :confirm => 'This will delete current questions for this quiz. Are you sure you want to upload new questions?' },
 						                :class => "btn btn-inverse",:style => "float:left;margin-left: 20px;margin-top:-5px" %> 

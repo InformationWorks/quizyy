@@ -118,7 +118,13 @@ class QuizzesController < ApplicationController
     
     quiz = Quiz.find_by_slug!(params[:id])
     
-    full_quiz_uploader = FullQuizUploader.new(getWorkbookFromParams(params),quiz,false)
+    if params[:quiz][:dry_run] == "true"
+      dry_run = true
+    else
+      dry_run = false
+    end
+    
+    full_quiz_uploader = FullQuizUploader.new(getWorkbookFromParams(params),quiz,dry_run)
     
     if full_quiz_uploader.validate_excel_workbook
       # Valid Excel
@@ -143,7 +149,13 @@ class QuizzesController < ApplicationController
     
     quiz = Quiz.find_by_slug!(params[:id])
     
-    verbal_quiz_uploader = VerbalQuizUploader.new(getWorkbookFromParams(params),quiz,false)
+    if params[:quiz][:dry_run] == "true"
+      dry_run = true
+    else
+      dry_run = false
+    end
+    
+    verbal_quiz_uploader = VerbalQuizUploader.new(getWorkbookFromParams(params),quiz,dry_run)
     
     if verbal_quiz_uploader.validate_excel_workbook
       # Valid Excel
@@ -169,7 +181,13 @@ class QuizzesController < ApplicationController
     
     quiz = Quiz.find_by_slug!(params[:id])
     
-    quant_quiz_uploader = QuantQuizUploader.new(getWorkbookFromParams(params),quiz,false)
+    if params[:quiz][:dry_run] == "true"
+      dry_run = true
+    else
+      dry_run = false
+    end
+    
+    quant_quiz_uploader = QuantQuizUploader.new(getWorkbookFromParams(params),quiz,dry_run)
     
     if quant_quiz_uploader.validate_excel_workbook
       # Valid Excel
