@@ -5,4 +5,9 @@ class Offer < ActiveRecord::Base
   
   scope :add_credits_on_confirm, :conditions => { :code => "add_credits_on_confirm" }
   scope :active, :conditions => { :active => true }
+  
+  def valid_for_user?(user)
+    # TODO: Implement offer_users table and check from that.
+    return true
+  end
 end

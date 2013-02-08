@@ -173,6 +173,20 @@ class User < ActiveRecord::Base
     end
   end
   
+  # Add credits and log the activity.
+  def add_credits(credits,actor_id,action,target_id,activity)
+    # Add credits.
+    self.credits += credits
+    self.save!
+    
+    # Log the add credits activity.
+    activity_log = ActivityLog.new
+    activity_log.actor_id = actor_id
+    activity_log.action = action
+    activity_log.target_id = target_id
+    activity_log.activity = activity
+  end
+  
   private
   
   def ability
