@@ -25,7 +25,7 @@ class ConfirmationsController < Devise::ConfirmationsController
       set_flash_message :notice, :confirmed 
       
       # Check for offers.
-      offer_messages = OrdersHelper.after_confirmation_offers(self.resource)
+      offer_messages = OffersHelper.after_confirmation_offers(self.resource)
            
       flash[:offer_messages] = offer_messages.map{|s| "#{s}"}.join('<br /><br />')
       

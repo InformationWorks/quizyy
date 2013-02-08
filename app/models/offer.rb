@@ -4,7 +4,10 @@ class Offer < ActiveRecord::Base
   validates :active, :code, :credits, :desc, :global, :start, :stop, :title, :presence => true
   
   scope :add_credits_on_confirm, :conditions => { :code => "add_credits_on_confirm" }
-  scope :active, :conditions => { :active => true }
+    
+  scope :active, lambda { 
+    { :conditions => ["? BETWEEN start AND stop AND active = true",DateTime.now] } 
+  }
   
   def valid_for_user?(user)
     # TODO: Implement offer_users table and check from that.
