@@ -1,4 +1,9 @@
 class OffersController < ApplicationController
+  
+  before_filter :authenticate_user!
+  before_filter :load_offer, :only => [ :show, :edit, :update, :destroy ]
+  load_and_authorize_resource
+  
   # GET /offers
   # GET /offers.json
   def index
@@ -80,4 +85,11 @@ class OffersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+  
+  def load_offer
+    @offer = Offer.find(params[:id])
+  end
+  
 end

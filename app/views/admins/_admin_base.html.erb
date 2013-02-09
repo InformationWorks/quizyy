@@ -72,6 +72,11 @@
 							<span class="awe-money"></span>Transaction Management
 							<% end %>
 						</li>
+						<li <% if @current_controller == "offers" %>class = "current"<% end %> >
+							<%= link_to(offers_path, :class => "no-submenu") do %>
+							<span class="awe-money"></span>Offers
+							<% end %>
+						</li>
 					</ul>
 				</nav>
 				<!-- /Main navigation -->

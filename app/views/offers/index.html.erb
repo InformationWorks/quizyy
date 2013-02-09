@@ -1,3 +1,5 @@
+<% content_for :admin_content do %>
+
 <h1>Listing offers</h1>
 
 <table>
@@ -35,3 +37,7 @@
 <br />
 
 <%= link_to 'New Offer', new_offer_path %>
+
+<% end %>
+
+<%= render 'admins/admin_base' %>

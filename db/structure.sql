@@ -357,9 +357,9 @@ CREATE TABLE offers (
     "desc" text,
     start timestamp without time zone,
     stop timestamp without time zone,
-    global boolean,
-    active boolean,
-    credits integer,
+    global boolean DEFAULT true NOT NULL,
+    active boolean DEFAULT false NOT NULL,
+    credits integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
