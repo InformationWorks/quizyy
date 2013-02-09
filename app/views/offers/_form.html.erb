@@ -1,49 +1,105 @@
-<%= form_for(@offer) do |f| %>
-  <% if @offer.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@offer.errors.count, "error") %> prohibited this offer from being saved:</h2>
+<% content_for :admin_content do %>
 
-      <ul>
-      <% @offer.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<!-- Data block -->
+<article class="data-block">
+    <div class="data-container">
+        <header>
+            <h2><%= yield :offer_form_title %></h2>
+            <ul class="data-header-actions">
+                <%= link_to(offers_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+                 Cancel
+                <% end %>   
+            </ul>
+        </header>
+        <section class="tab-content">
+            
+            <!-- Form starts here -->
+            <div class="span11" style="margin-left: 15px;">
+                  <%= form_for(@offer) do |f| %>
+                  <% if @offer.errors.any? %>
+                  
+                    <div class="alert alert-error">
+                        <button class="close" data-dismiss="alert"></button>
+                        <strong><%= pluralize(@offer.errors.count, "error") %> prohibited this offer from being saved!</strong>
+                        <br />
+                        <br /> 
+                        <ul>
+                          <% @offer.errors.full_messages.each do |msg| %>
+                            <li><%= msg %></li>
+                          <% end %>
+                        </ul>
+                    </div>
+                  <% end %>
+                  
+                  <div class="control-group" id="topic_select">
+                    <label class="control-label" for="input"><%= f.label :offer_code %></label>
+                    <div class="controls">
+                        <%= f.collection_select :offer_code_id, OfferCode.all, :id, :code %>
+                    </div>
+                  </div>
+                
+                    <div class="control-group">
+                        <label class="control-label" for="input"><%= f.label :title %></label>
+                        <div class="controls">
+                            <%= f.text_field :title, :class => "input-xlarge" %>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input"><%= f.label :desc %></label>
+                        <div class="controls">
+                            <%= f.text_field :desc, :class => "input-xlarge" %>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input"><%= f.label :start %></label>
+                        <div class="controls">
+                            <%= f.datetime_select :start, :class => "input-xlarge" %>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input"><%= f.label :stop %></label>
+                        <div class="controls">
+                            <%= f.datetime_select :stop, :class => "input-xlarge" %>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input"><%= f.label :global %></label>
+                        <div class="controls">
+                            <%= f.check_box :global, :class => "input-xlarge" %>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input"><%= f.label :active %></label>
+                        <div class="controls">
+                            <%= f.check_box :active, :class => "input-xlarge" %>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input"><%= f.label :credits %></label>
+                        <div class="controls">
+                            <%= f.number_field :credits, :class => "input-xlarge" %>
+                        </div>
+                    </div>
+                                            
+                    <div class="form-actions">
+                        <%= f.submit :class => "btn btn-info" %>
+                    </div>
+                <% end %>
+            </div>
+            <!-- Form ends here -->
+        </section>
     </div>
-  <% end %>
+</article>
+<!-- /Data block -->
 
-  <div class="field">
-    <%= f.label :code %><br />
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :desc %><br />
-    <%= f.text_area :desc %>
-  </div>
-  <div class="field">
-    <%= f.label :start %><br />
-    <%= f.datetime_select :start %>
-  </div>
-  <div class="field">
-    <%= f.label :stop %><br />
-    <%= f.datetime_select :stop %>
-  </div>
-  <div class="field">
-    <%= f.label :global %><br />
-    <%= f.check_box :global %>
-  </div>
-  <div class="field">
-    <%= f.label :active %><br />
-    <%= f.check_box :active %>
-  </div>
-  <div class="field">
-    <%= f.label :credits %><br />
-    <%= f.number_field :credits %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<br />
+
 <% end %>
+
+<%= render 'admins/admin_base' %>

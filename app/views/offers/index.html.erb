@@ -84,7 +84,7 @@
                         
                         <% @offers.each do |offer| %>
                           <tr>
-                            <td><%= offer.code %></td>
+                            <td><%= offer.offer_code.code %></td>
                             <td><%= offer.title %></td>
                             <td><%= offer.desc %></td>
                             <td><%= offer.start %></td>

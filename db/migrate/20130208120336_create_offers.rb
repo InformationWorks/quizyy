@@ -1,7 +1,7 @@
 class CreateOffers < ActiveRecord::Migration
   def change
     create_table :offers do |t|
-      t.string :code
+      t.references :offer_code
       t.string :title
       t.text :desc
       t.datetime :start
@@ -12,5 +12,6 @@ class CreateOffers < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :offers, :offer_code_id
   end
 end

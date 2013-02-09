@@ -1,7 +1,9 @@
 class Offer < ActiveRecord::Base
-  attr_accessible :active, :code, :credits, :desc, :global, :start, :stop, :title
+  attr_accessible :active, :offer_code_id, :credits, :desc, :global, :start, :stop, :title
   
-  validates :active, :code, :credits, :desc, :global, :start, :stop, :title, :presence => true
+  validates :active, :offer_code_id, :credits, :desc, :global, :start, :stop, :title, :presence => true
+  
+  belongs_to :offer_code
   
   has_many :offer_users
   has_many :users, :through => :offer_users
