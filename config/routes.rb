@@ -1,6 +1,5 @@
 GremastersWeb::Application.routes.draw do
-  resources :offers
-
+  
   get "progress_report/index"
 
   get "progress_report/show"
@@ -101,6 +100,10 @@ GremastersWeb::Application.routes.draw do
   resources :topics
 
   resources :categories
+  
+  resources :offers
+  
+  resources :offer_codes
 
   get "landings/index"
 

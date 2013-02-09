@@ -8,6 +8,7 @@ class OffersController < ApplicationController
   # GET /offers.json
   def index
     @offers = Offer.all
+    @offer_codes = OfferCode.all
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,42 +1,120 @@
 <% content_for :admin_content do %>
 
-<h1>Listing offers</h1>
+<!-- Data block -->
+<article class="data-block">
+    <div class="data-container">
+        <header>
+            <h2>Offer Codes</h2>
+            <ul class="data-header-actions">
+                <%= link_to(new_offer_code_path,:class => "btn btn-primary") do %>
+                 New Offer Code
+                <% end %>   
+            </ul>
+        </header>
+        <section class="tab-content">
+        
+            <!-- Tab #static -->
+            <div class="tab-pane active" id="static">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Desc</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <% @offer_codes.each do |offer_code| %>
+                          <tr>
+                            <td><%= offer_code.code %></td>
+                            <td><%= offer_code.desc %></td>
+                            <td class="toolbar">
+                              <div class="btn-group">
+                                <%= link_to(offer_code, :class => "btn") do %>
+                                  <span class="awe-eye-open"></span>
+                                <% end %>
+                                <%= link_to(edit_offer_code_path(offer_code), :class => "btn") do %>
+                                  <span class="awe-wrench"></span>
+                                <% end %>
+                                <%= link_to(offer_code, method: :delete, data: { confirm: 'Are you sure you want to delete this offer code?' }, :class => "btn") do %>
+                                  <span class="awe-remove"></span>
+                                <% end %>
+                              </div>
+                            </td>
+                          </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+        </section>
+    </div>
+</article>
+<!-- /Data block -->
 
-<table>
-  <tr>
-    <th>Code</th>
-    <th>Title</th>
-    <th>Desc</th>
-    <th>Start</th>
-    <th>Stop</th>
-    <th>Global</th>
-    <th>Active</th>
-    <th>Credits</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @offers.each do |offer| %>
-  <tr>
-    <td><%= offer.code %></td>
-    <td><%= offer.title %></td>
-    <td><%= offer.desc %></td>
-    <td><%= offer.start %></td>
-    <td><%= offer.stop %></td>
-    <td><%= offer.global %></td>
-    <td><%= offer.active %></td>
-    <td><%= offer.credits %></td>
-    <td><%= link_to 'Show', offer %></td>
-    <td><%= link_to 'Edit', edit_offer_path(offer) %></td>
-    <td><%= link_to 'Destroy', offer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<!-- Data block -->
+<article class="data-block">
+    <div class="data-container">
+        <header>
+            <h2>Offers</h2>
+            <ul class="data-header-actions">
+                <%= link_to(new_offer_path,:class => "btn btn-primary") do %>
+                 New Offer
+                <% end %>   
+            </ul>
+        </header>
+        <section class="tab-content">
+        
+            <!-- Tab #static -->
+            <div class="tab-pane active" id="static">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Title</th>
+                            <th>Desc</th>
+                            <th>Start</th>
+                            <th>Stop</th>
+                            <th>Global</th>
+                            <th>Active</th>
+                            <th>Credits</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <% @offers.each do |offer| %>
+                          <tr>
+                            <td><%= offer.code %></td>
+                            <td><%= offer.title %></td>
+                            <td><%= offer.desc %></td>
+                            <td><%= offer.start %></td>
+                            <td><%= offer.stop %></td>
+                            <td><%= offer.global %></td>
+                            <td><%= offer.active %></td>
+                            <td><%= offer.credits %></td>
+                            <td class="toolbar">
+                              <div class="btn-group">
+                                <%= link_to(offer, :class => "btn") do %>
+                                  <span class="awe-eye-open"></span>
+                                <% end %>
+                                <%= link_to(edit_offer_path(offer), :class => "btn") do %>
+                                  <span class="awe-wrench"></span>
+                                <% end %>
+                                <%= link_to(offer, method: :delete, data: { confirm: 'Are you sure you want to delete this offer?' }, :class => "btn") do %>
+                                  <span class="awe-remove"></span>
+                                <% end %>
+                              </div>
+                            </td>
+                          </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+        </section>
+    </div>
+</article>
+<!-- /Data block -->
 
 <br />
-
-<%= link_to 'New Offer', new_offer_path %>
 
 <% end %>
 

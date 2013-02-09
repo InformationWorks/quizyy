@@ -282,6 +282,38 @@ ALTER SEQUENCE dictionaries_id_seq OWNED BY dictionaries.id;
 
 
 --
+-- Name: offer_codes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE offer_codes (
+    id integer NOT NULL,
+    code character varying(255),
+    "desc" text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: offer_codes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE offer_codes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: offer_codes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE offer_codes_id_seq OWNED BY offer_codes.id;
+
+
+--
 -- Name: offer_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1082,6 +1114,13 @@ ALTER TABLE ONLY dictionaries ALTER COLUMN id SET DEFAULT nextval('dictionaries_
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY offer_codes ALTER COLUMN id SET DEFAULT nextval('offer_codes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY offer_items ALTER COLUMN id SET DEFAULT nextval('offer_items_id_seq'::regclass);
 
 
@@ -1279,6 +1318,14 @@ ALTER TABLE ONLY categories
 
 ALTER TABLE ONLY dictionaries
     ADD CONSTRAINT dictionaries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: offer_codes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY offer_codes
+    ADD CONSTRAINT offer_codes_pkey PRIMARY KEY (id);
 
 
 --
@@ -1903,3 +1950,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130208120336');
 INSERT INTO schema_migrations (version) VALUES ('20130208212447');
 
 INSERT INTO schema_migrations (version) VALUES ('20130208213101');
+
+INSERT INTO schema_migrations (version) VALUES ('20130209182543');
