@@ -5,7 +5,7 @@ module OffersHelper
     
     ##############################################
     ### Handle "add_credits_on_confirm" offers
-    add_credits_on_confirm_offers = Offer.add_credits_on_confirm.active
+    add_credits_on_confirm_offers = Offer.add_credits_on_confirm_offers.active
     add_credits_on_confirm_offers.each do |offer|
       
       if offer.global || offer.valid_for_user?(user)
@@ -20,7 +20,7 @@ module OffersHelper
 
     ##############################################
     ### Handle "add_items_on_confirm" offers
-    add_items_on_confirm_offers = Offer.add_items_on_confirm.active
+    add_items_on_confirm_offers = Offer.add_items_on_confirm_offers.active
     add_items_on_confirm_offers.each do |offer|
       
       if offer.global || offer.valid_for_user?(user)
