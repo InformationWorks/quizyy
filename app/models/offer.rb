@@ -15,11 +15,11 @@ class Offer < ActiveRecord::Base
   has_many :packages, :through => :offer_items
   
   scope :add_credits_on_confirm_offers, lambda {  
-    where("offer_code_id = ?", OfferCode.find_by_code("add_credits_on_cofirm"))
+    where("offer_code_id = ?", OfferCode.find_by_code("add_credits_on_confirm"))
   }
   
   scope :add_items_on_confirm_offers, lambda {  
-    where("offer_code_id = ?", OfferCode.find_by_code("add_items_on_cofirm"))
+    where("offer_code_id = ?", OfferCode.find_by_code("add_items_on_confirm"))
   }
     
   scope :active, lambda { 
