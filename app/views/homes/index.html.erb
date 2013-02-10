@@ -139,34 +139,38 @@
   <div class="tab-content">
     <div class= '<%= fullquiz_tabpane_class %>' id="full-test">
       <ul class="test-list">
+        <% purchased_full_quizzes = current_user.purchased_full_quizzes %>
+        
+        <% if purchased_full_quizzes.count == 0 %>
+         <h1>No tests in your account. Go to <%= link_to "store", timed_tests_path, :style => "color:#01a31c !important" %> and get started.</h1> <br /><br />
+        <% else %>
+         <% purchased_full_quizzes.each do |full_quiz| %>
 
-      	<% current_user.purchased_full_quizzes.each do |full_quiz| %>
+            <!%-- Set the css properties based on the status of the quiz --%>
+            <% status = full_quiz.quiz_users.where(:quiz_id => full_quiz.id,:user_id => current_user.id).first.status %>
 
-      		<!%-- Set the css properties based on the status of the quiz --%>
-      		<% status = full_quiz.quiz_users.where(:quiz_id => full_quiz.id,:user_id => current_user.id).first.status %>
-
-      		<% if status == :new %>
-      			<% li_class = "mediumListIconTextItem new"  %>
-      			<% command_btn_image = "" %>
-      			<% action_text = "Start" %>
-      		<% elsif status == :paused %>
-      			<% li_class = "mediumListIconTextItem pause"  %>
-      			<% command_btn_image = "" %>
-      			<% action_text = "Start" %>
-      		<% elsif status == :completed %>
-      		    <% li_class = "mediumListIconTextItem complete"  %>
-      		    <% command_btn_image = "" %>
-      		    <% action_text = "Review" %>
-      		<% end %>
+            <% if status == :new %>
+                <% li_class = "mediumListIconTextItem new"  %>
+                <% command_btn_image = "" %>
+                <% action_text = "Start" %>
+            <% elsif status == :paused %>
+                <% li_class = "mediumListIconTextItem pause"  %>
+                <% command_btn_image = "" %>
+                <% action_text = "Start" %>
+            <% elsif status == :completed %>
+                <% li_class = "mediumListIconTextItem complete"  %>
+                <% command_btn_image = "" %>
+                <% action_text = "Review" %>
+            <% end %>
 
            <%= link_to(full_quiz.test_detail_path, :style => "color:black") do %>     
-      		<li class= "<%= li_class %>">
-	          <small><%= status %></small>
-	          <div class="mediumListIconTextItem-Detail">
-	            <h4><%= full_quiz.name %></h4>
-	            <h6><%= full_quiz.desc %></h6>
-	          </div>
-	          <div class="command-btn pull-right">
+            <li class= "<%= li_class %>">
+              <small><%= status %></small>
+              <div class="mediumListIconTextItem-Detail">
+                <h4><%= full_quiz.name %></h4>
+                <h6><%= full_quiz.desc %></h6>
+              </div>
+              <div class="command-btn pull-right">
                 <% if status == :completed  %>
                     <%= link_to('/reports/'+full_quiz.slug.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
                         <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
@@ -178,56 +182,64 @@
                         <span class="win-label"><%= action_text %></span>
                     <% end %>
                 <% end %>
-	          </div>
-	        </li>
-	        <% end %>
-      	<% end %>
-
+              </div>
+            </li>
+            <% end %>
+        <% end %>
+        <br />
+            <br />
+            <%= link_to "Get more timed tests", timed_tests_path %>
+        <% end %>
       </ul>
-      <%= link_to "Get more timed tests", timed_tests_path %>
     </div>
 
   	<div class= '<%= categoryquiz_tabpane_class %>' id="category-test">
                 <ul class="test-list">
+                    <% purchased_category_topic_quizzes = current_user.purchased_category_topic_quizzes %>
+                
+                    <% if purchased_category_topic_quizzes.count == 0 %>
+                     <h1>No tests in your account. Go to <%= link_to "store", practice_tests_path, :style => "color:#01a31c !important" %> and get started.</h1> <br /><br />
+                    <% else %>
+                      <% purchased_category_topic_quizzes.each do |category_topic_quiz| %>
 
-            <% current_user.purchased_category_topic_quizzes.each do |category_topic_quiz| %>
-
-      		<!%-- Set the css properties based on the status of the quiz --%>
-      		<% status = category_topic_quiz.quiz_users.where(:quiz_id => category_topic_quiz.id,:user_id => current_user.id).first.status %>
-
-      		<% if status == :new %>
-      			<% li_class = "mediumListIconTextItem new"  %>
-      			<% command_btn_image = "" %>
-      			<% action_text = "Start" %>
-      		<% elsif status == :paused %>
-      			<% li_class = "mediumListIconTextItem pause"  %>
-      			<% command_btn_image = "" %>
-      			<% action_text = "Start" %>
-      		<% elsif status == :completed %>
-      		    <% li_class = "mediumListIconTextItem complete"  %>
-      		    <% command_btn_image = "" %>
-      		    <% action_text = "Review" %>
-      		<% end %>
-
-            <%= link_to( category_topic_quiz.test_detail_path, :style => "color:black") do %>
-      		<li class= "<%= li_class %>">
-	          <small><%= status %></small>
-	          <div class="mediumListIconTextItem-Detail">
-	            <h4><%= category_topic_quiz.name %></h4>
-	            <h6><%= category_topic_quiz.desc %></h6>
-	          </div>
-	          <div class="command-btn pull-right">
-	            <button class="win-command">
-	              <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
-	              <span class="win-label"><%= action_text %></span>
-	            </button>
-	          </div>
-	        </li>
-	        <% end %>
-      		<% end %>
-
+                        <!%-- Set the css properties based on the status of the quiz --%>
+                        <% status = category_topic_quiz.quiz_users.where(:quiz_id => category_topic_quiz.id,:user_id => current_user.id).first.status %>
+            
+                        <% if status == :new %>
+                            <% li_class = "mediumListIconTextItem new"  %>
+                            <% command_btn_image = "" %>
+                            <% action_text = "Start" %>
+                        <% elsif status == :paused %>
+                            <% li_class = "mediumListIconTextItem pause"  %>
+                            <% command_btn_image = "" %>
+                            <% action_text = "Start" %>
+                        <% elsif status == :completed %>
+                            <% li_class = "mediumListIconTextItem complete"  %>
+                            <% command_btn_image = "" %>
+                            <% action_text = "Review" %>
+                        <% end %>
+            
+                        <%= link_to( category_topic_quiz.test_detail_path, :style => "color:black") do %>
+                        <li class= "<%= li_class %>">
+                          <small><%= status %></small>
+                          <div class="mediumListIconTextItem-Detail">
+                            <h4><%= category_topic_quiz.name %></h4>
+                            <h6><%= category_topic_quiz.desc %></h6>
+                          </div>
+                          <div class="command-btn pull-right">
+                            <button class="win-command">
+                              <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
+                              <span class="win-label"><%= action_text %></span>
+                            </button>
+                          </div>
+                        </li>
+                        <% end %>
+                        <% end %>
+                        <br />
+                        <br />
+                        <%= link_to "Get more practise tests", practice_tests_path %>
+                    <% end %>
                 </ul>
-                <%= link_to "Get more practise tests", practice_tests_path %>
             </div>
 
   </div>
