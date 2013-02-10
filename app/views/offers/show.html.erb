@@ -17,7 +17,7 @@
         <section class="tab-content">
             
             <!-- Form starts here -->
-            <div class="span11" style="margin-left: 15px;">
+            <div class="span9" style="margin-left: 15px;">
                 <div class="control-group">
                     <label class="control-label" for="input">Code</label>
                     <div class="controls">
@@ -67,12 +67,95 @@
                     </div>
                 </div>
                 
-                <div class="control-group">
-                    <label class="control-label" for="input">Credits</label>
-                    <div class="controls">
-                        <p><%= @offer.credits %></p>
+                <% if @offer.offer_code.code == "add_credits_on_confirm" %>
+                    <div class="control-group">
+                        <label class="control-label" for="input">Credits</label>
+                        <div class="controls">
+                            <p><%= @offer.credits %></p>
+                        </div>
                     </div>
-                </div>
+                <% elsif @offer.offer_code.code == "add_items_on_confirm" %>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input">Quizzes</label>
+                        <br />
+                        <div class="controls">
+                            <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <% @offer_quizzes.each do |quiz| %>
+                                  <tr>
+                                    <td><%= link_to quiz.name, quiz_path(quiz) %></td>
+                                    <td class="toolbar">
+                                      <div class="btn-group">
+                                        <%= link_to(destroy_quiz_from_offer_path(@offer,quiz.id), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn") do %>
+                                          <span class="awe-remove"></span>
+                                        <% end %>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                <% end %>
+                            </tbody>
+                            </table>
+                            
+                            <div class="control-group">
+                            <label class="control-label" for="input">Add quiz to offer</label>
+                            <div class="controls">
+                                <%= form_for(@offer, :url => add_quiz_to_offer_path(@offer), :html => { :class => "form-horizontal" , :style=>"background: white;border: 0px;" } ) do |f| %>
+                                    <%= collection_select(:quiz, :id, @quizzes, :id, :name, {:prompt => true}) %>
+                                    <%= f.submit "Add", :class => "btn btn-flat btn-info" %>
+                                <% end %>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input">Packages</label>
+                        <br />
+                        <div class="controls">
+                            <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <% @offer_packages.each do |package| %>
+                                  <tr>
+                                    <td><%= link_to package.name, package_path(package) %></td>
+                                    <td class="toolbar">
+                                      <div class="btn-group">
+                                        <%= link_to(destroy_package_from_offer_path(@offer,package.id), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn") do %>
+                                          <span class="awe-remove"></span>
+                                        <% end %>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                <% end %>
+                            </tbody>
+                            </table>
+                            
+                            <div class="control-group">
+                                <label class="control-label" for="input">Add package to offer</label>
+                                <br />
+                                <div class="controls">
+                                    <%= form_for(@offer, :url => add_package_to_offer_path(@offer), :html => { :class => "form-horizontal" , :style=>"background: white;border: 0px;" } ) do |f| %>
+                                        <%= collection_select(:package, :id, @packages, :id, :name, {:prompt => true}) %>
+                                        <br />
+                                        <br />
+                                        <%= f.submit "Add", :class => "btn btn-flat btn-info" %>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                <% end %>
                 
             </div>
             <!-- Form ends here -->

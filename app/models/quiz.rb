@@ -38,6 +38,14 @@ class Quiz < ActiveRecord::Base
       return { :conditions => ["id not in (?)", user_quiz_ids] }  
     end
   }
+  scope :excluding, lambda { |quizzes|
+    quiz_ids = quizzes.pluck('quizzes.id')
+    if quiz_ids == []
+      return
+    else
+      return { :conditions => ["id not in (?)", quiz_ids] }  
+    end
+  }
   
   def self.scoped_timed_full_quizzes(user)
     if user == nil 

@@ -13,6 +13,15 @@ class Package < ActiveRecord::Base
   has_many :package_quizzes
   has_many :quizzes, :through => :package_quizzes
   
+  scope :excluding, lambda { |packages|
+    package_ids = packages.pluck('packages.id')
+    if package_ids == []
+      return
+    else
+      return { :conditions => ["id not in (?)", package_ids] }  
+    end
+  }
+  
   # Custom validation
   def position_cannot_be_repeated
     

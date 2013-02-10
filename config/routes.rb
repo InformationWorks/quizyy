@@ -102,6 +102,10 @@ GremastersWeb::Application.routes.draw do
   resources :categories
   
   resources :offers
+  match "offers/:id/add_quiz_to_offer" => "offers#add_quiz_to_offer", via: [:put], :as => "add_quiz_to_offer"
+  match "offers/:id/add_package_to_offer" => "offers#add_package_to_offer", via: [:put], :as => "add_package_to_offer"
+  match 'offers/:id/destroy_quiz_from_offer/:quiz_id', to: 'offers#destroy_quiz_from_offer', via: [:delete], as: 'destroy_quiz_from_offer'
+  match 'offers/:id/destroy_package_from_offer/:package_id', to: 'offers#destroy_package_from_offer', via: [:delete], as: 'destroy_package_from_offer'
   
   resources :offer_codes
 
