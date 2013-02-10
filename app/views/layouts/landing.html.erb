@@ -98,9 +98,15 @@
       <% elsif flash[:error] || flash[:warning] || flash[:notice] %>
           <div class="alert alert-error">
             <button type="button" class="close" data-dismiss="alert"></button>
-            <%= flash[:error].gsub("here", link_to("here",new_user_confirmation_path, :style => "color: white;font-size: 1.1em;font-style: normal;text-decoration: underline;" ) ).html_safe || 
-            flash[:warning] || 
-            flash[:notice] %>
+            <% if flash[:error] != nil %>
+              <%= flash[:error].gsub("here", link_to("here",new_user_confirmation_path, :style => "color: white;font-size: 1.1em;font-style: normal;text-decoration: underline;" ) ).html_safe %>
+            <% end %>
+            <% if flash[:warning] %>
+              <%= flash[:warning] %>
+            <% end %>
+            <% if flash[:notice] %>
+              <%= flash[:notice] %>
+            <% end %>
           </div>
       <% end %>
       <%= yield :main_unit %>
