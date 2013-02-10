@@ -142,12 +142,9 @@
                             
                             <div class="control-group">
                                 <label class="control-label" for="input">Add package to offer</label>
-                                <br />
                                 <div class="controls">
                                     <%= form_for(@offer, :url => add_package_to_offer_path(@offer), :html => { :class => "form-horizontal" , :style=>"background: white;border: 0px;" } ) do |f| %>
                                         <%= collection_select(:package, :id, @packages, :id, :name, {:prompt => true}) %>
-                                        <br />
-                                        <br />
                                         <%= f.submit "Add", :class => "btn btn-flat btn-info" %>
                                     <% end %>
                                 </div>
@@ -155,6 +152,49 @@
                         </div>
                     </div>
                     
+                <% end %>
+                
+                <% if !@offer.global %>
+                
+                    <div class="control-group">
+                        <label class="control-label" for="input">Email id's for the offer</label>
+                        <br />
+                        <div class="controls">
+                            <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <% @offer_users.each do |offer_user| %>
+                                  <tr>
+                                    <td><%= offer_user.email %></td>
+                                    <td class="toolbar">
+                                      <div class="btn-group">
+                                        <%= link_to(destroy_email_from_offer_path(@offer,offer_user.email), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn") do %>
+                                          <span class="awe-remove"></span>
+                                        <% end %>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                <% end %>
+                            </tbody>
+                            </table>
+                            
+                            <div class="control-group">
+                            <label class="control-label" for="input">Add emails to offer</label>
+                            <div class="controls">
+                                <%= form_for(@offer, :url => add_emails_to_offer_path(@offer), :html => { :class => "form-horizontal" , :style=>"background: white;border: 0px;" } ) do |f| %>
+                                    <%= text_area_tag 'emails', nil, :rows => 10, :cols => 125,:style => "width:550px" %>
+                                    <br />
+                                    <%= f.submit "Add", :class => "btn btn-flat btn-info" %>
+                                <% end %>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                  
                 <% end %>
                 
             </div>

@@ -8,10 +8,10 @@ module OffersHelper
     add_credits_on_confirm_offers = Offer.add_credits_on_confirm_offers.active
     add_credits_on_confirm_offers.each do |offer|
       
-      if offer.global || offer.valid_for_user?(user)
+      if offer.global || offer.valid_for_email?(user.email)
         
         # Add credits to the user.
-        user.add_credits(offer.credits,-1,"offer - " + offer.code,user.id,"Added credit after confirmation")
+        user.add_credits(offer.credits,-1,"offer - " + offer.offer_code.code,user.id,"Added credit after confirmation")
         offer_messages << "Added #{offer.credits} credits for the offer - #{offer.title}"
        
       end
@@ -23,7 +23,7 @@ module OffersHelper
     add_items_on_confirm_offers = Offer.add_items_on_confirm_offers.active
     add_items_on_confirm_offers.each do |offer|
       
-      if offer.global || offer.valid_for_user?(user)
+      if offer.global || offer.valid_for_email?(user.email)
         
         offer.offer_items.each do |offer_item|
           
@@ -31,7 +31,7 @@ module OffersHelper
             quiz_to_add = Quiz.find(offer_item.quiz_id)
             
             # Add items to the user.
-            user.add_quiz(quiz_to_add,-1,"offer - " + offer.code,user.id,"Added quiz after confirmation")
+            user.add_quiz(quiz_to_add,-1,"offer - " + offer.offer_code.code,user.id,"Added quiz after confirmation")
             offer_messages << "Added a test #{quiz_to_add.name} for the offer - #{offer.title}"
           end
           
@@ -39,7 +39,7 @@ module OffersHelper
             package_to_add = Package.find(offer_item.package_id)
             
             # Add items to the user.
-            user.add_package(package_to_add,-1,"offer - " + offer.code,user.id,"Added quiz after confirmation")
+            user.add_package(package_to_add,-1,"offer - " + offer.offer_code.code,user.id,"Added quiz after confirmation")
             offer_messages << "Added a package #{package_to_add.name} for the offer - #{offer.title}"
           end
           

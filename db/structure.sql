@@ -353,7 +353,7 @@ ALTER SEQUENCE offer_items_id_seq OWNED BY offer_items.id;
 CREATE TABLE offer_users (
     id integer NOT NULL,
     offer_id integer,
-    user_id integer,
+    email character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -1592,13 +1592,6 @@ CREATE INDEX index_offer_items_on_quiz_id ON offer_items USING btree (quiz_id);
 --
 
 CREATE INDEX index_offer_users_on_offer_id ON offer_users USING btree (offer_id);
-
-
---
--- Name: index_offer_users_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_offer_users_on_user_id ON offer_users USING btree (user_id);
 
 
 --

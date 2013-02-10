@@ -681,3 +681,9 @@ File.open(Rails.root.join("app/assets/files/words.txt")) do |dictionary|
     Dictionary.create!(:word => word, :meaning => meaning)
   end
 end
+
+# Add OfferCodes
+add_credits_on_confirm_offer_code = OfferCode.create!(:code => "add_credits_on_confirm")
+add_items_on_confirm_offer_code = OfferCode.create!(:code => "add_items_on_confirm")
+
+

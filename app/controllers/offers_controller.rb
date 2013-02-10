@@ -1,7 +1,7 @@
 class OffersController < ApplicationController
   
   before_filter :authenticate_user!
-  before_filter :load_offer, :only => [ :show, :edit, :update, :destroy, :add_quiz_to_offer, :add_package_to_offer, :destroy_quiz_from_offer ]
+  before_filter :load_offer, :only => [ :show, :edit, :update, :destroy, :add_quiz_to_offer, :add_package_to_offer, :destroy_quiz_from_offer, :add_emails_to_offer, :destroy_email_from_offer ]
   load_and_authorize_resource
   
   # GET /offers
@@ -24,6 +24,7 @@ class OffersController < ApplicationController
     @offer_packages = @offer.packages
     @quizzes = Quiz.excluding(@offer.quizzes)
     @packages = Package.excluding(@offer.packages)
+    @offer_users = @offer.offer_users
 
     respond_to do |format|
       format.html # show.html.erb
@@ -146,6 +147,48 @@ class OffersController < ApplicationController
     rescue Exception => ex
       logger.info("Error 1001: Error removing package from offer : " + ex.message)
       redirect_to @offer, notice: 'Error 1001: Error removing package from the offer. '
+    end
+  end
+  
+  # /offers/:id/add_emails_to_offer
+  # POST /offers/:id/add_emails_to_offer
+  def add_emails_to_offer
+    
+    if params[:emails] == nil || params[:emails].strip == ""
+      redirect_to @offer, notice: 'Please enter atleast one email.'
+    else
+      emails = params[:emails].strip.split("\r\n")
+      
+      begin
+        emails.each do |email|
+        
+          offer_user = OfferUser.new
+          offer_user.offer_id = params[:id]
+          offer_user.email = email.strip
+          offer_user.save
+        
+        end
+        
+        redirect_to @offer, notice: 'Emails added successfully to the offer.'
+        
+      rescue Exception => ex
+        logger.info("Error adding emails to the offer: " + ex.message )
+        redirect_to @offer, notice: 'Error adding emails to the offer.'
+      end
+
+    end
+  end
+  
+  # /offers/:id/destroy_email_from_offer
+  # DELETE /offers/:id/destroy_email_from_offer
+  def destroy_email_from_offer
+    begin
+      logger.info("params[email] = " + params[:email])
+      OfferUser.delete_all(["offer_id = ? AND email = ?",@offer.id,params[:email]])
+      redirect_to @offer, notice: 'Email was successfully removed from the offer.'
+    rescue Exception => ex
+      logger.info("Error 1001: Error removing email from offer : " + ex.message)
+      redirect_to @offer, notice: 'Error 1001: Error removing email from the offer. '
     end
   end
   
