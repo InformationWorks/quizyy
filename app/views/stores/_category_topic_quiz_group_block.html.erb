@@ -1,7 +1,7 @@
 <!-- Category & Topic Tests -->
 <% store_entities.each_with_index do |entity_name_quizzes,index| %>
 
-<% if index == 0 && current_user.purchased_full_quizzes.count != 0 %>
+<% if index == 0 && store_entities.count != 0 %>
     <section class="category-section first">
 <% else %>
     <section class="category-section">

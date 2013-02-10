@@ -7,10 +7,10 @@ class HomesController < ApplicationController
     @first_name = split_user_full_name[0]
     @last_name = split_user_full_name[1]
     # if params[:category] is true activate category
-    if params[:category_quiz] == "true"
-      @active_tab = :category_quiz
+    if params[:practice_quiz] == "true"
+      @active_tab = :practice_quiz
     else
-      @active_tab = :full_quiz
+      @active_tab = :timed_quiz
     end 
     
   end
