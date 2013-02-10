@@ -46,6 +46,12 @@ class Quiz < ActiveRecord::Base
       return { :conditions => ["id not in (?)", quiz_ids] }  
     end
   }
+  scope :specific_category, lambda { |category| 
+    return { :conditions => { :category_id => category.id } }  
+  }
+  scope :specific_topic, lambda { |topic| 
+    return { :conditions => { :topic_id => topic.id } }  
+  }
   
   def self.scoped_timed_full_quizzes(user)
     if user == nil 

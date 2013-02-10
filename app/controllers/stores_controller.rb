@@ -112,9 +112,11 @@ class StoresController < ApplicationController
   # match "timed_tests/categories/:category_slug" => "stores#category_all_timed_tests", via: [:get], :as => "category_all_timed_tests"
   def category_all_timed_tests
     @category = Category.find_by_slug!(params[:category_slug])
-    @category = Category.timed_quizzes(current_user,@category.id).order("quizzes.id ASC").first()
+    
     if @category
-      @quizzes = load_words_for_quizzes(@category.quizzes)
+      @quizzes = Quiz.not_in_account_of_user(current_user).category.specific_category(@category).timed.order('id ASC')
+      @quizzes += current_user.quizzes.category.specific_category(@category).timed
+      @quizzes = load_words_for_quizzes(@quizzes)
       @name = @category.name
     else
       @quizzes = []
@@ -127,9 +129,11 @@ class StoresController < ApplicationController
   # match "timed_tests/topics/:topic_slug" => "stores#topic_all_timed_tests", via: [:get], :as => "topic_all_timed_tests"
   def topic_all_timed_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
-    @topic = Topic.timed_quizzes(current_user,@topic.id).order("quizzes.id ASC").first()
+    
     if @topic
-      @quizzes = load_words_for_quizzes(@topic.quizzes)
+      @quizzes = Quiz.not_in_account_of_user(current_user).topic.specific_topic(@topic).timed.order('id ASC')
+      @quizzes += current_user.quizzes.topic.specific_topic(@topic).timed
+      @quizzes = load_words_for_quizzes(@quizzes)
       @name = @topic.name
     else
       @quizzes = []
@@ -141,9 +145,11 @@ class StoresController < ApplicationController
   # match "practice_tests/categories/:category_slug" => "stores#category_all_practice_tests", via: [:get], :as => "category_all_practice_tests"
   def category_all_practice_tests
     @category = Category.find_by_slug!(params[:category_slug])
-    @category = Category.practice_quizzes(current_user,@category.id).order("quizzes.id ASC").first()
+
     if @category
-      @quizzes = load_words_for_quizzes(@category.quizzes)
+      @quizzes = Quiz.not_in_account_of_user(current_user).category.specific_category(@category).practice.order('id ASC')
+      @quizzes += current_user.quizzes.category.specific_category(@category).practice
+      @quizzes = load_words_for_quizzes(@quizzes)      
       @name = @category.name
     else
       @quizzes = []
@@ -155,9 +161,11 @@ class StoresController < ApplicationController
   # match "practice_tests/topics/:topic_slug" => "stores#topic_all_practice_tests", via: [:get], :as => "topic_all_practice_tests"
   def topic_all_practice_tests
     @topic = Topic.find_by_slug!(params[:topic_slug])
-    @topic = Topic.practice_quizzes(current_user,@topic.id).order("quizzes.id ASC").first()
+    
     if @topic
-      @quizzes = load_words_for_quizzes(@topic.quizzes)
+      @quizzes = Quiz.not_in_account_of_user(current_user).topic.specific_topic(@topic).practice.order('id ASC')
+      @quizzes += current_user.quizzes.topic.specific_topic(@topic).practice
+      @quizzes = load_words_for_quizzes(@quizzes)
       @name = @topic.name
     else
       @quizzes = []
