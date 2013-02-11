@@ -90,6 +90,10 @@ GremastersWeb::Application.routes.draw do
     
     # SectionType routes.
     resources :section_types
+    
+    # Students routes.
+    resources :students, :only => [:index,:new,:create]
+    match '/students/upload_via_excel' => "students#upload_via_excel", via: [:post], :as => "upload_students_via_excel"
   end
 
   resources :reports, :only=>[:index,:show] do
@@ -168,10 +172,6 @@ GremastersWeb::Application.routes.draw do
   match "buy/package/:id" => "checkout#buy_package", via: [:get], :as => "checkout_buy_package"
   match 'process_payment' => 'checkout#process_payment'
   match 'z_response'      => 'checkout#z_response'
-  
-  # Students routes.
-  resources :students, :only => [:index,:new,:create]
-  match '/students/upload_via_excel' => "students#upload_via_excel", via: [:post], :as => "upload_students_via_excel"
 
   root :to => "landings#index"
   # Devise routes.

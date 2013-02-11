@@ -58,7 +58,7 @@
 							<% end %>
 						</li>
 						<li <% if @current_controller == "students" %>class = "current"<% end %> >
-                            <%= link_to(students_path, :class => "no-submenu") do %>
+                            <%= link_to(admins_students_path, :class => "no-submenu") do %>
                             <span class="awe-money"></span>Student Management
                             <% end %>
                         </li>
