@@ -64,7 +64,7 @@
 								
 								<% @package.quizzes.each do |quiz| %>
 								  <tr>
-								    <td><%= link_to quiz.name, quiz_path(quiz) %></td>
+								    <td><%= link_to quiz.name, admins_quiz_path(quiz) %></td>
 								    <td class="toolbar">
 								      <div class="btn-group">
 								      	<%= link_to(admins_destroy_quiz_from_package_path(@package,quiz.id), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn") do %>
