@@ -64,8 +64,6 @@ GremastersWeb::Application.routes.draw do
   
     resources :quiz_types
   
-    resources :types
-  
     resources :topics
   
   namespace :admins do
@@ -86,6 +84,9 @@ GremastersWeb::Application.routes.draw do
     
     # Category routes.
     resources :categories
+    
+    # Type routes.
+    resources :types
   end
 
   resources :reports, :only=>[:index,:show] do
