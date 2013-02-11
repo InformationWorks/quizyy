@@ -60,8 +60,6 @@ GremastersWeb::Application.routes.draw do
       end
     end
   
-    resources :section_types
-  
   namespace :admins do
     # Offer routes.
     resources :offers
@@ -89,6 +87,9 @@ GremastersWeb::Application.routes.draw do
     
     # QuizType routes.
     resources :quiz_types
+    
+    # SectionType routes.
+    resources :section_types
   end
 
   resources :reports, :only=>[:index,:show] do
