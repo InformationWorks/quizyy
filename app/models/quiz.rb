@@ -52,6 +52,17 @@ class Quiz < ActiveRecord::Base
   scope :specific_topic, lambda { |topic| 
     return { :conditions => { :topic_id => topic.id } }  
   }
+  scope :scoped_for_user, lambda { |user| 
+    if user == nil 
+      return { :conditions => { :approved => true } }
+    elsif user.role?(:super_admin) || user.role?(:admin) 
+      return { :conditions => { :published => true } }
+    elsif user.role?(:publisher)
+      return
+    else
+      return { :conditions => { :approved => true } }
+    end
+  }
   
   def self.scoped_timed_full_quizzes(user)
     if user == nil 
@@ -98,10 +109,10 @@ class Quiz < ActiveRecord::Base
     # Fetch the quizzes not owned by user first and then append owned quizzes.
     if entity == "Category"
       if timed
-        quizzes = Quiz.not_in_account_of_user(user).category.timed.order('id ASC')
+        quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).category.timed.order('id ASC')
         quizzes += user.quizzes.category.timed
       else
-        quizzes = Quiz.not_in_account_of_user(user).category.practice.order('id ASC')
+        quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).category.practice.order('id ASC')
         quizzes += user.quizzes.category.practice
       end
       
@@ -121,10 +132,10 @@ class Quiz < ActiveRecord::Base
       end
     else
       if timed
-        quizzes = Quiz.not_in_account_of_user(user).topic.timed.order('id ASC')
+        quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).topic.timed.order('id ASC')
         quizzes += user.quizzes.topic.timed
       else
-        quizzes = Quiz.not_in_account_of_user(user).topic.practice.order('id ASC')
+        quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).topic.practice.order('id ASC')
         quizzes += user.quizzes.topic.practice
       end
       

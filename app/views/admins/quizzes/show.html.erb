@@ -48,7 +48,7 @@
 						</li>
 					<% else %>	
 						<li class="demoTabs">
-						<%= button_to('Publish', quiz_publish_path(@quiz) , :confirm => 'Are you sure you want to publish this test?',
+						<%= button_to('Publish', { :action => "publish", :quiz_id => @quiz.id } , :confirm => 'Are you sure you want to publish this test?',
           					:method => :post, :remote => false, :disable_with => 'publishing...') %>
 						</li>
 					<% end %>
