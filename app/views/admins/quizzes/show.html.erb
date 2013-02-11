@@ -156,6 +156,9 @@
 						    <th>Name</th>
 						    <th>Sequence no</th>
 						    <th>Section type</th>
+						    <% if @quiz.timed %>
+						    	<th>Time</th>
+						   	<% end %>
 						    <th></th>
 						  </tr>
 						  </thead>
@@ -165,6 +168,9 @@
 							    <td><%= section.name %></td>
 							    <td><%= section.sequence_no %></td>
 							    <td><%= section.section_type.name %></td>
+							    <% if @quiz.timed %>
+							    	<td><%= section.time %></td>
+							    <% end %>
 							    <td class="toolbar">
 							      <div class="btn-group">
 							    	<%= link_to(admins_quiz_section_path(section.quiz,section), :class => "btn") do %>

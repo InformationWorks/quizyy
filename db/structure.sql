@@ -854,7 +854,8 @@ CREATE TABLE sections (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     display_text text,
-    slug character varying(255)
+    slug character varying(255),
+    "time" integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1952,3 +1953,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130208212447');
 INSERT INTO schema_migrations (version) VALUES ('20130208213101');
 
 INSERT INTO schema_migrations (version) VALUES ('20130209182543');
+
+INSERT INTO schema_migrations (version) VALUES ('20130211224518');

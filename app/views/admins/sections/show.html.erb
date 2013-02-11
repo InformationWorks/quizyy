@@ -8,6 +8,9 @@
 			<h3><%= @section.name %></h3>
 				<span class="label">Sequence No. <%= @section.sequence_no %></span>
 				<span class="label"><%= @section.section_type.name %></span>
+				<% if @section.quiz.timed %>
+					<span class="label">Time: <%= @section.time %> minutes</span>
+				<% end %>
 			<ul class="data-header-actions">
 				<%= link_to(edit_admins_quiz_section_path(@section.quiz,@section),:class => "btn btn-warning" ) do %>
 				 Edit
