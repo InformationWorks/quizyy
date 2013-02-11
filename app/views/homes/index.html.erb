@@ -19,7 +19,7 @@
               <% if current_user.profile_image_url.to_s != "" %>
               	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src= "<%= current_user.profile_image_url.to_s %>" alt="">
               <% else %>
-              	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src="/assets/metro-user.png" alt="">
+              	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src="<%= @profile_image_url%>" alt="">
               <% end %>
 
             </div>
