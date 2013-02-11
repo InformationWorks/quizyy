@@ -19,13 +19,13 @@
               <% if current_user.profile_image_url.to_s != "" %>
               	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src= "<%= current_user.profile_image_url.to_s %>" alt="">
               <% else %>
-              	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src="/assets/metro-user.png" alt="">
+              	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src="<%= @profile_image_url%>" alt="">
               <% end %>
 
             </div>
 
-            <input type="button" id="remove-image-btn" value="Remove Image" data-confirm="Are you sure you want to remove the image?">
-
+            <!--<input type="button" id="remove-image-btn" value="Remove Image" data-confirm="Are you sure you want to remove the image?">-->
+            <%= link_to "Edit Profile", edit_user_registration_path%>
             <%= form_tag("/users/profiles/update_profile_pic", :multipart => true) do %>
 			  <input id="profile_pic_uploader" type="file" name="profile_pic_file" style="display:none;" />
 			<% end %>
@@ -89,7 +89,7 @@
       </div>
       <div id="section2" class="metro-section tile-span-2">
         <div class="row">
-          <%= link_to timed_tests_path, :class=>"tile app bg-color-green" do%>
+          <%= link_to timed_tests_path, :class=>"tile app bg-color-green", :"data-no-turbolink" => true do%>
               <div class="image-wrapper">
                 <span class="icon icon-cart"></span>
               </div>
@@ -130,7 +130,7 @@
 
 <div>
   <section id="available-tests">
-  <header class="title">Available Tests</header>
+  <header class="title"><h2>Available Tests</h2></header>
   <ul class="nav nav-pills" id="available-test-tabs">
     <li class= '<%= timed_quiz_li_class %>' ><a href="#full-test">Timed Tests</a></li>
     <li class= '<%= practice_quiz_li_class %>' ><a href="#category-test">Practice Tests</a></li>
@@ -142,7 +142,7 @@
         <% purchased_timed_quizzes = current_user.purchased_timed_quizzes %>
         
         <% if purchased_timed_quizzes.count == 0 %>
-         <h1>No tests in your account. Go to <%= link_to "store", timed_tests_path, :style => "color:#01a31c !important" %> and get started.</h1> <br /><br />
+         <p class="lead">No timed tests in your account. Go to <%= link_to "store", timed_tests_path, :style => "color:#01a31c !important", :"data-no-turbolink" => true %> to get started. </p> <br /><br />
         <% else %>
          <% purchased_timed_quizzes.each do |purchased_timed_quiz| %>
 
@@ -188,7 +188,7 @@
         <% end %>
         <br />
             <br />
-            <%= link_to "Get more timed tests", timed_tests_path %>
+            <%= link_to "Get more timed tests", timed_tests_path, :"data-no-turbolink" => true %>
         <% end %>
       </ul>
     </div>
@@ -198,7 +198,7 @@
                     <% purchased_practice_quizzes = current_user.purchased_practice_quizzes %>
                 
                     <% if purchased_practice_quizzes.count == 0 %>
-                     <h1>No tests in your account. Go to <%= link_to "store", practice_tests_path, :style => "color:#01a31c !important" %> and get started.</h1> <br /><br />
+                     <p class="lead">No practice tests in your account. Go to <%= link_to "store", practice_tests_path, :style => "color:#01a31c !important" , :"data-no-turbolink" => true%> to get started.</p> <br /><br />
                     <% else %>
                       <% purchased_practice_quizzes.each do |purchased_practice_quiz| %>
 
@@ -237,7 +237,7 @@
                         <% end %>
                         <br />
                         <br />
-                        <%= link_to "Get more practise tests", practice_tests_path %>
+                        <%= link_to "Get more practise tests", practice_tests_path, :"data-no-turbolink" => true %>
                     <% end %>
                 </ul>
             </div>

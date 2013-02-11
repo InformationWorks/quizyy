@@ -95,5 +95,3 @@ Gre340.module "Routing", (Routing, Gre340, Backbone, Marionette, $, _) ->
 
   Routing.addInitializer ->
     router = new Router()
-  Routing.addFinalizer ->
-    console.log 'stopped routing testcenter'
