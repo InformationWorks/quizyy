@@ -29,15 +29,15 @@
 						<% @activity_logs.each do |activity_log| %>
 						  <tr>
 						  	<td><%= activity_log.updated_at.in_time_zone("Mumbai").strftime("%d-%b-%y %H:%M:%S") %></td>
-						    <td><%= activity_log.actor.full_name %></td>
+						    <td><%= activity_log.actor.full_name if activity_log.actor != nil %></td>
 						    <td><%= activity_log.action %></td>
 						    <td>
-						    	<% if activity_log.target.profile_image_url.to_s != "" %>
+						    	<% if activity_log.target != nil && activity_log.target.profile_image_url.to_s != "" %>
 				              	  <img id="profile-image" style="width:50px;height: 50px;" src= "<%= activity_log.target.profile_image_url.to_s %>" alt="">
 				                <% else %>
 				              	  <img id="profile-image" style="width:50px;height: 50px;" src="/assets/metro-user.png" alt="">
 				                <% end %>
-						    	<%= activity_log.target.full_name %>
+						    	<%= activity_log.target != nil ? activity_log.target.full_name : "target_id:" + activity_log.target_id.to_s %>
 						    </td>
 						    <td><%= activity_log.activity %></td>
 						    <td><%= activity_log.desc %></td>
