@@ -42,7 +42,9 @@
         
     <% else %>
         <%= "\u20B9 " + @quiz.price.to_s %>
-        <a href="stores/cart" style="float: right;height: 55px;width: 100px;padding-top: 35px;color: white;font-size: 25px;" class="btn btn-success" id="">Buy</a>
+        <%= link_to( "Buy"  , cart_items_path(:quiz_id => @quiz.id,:back_controller => "checkout",:back_action => "show_cart") ,
+                    :method => "post", :disable_with => 'adding to cart...',:class=>'btn btn-success', :style => "float: right;height: 55px;width: 100px;padding-top: 35px;color: white;font-size: 25px;") %>
+        
     <% end %>
     
     <hr>
