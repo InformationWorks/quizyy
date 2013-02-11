@@ -54,7 +54,9 @@
                             </td>
                             <td class="toolbar">
                             <% if current_user.role? :super_admin %>
-						    	<%= link_to('Reconfirm', { :action => "reconfirm", :user_id => student.id } , :confirm => 'Are you sure you want to resend confirmation?',
+                            	<%= link_to('Confirm', { :action => "confirm", :user_id => student.id } , :confirm => 'Are you sure you want to confirm user?',
+          							:method => "post", :remote => false, :disable_with => 'Sending reconfirm...') %>
+						    	<%= link_to('Resend', { :action => "reconfirm", :user_id => student.id } , :confirm => 'Are you sure you want to resend confirmation?',
           							:method => "post", :remote => false, :disable_with => 'Sending reconfirm...') %>
 						    	<%= link_to('Delete', { :action => "delete", :user_id => student.id } , :confirm => 'Are you sure you want to delete this user?',
           							:method => "delete", :remote => false, :disable_with => 'deleting...') %>

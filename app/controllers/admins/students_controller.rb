@@ -3,7 +3,7 @@ module Admins
     
     before_filter :authenticate_user!
     before_filter :check_authorization
-    before_filter :check_manage_authorization, :only => [:delete, :reconfirm]
+    before_filter :check_manage_authorization, :only => [:delete, :reconfirm, :confirm]
     include UploadExcel
     
     def new
@@ -82,6 +82,20 @@ module Admins
       else
         user.send_confirmation_instructions
         redirect_to admins_students_path, notice: "Confirmation instruction sent to #{user.full_name}."
+      end
+      
+    end
+    
+    def confirm
+      
+      user = User.find(params[:user_id])
+      
+      if user.confirmed?
+        redirect_to admins_students_path, notice: "User already confirmed." 
+      elsif user.confirm!
+        redirect_to admins_students_path, notice: "User confirmed successfully." 
+      else
+        redirect_to admins_students_path, notice: "User could not be confirmed."
       end
       
     end

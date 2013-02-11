@@ -68,6 +68,7 @@ GremastersWeb::Application.routes.draw do
     match '/students/upload_via_excel' => "students#upload_via_excel", via: [:post], :as => "upload_students_via_excel"
     match "/students/:user_id/reconfirm" => "students#reconfirm", via: [:post], :as => "reconfirm_user"
     match "/students/:user_id/delete" => "students#delete", via: [:delete], :as => "delete_user"
+    match "/students/:user_id/confirm" => "students#confirm", via: [:post], :as => "confirm_user"
     
     # Transaction routes.
     resources :transactions, :only => [:index]
