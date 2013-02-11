@@ -2,6 +2,7 @@ module Admins
   class CreditsController < ApplicationController
     
     before_filter :authenticate_user!
+    before_filter :check_authorization
     
     def index
       @users = User.all
@@ -74,6 +75,12 @@ module Admins
     
     def activity_log
       @activity_logs = ActivityLog.order("updated_at desc").all
+    end
+    
+    private
+    
+    def check_authorization
+        authorize! :add, :credits
     end
     
   end

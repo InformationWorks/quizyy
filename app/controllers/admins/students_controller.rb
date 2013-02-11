@@ -1,6 +1,8 @@
 module Admins
   class StudentsController < AdminsController
     
+    before_filter :authenticate_user!
+    before_filter :check_authorization
     include UploadExcel
     
     def new
@@ -82,6 +84,10 @@ module Admins
         book = Spreadsheet.open Rails.root.join('tmp/uploads').join"#{file.store_path}"
         file.delete_file
         return book
+      end
+      
+      def check_authorization
+        authorize! :create, :students
       end
     
   end
