@@ -19,7 +19,7 @@
 							<% end %>
 						</li>
 						<li <% if @current_controller == "packages" %>class = "current"<% end %> >
-							<%= link_to(packages_path, :class => "no-submenu") do %>
+							<%= link_to(admins_packages_path, :class => "no-submenu") do %>
 							<span class="awe-th-large"></span>Packages
 							<% end %>
 						</li>
@@ -73,7 +73,7 @@
 							<% end %>
 						</li>
 						<li <% if @current_controller == "offers" %>class = "current"<% end %> >
-							<%= link_to(offers_path, :class => "no-submenu") do %>
+							<%= link_to(admins_offers_path, :class => "no-submenu") do %>
 							<span class="awe-money"></span>Offers
 							<% end %>
 						</li>

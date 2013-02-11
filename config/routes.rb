@@ -31,21 +31,72 @@ GremastersWeb::Application.routes.draw do
   post "api/v1/attempts/update_time" => "api/v1/attempts#update_time" 
   post "api/v1/visits/create" => "api/v1/visits#create"
   post "api/v1/visits/set_end_time" => "api/v1/visits#set_end_time"  
+  
   # Admin routes.
   get "admins/home"
+  
+  # Quiz routes.
+    # Sections sub-routes
+    # Questions sub-routes
+    # Options sub-routes
+    get "quizzes/get_current_attempt"
+    resources :quizzes do
+      resources :sections do
+        resources :questions do
+          resources :options
+        end    
+      end
+      member do
+        post 'upload_question_images'
+        post 'delete_question_images'
+        post 'upload_full_excel'
+        post 'upload_verbal_excel'
+        post 'upload_quant_excel'
+        post 'publish'
+        post 'unpublish'
+        post 'approve'
+        post 'unapprove'
+        post 'reject'
+      end
+    end
+  
+    resources :section_types
+  
+    resources :quiz_types
+  
+    resources :types
+  
+    resources :topics
+  
+    resources :categories
+  
+  namespace :admins do
+    
+    resources :offers
+    match "offers/:id/add_quiz_to_offer" => "offers#add_quiz_to_offer", via: [:put], :as => "add_quiz_to_offer"
+    match "offers/:id/add_package_to_offer" => "offers#add_package_to_offer", via: [:put], :as => "add_package_to_offer"
+    match 'offers/:id/destroy_quiz_from_offer/:quiz_id', to: 'offers#destroy_quiz_from_offer', via: [:delete], as: 'destroy_quiz_from_offer'
+    match 'offers/:id/destroy_package_from_offer/:package_id', to: 'offers#destroy_package_from_offer', via: [:delete], as: 'destroy_package_from_offer'
+    match "offers/:id/add_emails_to_offer" => "offers#add_emails_to_offer", via: [:put], :as => "add_emails_to_offer"
+    match 'offers/:id/destroy_email_from_offer/:email', to: 'offers#destroy_email_from_offer', via: [:delete], as: 'destroy_email_from_offer' , :email => /[^\/]*/
+    
+    resources :offer_codes
+    
+     # Package routes.
+      resources :packages do
+        member do
+           
+        end
+      end
+      match "packages/:id/add_quiz_to_package" => "packages#add_quiz_to_package", via: [:put], :as => "add_quiz_to_package"
+      match 'packages/:id/destroy_quiz_from_package/:quiz_id', to: 'packages#destroy_quiz_from_package', via: [:delete], as: 'destroy_quiz_from_package'
+  end
 
   resources :reports, :only=>[:index,:show] do
   end
 
   resources :reviews, :only=>[:show] do
   end
-   # Package routes.
-  resources :packages do
-    member do
-       match 'destroy_quiz_from_package/:quiz_id', to: 'packages#destroy_quiz_from_package', via: [:delete], as: 'destroy_quiz_from'
-    end
-  end
-  match "packages/:id/add_quiz_to_package" => "packages#add_quiz_to_package", via: [:put], :as => "add_quiz_to_package"
   
   # Store routes.
   ## Store route to show timed / practice tests. 
@@ -65,51 +116,6 @@ GremastersWeb::Application.routes.draw do
   match "timed_tests/topics/:topic_slug/:quiz_slug" => "stores#show_topic_timed_test", via: [:get], :as => "show_topic_timed_test"
   match "practice_tests/categories/:category_slug/:quiz_slug" => "stores#show_category_practice_test", via: [:get], :as => "show_category_practice_test"
   match "practice_tests/topics/:topic_slug/:quiz_slug" => "stores#show_topic_practice_test", via: [:get], :as => "show_topic_practice_test"
-
-  # Quiz routes.
-  # Sections sub-routes
-  # Questions sub-routes
-  # Options sub-routes
-  get "quizzes/get_current_attempt"
-  resources :quizzes do
-    resources :sections do
-      resources :questions do
-        resources :options
-      end    
-    end
-    member do
-      post 'upload_question_images'
-      post 'delete_question_images'
-      post 'upload_full_excel'
-      post 'upload_verbal_excel'
-      post 'upload_quant_excel'
-      post 'publish'
-      post 'unpublish'
-      post 'approve'
-      post 'unapprove'
-      post 'reject'
-    end
-  end
-
-  resources :section_types
-
-  resources :quiz_types
-
-  resources :types
-
-  resources :topics
-
-  resources :categories
-  
-  resources :offers
-  match "offers/:id/add_quiz_to_offer" => "offers#add_quiz_to_offer", via: [:put], :as => "add_quiz_to_offer"
-  match "offers/:id/add_package_to_offer" => "offers#add_package_to_offer", via: [:put], :as => "add_package_to_offer"
-  match 'offers/:id/destroy_quiz_from_offer/:quiz_id', to: 'offers#destroy_quiz_from_offer', via: [:delete], as: 'destroy_quiz_from_offer'
-  match 'offers/:id/destroy_package_from_offer/:package_id', to: 'offers#destroy_package_from_offer', via: [:delete], as: 'destroy_package_from_offer'
-  match "offers/:id/add_emails_to_offer" => "offers#add_emails_to_offer", via: [:put], :as => "add_emails_to_offer"
-  match 'offers/:id/destroy_email_from_offer/:email', to: 'offers#destroy_email_from_offer', via: [:delete], as: 'destroy_email_from_offer' , :email => /[^\/]*/
-  
-  resources :offer_codes
 
   get "landings/index"
 
