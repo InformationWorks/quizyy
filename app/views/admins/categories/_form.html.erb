@@ -6,7 +6,7 @@
 		<header>
 			<h2><%= yield :category_form_title %></h2>
 			<ul class="data-header-actions">
-				<%= link_to(categories_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				<%= link_to(admins_categories_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
 				 Cancel
 				<% end %>	
 			</ul>
@@ -15,7 +15,7 @@
 			
 			<!-- Form starts here -->
 			<div class="span11" style="margin-left: 15px;">
-				  <%= form_for(@category) do |f| %>
+				  <%= form_for([:admins,@category]) do |f| %>
 				  <% if @category.errors.any? %>
 				  
 				  	<div class="alert alert-error">

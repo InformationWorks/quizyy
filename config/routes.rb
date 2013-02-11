@@ -68,11 +68,10 @@ GremastersWeb::Application.routes.draw do
   
     resources :topics
   
-    resources :categories
-  
   namespace :admins do
-    
+    # Offer routes.
     resources :offers
+    resources :offer_codes
     match "offers/:id/add_quiz_to_offer" => "offers#add_quiz_to_offer", via: [:put], :as => "add_quiz_to_offer"
     match "offers/:id/add_package_to_offer" => "offers#add_package_to_offer", via: [:put], :as => "add_package_to_offer"
     match 'offers/:id/destroy_quiz_from_offer/:quiz_id', to: 'offers#destroy_quiz_from_offer', via: [:delete], as: 'destroy_quiz_from_offer'
@@ -80,16 +79,13 @@ GremastersWeb::Application.routes.draw do
     match "offers/:id/add_emails_to_offer" => "offers#add_emails_to_offer", via: [:put], :as => "add_emails_to_offer"
     match 'offers/:id/destroy_email_from_offer/:email', to: 'offers#destroy_email_from_offer', via: [:delete], as: 'destroy_email_from_offer' , :email => /[^\/]*/
     
-    resources :offer_codes
+    # Package routes.
+    resources :packages
+    match "packages/:id/add_quiz_to_package" => "packages#add_quiz_to_package", via: [:put], :as => "add_quiz_to_package"
+    match 'packages/:id/destroy_quiz_from_package/:quiz_id', to: 'packages#destroy_quiz_from_package', via: [:delete], as: 'destroy_quiz_from_package'
     
-     # Package routes.
-      resources :packages do
-        member do
-           
-        end
-      end
-      match "packages/:id/add_quiz_to_package" => "packages#add_quiz_to_package", via: [:put], :as => "add_quiz_to_package"
-      match 'packages/:id/destroy_quiz_from_package/:quiz_id', to: 'packages#destroy_quiz_from_package', via: [:delete], as: 'destroy_quiz_from_package'
+    # Category routes.
+    resources :categories
   end
 
   resources :reports, :only=>[:index,:show] do

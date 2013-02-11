@@ -6,7 +6,7 @@
 		<header>
 			<h2>Categories</h2>
 			<ul class="data-header-actions">
-				<%= link_to(new_category_path,:class => "btn btn-primary") do %>
+				<%= link_to(new_admins_category_path,:class => "btn btn-primary") do %>
 				 Create New Category
 				<% end %>	
 			</ul>
@@ -35,13 +35,13 @@
 						    <td><%= category.slug %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
-						    	<%= link_to(category, :class => "btn") do %>
+						    	<%= link_to(admins_category_path(category), :class => "btn") do %>
 						    	  <span class="awe-eye-open"></span>
 						    	<% end %>
-						    	<%= link_to(edit_category_path(category), :class => "btn") do %>
+						    	<%= link_to(edit_admins_category_path(category), :class => "btn") do %>
 						    	  <span class="awe-wrench"></span>
 						    	<% end %>
-						    	<%= link_to(category, method: :delete, data: { confirm: 'Are you sure you want to delete this package?' }, :class => "btn") do %>
+						    	<%= link_to(admins_category_path(category), method: :delete, data: { confirm: 'Are you sure you want to delete this category?' }, :class => "btn") do %>
 						    	  <span class="awe-remove"></span>
 						    	<% end %>
 						      </div>
