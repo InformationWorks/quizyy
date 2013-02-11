@@ -60,13 +60,13 @@ end
             </td>
             <td class="toolbar">
               <div class="btn-group">
-                <%= link_to(quiz, :class => "btn") do %>
+                <%= link_to(admins_quiz_path(quiz), :class => "btn") do %>
                   <span class="awe-eye-open"></span>
                 <% end %>
-                <%= link_to(edit_quiz_path(quiz), :class => "btn") do %>
+                <%= link_to(edit_admins_quiz_path(quiz), :class => "btn") do %>
                   <span class="awe-wrench"></span>
                 <% end %>
-                <%= link_to(quiz, method: :delete, data: { confirm: 'Are you sure you want to delete this quiz' }, :class => "btn") do %>
+                <%= link_to(admins_quiz_path(quiz), method: :delete, data: { confirm: 'Are you sure you want to delete this quiz' }, :class => "btn") do %>
                   <span class="awe-remove"></span>
                 <% end %>
               </div>

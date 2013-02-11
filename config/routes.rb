@@ -32,32 +32,6 @@ GremastersWeb::Application.routes.draw do
   
   # Admin routes.
   get "admins/home"
-  
-  # Quiz routes.
-    # Sections sub-routes
-    # Questions sub-routes
-    # Options sub-routes
-    get "quizzes/get_current_attempt"
-    resources :quizzes do
-      resources :sections do
-        resources :questions do
-          resources :options
-        end    
-      end
-      member do
-        post 'upload_question_images'
-        post 'delete_question_images'
-        post 'upload_full_excel'
-        post 'upload_verbal_excel'
-        post 'upload_quant_excel'
-        post 'publish'
-        post 'unpublish'
-        post 'approve'
-        post 'unapprove'
-        post 'reject'
-      end
-    end
-  
   namespace :admins do
     # Offer routes.
     resources :offers
@@ -103,6 +77,31 @@ GremastersWeb::Application.routes.draw do
     match "credits/:user_id/create" => "credits#create", via: [:post], :as => "user_credits"
     match "credits/activity_log" => "credits#activity_log", via: [:get], :as => "credits_activity_log"
     match "credits/:user_id/remove_credits" => "credits#remove_credits", via: [:delete], :as => "remove_credits"
+    
+    # Quiz routes.
+    # Sections sub-routes
+    # Questions sub-routes
+    # Options sub-routes
+    get "quizzes/get_current_attempt"
+    resources :quizzes do
+      resources :sections do
+        resources :questions do
+          resources :options
+        end    
+      end
+      member do
+        post 'upload_question_images'
+        post 'delete_question_images'
+        post 'upload_full_excel'
+        post 'upload_verbal_excel'
+        post 'upload_quant_excel'
+        post 'publish'
+        post 'unpublish'
+        post 'approve'
+        post 'unapprove'
+        post 'reject'
+      end
+    end
   end
 
   resources :reports, :only=>[:index,:show] do

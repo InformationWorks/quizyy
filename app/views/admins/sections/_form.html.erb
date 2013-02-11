@@ -8,11 +8,11 @@
 			<ul class="data-header-actions">
 				
 				<% if @section.new_record? %>
-				 	<%= link_to(quiz_path(@quiz),:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				 	<%= link_to(admins_quiz_path(@quiz),:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
 				 	Cancel
 					<% end %>
 				<% else %>
-				 	<%= link_to(quiz_section_path(@quiz,@section),:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
+				 	<%= link_to(admins_quiz_section_path(@quiz,@section),:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
 				 	Cancel
 					<% end %>
 				<% end %>
@@ -22,7 +22,7 @@
 			
 			<!-- Form starts here -->
 			<div class="span11" style="margin-left: 15px;">
-				  <%= form_for([@quiz,@section]) do |f| %>
+				  <%= form_for([:admins,@quiz,@section]) do |f| %>
 				  <% if @section.errors.any? %>
 				  
 				  	<div class="alert alert-error">
@@ -48,7 +48,7 @@
 					<div class="control-group">
 						<label class="control-label" for="input"><%= f.label :sequence_no %></label>
 						<div class="controls">
-							<%= f.text_area :sequence_no, :class => "input-xlarge" %>
+							<%= f.number_field :sequence_no, :class => "input-xlarge" %>
 						</div>
 					</div>
 					

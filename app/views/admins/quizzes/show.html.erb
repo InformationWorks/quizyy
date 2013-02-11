@@ -86,12 +86,12 @@
 				<% end %>
 				
 				<li class="demoTabs">
-				<%= link_to(edit_quiz_path(@quiz),:class => "btn btn-primary	" ) do %>
+				<%= link_to(edit_admins_quiz_path(@quiz),:class => "btn btn-primary	" ) do %>
 				 Edit
 				<% end %>
 				</li>
 				<li class="demoTabs">
-				<%= link_to(quizzes_path,:class => "btn") do %>
+				<%= link_to(admins_quizzes_path,:class => "btn") do %>
 				 Back
 				<% end %>	
 				</li>
@@ -143,7 +143,7 @@
 					<h3>Sections</h3>
 					<ul class="data-header-actions">
 						<li class="demoTabs">
-						<%= link_to(new_quiz_section_path(@quiz),:class => "btn") do %>
+						<%= link_to(new_admins_quiz_section_path(@quiz),:class => "btn") do %>
 						 Create New Section
 						<% end %>	
 						</li>
@@ -167,13 +167,13 @@
 							    <td><%= section.section_type.name %></td>
 							    <td class="toolbar">
 							      <div class="btn-group">
-							    	<%= link_to(quiz_section_path(section.quiz,section), :class => "btn") do %>
+							    	<%= link_to(admins_quiz_section_path(section.quiz,section), :class => "btn") do %>
 							    	  <span class="awe-eye-open"></span>
 							    	<% end %>
-							    	<%= link_to(edit_quiz_section_path(section.quiz,section), :class => "btn") do %>
+							    	<%= link_to(edit_admins_quiz_section_path(section.quiz,section), :class => "btn") do %>
 							    	  <span class="awe-wrench"></span>
 							    	<% end %>
-							    	<%= link_to(quiz_section_path(section.quiz,section), method: :delete, data: { confirm: 'Are you sure you want to delete this quiz' }, :class => "btn") do %>
+							    	<%= link_to(admins_quiz_section_path(section.quiz,section), method: :delete, data: { confirm: 'Are you sure you want to delete this quiz' }, :class => "btn") do %>
 							    	  <span class="awe-remove"></span>
 							    	<% end %>
 							      </div>
@@ -191,7 +191,7 @@
 					<%= button_to "Delete all images", {:controller => 'quizzes', :action => 'delete_question_images', :id => @quiz.slug}, {:class => "btn btn-inverse",:confirm => "Are you sure you want to delete all images?" } %>	
 					
 					<div style="float: middle;height:118px;" class="table table-bordered">
-				    <%= form_for @quiz, :url => upload_question_images_quiz_path(@quiz), :method => :post, :html => { :multipart => true } do |fe| %> 
+				    <%= form_for @quiz, :url => upload_question_images_admins_quiz_path(@quiz), :method => :post, :html => { :multipart => true } do |fe| %> 
 				    <%= fe.file_field :quiz_question_images,:class => "form_fields",:multiple => true %> <br /> <br />
 				    <%= fe.submit "Upload Images",:confirm => "Are you sure you want to add selected images ?", :method => :post, :data => { :confirm => 'This will delete current questions for this quiz. Are you sure you want to upload new questions?' },
 				                    :class => "btn btn-inverse",:style => "float:left;margin-left: 20px;margin-top:-5px" %> 
