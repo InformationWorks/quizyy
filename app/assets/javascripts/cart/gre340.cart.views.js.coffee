@@ -10,8 +10,9 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     initialize:(options) ->
       @collection = Gre340.Cart.Data.cart
       @collection.reset($('#cart-wrapper').data('cart'),{silent:false})
-      Gre340.vent.on "add:cart:item", @addItemToCart, @
-      Gre340.vent.on "remove:cart:item",@removeItemFromCart,@
+      @listenTo Gre340.vent,"add:cart:item",@addItemToCart,@
+      @listenTo Gre340.vent,"remove:cart:item",@removeItemFromCart,@
+      @
     events:
       'click .remove-cart-side-btn': 'removeItemFromCartEvent'
     template: 'cart/cart'
@@ -73,10 +74,13 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       event.preventDefault()
       Gre340.vent.trigger "add:cart:item",$(@).data('value'),@
 
-    $('body').on 'click','a.remove-cart-btn', (event)->
+    $('body').on 'click','a.remove-cart-btn',(event)->
       event.preventDefault()
       Gre340.vent.trigger "remove:cart:item",$(@).data('id'),@
 
     $('body').tooltip
       selector: '[rel=tooltip]'
       placement: 'bottom'
+  Views.addFinalizer ->
+    console.log 'closing cart view'
+    Views.cartView.close()

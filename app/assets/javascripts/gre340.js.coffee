@@ -10,4 +10,6 @@ Gre340.on "initialize:after", ->
 $(document).ready ->
   Gre340.start()
 $(document).on('page:fetch', (event) -> $('#loading').show())
-$(document).on('page:change',(event) -> $('#loading').hide())
+$(document).on('page:change',(event) ->
+  $('#loading').hide()
+)

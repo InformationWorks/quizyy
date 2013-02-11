@@ -89,11 +89,10 @@ Gre340.module "Routing", (Routing, Gre340, Backbone, Marionette, $, _) ->
       if !Modernizr.mq("screen and (min-width: 1200px)")
         scrollToElement("#available-tests")
     initCart:()->
+      console.log 'starting cart'
       Gre340.Cart.start()
       Gre340.TestCenter.stop()
   )
 
   Routing.addInitializer ->
     router = new Router()
-  Routing.addFinalizer ->
-    console.log 'stopped routing testcenter'
