@@ -13,7 +13,8 @@ class StoresController < ApplicationController
     
     # Get full-length quizzes.
     @full_length_quizzes = Quiz.scoped_timed_full_quizzes(current_user).not_in_account_of_user(current_user).order('id ASC').first(3)
-    @full_length_quizzes += current_user.quizzes.full.timed
+    @purchased_full_length_timed_quizzes = current_user.quizzes.full.timed
+    @full_length_quizzes += @purchased_full_length_timed_quizzes
     load_words_for_quizzes(@full_length_quizzes)
     
     # generate store entities for timed.

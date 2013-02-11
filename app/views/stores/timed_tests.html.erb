@@ -6,7 +6,7 @@
   <%= content_tag "div", id: "cart-wrapper",class: "well", data: { cart: @cart.cart_items.to_json(:include => :quiz) } do%>
 
   <% end %>
-  <% if @full_length_quizzes.count == 0 %>
+  <% if @purchased_full_length_timed_quizzes.count == 0 %>
 	<%= render "full_quiz_pack_selection"%>
   <% end %>
 	
