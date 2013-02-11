@@ -43,7 +43,7 @@
 							<% end %>
 						</li>
 						<li <% if @current_controller == "topics" %>class = "current"<% end %> >
-							<%= link_to(topics_path, :class => "no-submenu") do %>
+							<%= link_to(admins_topics_path, :class => "no-submenu") do %>
 							<span class="awe-folder-close"></span>Topics
 							<% end %>
 						</li>
