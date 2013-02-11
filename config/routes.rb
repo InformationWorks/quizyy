@@ -4,8 +4,6 @@ GremastersWeb::Application.routes.draw do
 
   get "progress_report/show"
 
-  get "transactions/index"
-
   ### API routes go here.
     
   # API v1
@@ -94,6 +92,9 @@ GremastersWeb::Application.routes.draw do
     # Students routes.
     resources :students, :only => [:index,:new,:create]
     match '/students/upload_via_excel' => "students#upload_via_excel", via: [:post], :as => "upload_students_via_excel"
+    
+    # Transaction routes.
+    resources :transactions, :only => [:index]
   end
 
   resources :reports, :only=>[:index,:show] do

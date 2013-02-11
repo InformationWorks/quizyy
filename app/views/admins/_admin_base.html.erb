@@ -59,7 +59,7 @@
 						</li>
 						<li <% if @current_controller == "students" %>class = "current"<% end %> >
                             <%= link_to(admins_students_path, :class => "no-submenu") do %>
-                            <span class="awe-money"></span>Student Management
+                            <span class="awe-user"></span>Student Management
                             <% end %>
                         </li>
 						<li <% if @current_controller == "credits" %>class = "current"<% end %> >
@@ -68,13 +68,13 @@
 							<% end %>
 						</li>
 						<li <% if @current_controller == "transactions" %>class = "current"<% end %> >
-							<%= link_to(transactions_index_path, :class => "no-submenu") do %>
-							<span class="awe-money"></span>Transaction Management
+							<%= link_to(admins_transactions_path, :class => "no-submenu") do %>
+							<span class="awe-credit-card"></span>Transaction Management
 							<% end %>
 						</li>
 						<li <% if @current_controller == "offers" %>class = "current"<% end %> >
 							<%= link_to(admins_offers_path, :class => "no-submenu") do %>
-							<span class="awe-money"></span>Offers
+							<span class="awe-gift"></span>Offers
 							<% end %>
 						</li>
 					</ul>
