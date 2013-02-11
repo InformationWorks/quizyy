@@ -6,7 +6,7 @@
 		<header>
 			<h2>QuizTypes</h2>
 			<ul class="data-header-actions">
-				<%= link_to(new_quiz_type_path,:class => "btn btn-primary") do %>
+				<%= link_to(new_admins_quiz_type_path,:class => "btn btn-primary") do %>
 				 Create New QuizType
 				<% end %>	
 			</ul>
@@ -29,13 +29,13 @@
 						    <td><%= quiz_type.name %></td>
 						    <td class="toolbar">
 						      <div class="btn-group">
-						    	<%= link_to(quiz_type_path(quiz_type), :class => "btn") do %>
+						    	<%= link_to(admins_quiz_type_path(quiz_type), :class => "btn") do %>
 						    	  <span class="awe-eye-open"></span>
 						    	<% end %>
-						    	<%= link_to(edit_quiz_type_path(quiz_type), :class => "btn") do %>
+						    	<%= link_to(edit_admins_quiz_type_path(quiz_type), :class => "btn") do %>
 						    	  <span class="awe-wrench"></span>
 						    	<% end %>
-						    	<%= link_to(quiz_type, method: :delete, data: { confirm: 'Are you sure you want to delete this QuizType' }, :class => "btn") do %>
+						    	<%= link_to(admins_quiz_type_path(quiz_type), method: :delete, data: { confirm: 'Are you sure you want to delete this QuizType' }, :class => "btn") do %>
 						    	  <span class="awe-remove"></span>
 						    	<% end %>
 						      </div>
