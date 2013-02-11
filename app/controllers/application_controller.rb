@@ -10,22 +10,22 @@ class ApplicationController < ActionController::Base
     # For controllers under "Admin" section redirect to specific index page.
     if @current_controller == "topics"
       flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
-      redirect_to topics_url
+      redirect_to admins_topics_url
     elsif @current_controller == "categories"
       flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
-      redirect_to categories_url
+      redirect_to admins_categories_url
     elsif @current_controller == "types"
       flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
-      redirect_to types_url
+      redirect_to admins_types_url
     elsif @current_controller == "packages"
       flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
-      redirect_to packages_url
+      redirect_to admins_packages_url
     elsif @current_controller == "quiz_types"
       flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
-      redirect_to quiz_types_url
+      redirect_to admins_quiz_types_url
     elsif @current_controller == "section_types"
       flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
-      redirect_to section_types_url
+      redirect_to admins_section_types_url
     else
       redirect_to homes_index_url
     end
