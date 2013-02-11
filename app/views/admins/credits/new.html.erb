@@ -13,7 +13,7 @@
 			<code style="margin-left: 10px;">Available Credits: <%= @user.credits %></code>
 			<ul class="data-header-actions">
 				<li>
-					<%= link_to(credits_index_path,:class => "btn") do %>
+					<%= link_to(admins_credits_path,:class => "btn") do %>
 					 Back
 					<% end %>
 				</li>
@@ -31,7 +31,7 @@
 					
 					    <h3>Add credits</h3>
 					    <br />
-						<%= form_tag(credits_path(@user.id), :method=>'post', :style => "") do %>
+						<%= form_tag(admins_user_credits_path(@user.id), :method=>'post', :style => "") do %>
 						     <div class="control-group">
                                 <label class="control-label" for="input">Description</label>
                                 <div class="controls">
@@ -64,7 +64,7 @@
 						
 						<h3>Remove credits</h3>
                         <br />
-                        <%= form_tag(remove_credits_path(@user.id), :method=>'delete', :style => "") do %>
+                        <%= form_tag(admins_remove_credits_path(@user.id), :method=>'delete', :style => "") do %>
                              <div class="control-group">
                                 <label class="control-label" for="input">Description</label>
                                 <div class="controls">

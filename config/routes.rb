@@ -95,6 +95,14 @@ GremastersWeb::Application.routes.draw do
     
     # Transaction routes.
     resources :transactions, :only => [:index]
+    
+    # Credits routes.
+    # Credits routes
+    resources :credits, :only => [:index]
+    match "credits/:user_id/new" => "credits#new", via: [:get], :as => "new_user_credit"
+    match "credits/:user_id/create" => "credits#create", via: [:post], :as => "user_credits"
+    match "credits/activity_log" => "credits#activity_log", via: [:get], :as => "credits_activity_log"
+    match "credits/:user_id/remove_credits" => "credits#remove_credits", via: [:delete], :as => "remove_credits"
   end
 
   resources :reports, :only=>[:index,:show] do
@@ -149,13 +157,6 @@ GremastersWeb::Application.routes.draw do
   get "test_center/index"
   match 'test_center' => 'test_center#index'
   match 'test_center/*anything' => "test_center#index"
-  
-  # Credits routes
-  get "credits/index"
-  match "credits/:user_id/new" => "credits#new", via: [:get], :as => "new_credit"
-  match "credits/:user_id/create" => "credits#create", via: [:post], :as => "credits"
-  match "credits/activity_log" => "credits#activity_log", via: [:get], :as => "credits_activity_log"
-  match "credits/:user_id/remove_credits" => "credits#remove_credits", via: [:delete], :as => "remove_credits"
 
   # Cart routes.
   resources :carts, :only => [:index]
