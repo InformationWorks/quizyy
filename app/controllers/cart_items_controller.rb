@@ -36,7 +36,6 @@ class CartItemsController < ApplicationController
       end
 
       # Go back to the controller => action from which cart item was created.
-      flash[:notice] = "#{entity} added to cart successfully."
       respond_to do |format|
         format.json { render :json => {:data=>@cart_item.to_json(:include=>:quiz),:success=>true, :message => "#{entity} added to cart successfully."} }
         format.html { redirect_to :controller => params[:back_controller], :action => params[:back_action]}
@@ -60,7 +59,6 @@ class CartItemsController < ApplicationController
       end
 
       @cart_item.destroy
-      flash[:notice] = "#{entity} removed from cart successfully."
       respond_to do |format|
         format.json { render :json => {:data=>@cart_item,:success=>true, :message => "#{entity} removed from cart."} }
         format.html {
