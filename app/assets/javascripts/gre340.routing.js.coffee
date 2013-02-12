@@ -36,6 +36,7 @@ Gre340.module "Routing", (Routing, Gre340, Backbone, Marionette, $, _) ->
     routes:
       'homes/index': 'goToAvailableTest'
       'store': 'initCart'
+      'store/*anything': 'initCart'
       'timed_tests': 'initCart'
       'practice_tests': 'initCart'
       'test_center/error': 'showError'

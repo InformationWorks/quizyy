@@ -51,5 +51,8 @@
       <% end %>
     </div>
     </section>
+      <!-- Show the cart -->
+      <%= content_tag "div", id: "cart-wrapper",class: "span3 well", data: { cart: @cart.cart_items.to_json(:include => :quiz) } do%>
+      <% end %>
    </div> 
 </div>
