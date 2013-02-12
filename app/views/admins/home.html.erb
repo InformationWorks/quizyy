@@ -1,5 +1,17 @@
 <% content_for :admin_content do %>
-  Content goes here
+
+<!--First Data row -->
+<div class="row">
+			
+	<%= render :partial => "dashboard_in_store_table", :locals => { :table_type => "paid" } %>				
+	
+	<%= render :partial => "dashboard_in_store_table", :locals => { :table_type => "free" } %>
+	
+</div>
+
+
+<br />
+  
 <% end %>
 
 <%= render "admin_base"%>

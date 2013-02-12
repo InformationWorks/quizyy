@@ -1,0 +1,79 @@
+<!-- Set values that need to be used for specific cases -->
+<% 
+
+if table_type == "paid"
+  @title = "Paid In-Store Tests"
+  @full_quizzes = @full_paid_quizzes
+  @category_quizzes = @category_paid_quizzes
+  @topic_quizzes = @topic_paid_quizzes
+elsif table_type == "free"
+  @title = "Free In-Store Tests"
+  @full_quizzes = @full_free_quizzes
+  @category_quizzes = @category_free_quizzes
+  @topic_quizzes = @topic_free_quizzes
+end
+	
+%>
+
+<!-- Data block -->
+<article class="span6 data-block">
+	<div class="data-container">
+		<header>
+			<h2><%= @title %></h2>
+			<ul class="data-header-actions">
+				<li><span class="loading" data-original-title="Loading, please wait…">Loading…</span></li>
+			</ul>
+		</header>
+		<section>
+			<table class="table table-stripped table-hover">
+				<thead>
+					<tr>
+						<th>Test Type</th>
+						<th>In-Store</th>
+						<th>Users</th>
+						<th>Purchases</th>
+						<% if table_type == "paid" %>
+						  <th>Revenue</th>
+						<% end %>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Full</td>
+						<td><%= @full_quizzes.count %></td>
+						<td><%= @full_quizzes.joins(:users).count %></td>
+						<% revenue , purchases = Quiz.revenue_and_purchases_for_quizzes(@full_quizzes) %>
+						<td><%= purchases.to_s %></td>
+						<% if table_type == "paid" %>
+						  <td><%= "\u20B9 " + revenue.to_s %></td>
+						<% end %>
+					</tr>
+					<tr>
+						<td>Category</td>
+						<td><%= @category_quizzes.count %></td>
+						<td><%= @category_quizzes.joins(:users).count %></td>
+						<% revenue , purchases = Quiz.revenue_and_purchases_for_quizzes(@category_quizzes) %>
+						<td><%= purchases.to_s %></td>
+						<% if table_type == "paid" %>
+						  <td><%= "\u20B9 " + revenue.to_s %></td>
+						<% end %>
+					</tr>
+					<tr>
+						<td>Topic</td>
+						<td><%= @topic_quizzes.count %></td>
+						<td><%= @topic_quizzes.joins(:users).count %></td>
+						<% revenue , purchases = Quiz.revenue_and_purchases_for_quizzes(@topic_quizzes) %>
+						<td><%= purchases.to_s %></td>
+						<% if table_type == "paid" %>
+						  <td><%= "\u20B9 " + revenue.to_s %></td>
+						<% end %>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		<footer class="warning">
+			<p></p>
+		</footer>
+	</div>
+</article>
+<!-- /Data block -->

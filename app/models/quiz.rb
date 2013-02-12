@@ -76,6 +76,21 @@ class Quiz < ActiveRecord::Base
     end
   end
   
+  def self.revenue_and_purchases_for_quizzes(quizzes)
+    
+    revenue = 0
+    purchases = 0
+    quizzes.each do |quiz|
+      user_count = quiz.users.count
+      if user_count > 0
+        purchases += 1
+        revenue += (quiz.price * user_count)
+      end
+    end
+    
+    return revenue, purchases
+  end
+  
   def to_param
     slug
   end
