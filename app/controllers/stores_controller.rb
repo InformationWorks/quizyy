@@ -73,6 +73,42 @@ class StoresController < ApplicationController
     render "show_all_tests"
   end
   
+  # match "store/full_tests/:quiz_slug" => "stores#show_full_test", via: [:get], :as => "show_full_test"
+  def show_full_test
+    
+    @quiz = Quiz.scoped_for_user(current_user).find_by_slug(params[:quiz_slug])
+    
+    if (@quiz == nil || @quiz.quiz_type_id != QuizType.find_by_name("FullQuiz").id)
+      redirect_to "/404.html"
+    else
+      render 'show_test_detail'
+    end
+  end
+  
+  # match "store/categories/:category_slug/:quiz_slug" => "stores#show_category_test", via: [:get], :as => "show_category_test"
+  def show_category_test
+    
+    @quiz = Quiz.scoped_for_user(current_user).find_by_slug(params[:quiz_slug])
+    
+    if (@quiz == nil || @quiz.quiz_type_id != QuizType.find_by_name("CategoryQuiz").id)
+      redirect_to "/404.html"
+    else
+      render 'show_test_detail'
+    end
+  end
+  
+  # match "store/topics/:topic_slug/:quiz_slug" => "stores#show_topic_test", via: [:get], :as => "show_topic_test"
+  def show_topic_test
+    
+    @quiz = Quiz.scoped_for_user(current_user).find_by_slug(params[:quiz_slug])
+    
+    if (@quiz == nil || @quiz.quiz_type_id != QuizType.find_by_name("TopicQuiz").id)
+      redirect_to "/404.html"
+    else
+      render 'show_test_detail'
+    end  
+  end
+  
   # match "timed_tests" => "stores#timed_tests", via: [:get], :as => "timed_tests"
   def timed_tests
 

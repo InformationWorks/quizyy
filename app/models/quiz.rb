@@ -102,16 +102,12 @@ class Quiz < ActiveRecord::Base
   # Generate test_detail_path based on the type.
   def test_detail_path
     
-    if self.timed && self.quiz_type_id == QuizType.find_by_name("FullQuiz").id
-      Rails.application.routes.url_helpers.show_full_timed_test_path(self.slug)
-    elsif self.timed && self.quiz_type_id == QuizType.find_by_name("CategoryQuiz").id
-      Rails.application.routes.url_helpers.show_category_timed_test_path(self.category.slug,self.slug)
-    elsif self.timed && self.quiz_type_id == QuizType.find_by_name("TopicQuiz").id
-      Rails.application.routes.url_helpers.show_topic_timed_test_path(self.topic.slug,self.slug)
-    elsif self.timed != true && self.quiz_type_id == QuizType.find_by_name("CategoryQuiz").id
-      Rails.application.routes.url_helpers.show_category_practice_test_path(self.category.slug,self.slug)
-    elsif self.timed != true && self.quiz_type_id == QuizType.find_by_name("TopicQuiz").id
-      Rails.application.routes.url_helpers.show_topic_practice_test_path(self.topic.slug,self.slug)
+    if self.quiz_type_id == QuizType.find_by_name("FullQuiz").id
+      Rails.application.routes.url_helpers.show_full_test_path(self.slug)
+    elsif self.quiz_type_id == QuizType.find_by_name("CategoryQuiz").id
+      Rails.application.routes.url_helpers.show_category_test_path(self.category.slug,self.slug)
+    elsif self.quiz_type_id == QuizType.find_by_name("TopicQuiz").id
+      Rails.application.routes.url_helpers.show_topic_test_path(self.topic.slug,self.slug)
     end
     
   end
