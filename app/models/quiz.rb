@@ -119,17 +119,13 @@ class Quiz < ActiveRecord::Base
   # Generate a array of special datastructure for store.
   # structure: 
   # { entity => string, name => string, slug => string , quizzes => array_of_quizzes }
-  def self.store_entity_name_quizzes(entity,timed,user)
+  def self.store_entity_name_quizzes(entity,user)
     
     # Fetch the quizzes not owned by user first and then append owned quizzes.
     if entity == "Category"
-      if timed
-        quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).category.timed.order('id ASC')
-        quizzes += user.quizzes.category.timed
-      else
-        quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).category.practice.order('id ASC')
-        quizzes += user.quizzes.category.practice
-      end
+      
+      quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).category.order('id ASC')
+      quizzes += user.quizzes.category
       
       # Club all quizzes based on categories.
       # {  
@@ -146,13 +142,9 @@ class Quiz < ActiveRecord::Base
         name_slug_hash[quiz.category.name] = quiz.category.slug
       end
     else
-      if timed
-        quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).topic.timed.order('id ASC')
-        quizzes += user.quizzes.topic.timed
-      else
-        quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).topic.practice.order('id ASC')
-        quizzes += user.quizzes.topic.practice
-      end
+      
+      quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).topic.order('id ASC')
+      quizzes += user.quizzes.topic
       
       # Club all quizzes based on topics.
       # {  

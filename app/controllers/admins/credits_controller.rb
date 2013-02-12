@@ -35,7 +35,7 @@ module Admins
       activity_log.desc = desc
       activity_log.save!
       
-      redirect_to admins_new_credit_path(@user.id), notice: "Credit added successfully."
+      redirect_to admins_new_user_credit_path(@user.id), notice: "Credit added successfully."
       
     end
     
@@ -46,7 +46,7 @@ module Admins
       @user.credits -= params[:credits_to_remove].to_i
       
       if @user.credits < 0
-        redirect_to admins_new_credit_path(@user.id), notice: "Credit can't go below 0."
+        redirect_to admins_new_user_credit_path(@user.id), notice: "Credit can't go below 0."
         return
       end
       
@@ -69,7 +69,7 @@ module Admins
       
       activity_log.save!
       
-      redirect_to admins_new_credit_path(@user.id), notice: "Credit removed successfully."
+      redirect_to admins_new_user_credit_path(@user.id), notice: "Credit removed successfully."
       
     end
     

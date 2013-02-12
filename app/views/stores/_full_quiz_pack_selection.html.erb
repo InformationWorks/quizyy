@@ -1,92 +1,89 @@
-  <div class="span12">
-  
-  <div id="full-test-pack-selection">
+<div id="full-test-pack-selection">
   
   <section class="category-section first">
-	<h2>Full-length packages</h2>
+   <h2>Full-length packages</h2>
   </section>
   
   <br />
   <br />
-    <section class="category-section first">
-      <div class="span4 pack-tile light-grey">
-        <h2><%= @package_1.name %></h2>
-        <hr>
-        <p><strong><%= @package_1.quizzes.count %></strong> full length tests</p>
-        <p><strong><%= @package_1.quizzes.count * 4 %></strong> sections</p>
-        <p><strong><%= @package_1.quizzes.count * 80 %></strong> questions</p>
-        <div class="prize">
-          <hr>
-          
-          	<% cart_item_id = current_user.get_cart_item_id_for_package(@package_1.id) %>  	
-  			<% if cart_item_id != -1 %>
-      		<div>
-		    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
-					:method => "delete", :disable_with => 'removing from cart...' ) %>
-      		</div>
-      		<% else %>
-      			<div class="actions hide" style="float:left">
-		           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_1.id,:back_controller => "checkout",:back_action => "show_cart") ,
-							:method => "post", :disable_with => 'adding to cart...' ) %>
-		         </div>
-      		<% end %>
-          
-            <p class="lead"><span style='font-family: "Open Sans";'>&#x20b9;</span>  <%= @package_1.price %></p>
-          </div>
+<section class="category-section first">
+  <div class="span4 pack-tile light-grey">
+    <h2><%= @package_1.name %></h2>
+    <hr>
+    <p><strong><%= @package_1.quizzes.count %></strong> full length tests</p>
+    <p><strong><%= @package_1.quizzes.count * 4 %></strong> sections</p>
+    <p><strong><%= @package_1.quizzes.count * 80 %></strong> questions</p>
+    <div class="prize">
+      <hr>
+      
+      	<% cart_item_id = current_user.get_cart_item_id_for_package(@package_1.id) %>  	
+		<% if cart_item_id != -1 %>
+  		<div>
+	    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
+				:method => "delete", :disable_with => 'removing from cart...' ) %>
+  		</div>
+  		<% else %>
+  			<div class="actions hide" style="float:left">
+	           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_1.id,:back_controller => "checkout",:back_action => "show_cart") ,
+						:method => "post", :disable_with => 'adding to cart...' ) %>
+	         </div>
+  		<% end %>
+      
+        <p class="lead"><span style='font-family: "Open Sans";'>&#x20b9;</span>  <%= @package_1.price %></p>
       </div>
-      <div class="span4 pack-tile light-grey blue-border">
-        <h2><%= @package_2.name %></h2>
-        <hr>
-        <p><strong><%= @package_2.quizzes.count %></strong> full length tests</p>
-        <p><strong><%= @package_2.quizzes.count * 4 %></strong> sections</p>
-        <p><strong><%= @package_2.quizzes.count * 80 %></strong> questions</p>
-        <div class="prize">
-          <hr>
-          
-            <% cart_item_id = current_user.get_cart_item_id_for_package(@package_2.id) %>  	
-  			<% if cart_item_id != -1 %>
-      		<div>
-		    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
-					:method => "delete", :disable_with => 'removing from cart...' ) %>
-      		</div>
-      		<% else %>
-      			<div class="actions hide" style="float:left">
-		           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_2.id,:back_controller => "checkout",:back_action => "show_cart") ,
-							:method => "post", :disable_with => 'adding to cart...' ) %>
-		         </div>
-      		<% end %>
-          
-          <p class="lead"><span style='font-family: "Open Sans";'>&#x20b9;</span>  <%= @package_2.price %></p>
-        </div>
-      </div>
-      <div class="span4 pack-tile ">
-        <h2><%= @package_3.name %></h2>
-        <hr class="blue">
-        <p><strong><%= @package_3.quizzes.count %></strong> full length tests</p>
-        <p><strong><%= @package_3.quizzes.count * 4 %></strong> sections</p>
-        <p><strong><%= @package_3.quizzes.count * 80 %></strong> questions</p>
-        <div class="prize">
-          <hr class="blue">
-          	
-          	<% cart_item_id = current_user.get_cart_item_id_for_package(@package_3.id) %>  	
-  			<% if cart_item_id != -1 %>
-      		<div>
-		    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
-					:method => "delete", :disable_with => 'removing from cart...' ) %>
-      		</div>
-      		<% else %>
-      			<div class="actions hide" style="float:left">
-		           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_3.id,:back_controller => "checkout",:back_action => "show_cart") ,
-							:method => "post", :disable_with => 'adding to cart...' ) %>
-		         </div>
-      		<% end %>
-      		
-          <p class="lead"><span style='font-family: "Open Sans";'>&#x20b9;</span> <%= @package_3.price %></p>
-        </div>
-      </div>
-    </section>
+  </div>
+  <div class="span4 pack-tile light-grey blue-border">
+    <h2><%= @package_2.name %></h2>
+    <hr>
+    <p><strong><%= @package_2.quizzes.count %></strong> full length tests</p>
+    <p><strong><%= @package_2.quizzes.count * 4 %></strong> sections</p>
+    <p><strong><%= @package_2.quizzes.count * 80 %></strong> questions</p>
+    <div class="prize">
+      <hr>
+      
+        <% cart_item_id = current_user.get_cart_item_id_for_package(@package_2.id) %>  	
+		<% if cart_item_id != -1 %>
+  		<div>
+	    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
+				:method => "delete", :disable_with => 'removing from cart...' ) %>
+  		</div>
+  		<% else %>
+  			<div class="actions hide" style="float:left">
+	           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_2.id,:back_controller => "checkout",:back_action => "show_cart") ,
+						:method => "post", :disable_with => 'adding to cart...' ) %>
+	         </div>
+  		<% end %>
+      
+      <p class="lead"><span style='font-family: "Open Sans";'>&#x20b9;</span>  <%= @package_2.price %></p>
+    </div>
+  </div>
+  <div class="span4 pack-tile ">
+    <h2><%= @package_3.name %></h2>
+    <hr class="blue">
+    <p><strong><%= @package_3.quizzes.count %></strong> full length tests</p>
+    <p><strong><%= @package_3.quizzes.count * 4 %></strong> sections</p>
+    <p><strong><%= @package_3.quizzes.count * 80 %></strong> questions</p>
+    <div class="prize">
+      <hr class="blue">
+      	
+      	<% cart_item_id = current_user.get_cart_item_id_for_package(@package_3.id) %>  	
+		<% if cart_item_id != -1 %>
+  		<div>
+	    	<%= button_to( "Remove from cart"  , cart_item_path(:id => cart_item_id,:back_controller => "stores",:back_action => "timed_tests") ,
+				:method => "delete", :disable_with => 'removing from cart...' ) %>
+  		</div>
+  		<% else %>
+  			<div class="actions hide" style="float:left">
+	           <%= button_to( "Buy"  , cart_items_path(:package_id => @package_3.id,:back_controller => "checkout",:back_action => "show_cart") ,
+						:method => "post", :disable_with => 'adding to cart...' ) %>
+	         </div>
+  		<% end %>
+  		
+      <p class="lead"><span style='font-family: "Open Sans";'>&#x20b9;</span> <%= @package_3.price %></p>
+    </div>
+  </div>
+</section>
 
-</div>
 </div>
     
 <script>

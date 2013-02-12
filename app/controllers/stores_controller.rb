@@ -3,6 +3,33 @@ class StoresController < ApplicationController
   before_filter :authenticate_user!
   before_filter :initialize_cart
   
+  # match 'store' => "stores#index", via: [:get], :as => "store"
+  def index
+    
+    # Get full-length quizzes.
+    @full_length_quizzes = Quiz.scoped_for_user(current_user).full.not_in_account_of_user(current_user).order('id ASC').first(3)
+    @purchased_full_length_quizzes = current_user.quizzes.full
+    @full_length_quizzes += @purchased_full_length_quizzes
+    load_words_for_quizzes(@full_length_quizzes)
+    
+    # Fetch packages if no full length quiz is purchased by the user.
+    if @purchased_full_length_quizzes.count == 0
+      packages = Package.where("position = 1 or position = 2 or position = 3").order("position asc")
+      @package_1 = packages[0]
+      @package_2 = packages[1]
+      @package_3 = packages[2] 
+    end
+    
+    # generate store entities for timed.
+    @store_entities = generate_store_entities
+    
+    # Load words for each quiz.
+    @store_entities.each do |entity_name_quizzes|
+      load_words_for_quizzes(entity_name_quizzes[:quizzes])
+    end
+    
+  end
+  
   # match "timed_tests" => "stores#timed_tests", via: [:get], :as => "timed_tests"
   def timed_tests
 
@@ -178,12 +205,12 @@ class StoresController < ApplicationController
   private
   
   # Generate store entities
-  def generate_store_entities(timed)
+  def generate_store_entities
     
     # Get array of category & topic structures.
     # [ { entity => string, name => string, slug => string , quizzes => array_of_quizzes } ]
-    store_category_entities = Quiz.store_entity_name_quizzes("Category",timed,current_user)
-    store_topic_entities = Quiz.store_entity_name_quizzes("Topic",timed,current_user)
+    store_category_entities = Quiz.store_entity_name_quizzes("Category",current_user)
+    store_topic_entities = Quiz.store_entity_name_quizzes("Topic",current_user)
     
     # Combile category & topic array and sort them by name.
     store_entities = []
