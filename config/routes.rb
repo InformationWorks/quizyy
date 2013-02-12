@@ -116,6 +116,11 @@ GremastersWeb::Application.routes.draw do
   # Store routes.
   match 'store' => "stores#index", via: [:get], :as => "store"
   
+  ## Store route to show all tests for full/category/topic
+  match "store/full_tests" => "stores#show_all_full_tests", via: [:get], :as => "show_all_full_tests"
+  match "store/categories/:category_slug" => "stores#show_category_all_tests", via: [:get], :as => "show_category_all_tests"
+  match "store/topics/:topic_slug" => "stores#show_topic_all_tests", via: [:get], :as => "show_topic_all_tests"
+  
   ## Store route to show timed / practice tests. 
   match "timed_tests" => "stores#timed_tests", via: [:get], :as => "timed_tests"
   match "practice_tests" => "stores#practice_tests", via: [:get], :as => "practice_tests"

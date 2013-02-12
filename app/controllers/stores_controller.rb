@@ -30,6 +30,49 @@ class StoresController < ApplicationController
     
   end
   
+  # match "store/full_tests" => "stores#show_all_full_tests", via: [:get], :as => "show_all_full_tests"
+  def show_all_full_tests
+    @quizzes = Quiz.scoped_for_user(current_user).full.not_in_account_of_user(current_user).order('id ASC')
+    @quizzes += current_user.quizzes.full
+    @quizzes = load_words_for_quizzes(@quizzes)
+    
+    @name = "Full length tests"
+    render "show_all_tests"
+  end
+  
+  # match "store/categories/:category_slug" => "stores#show_category_all_tests", via: [:get], :as => "show_category_all_tests"
+  def show_category_all_tests
+    @category = Category.find_by_slug!(params[:category_slug])
+    
+    if @category
+      @quizzes = Quiz.scoped_for_user(current_user).not_in_account_of_user(current_user).category.specific_category(@category).order('id ASC')
+      @quizzes += current_user.quizzes.category.specific_category(@category)
+      @quizzes = load_words_for_quizzes(@quizzes)
+      @name = @category.name
+    else
+      @quizzes = []
+    end
+    
+    render "show_all_tests"
+    
+  end
+  
+  # match "practice_tests/topics/:topic_slug" => "stores#topic_all_practice_tests", via: [:get], :as => "topic_all_practice_tests"
+  def show_topic_all_tests
+    @topic = Topic.find_by_slug!(params[:topic_slug])
+    
+    if @topic
+      @quizzes = Quiz.scoped_for_user(current_user).not_in_account_of_user(current_user).topic.specific_topic(@topic).order('id ASC')
+      @quizzes += current_user.quizzes.topic.specific_topic(@topic)
+      @quizzes = load_words_for_quizzes(@quizzes)
+      @name = @topic.name
+    else
+      @quizzes = []
+    end
+    
+    render "show_all_tests"
+  end
+  
   # match "timed_tests" => "stores#timed_tests", via: [:get], :as => "timed_tests"
   def timed_tests
 
