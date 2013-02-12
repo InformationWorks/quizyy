@@ -12,13 +12,6 @@ class HomesController < ApplicationController
       hash = Digest::MD5.hexdigest(email_address)
       @profile_image_url = "http://www.gravatar.com/avatar/#{hash}"
     end
-    # if params[:category] is true activate category
-    if params[:practice_quiz] == "true"
-      @active_tab = :practice_quiz
-    else
-      @active_tab = :timed_quiz
-    end 
-    
   end
   
   # TODO: Remove this before go-live.

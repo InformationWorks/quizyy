@@ -1,6 +1,6 @@
 
 <% content_for :nav_menu_header do %>
-	Test Hub
+    Test Hub
 <% end %>
 
 <div class="row-fluid">
@@ -17,9 +17,9 @@
             <div class="square image">
 
               <% if current_user.profile_image_url.to_s != "" %>
-              	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src= "<%= current_user.profile_image_url.to_s %>" alt="">
+                <img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src= "<%= current_user.profile_image_url.to_s %>" alt="">
               <% else %>
-              	<img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src="<%= @profile_image_url%>" alt="">
+                <img id="profile-image" style="cursor:pointer;width:150px;height: 150px;" src="<%= @profile_image_url%>" alt="">
               <% end %>
 
             </div>
@@ -27,8 +27,8 @@
             <!--<input type="button" id="remove-image-btn" value="Remove Image" data-confirm="Are you sure you want to remove the image?">-->
             <%= link_to "Edit Profile", edit_user_registration_path%>
             <%= form_tag("/users/profiles/update_profile_pic", :multipart => true) do %>
-			  <input id="profile_pic_uploader" type="file" name="profile_pic_file" style="display:none;" />
-			<% end %>
+              <input id="profile_pic_uploader" type="file" name="profile_pic_file" style="display:none;" />
+            <% end %>
 
           </div>
           <!-- TODO: This needs to be uncommented when we have enough data for suggesting areas of improvement.  
@@ -114,40 +114,23 @@
     </div>
   </div>
 </div>
-<!-- <hr class="soften"> -->
-
-<% if @active_tab == :practice_quiz  %>
-	<% timed_quiz_li_class = "" %>
-	<% timed_quiz_tabpane_class = "tab-pane" %>
-	<% practice_quiz_li_class = "active" %>
-	<% practice_quiz_tabpane_class = "tab-pane active" %>
-<% else %>
-	<% timed_quiz_li_class = "active" %>
-	<% timed_quiz_tabpane_class = "tab-pane active" %>
-	<% practice_quiz_li_class = "" %>
-	<% practice_quiz_tabpane_class = "tab-pane" %>
-<% end %>
 
 <div>
   <section id="available-tests">
   <header class="title"><h2>Available Tests</h2></header>
-  <ul class="nav nav-pills" id="available-test-tabs">
-    <li class= '<%= timed_quiz_li_class %>' ><a href="#full-test">Timed Tests</a></li>
-    <li class= '<%= practice_quiz_li_class %>' ><a href="#category-test">Practice Tests</a></li>
-  </ul>
-
+  <hr class="soften">
   <div class="tab-content">
-    <div class= '<%= timed_quiz_tabpane_class %>' id="full-test">
+    <div class= 'tab-pane active' id="full-test">
       <ul class="test-list">
-        <% purchased_timed_quizzes = current_user.purchased_timed_quizzes %>
+        <% user_quizzes = current_user.quizzes %>
         
-        <% if purchased_timed_quizzes.count == 0 %>
-         <p class="lead">No timed tests in your account. Go to <%= link_to "store", timed_tests_path, :style => "color:#01a31c !important", :"data-no-turbolink" => true %> to get started. </p> <br /><br />
+        <% if user_quizzes.count == 0 %>
+         <p class="lead">No tests in your account. Go to <%= link_to "store", timed_tests_path, :style => "color:#01a31c !important", :"data-no-turbolink" => true %> to get started. </p> <br /><br />
         <% else %>
-         <% purchased_timed_quizzes.each do |purchased_timed_quiz| %>
+         <% user_quizzes.each do |user_quiz| %>
 
             <!%-- Set the css properties based on the status of the quiz --%>
-            <% status = purchased_timed_quiz.quiz_users.where(:quiz_id => purchased_timed_quiz.id,:user_id => current_user.id).first.status %>
+            <% status = user_quiz.quiz_users.where(:quiz_id => user_quiz.id,:user_id => current_user.id).first.status %>
 
             <% if status == :new %>
                 <% li_class = "mediumListIconTextItem new"  %>
@@ -163,21 +146,21 @@
                 <% action_text = "Review" %>
             <% end %>
 
-           <%= link_to(purchased_timed_quiz.test_detail_path, :style => "color:black") do %>     
+           <%= link_to(user_quiz.test_detail_path, :style => "color:black") do %>     
             <li class= "<%= li_class %>">
               <small><%= status %></small>
               <div class="mediumListIconTextItem-Detail">
-                <h4><%= purchased_timed_quiz.name %></h4>
-                <h6><%= purchased_timed_quiz.desc %></h6>
+                <h4><%= user_quiz.name %></h4>
+                <h6><%= user_quiz.desc %></h6>
               </div>
               <div class="command-btn pull-right">
                 <% if status == :completed  %>
-                    <%= link_to('/reports/'+purchased_timed_quiz.slug.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
+                    <%= link_to('/reports/'+user_quiz.slug.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
                         <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
                         <span class="win-label"><%= action_text %></span>
                     <% end %>
                 <%else%>
-                    <%= link_to('/test_center/index?quiz_id='+purchased_timed_quiz.id.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
+                    <%= link_to('/test_center/index?quiz_id='+user_quiz.id.to_s, :class=>'win-command', :'data-no-turbolink' => true) do %>
                         <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
                         <span class="win-label"><%= action_text %></span>
                     <% end %>
@@ -187,67 +170,17 @@
             <% end %>
         <% end %>
         <br />
-            <br />
-            <%= link_to "Get more timed tests", timed_tests_path, :"data-no-turbolink" => true %>
+        <br />
+        <%= link_to "Get more tests", timed_tests_path, :"data-no-turbolink" => true %>
         <% end %>
       </ul>
     </div>
-
-  	<div class= '<%= practice_quiz_tabpane_class %>' id="category-test">
-                <ul class="test-list">
-                    <% purchased_practice_quizzes = current_user.purchased_practice_quizzes %>
-                
-                    <% if purchased_practice_quizzes.count == 0 %>
-                     <p class="lead">No practice tests in your account. Go to <%= link_to "store", practice_tests_path, :style => "color:#01a31c !important" , :"data-no-turbolink" => true%> to get started.</p> <br /><br />
-                    <% else %>
-                      <% purchased_practice_quizzes.each do |purchased_practice_quiz| %>
-
-                        <!%-- Set the css properties based on the status of the quiz --%>
-                        <% status = purchased_practice_quiz.quiz_users.where(:quiz_id => purchased_practice_quiz.id,:user_id => current_user.id).first.status %>
-            
-                        <% if status == :new %>
-                            <% li_class = "mediumListIconTextItem new"  %>
-                            <% command_btn_image = "" %>
-                            <% action_text = "Start" %>
-                        <% elsif status == :paused %>
-                            <% li_class = "mediumListIconTextItem pause"  %>
-                            <% command_btn_image = "" %>
-                            <% action_text = "Start" %>
-                        <% elsif status == :completed %>
-                            <% li_class = "mediumListIconTextItem complete"  %>
-                            <% command_btn_image = "" %>
-                            <% action_text = "Review" %>
-                        <% end %>
-            
-                        <%= link_to( purchased_practice_quiz.test_detail_path, :style => "color:black") do %>
-                        <li class= "<%= li_class %>">
-                          <small><%= status %></small>
-                          <div class="mediumListIconTextItem-Detail">
-                            <h4><%= purchased_practice_quiz.name %></h4>
-                            <h6><%= purchased_practice_quiz.desc %></h6>
-                          </div>
-                          <div class="command-btn pull-right">
-                            <button class="win-command">
-                              <span class="win-commandimage win-commandring"><%= command_btn_image %></span>
-                              <span class="win-label"><%= action_text %></span>
-                            </button>
-                          </div>
-                        </li>
-                        <% end %>
-                        <% end %>
-                        <br />
-                        <br />
-                        <%= link_to "Get more practise tests", practice_tests_path, :"data-no-turbolink" => true %>
-                    <% end %>
-                </ul>
-            </div>
-
   </div>
   </section>
   </div>
-	<% if current_user.role? :super_admin %>
-		<%= button_to "Reset user quizzes", { :action => "reset_user_quizzes" },
-      		:confirm => "Are you sure you want to delete all the quizzes ?", :method => :delete %>
+    <% if current_user.role? :super_admin %>
+        <%= button_to "Reset user quizzes", { :action => "reset_user_quizzes" },
+            :confirm => "Are you sure you want to delete all the quizzes ?", :method => :delete %>
     <% end %>
   </div>
 </div>
