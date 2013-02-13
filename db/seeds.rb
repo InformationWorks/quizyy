@@ -132,39 +132,27 @@ end
 end
 
 # Generate QuitTypes.
-["FullQuiz", "CategoryQuiz", "TopicQuiz"].each do | quiz_type_name |
+["FullQuiz", "SectionQuiz", "CategoryQuiz", "TopicQuiz"].each do | quiz_type_name |
   QuizType.find_or_create_by_name(quiz_type_name)
 end
   
 full_quiz_type_id = QuizType.find_by_name("FullQuiz").id
   
 # Create 10 FullLengthQuiz [ Timed + Paid ]
-(1..10).each do |index|
+(1..12).each do |index|
   full_quiz = Quiz.new
   full_quiz.name = "Full Length " + (index+100).to_s
   full_quiz.desc = "Full Length " + (index+100).to_s + " desc"
   full_quiz.random = false
-  full_quiz.quiz_type_id = full_quiz_type_id 
-  full_quiz.timed = true
-  full_quiz.price = 99.0
-  full_quiz.published = true  
-  full_quiz.publisher_id = publisher_user.id
-  full_quiz.published_at = DateTime.now
-  full_quiz.approved = true
-  full_quiz.approver_id = admin_user.id
-  full_quiz.approved_at = DateTime.now
-  full_quiz.save!
-end
-
-# 2 Full length test [ Timed + Free + Available by default ]
-(1..2).each do |index|
-  full_quiz = Quiz.new
-  full_quiz.name = "Full Length Practice " + (index).to_s
-  full_quiz.desc = "Full Length Practice " + (index).to_s + " desc"
-  full_quiz.random = false
-  full_quiz.quiz_type_id = full_quiz_type_id 
-  full_quiz.timed = true
-  full_quiz.price = 0.0
+  full_quiz.quiz_type_id = full_quiz_type_id
+  
+  # 11 - 12 are free
+  if index == 11 || index == 12
+    full_quiz.price = 0
+  else
+    full_quiz.price = 99.0
+  end
+  
   full_quiz.published = true  
   full_quiz.publisher_id = publisher_user.id
   full_quiz.published_at = DateTime.now
@@ -177,12 +165,11 @@ end
 # Create 5 Category-wise quiz for RC + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   rc_cat_quiz = Quiz.new
-  rc_cat_quiz.name = "RC Practice " + (index).to_s
-  rc_cat_quiz.desc = "RC Practice " + (index).to_s + " desc"
+  rc_cat_quiz.name = "RC 10" + (index).to_s
+  rc_cat_quiz.desc = "RC 10" + (index).to_s + " desc"
   rc_cat_quiz.random = false
   rc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   rc_cat_quiz.category_id = Category.find_by_code("RC").id
-  rc_cat_quiz.timed = false
   rc_cat_quiz.price = 99.0
   # First one is free
   if index == 1
@@ -192,28 +179,14 @@ end
   rc_cat_quiz.save!
 end
 
-# Create 2 Category-wise quiz for RC + Timed [ 2 Paid ]
-(1..2).each do |index|
-  qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "RC Timed " + (index).to_s
-  qc_cat_quiz.desc = "RC Timed " + (index).to_s + " desc"
-  qc_cat_quiz.random = false
-  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  qc_cat_quiz.category_id = Category.find_by_code("RC").id
-  qc_cat_quiz.timed = true
-  qc_cat_quiz.price = 99.0
-  qc_cat_quiz.save!
-end
-
 # Create 5 Category-wise quiz for TC + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   tc_cat_quiz = Quiz.new
-  tc_cat_quiz.name = "TC Practice " + (index).to_s
-  tc_cat_quiz.desc = "TC Practice " + (index).to_s + " desc"
+  tc_cat_quiz.name = "TC 10" + (index).to_s
+  tc_cat_quiz.desc = "TC 10" + (index).to_s + " desc"
   tc_cat_quiz.random = false
   tc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   tc_cat_quiz.category_id = Category.find_by_code("TC").id
-  tc_cat_quiz.timed = false
   tc_cat_quiz.price = 99.0
   
   # First one is free
@@ -224,28 +197,14 @@ end
   tc_cat_quiz.save!
 end
 
-# Create 2 Category-wise quiz for TC + Timed [ 2 Paid ]
-(1..2).each do |index|
-  qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "TC Timed " + (index).to_s
-  qc_cat_quiz.desc = "TC Timed " + (index).to_s + " desc"
-  qc_cat_quiz.random = false
-  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  qc_cat_quiz.category_id = Category.find_by_code("TC").id
-  qc_cat_quiz.timed = true
-  qc_cat_quiz.price = 99.0
-  qc_cat_quiz.save!
-end
-
 # Create 5 Category-wise quiz for SE + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   se_cat_quiz = Quiz.new
-  se_cat_quiz.name = "SE Practice " + (index).to_s
-  se_cat_quiz.desc = "SE Practice " + (index).to_s + " desc"
+  se_cat_quiz.name = "SE 10" + (index).to_s
+  se_cat_quiz.desc = "SE 10" + (index).to_s + " desc"
   se_cat_quiz.random = false
   se_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   se_cat_quiz.category_id = Category.find_by_code("SE").id
-  se_cat_quiz.timed = false
   se_cat_quiz.price = 99.0
   
   # First one is free
@@ -256,28 +215,14 @@ end
   se_cat_quiz.save!
 end
 
-# Create 2 Category-wise quiz for SE + Timed [ 2 Paid ]
-(1..2).each do |index|
-  qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "SE Timed " + (index).to_s
-  qc_cat_quiz.desc = "SE Timed " + (index).to_s + " desc"
-  qc_cat_quiz.random = false
-  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  qc_cat_quiz.category_id = Category.find_by_code("SE").id
-  qc_cat_quiz.timed = true
-  qc_cat_quiz.price = 99.0
-  qc_cat_quiz.save!
-end
-
 # Create 5 Category-wise quiz for QC + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "QC Practice " + (index).to_s
-  qc_cat_quiz.desc = "QC Practice " + (index).to_s + " desc"
+  qc_cat_quiz.name = "QC 10" + (index).to_s
+  qc_cat_quiz.desc = "QC 10" + (index).to_s + " desc"
   qc_cat_quiz.random = false
   qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   qc_cat_quiz.category_id = Category.find_by_code("QC").id
-  qc_cat_quiz.timed = false
   qc_cat_quiz.price = 99.0
   
   # First one is free
@@ -288,28 +233,14 @@ end
   qc_cat_quiz.save!
 end
 
-# Create 2 Category-wise quiz for QC + Timed [ 2 Paid ]
-(1..2).each do |index|
-  qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "QC Timed " + (index).to_s
-  qc_cat_quiz.desc = "QC Timed " + (index).to_s + " desc"
-  qc_cat_quiz.random = false
-  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  qc_cat_quiz.category_id = Category.find_by_code("QC").id
-  qc_cat_quiz.timed = true
-  qc_cat_quiz.price = 99.0
-  qc_cat_quiz.save!
-end
-
 # Create 5 Category-wise quiz for QC + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   ne_cat_quiz = Quiz.new
-  ne_cat_quiz.name = "NE Practice " + (index).to_s
-  ne_cat_quiz.desc = "NE Practice " + (index).to_s + " desc"
+  ne_cat_quiz.name = "NE 10" + (index).to_s
+  ne_cat_quiz.desc = "NE 10" + (index).to_s + " desc"
   ne_cat_quiz.random = false
   ne_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   ne_cat_quiz.category_id = Category.find_by_code("NE").id
-  ne_cat_quiz.timed = false
   ne_cat_quiz.price = 99.0
   
   # First one is free
@@ -320,31 +251,14 @@ end
   ne_cat_quiz.save!
 end
 
-# Create 2 Category-wise quiz for NE + Timed [ 2 Paid ]
-(1..2).each do |index|
-  qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "NE Timed " + (index).to_s
-  qc_cat_quiz.desc = "NE Timed " + (index).to_s + " desc"
-  qc_cat_quiz.random = false
-  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  qc_cat_quiz.category_id = Category.find_by_code("NE").id
-  qc_cat_quiz.timed = true
-  qc_cat_quiz.price = 99.0
-  qc_cat_quiz.save!
-end
-
-# Create 2 Category-wise quiz for RC + Timed + Paid
-
-
 # Create 5 Topic-wise quiz for Integers + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   integers_quiz = Quiz.new
-  integers_quiz.name = "Integers Practice " + (index).to_s
-  integers_quiz.desc = "Integers Practice " + (index).to_s + " desc"
+  integers_quiz.name = "Integers 10" + (index).to_s
+  integers_quiz.desc = "Integers 10" + (index).to_s + " desc"
   integers_quiz.random = false
   integers_quiz.quiz_type = QuizType.find_by_name("TopicQuiz")
   integers_quiz.topic_id = Topic.find_by_name("Integers").id
-  integers_quiz.timed = false
   integers_quiz.price = 99.0
   
   # First one is free
@@ -355,28 +269,14 @@ end
   integers_quiz.save!
 end
 
-# Create 2 Topic-wise quiz for Integers + Timed [ 2 Paid ]
-(1..2).each do |index|
-  qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "Integers Timed " + (index).to_s
-  qc_cat_quiz.desc = "Integers Timed " + (index).to_s + " desc"
-  qc_cat_quiz.random = false
-  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("TopicQuiz").id
-  qc_cat_quiz.topic_id = Topic.find_by_name("Integers").id
-  qc_cat_quiz.timed = true
-  qc_cat_quiz.price = 99.0
-  qc_cat_quiz.save!
-end
-
 # Create 5 Topic-wise quiz for Integers + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   decimals_quiz = Quiz.new
-  decimals_quiz.name = "Decimals Practice " + (index).to_s
-  decimals_quiz.desc = "Decimals Practice " + (index).to_s + " desc"
+  decimals_quiz.name = "Decimals 10" + (index).to_s
+  decimals_quiz.desc = "Decimals 10" + (index).to_s + " desc"
   decimals_quiz.random = false
   decimals_quiz.quiz_type = QuizType.find_by_name("TopicQuiz")
   decimals_quiz.topic_id = Topic.find_by_name("Decimals").id
-  decimals_quiz.timed = false
   decimals_quiz.price = 99.0
   
   # First one is free
@@ -387,28 +287,14 @@ end
   decimals_quiz.save!
 end
 
-# Create 2 Topic-wise quiz for Decimals + Timed [ 2 Paid ]
-(1..2).each do |index|
-  qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "Decimals Timed " + (index).to_s
-  qc_cat_quiz.desc = "Decimals Timed " + (index).to_s + " desc"
-  qc_cat_quiz.random = false
-  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("TopicQuiz").id
-  qc_cat_quiz.topic_id = Topic.find_by_name("Decimals").id
-  qc_cat_quiz.timed = true
-  qc_cat_quiz.price = 99.0
-  qc_cat_quiz.save!
-end
-
 # Create 5 Topic-wise quiz for Fractions + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   fractions_quiz = Quiz.new
-  fractions_quiz.name = "Fractions Practice " + (index).to_s
-  fractions_quiz.desc = "Fractions Practice " + (index).to_s + " desc"
+  fractions_quiz.name = "Fractions 10" + (index).to_s
+  fractions_quiz.desc = "Fractions 10" + (index).to_s + " desc"
   fractions_quiz.random = false
   fractions_quiz.quiz_type = QuizType.find_by_name("TopicQuiz")
   fractions_quiz.topic_id = Topic.find_by_name("Fractions").id
-  fractions_quiz.timed = false
   fractions_quiz.price = 99.0
   
   # First one is free
@@ -419,28 +305,14 @@ end
   fractions_quiz.save!
 end
 
-# Create 2 Topic-wise quiz for Fractions + Timed [ 2 Paid ]
-(1..2).each do |index|
-  qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "Fractions Timed " + (index).to_s
-  qc_cat_quiz.desc = "Fractions Timed " + (index).to_s + " desc"
-  qc_cat_quiz.random = false
-  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("TopicQuiz").id
-  qc_cat_quiz.topic_id = Topic.find_by_name("Fractions").id
-  qc_cat_quiz.timed = true
-  qc_cat_quiz.price = 99.0
-  qc_cat_quiz.save!
-end
-
 # Create 5 Topic-wise quiz for Exp. & Sq. roots + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   exp_sq_quiz = Quiz.new
-  exp_sq_quiz.name = "Exp. & Sq. roots Practice " + (index).to_s
-  exp_sq_quiz.desc = "Exp. & Sq. roots Practice " + (index).to_s + " desc"
+  exp_sq_quiz.name = "Exp. & Sq. roots 10" + (index).to_s
+  exp_sq_quiz.desc = "Exp. & Sq. roots 10" + (index).to_s + " desc"
   exp_sq_quiz.random = false
   exp_sq_quiz.quiz_type = QuizType.find_by_name("TopicQuiz")
   exp_sq_quiz.topic_id = Topic.find_by_name("Exponents and Square Roots").id
-  exp_sq_quiz.timed = false
   exp_sq_quiz.price = 99.0
   
   # First one is free
@@ -451,28 +323,14 @@ end
   exp_sq_quiz.save!
 end
 
-# Create 2 Topic-wise quiz for Exponents and Square Roots + Timed [ 2 Paid ]
-(1..2).each do |index|
-  qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "Exp. & Sq. roots Timed " + (index).to_s
-  qc_cat_quiz.desc = "Exp. & Sq. roots Timed " + (index).to_s + " desc"
-  qc_cat_quiz.random = false
-  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("TopicQuiz").id
-  qc_cat_quiz.topic_id = Topic.find_by_name("Exponents and Square Roots").id
-  qc_cat_quiz.timed = true
-  qc_cat_quiz.price = 99.0
-  qc_cat_quiz.save!
-end
-
 # Create 5 Topic-wise quiz for Ordering & real number line + Practice [ 1 Free + 4 Paid ]
 (1..5).each do |index|
   ord_re_quiz = Quiz.new
-  ord_re_quiz.name = "Ordering & real number line Practice " + (index).to_s
-  ord_re_quiz.desc = "Ordering & real number line Practice " + (index).to_s + " desc"
+  ord_re_quiz.name = "Ordering & real number line 10" + (index).to_s
+  ord_re_quiz.desc = "Ordering & real number line 10" + (index).to_s + " desc"
   ord_re_quiz.random = false
   ord_re_quiz.quiz_type = QuizType.find_by_name("TopicQuiz")
   ord_re_quiz.topic_id = Topic.find_by_name("Ordering and the Real Number Line").id
-  ord_re_quiz.timed = false
   ord_re_quiz.price = 99.0
   
   # First one is free
@@ -481,19 +339,6 @@ end
   end
   
   ord_re_quiz.save!
-end
-
-# Create 2 Topic-wise quiz for Ordering & real number line + Timed [ 2 Paid ]
-(1..2).each do |index|
-  qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "Ordering & real number line " + (index).to_s
-  qc_cat_quiz.desc = "Ordering & real number line " + (index).to_s + " desc"
-  qc_cat_quiz.random = false
-  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("TopicQuiz").id
-  qc_cat_quiz.topic_id = Topic.find_by_name("Ordering and the Real Number Line").id
-  qc_cat_quiz.timed = true
-  qc_cat_quiz.price = 99.0
-  qc_cat_quiz.save!
 end
   
 # Add 3 packages for full-quiz section in store.

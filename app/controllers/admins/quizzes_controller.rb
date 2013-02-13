@@ -15,14 +15,9 @@ module Admins
       # TODO: It might be more efficient to load all the quizzes in memory first
       # and then construct different arrays instead of using multiple queries.
       ####
-      @full_timed_quizzes = Quiz.full.timed
-      @full_practice_quizzes = Quiz.full.practice
-      
-      @category_timed_quizzes = Quiz.category.timed
-      @category_practice_quizzes = Quiz.category.practice
-      
-      @topic_timed_quizzes = Quiz.topic.timed
-      @topic_practice_quizzes = Quiz.topic.practice
+      @full_quizzes = Quiz.full
+      @category_quizzes = Quiz.category
+      @topic_quizzes = Quiz.topic
   
       respond_to do |format|
         format.html # index.html.erb
@@ -61,6 +56,13 @@ module Admins
       @quiz = Quiz.new(params[:quiz])
       
       if @quiz.quiz_type_id == QuizType.find_by_name("FullQuiz").id
+        @quiz.category_id = nil
+        @quiz.topic_id = nil
+      elsif @quiz.quiz_type_id == QuizType.find_by_name("CategoryQuiz").id
+        @quiz.topic_id = nil
+      elsif @quiz.quiz_type_id == QuizType.find_by_name("TopicQuiz").id
+        @quiz.category_id = nil
+      elsif @quiz.quiz_type_id == QuizType.find_by_name("SectionQuiz").id
         @quiz.category_id = nil
         @quiz.topic_id = nil
       end

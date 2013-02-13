@@ -2,10 +2,11 @@ class Quiz < ActiveRecord::Base
   belongs_to :quiz_type
   belongs_to :category
   belongs_to :topic
-  attr_accessible :name, :timed, :random, :quiz_type_id, :category_id, :topic_id,:desc
+  attr_accessible :name, :random, :quiz_type_id, :category_id, :topic_id,:desc
   attr_accessor :word
   validates :name,:desc,:slug,:price, :presence => true
   before_validation :generate_slug
+  before_save :set_timed
   
   has_many :sections
   has_many :questions, :through => :sections
@@ -22,8 +23,6 @@ class Quiz < ActiveRecord::Base
   scope :full, :conditions => { :quiz_type_id => ( QuizType.find_by_name("FullQuiz") != nil ? QuizType.find_by_name("FullQuiz").id : -1 ) }
   scope :category, :conditions => { :quiz_type_id => ( QuizType.find_by_name("CategoryQuiz") != nil ? QuizType.find_by_name("CategoryQuiz").id : -1 ) }
   scope :topic, :conditions => { :quiz_type_id => ( QuizType.find_by_name("TopicQuiz") != nil ? QuizType.find_by_name("TopicQuiz").id : -1 ) }
-  scope :timed, :conditions => { :timed => true }
-  scope :practice, :conditions => { :timed => false }
   scope :free, :conditions => { :price => 0 }
   scope :paid, :conditions => ["price > 0"]
   scope :approved, :conditions => { :approved => true }
@@ -63,18 +62,6 @@ class Quiz < ActiveRecord::Base
       return { :conditions => { :approved => true } }
     end
   }
-  
-  def self.scoped_timed_full_quizzes(user)
-    if user == nil 
-      Quiz.full.timed.approved
-    elsif user.role?(:super_admin) || user.role?(:admin) 
-      Quiz.full.timed.published
-    elsif user.role?(:publisher)
-      Quiz.full.timed
-    else
-      Quiz.full.timed.approved
-    end
-  end
   
   def self.revenue_and_purchases_for_quizzes(quizzes)
     
@@ -170,6 +157,20 @@ class Quiz < ActiveRecord::Base
     
     return entity_name_quizzes
     
+  end
+  
+  # Set the timed flag as true for FullQuiz & SectionQuiz
+  def set_timed
+    
+    if self.quiz_type_id == QuizType.find_by_name("FullQuiz").id
+      self.timed = true
+    # TODO: Add SectionQuiz test.
+    #elsif self.quiz.quiz_type_id == QuizType.find_by_name("SectionQuiz").id
+    else
+      self.timed = false
+    end
+    # This is required as the call_back will fail if false is returned.
+    nil
   end
   
 end

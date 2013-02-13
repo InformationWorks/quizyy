@@ -53,13 +53,6 @@
 					</div>
 					
 					<div class="control-group">
-						<label class="control-label" for="input"><%= f.label :time_in_minutes %></label>
-						<div class="controls">
-							<%= f.number_field :time, :class => "input-xlarge" %>
-						</div>
-					</div>
-					
-					<div class="control-group">
 						<label class="control-label" for="input"><%= f.label :section_type %></label>
 						<div class="controls">
 							<%= f.collection_select :section_type_id, SectionType.all, :id, :name %>

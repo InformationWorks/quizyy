@@ -16,9 +16,8 @@
 			<div class="tab-pane active" id="static">
 				<h3><span class="awe-edit"></span> Full Tests</h3>				
 				
-				<%= render :partial => "quiz_table", :locals => { :table_type => "full_timed" }  %>
+				<%= render :partial => "quiz_table", :locals => { :table_type => "full" }  %>
 				
-				<%= render :partial => "quiz_table", :locals => { :table_type => "full_practice" }  %>
 			</div>	
 		</section>
 		
@@ -26,9 +25,7 @@
 			<!-- Tab #static -->
 			<div class="tab-pane active" id="static">
 				<h3><span class="awe-edit"></span> Category Tests</h3>
-				<%= render :partial => "quiz_table", :locals => { :table_type => "category_timed" }  %>
-                
-                <%= render :partial => "quiz_table", :locals => { :table_type => "category_practice" }  %>
+				<%= render :partial => "quiz_table", :locals => { :table_type => "category" }  %>
 			</div>	
 		</section>
 		
@@ -36,9 +33,7 @@
 			<!-- Tab #static -->
 			<div class="tab-pane active" id="static">
 				<h3><span class="awe-edit"></span> Topic Tests</h3>
-				<%= render :partial => "quiz_table", :locals => { :table_type => "topic_timed" }  %>
-                
-                <%= render :partial => "quiz_table", :locals => { :table_type => "topic_practice" }  %>
+				<%= render :partial => "quiz_table", :locals => { :table_type => "topic" }  %>
             </div>
 		</section>
 		

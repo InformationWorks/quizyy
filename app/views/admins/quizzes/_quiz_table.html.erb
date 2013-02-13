@@ -1,29 +1,17 @@
 <!-- Set values that need to be used for specific cases -->
 <% 
 
-if table_type == "full_timed"
-  @quizzes = @full_timed_quizzes
-  @name_header_label = "Timed"
+if table_type == "full"
+  @quizzes = @full_quizzes
+  @name_header_label = ""
   @category_topic_header_label = ""
-elsif table_type == "full_practice"
-  @name_header_label = "Practice"
-  @quizzes = @full_practice_quizzes
-  @category_topic_header_label = ""
-elsif table_type == "category_timed"
-  @name_header_label = "Timed"
-  @quizzes = @category_timed_quizzes
+elsif table_type == "category"
+  @name_header_label = ""
+  @quizzes = @category_quizzes
   @category_topic_header_label = "Category"
-elsif table_type == "category_practice"
-  @name_header_label = "Practice"        
-  @quizzes = @category_practice_quizzes
-  @category_topic_header_label = "Category"
-elsif table_type == "topic_timed"
-  @name_header_label = "Timed"
-  @quizzes = @topic_timed_quizzes
-  @category_topic_header_label = "Topic"
-elsif table_type == "topic_practice"
-  @name_header_label = "Practice"
-  @quizzes = @topic_practice_quizzes
+elsif table_type == "topic"
+  @name_header_label = ""
+  @quizzes = @topic_quizzes
   @category_topic_header_label = "Topic"
 end
 
@@ -52,9 +40,9 @@ end
                 <% end %>
             </td>
             <td>
-                <% if table_type == "category_timed" || table_type == "category_practice" %>
+                <% if table_type == "category" %>
                 <%= quiz.category ? quiz.category.name : "" %>
-                <% elsif table_type == "topic_timed" || table_type == "topic_practice" %>
+                <% elsif table_type == "topic" %>
                 <%= quiz.topic ? quiz.topic.name : "" %>
                 <% end %>
             </td>
