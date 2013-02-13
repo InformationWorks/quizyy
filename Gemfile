@@ -9,11 +9,11 @@ gem 'pg'
 gem 'devise'
 gem 'cancan'
 gem 'execjs'
-gem 'therubyracer'
+gem 'therubyracer', :platforms => :ruby
 gem 'spreadsheet'
 gem 'carrierwave'
 gem "mini_magick"
-gem 'rmagick'
+gem 'rmagick', '~> 2.13.2' 
 gem 'tinymce-rails'
 gem 'turbolinks'
 gem 'fog', '~> 1.3.1'
@@ -42,6 +42,12 @@ group :test do
   gem "factory_girl_rails"
   gem "capybara"
   gem "guard-rspec"
+end
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
 end
 
 # To use ActiveModel has_secure_password
