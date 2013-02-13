@@ -32,14 +32,15 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         $(@el).append('<a href="stores/cart" class="btn btn-success" id="proceed-checkout-btn">Proceed to checkout</a>') if $('#proceed-checkout-btn').length == 0
     onRender:()->
       @collectionChanged()
-    addItemToCart:(quiz_id,el)->
+    addItemToCart:(quiz_id,package_id,remove_btn_template,el)->
       cartItem = new Gre340.Cart.Data.Models.CartItem
         quiz_id:quiz_id
+        package_id:package_id
       cartItem.save null,
         success:(model,response,options)=>
           if response.success
             @collection.add(model)
-            removeBtn = _.template('<a href="#" rel="tooltip" class="btn remove-cart-btn" title="Remove from Cart" data-disabled-with="removing.." data-value="<%= quiz_id %>" data-id="<%=id %>"><span class="icon-remove"></span></a>',model.attributes)
+            removeBtn = _.template(remove_btn_template,model.attributes)
             $(el).tooltip('destroy')
             $(el).after(removeBtn)
             $(el).remove()
@@ -49,14 +50,22 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         error:@handleErrors
     removeItemFromCartEvent:(event)->
       event.preventDefault()
-      @removeItemFromCart($(event.currentTarget).data('id'),$(".remove-cart-btn[data-id='"+$(event.currentTarget).data('id')+"']"))
-    removeItemFromCart:(model_id,el)->
+      
+      if $(event.currentTarget).data('item-type') is "quiz"
+        add_btn_template = '<a href="#" rel="tooltip" class="btn add-cart-btn" data-disabled-with="adding.." data-item-type="quiz" data-value="<%= quiz_id %>" data-original-title="Add to Cart"><span class="icon-plus"></span></a>'
+      else
+        add_btn_template = '<a href="#" rel="tooltip" class="btn add-cart-btn" data-disabled-with="adding.." data-item-type="package" data-value="<%= package_id %>" data-original-title="Add to Cart"><span class="icon-plus"></span></a>'
+      
+      remove_btn = $(".remove-cart-btn[data-id='"+$(event.currentTarget).data('id')+ "']")
+      
+      @removeItemFromCart($(event.currentTarget).data('id'),add_btn_template,remove_btn)
+    removeItemFromCart:(model_id,add_btn_template,el)->
       @collection.get(model_id).destroy
         params:
           id:model_id
         success:(model,response,options)=>
           if response.success
-            addBtn = _.template('<a href="#" rel="tooltip" class="btn add-cart-btn" title="Add to Cart" data-disabled-with="adding.." data-value="<%=quiz.id%>"><span class="icon-plus"></span></a>',model.attributes)
+            addBtn = _.template(add_btn_template,model.attributes)
             $(el).tooltip('destroy')
             $(el).after(addBtn)
             $(el).remove()
@@ -70,13 +79,31 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
   Views.addInitializer ->
     Views.cartView = new Views.Cart()
     Gre340.Cart.Layout.layout.cart.show(Views.cartView)
+    
+    # Add cart-item event.
     $('body').on 'click','a.add-cart-btn',(event)->
       event.preventDefault()
-      Gre340.vent.trigger "add:cart:item",$(@).data('value'),@
+      
+      if $(@).data('item-type') is "quiz"
+        quiz_id = $(@).data('value')
+        package_id = null
+        remove_btn_template = '<a href="#" rel="tooltip" class="btn remove-cart-btn" title="Remove from Cart" data-disabled-with="removing.." data-item-type="quiz" data-id="<%=id%>"><span class="icon-remove"></span></a>'
+      else
+        quiz_id = null
+        package_id = $(@).data('value')
+        remove_btn_template = '<a href="#" rel="tooltip" class="btn remove-cart-btn" title="Remove from Cart" data-disabled-with="removing.." data-item-type="package" data-id="<%=id%>"><span class="icon-remove"></span></a>'
+      
+      Gre340.vent.trigger "add:cart:item",quiz_id,package_id,remove_btn_template,@
 
     $('body').on 'click','a.remove-cart-btn',(event)->
       event.preventDefault()
-      Gre340.vent.trigger "remove:cart:item",$(@).data('id'),@
+      
+      if $(@).data('item-type') is "quiz"
+        add_btn_template = '<a href="#" rel="tooltip" class="btn add-cart-btn" data-disabled-with="adding.." data-item-type="quiz" data-value="<%= quiz_id %>" data-original-title="Add to Cart"><span class="icon-plus"></span></a>'
+      else
+        add_btn_template = '<a href="#" rel="tooltip" class="btn add-cart-btn" data-disabled-with="adding.." data-item-type="package" data-value="<%= package_id %>" data-original-title="Add to Cart"><span class="icon-plus"></span></a>'
+      
+      Gre340.vent.trigger "remove:cart:item",$(@).data('id'),add_btn_template,@
 
     $('body').tooltip
       selector: '[rel=tooltip]'

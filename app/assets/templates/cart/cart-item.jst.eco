@@ -1,9 +1,9 @@
 <% if @quiz:%>
 <td><%=@quiz.name%></td>
 <td><%=@quiz.price%></td>
-<td><a href="#" class="remove-cart-side-btn" title="Remove from Cart" data-value="<%=@quiz_id%>" data-id="<%=@id %>"><span class="icon-remove"></span></a></td>
+<td><a href="#" class="remove-cart-side-btn" title="Remove from Cart" data-item-type = "quiz" data-value="<%=@quiz_id%>" data-id="<%=@id %>"><span class="icon-remove"></span></a></td>
 <% else: %>
 <td><%=@package.name%></td>
 <td><%=@package.price%></td>
-<td><a href="#" class="remove-cart-side-btn" title="Remove from Cart" data-value="<%=@package_id%>" data-id="<%=@id %>"><span class="icon-remove"></span></a></td>
+<td><a href="#" class="remove-cart-side-btn" title="Remove from Cart" data-item-type = "package" data-value="<%=@package_id%>" data-id="<%=@id %>"><span class="icon-remove"></span></a></td>
 <% end %>
