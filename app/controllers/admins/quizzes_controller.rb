@@ -350,14 +350,20 @@ module Admins
     end
     
     def upload_excel_path
-      if @quiz.category_id != nil
+      if @quiz.quiz_type_id == QuizType.find_by_name("CategoryQuiz").id
         if @quiz.category.section_type.name == "Verbal"
           upload_path = upload_verbal_excel_admins_quiz_path(@quiz)
         else
           upload_path = upload_quant_excel_admins_quiz_path(@quiz)
         end
-      elsif @quiz.topic_id != nil
+      elsif @quiz.quiz_type_id == QuizType.find_by_name("TopicQuiz").id
         if @quiz.topic.section_type.name == "Verbal"
+          upload_path = upload_verbal_excel_admins_quiz_path(@quiz)
+        else
+          upload_path = upload_quant_excel_admins_quiz_path(@quiz)
+        end
+      elsif @quiz.quiz_type_id == QuizType.find_by_name("SectionQuiz").id
+        if @quiz.section_type.name == "Verbal"
           upload_path = upload_verbal_excel_admins_quiz_path(@quiz)
         else
           upload_path = upload_quant_excel_admins_quiz_path(@quiz)

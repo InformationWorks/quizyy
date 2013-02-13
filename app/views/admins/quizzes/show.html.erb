@@ -8,6 +8,11 @@
 			<br />
 			<span class="label"><%= @quiz.quiz_type.name %></span>
 			
+			<!-- SectionType -->
+			<% if @quiz.section_type_id != nil %> 
+              <span class="label"><%= @quiz.section_type.name %></span>
+            <% end %>
+			
 			<!-- Category & Topic -->
 			<% if @quiz.category_id != nil %> 
 			  <span class="label"><%= @quiz.category.name %></span>

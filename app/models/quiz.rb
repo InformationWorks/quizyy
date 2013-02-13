@@ -165,8 +165,8 @@ class Quiz < ActiveRecord::Base
     
     if self.quiz_type_id == QuizType.find_by_name("FullQuiz").id
       self.timed = true
-    # TODO: Add SectionQuiz test.
-    #elsif self.quiz.quiz_type_id == QuizType.find_by_name("SectionQuiz").id
+    elsif self.quiz_type_id == QuizType.find_by_name("SectionQuiz").id
+      self.timed = true
     else
       self.timed = false
     end
