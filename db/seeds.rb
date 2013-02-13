@@ -137,6 +137,7 @@ end
 end
   
 full_quiz_type_id = QuizType.find_by_name("FullQuiz").id
+section_quiz_type_id = QuizType.find_by_name("SectionQuiz").id
   
 # Create 10 FullLengthQuiz [ Timed + Paid ]
 (1..12).each do |index|
@@ -160,6 +161,40 @@ full_quiz_type_id = QuizType.find_by_name("FullQuiz").id
   full_quiz.approver_id = admin_user.id
   full_quiz.approved_at = DateTime.now
   full_quiz.save!
+end
+
+# Create 5 verbal section quizzes. 1 free
+(1..5).each do |index|
+  section_quiz = Quiz.new
+  section_quiz.name = "Verbal 10" + (index).to_s
+  section_quiz.desc = "Verbal 10" + (index).to_s + " desc"
+  section_quiz.random = false
+  section_quiz.quiz_type_id = section_quiz_type_id
+  section_quiz.section_type_id = verbal_section_type.id
+  section_quiz.price = 99.0
+  # First one is free
+  if index == 1
+    section_quiz.price = 0.0
+  end
+  
+  section_quiz.save!
+end
+
+# Create 5 verbal section quizzes. 1 free
+(1..5).each do |index|
+  section_quiz = Quiz.new
+  section_quiz.name = "Quant 10" + (index).to_s
+  section_quiz.desc = "Quant 10" + (index).to_s + " desc"
+  section_quiz.random = false
+  section_quiz.quiz_type_id = section_quiz_type_id
+  section_quiz.section_type_id = quant_section_type.id
+  section_quiz.price = 99.0
+  # First one is free
+  if index == 1
+    section_quiz.price = 0.0
+  end
+  
+  section_quiz.save!
 end
 
 # Create 5 Category-wise quiz for RC + Practice [ 1 Free + 4 Paid ]
