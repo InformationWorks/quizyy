@@ -2,71 +2,63 @@
   	<div class="span8">
 	<section class="category-section first">
     <h2>Shopping Cart</h2>
-    <%= link_to "continue shopping",timed_tests_path, :class => "pull-right", :'data-no-turbolink'=>true %>
+    <%= link_to "continue shopping",store_path, :class => "pull-right", :'data-no-turbolink'=>true %>
     <hr>
     
     <% total = 0.0 %>
-    <% if @cart.cart_items.count == 0 %>
-    	<!-- show empty cart message -->
-    	<h4>Your cart is empty. Get tests from the 
-    		<%= link_to(timed_tests_path) do %>
-    		 Store.
-    		<% end %>
-    	</h4>
-    <% else %>
-	    <!-- show cart items here -->
-	    <table class="table table-hover">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th style="text-align: right">Price</th>
-				</tr>
-			</thead>
-			<tbody>
-				<% @cart.cart_items.order("updated_at desc").each do |cart_item| %>
-				  <tr>
-			    	<% if cart_item.quiz_id != nil %>
-			    		<td>
-				    		<%= link_to cart_item.quiz.name, cart_item.quiz.test_detail_path %>
-				    		<span class="label label-success">Test</span>
-				    		<br />
-				    		<%= link_to( "Delete"  , cart_item_path(:id => cart_item.id,:back_controller => "checkout",:back_action => "show_cart") ,
-	  						:method => "delete") %>
-				    		
-				    	</td>
-				    	<td style="text-align: right">
-				    		<%= "\u20B9 " + cart_item.quiz.price.to_s %>
-				    		<% total += cart_item.quiz.price %>
-				    	</td>
-			    	<% elsif cart_item.package_id != nil %>
-			    		<td>
-				    		<%= cart_item.package.name %>
-				    		<span class="label label-success">Package</span>
-				    		<br />
-				    		<%= link_to( "Delete"  , cart_item_path(:id => cart_item.id,:back_controller => "checkout",:back_action => "show_cart") ,
-	  						:method => "delete") %>
-				    	</td>
-				    	<td style="text-align: right">
-				    		<%= "\u20B9 " + cart_item.package.price.to_s %>
-				    		<% total += cart_item.package.price %>
-				    	</td>
-					<% else %>
-						Oops. Something went wrong.						    		
-			    	<% end %>
-				  </tr>
-				<% end %>
-				
-				<tr style="background-color: whitesmoke">
-			    <td style="text-align: left;font-weight: bold;">
-			    	Total 	
-			    </td>
-			    <td style="text-align: right;font-weight: bold;">
-			    	<%= "\u20B9 " + total.to_s %>
-			    </td>	
-				</tr>
-			</tbody>
-		</table>
-	<% end %>
+    <!-- show cart items here -->
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th style="text-align: right">Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @cart.cart_items.order("updated_at desc").each do |cart_item| %>
+			  <tr>
+		    	<% if cart_item.quiz_id != nil %>
+		    		<td>
+			    		<%= link_to cart_item.quiz.name, cart_item.quiz.test_detail_path %>
+			    		<span class="label label-success">Test</span>
+			    		<br />
+			    		<%= link_to( "Delete"  , cart_item_path(:id => cart_item.id,:back_controller => "checkout",:back_action => "show_cart") ,
+  						:method => "delete") %>
+			    		
+			    	</td>
+			    	<td style="text-align: right">
+			    		<%= "\u20B9 " + cart_item.quiz.price.to_s %>
+			    		<% total += cart_item.quiz.price %>
+			    	</td>
+		    	<% elsif cart_item.package_id != nil %>
+		    		<td>
+			    		<%= cart_item.package.name %>
+			    		<span class="label label-success">Package</span>
+			    		<br />
+			    		<%= link_to( "Delete"  , cart_item_path(:id => cart_item.id,:back_controller => "checkout",:back_action => "show_cart") ,
+  						:method => "delete") %>
+			    	</td>
+			    	<td style="text-align: right">
+			    		<%= "\u20B9 " + cart_item.package.price.to_s %>
+			    		<% total += cart_item.package.price %>
+			    	</td>
+				<% else %>
+					Oops. Something went wrong.						    		
+		    	<% end %>
+			  </tr>
+			<% end %>
+			
+			<tr style="background-color: whitesmoke">
+		    <td style="text-align: left;font-weight: bold;">
+		    	Total 	
+		    </td>
+		    <td style="text-align: right;font-weight: bold;">
+		    	<%= "\u20B9 " + total.to_s %>
+		    </td>	
+			</tr>
+		</tbody>
+	</table>
+	
     </section>
   </div>
   <div class="span3">

@@ -37,8 +37,6 @@ Gre340.module "Routing", (Routing, Gre340, Backbone, Marionette, $, _) ->
       'homes/index': 'goToAvailableTest'
       'store': 'initCart'
       'store/*anything': 'initCart'
-      'timed_tests': 'initCart'
-      'practice_tests': 'initCart'
       'test_center/error': 'showError'
       'test_center/index?quiz_id=:id': 'showIndex'
       'test_center/section/:sindex/question/:qindex': 'showQuestion'

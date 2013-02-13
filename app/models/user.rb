@@ -62,22 +62,6 @@ class User < ActiveRecord::Base
     password == password_confirmation && !password.blank?
   end
 
-  # Return an array of full quizzes available for a user.
-  # Purchased by the user.
-  def purchased_timed_quizzes
-    
-    return self.quizzes.timed
-    
-  end
-  
-  # Return an array of Category+Topic quizzes available for a user.
-  # Purchased by the user.
-  def purchased_practice_quizzes
-    
-    return self.quizzes.practice
-    
-  end
-
   def verbal_average
     (Attempt.section_scores_for_user(self.id)[:verbal][:avg]).to_i
   end
