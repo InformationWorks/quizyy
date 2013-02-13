@@ -52,6 +52,26 @@ class StoresController < ApplicationController
     render "show_all_tests"
   end
   
+  # match "store/verbal_tests" => "stores#show_all_verbal_tests", via: [:get], :as => "show_all_verbal_tests"
+  def show_all_verbal_tests
+    @quizzes = Quiz.scoped_for_user(current_user).section.verbal.not_in_account_of_user(current_user).order('id ASC')
+    @quizzes += current_user.quizzes.section.verbal
+    @quizzes = load_words_for_quizzes(@quizzes)
+    
+    @name = "Verbal tests"
+    render "show_all_tests"
+  end
+  
+  # match "store/quant_tests" => "stores#show_all_quant_tests", via: [:get], :as => "show_all_quant_tests"
+  def show_all_quant_tests
+    @quizzes = Quiz.scoped_for_user(current_user).section.quant.not_in_account_of_user(current_user).order('id ASC')
+    @quizzes += current_user.quizzes.section.quant
+    @quizzes = load_words_for_quizzes(@quizzes)
+    
+    @name = "Quant tests"
+    render "show_all_tests"
+  end
+  
   # match "store/categories/:category_slug" => "stores#show_category_all_tests", via: [:get], :as => "show_category_all_tests"
   def show_category_all_tests
     @category = Category.find_by_slug!(params[:category_slug])

@@ -118,6 +118,8 @@ GremastersWeb::Application.routes.draw do
   
   ## Store route to show all tests for full/category/topic
   match "store/full_tests" => "stores#show_all_full_tests", via: [:get], :as => "show_all_full_tests"
+  match "store/verbal_tests" => "stores#show_all_verbal_tests", via: [:get], :as => "show_all_verbal_tests"
+  match "store/quant_tests" => "stores#show_all_quant_tests", via: [:get], :as => "show_all_quant_tests"
   match "store/categories/:category_slug" => "stores#show_category_all_tests", via: [:get], :as => "show_category_all_tests"
   match "store/topics/:topic_slug" => "stores#show_topic_all_tests", via: [:get], :as => "show_topic_all_tests"
   

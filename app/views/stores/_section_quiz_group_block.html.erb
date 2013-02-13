@@ -4,9 +4,11 @@
 if section == "Verbal"
   @quizzes = @verbal_section_quizzes
   @name_header_label = "Verbal Section"
+  @detail_path = show_all_verbal_tests_path
 elsif section == "Quant"
   @quizzes = @quant_section_quizzes
   @name_header_label = "Quant Section"
+  @detail_path = show_all_quant_tests_path
 end
 
 %>
@@ -15,7 +17,7 @@ end
 <section class="category-section first">
   <!-- Title -->
   <h2><%= @name_header_label %></h2>
-  <%= link_to(show_all_full_tests_path, :class => "pull-right") do %>
+  <%= link_to(@detail_path, :class => "pull-right") do %>
     <h4>more</h4>
   <% end %>
       
