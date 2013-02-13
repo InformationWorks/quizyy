@@ -1,6 +1,6 @@
 Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
   Views.CartItemView = Marionette.ItemView.extend
-    model: 'Gre340.Cart.Data.Models.CardItem'
+    model: 'Gre340.Cart.Data.Models.CartItem'
     template: 'cart/cart-item'
     tagName: "tr"
   Views.CartEmpty = Marionette.ItemView.extend
