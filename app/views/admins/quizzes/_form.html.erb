@@ -72,6 +72,13 @@
 							<%= f.collection_select :topic_id, Topic.all, :id, :name %>
 						</div>
 					</div>
+					
+					<div class="control-group" id="section_type_select">
+                        <label class="control-label" for="input"><%= f.label :section_type %></label>
+                        <div class="controls">
+                            <%= f.collection_select :section_type_id, SectionType.all, :id, :name %>
+                        </div>
+                    </div>
 				  	
 				  	<div class="form-actions">
 						<%= f.submit :class => "btn btn-info" %>

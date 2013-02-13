@@ -680,7 +680,8 @@ CREATE TABLE quizzes (
     approved boolean DEFAULT false,
     approver_id integer,
     approved_at timestamp without time zone,
-    slug character varying(255)
+    slug character varying(255),
+    section_type_id integer
 );
 
 
@@ -1701,6 +1702,13 @@ CREATE INDEX index_quizzes_on_quiz_type_id ON quizzes USING btree (quiz_type_id)
 
 
 --
+-- Name: index_quizzes_on_section_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_quizzes_on_section_type_id ON quizzes USING btree (section_type_id);
+
+
+--
 -- Name: index_quizzes_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1955,3 +1963,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130208213101');
 INSERT INTO schema_migrations (version) VALUES ('20130209182543');
 
 INSERT INTO schema_migrations (version) VALUES ('20130211224518');
+
+INSERT INTO schema_migrations (version) VALUES ('20130213084138');

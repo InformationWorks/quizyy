@@ -2,7 +2,8 @@ class Quiz < ActiveRecord::Base
   belongs_to :quiz_type
   belongs_to :category
   belongs_to :topic
-  attr_accessible :name, :random, :quiz_type_id, :category_id, :topic_id,:desc
+  belongs_to :section_type
+  attr_accessible :name, :random, :quiz_type_id, :category_id, :topic_id,:desc,:section_type_id
   attr_accessor :word
   validates :name,:desc,:slug,:price, :presence => true
   before_validation :generate_slug
