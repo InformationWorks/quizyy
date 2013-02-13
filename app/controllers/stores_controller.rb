@@ -117,6 +117,30 @@ class StoresController < ApplicationController
     end
   end
   
+  # match "store/verbal_tests/:quiz_slug" => "stores#show_verbal_test", via: [:get], :as => "show_verbal_test"
+  def show_verbal_test
+    
+    @quiz = Quiz.scoped_for_user(current_user).section.verbal.find_by_slug(params[:quiz_slug])
+    
+    if (@quiz == nil)
+      redirect_to "/404.html"
+    else
+      render 'show_test_detail'
+    end
+  end
+  
+  # match "store/quant_tests/:quiz_slug" => "stores#show_quant_test", via: [:get], :as => "show_quant_test"
+  def show_quant_test
+    
+    @quiz = Quiz.scoped_for_user(current_user).section.quant.find_by_slug(params[:quiz_slug])
+    
+    if (@quiz == nil)
+      redirect_to "/404.html"
+    else
+      render 'show_test_detail'
+    end
+  end
+  
   # match "store/categories/:category_slug/:quiz_slug" => "stores#show_category_test", via: [:get], :as => "show_category_test"
   def show_category_test
     

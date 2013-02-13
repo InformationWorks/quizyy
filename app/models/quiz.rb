@@ -99,6 +99,12 @@ class Quiz < ActiveRecord::Base
       Rails.application.routes.url_helpers.show_category_test_path(self.category.slug,self.slug)
     elsif self.quiz_type_id == QuizType.find_by_name("TopicQuiz").id
       Rails.application.routes.url_helpers.show_topic_test_path(self.topic.slug,self.slug)
+    elsif self.quiz_type_id == QuizType.find_by_name("SectionQuiz").id
+      if self.section_type_id == SectionType.find_by_name("Verbal").id
+        Rails.application.routes.url_helpers.show_verbal_test_path(self.slug)
+      elsif self.section_type_id == SectionType.find_by_name("Quant").id
+        Rails.application.routes.url_helpers.show_quant_test_path(self.slug)
+      end
     end
     
   end
