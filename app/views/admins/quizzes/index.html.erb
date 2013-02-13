@@ -22,6 +22,16 @@
 		</section>
 		
 		<section class="tab-content">
+            <!-- Tab #static -->
+            <div class="tab-pane active" id="static">
+                <h3><span class="awe-edit"></span> Section Tests</h3>              
+                
+                <%= render :partial => "quiz_table", :locals => { :table_type => "section" }  %>
+                
+            </div>  
+        </section>
+		
+		<section class="tab-content">
 			<!-- Tab #static -->
 			<div class="tab-pane active" id="static">
 				<h3><span class="awe-edit"></span> Category Tests</h3>

@@ -5,6 +5,10 @@ if table_type == "full"
   @quizzes = @full_quizzes
   @name_header_label = ""
   @category_topic_header_label = ""
+elsif table_type == "section"
+  @quizzes = @section_quizzes
+  @name_header_label = ""
+  @category_topic_header_label = ""
 elsif table_type == "category"
   @name_header_label = ""
   @quizzes = @category_quizzes

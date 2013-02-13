@@ -16,6 +16,7 @@ module Admins
       # and then construct different arrays instead of using multiple queries.
       ####
       @full_quizzes = Quiz.full
+      @section_quizzes = Quiz.section
       @category_quizzes = Quiz.category
       @topic_quizzes = Quiz.topic
   
