@@ -1,0 +1,31 @@
+<!-- Set values that need to be used for specific cases -->
+<% 
+
+if section == "Verbal"
+  @quizzes = @verbal_section_quizzes
+  @name_header_label = "Verbal Section"
+elsif section == "Quant"
+  @quizzes = @quant_section_quizzes
+  @name_header_label = "Quant Section"
+end
+
+%>
+
+<!-- Full length tests -->
+<section class="category-section first">
+  <!-- Title -->
+  <h2><%= @name_header_label %></h2>
+  <%= link_to(show_all_full_tests_path, :class => "pull-right") do %>
+    <h4>more</h4>
+  <% end %>
+      
+  <hr>
+  <!-- show only three per row -->
+  <div class="row">
+    <% @quizzes.first(3).each do |quiz| %>
+    
+      <%= render :partial => "quiz_block", :locals => { :quiz => quiz } %>
+    
+    <% end %>
+  </div>
+</section>

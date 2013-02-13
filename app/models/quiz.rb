@@ -25,6 +25,8 @@ class Quiz < ActiveRecord::Base
   scope :category, :conditions => { :quiz_type_id => ( QuizType.find_by_name("CategoryQuiz") != nil ? QuizType.find_by_name("CategoryQuiz").id : -1 ) }
   scope :topic, :conditions => { :quiz_type_id => ( QuizType.find_by_name("TopicQuiz") != nil ? QuizType.find_by_name("TopicQuiz").id : -1 ) }
   scope :section, :conditions => { :quiz_type_id => ( QuizType.find_by_name("SectionQuiz") != nil ? QuizType.find_by_name("SectionQuiz").id : -1 ) }
+  scope :verbal, :conditions => { :section_type_id => ( SectionType.find_by_name("Verbal") != nil ? SectionType.find_by_name("Verbal").id : -1 ) }
+  scope :quant, :conditions => { :section_type_id => ( SectionType.find_by_name("Quant") != nil ? SectionType.find_by_name("Quant").id : -1 ) }
   scope :free, :conditions => { :price => 0 }
   scope :paid, :conditions => ["price > 0"]
   scope :approved, :conditions => { :approved => true }

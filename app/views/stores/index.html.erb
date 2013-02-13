@@ -15,6 +15,20 @@
     </div>
   <% end %>
   
+  <!-- Show verbal section quizzes -->
+  <% if @verbal_section_quizzes.count > 0  %>
+      <div class="span8">
+        <%= render :partial => "section_quiz_group_block", :locals => { :section => "Verbal" } %>
+      </div>
+  <% end %>
+  
+  <!-- Show quant section quizzes -->
+  <% if @quant_section_quizzes.count > 0  %>
+      <div class="span8">
+        <%= render :partial => "section_quiz_group_block", :locals => { :section => "Quant" } %>
+      </div>
+  <% end %>
+  
   <!-- Show category-topic tests -->
   <div class="span8">
     <%= render :partial => "category_topic_quiz_group_block", :locals => { :store_entities => @store_entities } %>

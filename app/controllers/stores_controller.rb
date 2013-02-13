@@ -12,6 +12,18 @@ class StoresController < ApplicationController
     @full_length_quizzes += @purchased_full_length_quizzes
     load_words_for_quizzes(@full_length_quizzes)
     
+    # Get verbal section quizzes.
+    @verbal_section_quizzes = Quiz.scoped_for_user(current_user).section.verbal.not_in_account_of_user(current_user).order('id ASC').first(3)
+    @purchased_verbal_section_quizzes = current_user.quizzes.section.verbal
+    @verbal_section_quizzes += @purchased_verbal_section_quizzes
+    load_words_for_quizzes(@verbal_section_quizzes)
+    
+    # Get quant section quizzes.
+    @quant_section_quizzes = Quiz.scoped_for_user(current_user).section.quant.not_in_account_of_user(current_user).order('id ASC').first(3)
+    @purchased_quant_section_quizzes = current_user.quizzes.section.quant
+    @quant_section_quizzes += @purchased_quant_section_quizzes
+    load_words_for_quizzes(@quant_section_quizzes)
+    
     # Fetch packages if no full length quiz is purchased by the user.
     if @purchased_full_length_quizzes.count == 0
       packages = Package.where("position = 1 or position = 2 or position = 3").order("position asc")
