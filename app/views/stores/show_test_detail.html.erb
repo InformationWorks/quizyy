@@ -3,7 +3,11 @@
     <section class="category-section first">
     <h2><%= @quiz.name %></h2>
     
-    <% if current_user.has_purchased_quiz?(@quiz.id) %>
+    <% if current_user == nil %>
+        <%= "\u20B9 " + @quiz.price.to_s %>
+        <%= link_to( "Buy"  , cart_items_path(:quiz_id => @quiz.id,:back_controller => "checkout",:back_action => "show_cart") ,
+                    :method => "post", :disable_with => 'adding to cart...',:class=>'btn btn-success', :style => "float: right;height: 55px;width: 100px;padding-top: 35px;color: white;font-size: 25px;") %>
+    <% elsif current_user.has_purchased_quiz?(@quiz.id) %>
         <% status = @quiz.quiz_users.where(:quiz_id => @quiz.id,:user_id => current_user.id).first.status %>
         <% if status == :new %>
             <% span_class = "label label-success"  %>

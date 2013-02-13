@@ -34,6 +34,12 @@ class Quiz < ActiveRecord::Base
   scope :published, :conditions => { :published => true }
   scope :unpublished, :conditions => { :published => false }
   scope :not_in_account_of_user, lambda { |user| 
+    
+    # For user's who haven't logged in.
+    if user == nil
+      return
+    end
+    
     user_quiz_ids = user.quizzes.pluck('quizzes.id')
     if user_quiz_ids == []
       return
@@ -109,6 +115,78 @@ class Quiz < ActiveRecord::Base
     
   end
   
+  # Fetch full quizzes to be displayed in the store.
+  # return full_length_quizzes,purchased_full_length_quizzes
+  def self.store_full_quizzes(user)
+    
+    full_quizzes = Quiz.scoped_for_user(user).full.not_in_account_of_user(user).order('id ASC')
+    
+    # Logged in users.
+    if user != nil
+      purchased_full_quizzes = user.quizzes.full
+      purchased_full_quizzes_count = purchased_full_length_quizzes.count
+      full_quizzes += purchased_full_quizzes
+    else
+      purchased_full_quizzes_count = 0
+    end
+    
+    return full_quizzes,purchased_full_quizzes_count
+  end
+  
+  # Fetch verbal section quizzes to be displayed in the store.
+  def self.store_verbal_section_quizzes(user)
+    
+    verbal_section_quizzes = Quiz.scoped_for_user(user).section.verbal.not_in_account_of_user(user).order('id ASC')
+    
+    # Logged in users.
+    if user != nil
+      purchased_verbal_section_quizzes = user.quizzes.section.verbal
+      verbal_section_quizzes += purchased_verbal_section_quizzes
+    end
+    
+    return verbal_section_quizzes
+  end
+  
+  # Fetch quant section quizzes to be displayed in the store.
+  def self.store_quant_section_quizzes(user)
+    
+    quant_section_quizzes = Quiz.scoped_for_user(user).section.quant.not_in_account_of_user(user).order('id ASC')
+    
+    # Logged in users.
+    if user != nil
+      purchased_quant_section_quizzes = user.quizzes.section.verbal
+      quant_section_quizzes += purchased_quant_section_quizzes
+    end
+    
+    return quant_section_quizzes
+  end
+  
+  # Fetch quant section quizzes to be displayed in the store.
+  def self.store_category_quizzes(user,category)
+    
+    category_quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).category.specific_category(category).order('id ASC')
+    
+    if user != nil
+      category_quizzes += current_user.quizzes.category.specific_category(category)  
+    end
+    
+    return category_quizzes
+    
+  end
+  
+  # Fetch quant section quizzes to be displayed in the store.
+  def self.store_topic_quizzes(user,topic)
+    
+    category_quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).topic.specific_topic(topic).order('id ASC')
+    
+    if user != nil
+      category_quizzes += current_user.quizzes.topic.specific_topic(category)  
+    end
+    
+    return category_quizzes
+    
+  end
+  
   # Generate a array of special datastructure for store.
   # structure: 
   # { entity => string, name => string, slug => string , quizzes => array_of_quizzes }
@@ -117,8 +195,12 @@ class Quiz < ActiveRecord::Base
     # Fetch the quizzes not owned by user first and then append owned quizzes.
     if entity == "Category"
       
-      quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).category.order('id ASC')
-      quizzes += user.quizzes.category
+      if user == nil
+        quizzes = Quiz.category.approved.order('id ASC')
+      else
+        quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).category.order('id ASC')
+        quizzes += user.quizzes.category
+      end
       
       # Club all quizzes based on categories.
       # {  
@@ -136,8 +218,12 @@ class Quiz < ActiveRecord::Base
       end
     else
       
-      quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).topic.order('id ASC')
-      quizzes += user.quizzes.topic
+      if user == nil
+        quizzes = Quiz.topic.approved.order('id ASC')
+      else
+        quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).topic.order('id ASC')
+        quizzes += user.quizzes.topic
+      end
       
       # Club all quizzes based on topics.
       # {  

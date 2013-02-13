@@ -1,35 +1,31 @@
 class StoresController < ApplicationController
   
-  before_filter :authenticate_user!
   before_filter :initialize_cart
   
   # match 'store' => "stores#index", via: [:get], :as => "store"
   def index
     
     # Get full-length quizzes.
-    @full_length_quizzes = Quiz.scoped_for_user(current_user).full.not_in_account_of_user(current_user).order('id ASC').first(3)
-    @purchased_full_length_quizzes = current_user.quizzes.full
-    @full_length_quizzes += @purchased_full_length_quizzes
+    @full_length_quizzes,@purchased_full_quizzes_count = Quiz.store_full_quizzes(current_user)
+    @full_length_quizzes = @full_length_quizzes.first(3)
     load_words_for_quizzes(@full_length_quizzes)
     
     # Get verbal section quizzes.
-    @verbal_section_quizzes = Quiz.scoped_for_user(current_user).section.verbal.not_in_account_of_user(current_user).order('id ASC').first(3)
-    @purchased_verbal_section_quizzes = current_user.quizzes.section.verbal
-    @verbal_section_quizzes += @purchased_verbal_section_quizzes
+    @verbal_section_quizzes = Quiz.store_verbal_section_quizzes(current_user)
+    @verbal_section_quizzes = @verbal_section_quizzes.first(3)
     load_words_for_quizzes(@verbal_section_quizzes)
     
     # Get quant section quizzes.
-    @quant_section_quizzes = Quiz.scoped_for_user(current_user).section.quant.not_in_account_of_user(current_user).order('id ASC').first(3)
-    @purchased_quant_section_quizzes = current_user.quizzes.section.quant
-    @quant_section_quizzes += @purchased_quant_section_quizzes
+    @quant_section_quizzes = Quiz.store_quant_section_quizzes(current_user)
+    @quant_section_quizzes = @quant_section_quizzes.first(3)
     load_words_for_quizzes(@quant_section_quizzes)
     
     # Fetch packages if no full length quiz is purchased by the user.
-    if @purchased_full_length_quizzes.count == 0
+    if current_user == nil || @purchased_full_quizzes_count == 0
       packages = Package.where("position = 1 or position = 2 or position = 3").order("position asc")
       @package_1 = packages[0]
       @package_2 = packages[1]
-      @package_3 = packages[2] 
+      @package_3 = packages[2]
     end
     
     # generate store entities.
@@ -54,8 +50,7 @@ class StoresController < ApplicationController
   
   # match "store/verbal_tests" => "stores#show_all_verbal_tests", via: [:get], :as => "show_all_verbal_tests"
   def show_all_verbal_tests
-    @quizzes = Quiz.scoped_for_user(current_user).section.verbal.not_in_account_of_user(current_user).order('id ASC')
-    @quizzes += current_user.quizzes.section.verbal
+    @quizzes = Quiz.store_verbal_section_quizzes(current_user)
     @quizzes = load_words_for_quizzes(@quizzes)
     
     @name = "Verbal tests"
@@ -64,8 +59,7 @@ class StoresController < ApplicationController
   
   # match "store/quant_tests" => "stores#show_all_quant_tests", via: [:get], :as => "show_all_quant_tests"
   def show_all_quant_tests
-    @quizzes = Quiz.scoped_for_user(current_user).section.quant.not_in_account_of_user(current_user).order('id ASC')
-    @quizzes += current_user.quizzes.section.quant
+    @quizzes = Quiz.store_quant_section_quizzes(current_user)
     @quizzes = load_words_for_quizzes(@quizzes)
     
     @name = "Quant tests"
@@ -77,8 +71,7 @@ class StoresController < ApplicationController
     @category = Category.find_by_slug!(params[:category_slug])
     
     if @category
-      @quizzes = Quiz.scoped_for_user(current_user).not_in_account_of_user(current_user).category.specific_category(@category).order('id ASC')
-      @quizzes += current_user.quizzes.category.specific_category(@category)
+      @quizzes = Quiz.store_category_quizzes(current_user,@category)
       @quizzes = load_words_for_quizzes(@quizzes)
       @name = @category.name
     else
@@ -94,8 +87,7 @@ class StoresController < ApplicationController
     @topic = Topic.find_by_slug!(params[:topic_slug])
     
     if @topic
-      @quizzes = Quiz.scoped_for_user(current_user).not_in_account_of_user(current_user).topic.specific_topic(@topic).order('id ASC')
-      @quizzes += current_user.quizzes.topic.specific_topic(@topic)
+      @quizzes = Quiz.store_topic_quizzes(current_user,@topic)
       @quizzes = load_words_for_quizzes(@quizzes)
       @name = @topic.name
     else

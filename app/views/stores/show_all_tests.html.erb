@@ -25,7 +25,9 @@
               <% end %>
           </p>
           
-          <% if current_user.has_purchased_quiz?(quiz.id) %>
+          <% if current_user == nil %>
+            
+          <% elsif current_user.has_purchased_quiz?(quiz.id) %>
             <div>
               <%= button_to( "Purchased" , "#" , :disabled => true ) %>
             </div>
@@ -51,8 +53,10 @@
       <% end %>
     </div>
     </section>
+    <% if current_user != nil %>
       <!-- Show the cart -->
       <%= content_tag "div", id: "cart-wrapper",class: "span3 well", data: { cart: @cart.cart_items.to_json(:include => [:quiz,:package]) } do%>
       <% end %>
+    <% end %>
    </div> 
 </div>

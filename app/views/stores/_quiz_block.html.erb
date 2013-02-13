@@ -17,8 +17,10 @@
             <% end %>
           <% end %>
       </p>
+      
+      <% if current_user == nil %>
        
-      <% if current_user.has_purchased_quiz?(quiz.id) %>
+      <% elsif current_user.has_purchased_quiz?(quiz.id) %>
         <div>
           <%= link_to( "Purchased" , "#" , :disabled => true ) %>
         </div>
