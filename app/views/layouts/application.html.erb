@@ -53,17 +53,38 @@
 	          <input type="text" class="search-query" placeholder="Search">
 	        </form>
 	      </div>
-            <div id="top-info" class="pull-right">
-              <a href="#" class="pull-left">
-                <div class="top-info-block">
-                  <h3>Credits (<span style='font-family: "Open Sans";'>&#x20b9;</span> <%= current_user.credits %>)</h3>
-                </div>
+	      
+          <%= render :partial => "layouts/top_right_nav", :locals => { :demo => false } %>
+          
+       <% else %> 
+        
+            <div id="main-nav-menu" class="dropdown pull-left">
+              <a class="header-dropdown dropdown-toggle accent-color" data-toggle="dropdown" href="#" data-no-turbolink>
+                <% if content_for?(:nav_menu_header) %>
+                  <%= yield(:nav_menu_header) %>
+                <% else %>
+                  Test Hub
+                <% end %>
+                <b class="caret"></b>
               </a>
-              <hr class="separator pull-left">
-              <a id="settings" class="pull-left" href="/stores/cart">
-                <h3>Cart (<%=@cart.cart_items.length %>)</h3>
-              </a>
+                <ul class="dropdown-menu">
+                    <li><%= link_to "Test Hub",homes_index_path,:"data-no-turbolink" => true %></li>
+                    <li><%= link_to "Reports", reports_path,:"data-no-turbolink" => true %></li>
+                    <li><%= link_to "Store", store_path,:"data-no-turbolink" => true %></li>
+                    <li><%= link_to "Orders", orders_path,:"data-no-turbolink" => true %></li>
+                    <li class="divider"></li>
+                    <li><%= link_to 'Logout', destroy_user_session_url, :method => 'delete' %></li>
+                </ul>
             </div>
+          </div>
+          <div id="second-nav">
+            <form class="navbar-search pull-left">
+              <input type="text" class="search-query" placeholder="Search">
+            </form>
+          </div>
+       
+          <%= render :partial => "layouts/top_right_nav", :locals => { :demo => true } %>
+           
       <% end %>
     </div>
   </div>
@@ -97,6 +118,17 @@
   </div>
   </div>
 </section>
+
+<% if current_user == nil %>
+<!-- BOTTOM RIGHT RIBBON: START COPYING HERE -->
+<div class="github-fork-ribbon-wrapper right-bottom">
+    <div class="github-fork-ribbon">
+        <%= link_to "Preview Mode", new_user_registration_path %>
+    </div>
+</div>
+<!-- BOTTOM RIGHT RIBBON: END COPYING HERE -->
+<% end %>
+
 <footer>
   <div class="container">
     <ul class="footer-links">

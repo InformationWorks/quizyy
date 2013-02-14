@@ -1,0 +1,30 @@
+
+<% if demo == false %>
+
+<div id="top-info" class="pull-right">
+  <a href="#" class="pull-left">
+    <div class="top-info-block">
+      <h3>Credits (<span style='font-family: "Open Sans";'>&#x20b9;</span> <%= current_user.credits %>)</h3>
+    </div>
+  </a>
+  <hr class="separator pull-left">
+  <a id="settings" class="pull-left" href="/stores/cart">
+    <h3>Cart (<%=@cart.cart_items.length %>)</h3>
+  </a>
+</div>
+
+<% else %>
+
+<div id="top-info" class="pull-right">
+  <%= link_to(new_user_session_path,:class => "pull-left") do %>
+    <div class="top-info-block">
+      <h3>Login</h3>
+    </div>
+  <% end %>
+  <hr class="separator pull-left">
+  <%= link_to(new_user_registration_path,:class => "pull-left") do %>
+    <h3>Sign up</h3>
+  <% end %>
+</div>
+
+<% end %>
