@@ -48,7 +48,7 @@
           </ul>
       <% elsif controller.controller_name == "landings" %>
 
-          <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "navbar-form pull-right sign-in-nav"}) do |f| %>
+          <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "navbar-form pull-right sign-in-nav", :style => "margin-right: 25px;"}) do |f| %>
 
               <div class="row row-sign-in">
 
@@ -82,6 +82,16 @@
 
     </div><!--/.nav-collapse -->
   </div><!-- /.navbar -->
+    
+    <% if current_user == nil %>
+    <!-- BOTTOM RIGHT RIBBON: START COPYING HERE -->
+    <div class="github-fork-ribbon-wrapper right">
+        <div class="github-fork-ribbon">
+            <%= link_to "Preview", homes_index_path %>
+        </div>
+    </div>
+    <!-- BOTTOM RIGHT RIBBON: END COPYING HERE -->
+    <% end %>
 
 </div>
 
