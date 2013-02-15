@@ -2,7 +2,11 @@ class ReportsController < ApplicationController
   before_filter :authenticate_user!
   def index
     @attempts = Attempt.where('user_id = ? and completed = true',current_user.id).includes(:quiz).all()
-    @attempts.each {|attempt| attempt[:report].each{|k,v| attempt[:report][k] = eval(v)}}
+    @attempts.each do |attempt|
+      if attempt[:report]
+        attempt[:report].each{|k,v| attempt[:report][k] = eval(v)} 
+      end
+    end
   end
 
   def show
