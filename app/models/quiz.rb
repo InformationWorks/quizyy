@@ -124,7 +124,7 @@ class Quiz < ActiveRecord::Base
     # Logged in users.
     if user != nil
       purchased_full_quizzes = user.quizzes.full
-      purchased_full_quizzes_count = purchased_full_length_quizzes.count
+      purchased_full_quizzes_count = purchased_full_quizzes.count
       full_quizzes += purchased_full_quizzes
     else
       purchased_full_quizzes_count = 0
