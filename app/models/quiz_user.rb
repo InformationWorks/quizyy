@@ -3,6 +3,18 @@ class QuizUser < ActiveRecord::Base
   belongs_to :user
   # attr_accessible :title, :body
   
+  # Restricts entries that belong
+  # to the quizzes whose ids are passed in.
+  # :args: Array of quiz ids
+  scope :entries_for_quizzes, lambda { |quiz_ids|
+    
+    if quiz_ids == nil || quiz_ids.count == 0
+      return where('id IS ?', nil)
+    end
+    
+    return where('quiz_id IN (?)', quiz_ids)
+  }
+  
   # Return the status of the quiz for a user.
   # :new => Quiz bought but not started yet.
   # :paused => Quiz started but not completed.
