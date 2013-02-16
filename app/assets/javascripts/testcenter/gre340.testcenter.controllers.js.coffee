@@ -163,8 +163,8 @@
     startNextSection: ()->
       @showLoading()
       @submitSection(@currentSection)
-      @resetTotalSeconds()
       if @currentSectionCollection.next(@currentSection)
+        @resetTotalSeconds()
         Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.next(@currentSection).get('sequence_no'))
       else
         @submitSection(@currentSection)
@@ -228,11 +228,14 @@
       if (time < 10) then "0" + time else time
     tick:()=>
       if @totalSeconds > 0 && @connection
-        @totalSeconds -= 1
+        if @quiz.get('timed')
+          @totalSeconds -= 1
+        else
+          @totalSeconds += 1
         @updateTimer(@totalSeconds)
       else if !@connection
         #do nothing
-      else if @totalSeconds == 0
+      else if @totalSeconds==0 && @quiz.get('timed')
         @submitSection(@currentSection)
         @startNextSection()
     updateServerTimeWithInterval:()=>
@@ -265,7 +268,10 @@
     resetTotalSeconds:()->
       clearInterval(@timerInterval)
       @endVisit(@currentQuestion.get('id')) if @currentQuestion
-      @totalSeconds = 1800 #30mins      
+      if @quiz.get('timed')
+        @totalSeconds = parseInt(@currentSectionCollection.next(@currentSection).get('time')) * 60
+      else
+        @totalSeconds = 1
     handleErrors:(model,xhr)=>
       if xhr.status == 500
         console.log 'an error occured on the server'

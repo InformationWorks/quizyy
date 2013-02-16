@@ -11,7 +11,7 @@
   json.topic_id @quiz.topic_id
   json.topic_name @quiz.topic ? @quiz.topic.name : nil
   json.random @quiz.random
-  
+  json.timed @quiz.timed
   ## Sections
   json.sections @quiz.sections do |section|
   	  if (@current_section and section.sequence_no >= @current_section.sequence_no) or @current_section.nil?
@@ -23,6 +23,7 @@
           json.sequence_no section.sequence_no
           json.quiz_id section.quiz_id
           json.submitted false
+          json.time section.time
           ### Questions
             	  json.questions section.questions do |question|
           	 	  json.id question.id
