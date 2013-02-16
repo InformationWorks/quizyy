@@ -1,18 +1,73 @@
+##
+# This class represents a Category.
+# Ex. ["Reading Comprehension", "Text Completion" ]
 class Category < ActiveRecord::Base
+  
+  ############################################################
+  # Basic setup
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Attributes
+  
   attr_accessible :code, :name, :section_type_id
-  has_many :quizzes
+  
+  # ----------------------------------------------------------
+  # Validations
   
   validates :code, :name, :slug, :presence => true
-  validates :code, :uniqueness => true
-  validates :name, :uniqueness => true
-  before_validation :generate_slug
+  validates :code, :name, :slug, :uniqueness => true
   
+  # ----------------------------------------------------------
+  # Before-After Callbacks
+  
+  before_validation :generate_slug
   belongs_to :section_type
+  
+  ############################################################
+  # Relations
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # belongs_to
+  
+  # ----------------------------------------------------------
+  # has_many
+  
+  has_many :quizzes
+  
+  # ----------------------------------------------------------
+  # has_many :through
+  
+  ############################################################
+  # Scopes
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Direct scopes
+  
+  # ----------------------------------------------------------
+  # Lambda scopes
+  
+  ###########################################################
+  # Functions
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Overrides
+  
+  # ----------------------------------------------------------
+  # Instance methods
+  
+  # ----------------------------------------------------------
+  # Class methods  
   
   def to_param
     slug
   end
   
+  private
+   
   def generate_slug
     self.slug = name.parameterize
   end

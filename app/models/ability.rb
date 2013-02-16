@@ -1,3 +1,5 @@
+##
+# This class represents CanCan ability.
 class Ability
   include CanCan::Ability
  
@@ -8,8 +10,7 @@ class Ability
       # Roles for developers.
       can :manage, :all
     elsif user.role? :admin
-      # Roles for admins to approve quiz.
-      # can :manage, [Product, Asset, Issue]
+      # Roles for admins.
       can :administer, :app
       can :create, :students
       can :add, :credits

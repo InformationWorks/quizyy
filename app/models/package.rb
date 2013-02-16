@@ -1,18 +1,78 @@
-# position = 1 => Left
-# position = 2 => Center
-# position = 3 => Right
+##
+# This class represents a package. A package is comprised of
+# multiple quizzes.
+#
+# Below are currently implemented packages.
+# 
+# * <tt>Package 1</tt>
+#
+# => 5 Full-length quizzes.
+#
+# * <tt>Package 2</tt>
+#
+# => 7 Full-length quizzes.
+#
+# * <tt>Package 3</tt>
+#
+# => 10 Full-length quizzes.  
+#
+# Store package arrangement.
+# 
+#   # # # # # # # # # # # # # # # # # # # 
+#   # Package 1 # Package 2 # Package 3 #
+#   # # # # # # # # # # # # # # # # # # #
+#
 class Package < ActiveRecord::Base
-  attr_accessible :desc, :name, :price, :position
   
   include ActiveModel::Validations
+  
+  ############################################################
+  # Basic setup
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Attributes
+  
+  attr_accessible :desc, :name, :price, :position
+  
+  # ----------------------------------------------------------
+  # Validations
+  
   validates :name,:slug,:position,:desc, :presence => true
-  validate :position_cannot_be_repeated
-  validates :name, :uniqueness => true
+  validates :name, :position, :uniqueness => true
+  
+  # ----------------------------------------------------------
+  # Before-After Callbacks
+  
   before_validation :generate_slug
+  
+  ############################################################
+  # Relations
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # belongs_to
+  
+  # ----------------------------------------------------------
+  # has_many
   
   has_many :package_quizzes
   has_many :quizzes, :through => :package_quizzes
   
+  # ----------------------------------------------------------
+  # has_many :through
+  
+  ############################################################
+  # Scopes
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Direct scopes
+  
+  # ----------------------------------------------------------
+  # Lambda scopes
+  
+  # Excludes packages passed to the scope.
   scope :excluding, lambda { |packages|
     package_ids = packages.pluck('packages.id')
     if package_ids == []
@@ -22,28 +82,24 @@ class Package < ActiveRecord::Base
     end
   }
   
-  # Custom validation
-  def position_cannot_be_repeated
-    
-     logger.info("id = " + id.to_s)
-    
-     if id
-      # Updating package.
-      if Package.where("id != " << id.to_s << " and position = " << position.to_s).count > 0
-        errors[:position] << 'already taken. Only one package can have position ' + position.to_s
-      end
-    else
-      # Creating package.
-      if Package.find_by_position(position)
-        errors[:position] << 'already taken. Only one package can have position ' + position.to_s
-      end
-    end
-    
-  end
+  ###########################################################
+  # Functions
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Overrides
+  
+  # ----------------------------------------------------------
+  # Instance methods
+ 
+  # ----------------------------------------------------------
+  # Class methods
   
   def to_param
     slug
   end
+  
+  private
   
   def generate_slug
     self.slug = name.parameterize
