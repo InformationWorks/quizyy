@@ -212,7 +212,7 @@ class Quiz < ActiveRecord::Base
   # return full_length_quizzes,purchased_full_length_quizzes
   def self.store_full_quizzes(user)
     
-    full_quizzes = Quiz.scoped_for_user(user).full.not_in_account_of_user(user).order('id ASC')
+    full_quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).full.order('id ASC')
     
     # Logged in users.
     if user != nil
@@ -229,7 +229,7 @@ class Quiz < ActiveRecord::Base
   # Fetch verbal section quizzes to be displayed in the store.
   def self.store_verbal_section_quizzes(user)
     
-    verbal_section_quizzes = Quiz.scoped_for_user(user).section.verbal.not_in_account_of_user(user).order('id ASC')
+    verbal_section_quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).section.verbal.order('id ASC')
     
     # Logged in users.
     if user != nil
@@ -243,18 +243,25 @@ class Quiz < ActiveRecord::Base
   # Fetch quant section quizzes to be displayed in the store.
   def self.store_quant_section_quizzes(user)
     
-    quant_section_quizzes = Quiz.scoped_for_user(user).section.quant.not_in_account_of_user(user).order('id ASC')
+    quant_section_quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).section.quant.order('id ASC')
     
     # Logged in users.
     if user != nil
-      purchased_quant_section_quizzes = user.quizzes.section.verbal
+      purchased_quant_section_quizzes = user.quizzes.section.quant
       quant_section_quizzes += purchased_quant_section_quizzes
     end
     
     return quant_section_quizzes
   end
   
-  # Fetch quant section quizzes to be displayed in the store.
+  # Fetch quizzes to be displayed in the store for a category.
+  #
+  # ==== Parameters
+  # * <tt>user</tt> - User to scope the quizzes to be displayed in store.
+  # * <tt>category</tt> - Category for which quizzes need to be fetched.
+  #
+  # ==== Returns
+  # * <tt>category_quizzes</tt> - quizzes to be displayed in the store for a Category.
   def self.store_category_quizzes(user,category)
     
     category_quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).category.specific_category(category).order('id ASC')
@@ -267,22 +274,34 @@ class Quiz < ActiveRecord::Base
     
   end
   
-  # Fetch quant section quizzes to be displayed in the store.
+  # Fetch quizzes to be displayed in the store for a topic.
+  #
+  # ==== Parameters
+  # * <tt>user</tt> - User to scope the quizzes to be displayed in store.
+  # * <tt>topic</tt> - Topic for which quizzes need to be fetched.
+  #
+  # ==== Returns
+  # * <tt>topic_quizzes</tt> - Quizzes to be displayed in the store for a Topic.
   def self.store_topic_quizzes(user,topic)
     
-    category_quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).topic.specific_topic(topic).order('id ASC')
+    topic_quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).topic.specific_topic(topic).order('id ASC')
     
     if user != nil
-      category_quizzes += current_user.quizzes.topic.specific_topic(category)  
+      topic_quizzes += current_user.quizzes.topic.specific_topic(topic)  
     end
     
-    return category_quizzes
+    return topic_quizzes
     
   end
   
   # Generate a array of special datastructure for store.
-  # structure: 
-  # { entity => string, name => string, slug => string , quizzes => array_of_quizzes }
+  #
+  # ==== Parameters
+  # * <tt>entity</tt> - "category" or "topic" string.
+  # * <tt>user</tt> - User to scope the quizzes to be displayed in store.
+  #
+  # ==== Returns
+  # * { entity => string, name => string, slug => string , quizzes => array_of_quizzes }
   def self.store_entity_name_quizzes(entity,user)
     
     # Fetch the quizzes not owned by user first and then append owned quizzes.

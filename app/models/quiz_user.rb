@@ -5,7 +5,7 @@ class QuizUser < ActiveRecord::Base
   
   # Restricts entries that belong
   # to the quizzes whose ids are passed in.
-  # :args: Array of quiz ids
+  # Input is Array of quiz ids
   scope :entries_for_quizzes, lambda { |quiz_ids|
     
     if quiz_ids == nil || quiz_ids.count == 0
