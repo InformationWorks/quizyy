@@ -44,7 +44,7 @@
 <hr>
 <div class="row align-center">
     <div class="span7 align-right">
-        <h2>Question <%=@question_number%> of <%=@total_questions%></h2>
+        <h2>Question <span id="question_number"><%=@question_number%></span> of <%=@total_questions%></h2>
     </div>
     <div class="span3 pull-right align-right">
         <div id="timer" class="pull-right">1:00:00</div>

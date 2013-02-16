@@ -23,6 +23,7 @@
       @connection = true
       @noInternetErrorShown = false
       @loadingView = new @Views.LoadingView()
+      @qActionBar = null
     start:() ->
       console.log 'start question controller called'
       @attempt.fetch
@@ -116,8 +117,12 @@
       @section_quant = false
       if /quant/i.test(@currentSection.get('section_type_name'))
         @section_quant = true
-      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber, question_number:@currentQuestion.get('sequence_no'),total_questions: @currentQuestionCollection.length, section_quant: @section_quant ))
+      unless @qActionBar?
+        @qActionBar = new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber, question_number:@currentQuestion.get('sequence_no'),total_questions: @currentQuestionCollection.length, section_quant: @section_quant )
+        Gre340.TestCenter.Layout.layout.actionbar.show(@qActionBar)
+      @qActionBar.changeQuestionNumber(@currentQuestion.get('sequence_no'))
     showSectionActionBar: () ->
+      @qActionBar = null
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
     startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
@@ -235,7 +240,7 @@
         @updateTimer(@totalSeconds)
       else if !@connection
         #do nothing
-      else if @totalSeconds==0 && @quiz.get('timed')
+      else if @totalSeconds == 0
         @submitSection(@currentSection)
         @startNextSection()
     updateServerTimeWithInterval:()=>
