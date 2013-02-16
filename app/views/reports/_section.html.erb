@@ -1,0 +1,29 @@
+<div class="row-fluid">
+  <div class="span12">
+    <div class="row-fluid">
+      <div class="span4">
+        <h3>Test Results for <%= @quiz.name %></h3>
+        <h1><%= @full_report['total_score'] %> / 170</h1>
+        <p class="lead"> You got <span class=""><%= @full_report['total']['correct'] %></span> right out of <span class=""><%= @full_report['total']['questions'] %></span> questions</p>
+
+        <h3><a href="/reviews/<%= @quiz.slug %>" data-no-turbolink>View solution</a></h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row-fluid">
+  <hr>
+  <h2>Question Types</h2>
+  <hr>
+  <table class="span6 table">
+    <tbody>
+    <% @full_report['category_report'].each do |code,value| %>
+        <tr>
+          <td><h3><%=value['name']%></h3></td>
+          <td><p><%= value['correct'] %> / <%= value['total'] %></p></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+</div>

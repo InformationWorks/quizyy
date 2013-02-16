@@ -57,6 +57,7 @@ class Attempt < ActiveRecord::Base
   end
 
   def calculate_score
+    quiz = Quiz.includes(:category,:topic).find(self.quiz_id)
     attempt_details = AttemptDetail.find_all_by_attempt_id(self.id)
     sections = Section.with_all_association_data.find_all_by_quiz_id(self.quiz_id)
     types = Type.includes(:category).all()
@@ -89,10 +90,17 @@ class Attempt < ActiveRecord::Base
       main_section_report[section.section_type.name]['total'] += section.questions.length
       section_report[section.id.to_s] = {'section_name' => section.name,'section_type'=> section.section_type.name,'correct'=> correct,'total'=> section.questions.length}
     end
-    self.report = Hash['main_section_report' => main_section_report,'section_report' => section_report, 'type_report'=> type_report, 'total_score'=> {'correct' => total_correct,'total' => total_question}]
+
+    main_section_report.delete_if { |k,v| v['total']==0}
+    type_report.delete_if { |k,v| v['total']==0 }
+    self.report = Hash['main_section_report' => main_section_report,'section_report' => section_report, 'type_report'=> type_report, 'total'=> {'correct' => total_correct,'questions' => total_question}]
     self.score = 0
-    main_section_report.each do |key,value|
-        self.score += ScaledScore.convert(key.downcase.to_sym,value['correct']*100/value['total'])
+    if quiz.quiz_type.name == "FullQuiz" or quiz.quiz_type.name == "SectionQuiz"
+      main_section_report.each do |key,value|
+          self.score +=  value['total'] != 0 ? ScaledScore.convert(key.downcase.to_sym,value['correct']*100/value['total']) : 0
+      end
+    else
+      self.score +=  total_correct*100/total_question
     end
     self.save
     self

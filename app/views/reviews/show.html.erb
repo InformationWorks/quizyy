@@ -14,7 +14,11 @@
   <div class="span3">
     <ul id="sidebar" class="nav nav-list">
       <% @sections.each do |section| %>
-          <li class="nav-header"><%= section.name %></li>
+          <% if @sections.length > 1 %>
+            <li class="nav-header"><%= section.name %></li>
+          <% else %>
+              <li class="nav-header">Questions</li>
+          <% end %>
           <% section.questions.each do |question| %>
               <li><a href="#<%= question.id %>">
                 <% if question.correct %>
@@ -32,13 +36,15 @@
   <div class="questions span8">
     <h3>Quiz Review</h3>
 
-    <h2>Full Length 101</h2>
+    <h2><%= @quiz.name %></h2>
     <% @sections.each do |section| %>
         <% section.questions.each do |question| %>
             <div id="<%= question.id %>" style="padding-top: 100px;">
               <% if question.sequence_no == 1 %>
-                  <h3><%= section.name %></h3>
-                  <hr>
+                  <% if @sections.length > 1 %>
+                    <h3><%= section.name %></h3>
+                    <hr>
+                  <% end %>
               <% end %>
               <h3>Question <%= question.sequence_no %> <% if question.correct %> <span class="label label-success">you got it right :-)</span><%elsif !question.attempted %> <span class="label label-important">you didn't answer <% else %><span class="label label-important">your got it wrong</span> <% end %></h3>
 
