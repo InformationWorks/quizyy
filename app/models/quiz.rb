@@ -1,38 +1,82 @@
+##
+# This class represents a quiz. A quiz has section/sections.
+# Sections further have questions & questions have options.
 class Quiz < ActiveRecord::Base
+  
+  ############################################################
+  # Basic setup
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Attributes
+  
+  attr_accessible :name, :random, :quiz_type_id, :category_id, :topic_id,:desc,:section_type_id
+  attr_accessor :word
+  
+  # ----------------------------------------------------------
+  # Validations
+  
+  validates :name,:desc,:slug,:price, :presence => true
+  
+  # ----------------------------------------------------------
+  # Before-After Callbacks
+  
+  before_validation :generate_slug
+  before_save :set_timed
+  
+  ############################################################
+  # Relations
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # belongs_to
+  
   belongs_to :quiz_type
   belongs_to :category
   belongs_to :topic
   belongs_to :section_type
-  attr_accessible :name, :random, :quiz_type_id, :category_id, :topic_id,:desc,:section_type_id
-  attr_accessor :word
-  validates :name,:desc,:slug,:price, :presence => true
-  before_validation :generate_slug
-  before_save :set_timed
-  
-  has_many :sections
-  has_many :questions, :through => :sections
-  
-  has_many :quiz_users
-  has_many :users, :through => :quiz_users
-  
-  has_many :package_quizzes
-  has_many :packages, :through => :package_quizzes
-  
   belongs_to :publisher, :class_name => "User"
   belongs_to :approver, :class_name => "User"
   
-  scope :full, :conditions => { :quiz_type_id => ( QuizType.find_by_name("FullQuiz") != nil ? QuizType.find_by_name("FullQuiz").id : -1 ) }
-  scope :category, :conditions => { :quiz_type_id => ( QuizType.find_by_name("CategoryQuiz") != nil ? QuizType.find_by_name("CategoryQuiz").id : -1 ) }
-  scope :topic, :conditions => { :quiz_type_id => ( QuizType.find_by_name("TopicQuiz") != nil ? QuizType.find_by_name("TopicQuiz").id : -1 ) }
-  scope :section, :conditions => { :quiz_type_id => ( QuizType.find_by_name("SectionQuiz") != nil ? QuizType.find_by_name("SectionQuiz").id : -1 ) }
-  scope :verbal, :conditions => { :section_type_id => ( SectionType.find_by_name("Verbal") != nil ? SectionType.find_by_name("Verbal").id : -1 ) }
-  scope :quant, :conditions => { :section_type_id => ( SectionType.find_by_name("Quant") != nil ? SectionType.find_by_name("Quant").id : -1 ) }
+  # ----------------------------------------------------------
+  # has_many
+  
+  has_many :sections
+  has_many :quiz_users
+  has_many :package_quizzes
+  
+  # ----------------------------------------------------------
+  # has_many :through
+  
+  has_many :questions, :through => :sections
+  has_many :users, :through => :quiz_users
+  has_many :packages, :through => :package_quizzes
+  
+  ############################################################
+  # Scopes
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Direct scopes
+  
+  scope :full, :conditions => { :quiz_type_id => QuizType.find_by_name("FullQuiz") }
+  scope :category, :conditions => { :quiz_type_id => QuizType.find_by_name("CategoryQuiz") }
+  scope :topic, :conditions => { :quiz_type_id => QuizType.find_by_name("TopicQuiz") }
+  scope :section, :conditions => { :quiz_type_id => QuizType.find_by_name("SectionQuiz") }
+  scope :verbal, :conditions => { :section_type_id => SectionType.find_by_name("Verbal") }
+  scope :quant, :conditions => { :section_type_id => SectionType.find_by_name("Quant") }
   scope :free, :conditions => { :price => 0 }
   scope :paid, :conditions => ["price > 0"]
   scope :approved, :conditions => { :approved => true }
   scope :unapproved, :conditions => { :approved => false }
   scope :published, :conditions => { :published => true }
   scope :unpublished, :conditions => { :published => false }
+  
+  # ----------------------------------------------------------
+  # Lambda scopes
+  
+  # Scope to return quizzes not in account of the user.
+  # For guest users => return   
   scope :not_in_account_of_user, lambda { |user| 
     
     # For user's who haven't logged in.
@@ -47,6 +91,8 @@ class Quiz < ActiveRecord::Base
       return { :conditions => ["id not in (?)", user_quiz_ids] }  
     end
   }
+  
+  # Excludes quizzes passed in as relation. 
   scope :excluding, lambda { |quizzes|
     quiz_ids = quizzes.pluck('quizzes.id')
     if quiz_ids == []
@@ -55,12 +101,29 @@ class Quiz < ActiveRecord::Base
       return { :conditions => ["id not in (?)", quiz_ids] }  
     end
   }
+  
+  # Only return quizzes for a specific categroy
+  # Be careful and don't pass 'nil' as category. 
+  # If 'nil' is passed, it will generate below query.
+  # SELECT "quizzes".* FROM "quizzes" WHERE "quizzes"."category_id" IS NULL
+  # category_id is nil for non-category quizzes too. Never pass 'nil' 
   scope :specific_category, lambda { |category| 
-    return { :conditions => { :category_id => category.id } }  
+    return { :conditions => { :category_id => category } }  
   }
+  
+  # Only return quizzes for a specific topic
+  # Be careful and don't pass 'nil' as topic. 
+  # If 'nil' is passed, it will generate below query.
+  # SELECT "quizzes".* FROM "quizzes" WHERE "quizzes"."topic_id" IS NULL
+  # topic_id is nil for non-topic quizzes too. Never pass 'nil'
   scope :specific_topic, lambda { |topic| 
-    return { :conditions => { :topic_id => topic.id } }  
+    return { :conditions => { :topic_id => topic } }  
   }
+  
+  # Only show quizzes that a user is supposed to see in store based on roles.
+  # Normal user & Guest user => Only approved.
+  # Super Admin & Admin => Any published quiz, even if it is not approved.
+  # Publisher => All quizzes. 
   scope :scoped_for_user, lambda { |user| 
     if user == nil 
       return { :conditions => { :approved => true } }
@@ -73,25 +136,22 @@ class Quiz < ActiveRecord::Base
     end
   }
   
-  def self.revenue_and_purchases_for_quizzes(quizzes)
-    
-    revenue = 0
-    purchases = 0
-    quizzes.each do |quiz|
-      user_count = quiz.users.count
-      if user_count > 0
-        purchases += 1
-        revenue += (quiz.price * user_count)
-      end
-    end
-    
-    return revenue, purchases
-  end
+  ###########################################################
+  # Functions
+  ############################################################
   
+  # ----------------------------------------------------------
+  # Overrides
+  
+  # Use slug for generating path/url.
   def to_param
     slug
   end
   
+  # ----------------------------------------------------------
+  # Instance methods
+  
+  # Use slug for generating path/url.
   def generate_slug
     self.slug = name.parameterize
   end
@@ -113,6 +173,39 @@ class Quiz < ActiveRecord::Base
       end
     end
     
+  end
+  
+  # Set the timed flag as true for FullQuiz & SectionQuiz
+  def set_timed
+    
+    if self.quiz_type_id == QuizType.find_by_name("FullQuiz").id
+      self.timed = true
+    elsif self.quiz_type_id == QuizType.find_by_name("SectionQuiz").id
+      self.timed = true
+    else
+      self.timed = false
+    end
+    # This is required as the call_back will fail if false is returned.
+    nil
+  end
+  
+  # ----------------------------------------------------------
+  # Class methods
+  
+  # Calculate revenue generated by passed quizzes.
+  def self.revenue_and_purchases_for_quizzes(quizzes)
+    
+    revenue = 0
+    purchases = 0
+    quizzes.each do |quiz|
+      user_count = quiz.users.count
+      if user_count > 0
+        purchases += user_count
+        revenue += (quiz.price * user_count)
+      end
+    end
+    
+    return revenue, purchases
   end
   
   # Fetch full quizzes to be displayed in the store.
@@ -253,20 +346,6 @@ class Quiz < ActiveRecord::Base
     
     return entity_name_quizzes
     
-  end
-  
-  # Set the timed flag as true for FullQuiz & SectionQuiz
-  def set_timed
-    
-    if self.quiz_type_id == QuizType.find_by_name("FullQuiz").id
-      self.timed = true
-    elsif self.quiz_type_id == QuizType.find_by_name("SectionQuiz").id
-      self.timed = true
-    else
-      self.timed = false
-    end
-    # This is required as the call_back will fail if false is returned.
-    nil
   end
   
 end
