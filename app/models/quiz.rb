@@ -41,9 +41,9 @@ class Quiz < ActiveRecord::Base
   # ----------------------------------------------------------
   # has_many
   
-  has_many :sections
-  has_many :quiz_users
-  has_many :package_quizzes
+  has_many :sections, :dependent => :destroy
+  has_many :quiz_users, :dependent => :destroy
+  has_many :package_quizzes, :dependent => :destroy
   
   # ----------------------------------------------------------
   # has_many :through

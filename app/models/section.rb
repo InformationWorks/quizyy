@@ -46,7 +46,7 @@ class Section < ActiveRecord::Base
   # ----------------------------------------------------------
   # has_many
   
-  has_many :questions,:dependent => :destroy
+  has_many :questions, :dependent => :destroy
   
   # ----------------------------------------------------------
   # has_many :through
