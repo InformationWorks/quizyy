@@ -1,33 +1,80 @@
+##
+# This class represents a devise User.
 class User < ActiveRecord::Base
+  
   delegate :can?, :cannot?, :to => :ability
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  # TODO: :confirmable to be added
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,:confirmable
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :full_name, :profile_image, :credits
-  # attr_accessible :title, :body
-  
+         
   mount_uploader :profile_image, ProfileImageUploader
+  
+  ############################################################
+  # Basic setup
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Attributes
+  
+  attr_accessible :email, :password, :password_confirmation, 
+                  :remember_me, :full_name, :profile_image, 
+                  :credits
+  
+  # ----------------------------------------------------------
+  # Validations
   
   validates :full_name,  :presence => true
   
+  # ----------------------------------------------------------
+  # Before-After Callbacks
+  
+  ############################################################
+  # Relations
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # belongs_to
+  
+  # ----------------------------------------------------------
+  # has_one & has_many
+  
   has_many :role_users
-  has_many :roles, :through => :role_users
-  
   has_many :quiz_users
-  has_many :quizzes, :through => :quiz_users
-  
   has_many :carts
-  has_many :orders, :through => :carts
-  
   has_many :published_quizzes, :class_name => "Quiz", :foreign_key => "publisher_id"
   has_many :approved_quizzes, :class_name => "Quiz", :foreign_key => "approver_id"
   
+  # ----------------------------------------------------------
+  # has_many :through
+  
+  has_many :orders, :through => :carts
+  has_many :roles, :through => :role_users
+  has_many :quizzes, :through => :quiz_users
+  
+  ############################################################
+  # Scopes
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Direct scopes
+  
+  # ----------------------------------------------------------
+  # Lambda scopes
+  
+  ###########################################################
+  # Functions
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Overrides
+  
+  # ----------------------------------------------------------
+  # Instance methods
+  
+  # Check if the User has a role.
   def role?(role)
     
     if ( self.roles.find_by_name(role.to_s.camelize) == nil )
@@ -38,7 +85,7 @@ class User < ActiveRecord::Base
     
   end
   
-  # Check if the user has ability to administer the app.
+  # Check if the User has ability to administer the app.
   def can_administer?
     
     if ( authorize! :administer, :app )
@@ -49,19 +96,6 @@ class User < ActiveRecord::Base
     
   end
   
-  # Devise password required override.
-  def password_required?
-    super if confirmed?
-  end
-  
-  # Devise confirmable password match.  
-  def password_match?
-    self.errors[:password] << "can't be blank" if password.blank?
-    self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?
-    self.errors[:password_confirmation] << "does not match password" if password != password_confirmation
-    password == password_confirmation && !password.blank?
-  end
-
   def verbal_average
     (Attempt.section_scores_for_user(self.id)[:verbal][:avg]).to_i
   end
@@ -201,9 +235,26 @@ class User < ActiveRecord::Base
     activity_log.target_id = target_id
     activity_log.activity = activity
   end
+ 
+  # ----------------------------------------------------------
+  # Class methods
   
   private
   
+  # Devise password required override.
+  def password_required?
+    super if confirmed?
+  end
+  
+  # Devise confirmable password match.  
+  def password_match?
+    self.errors[:password] << "can't be blank" if password.blank?
+    self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?
+    self.errors[:password_confirmation] << "does not match password" if password != password_confirmation
+    password == password_confirmation && !password.blank?
+  end
+  
+  # Ability delegate.
   def ability
     @ability ||= Ability.new(self)
   end
