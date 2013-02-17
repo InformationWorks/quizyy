@@ -1,14 +1,70 @@
+##
+# This class keeps track of the visits to questions.
 class Visit < ActiveRecord::Base
+  
+  ############################################################
+  # Basic setup
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Attributes
+  
+  attr_accessible :attempt_id, :question_id, :start, :end
+  
+  # ----------------------------------------------------------
+  # Validations
+  
+  # ----------------------------------------------------------
+  # Before-After Callbacks
+  
+  ############################################################
+  # Relations
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # belongs_to
+  
   belongs_to :attempt
   belongs_to :question
-  attr_accessible :attempt_id, :question_id, :start, :end
+  
+  # ----------------------------------------------------------
+  # has_many
+  
+  # ----------------------------------------------------------
+  # has_many :through
+  
+  ############################################################
+  # Scopes
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Direct scopes
+  
+  # ----------------------------------------------------------
+  # Lambda scopes
+  
+  ###########################################################
+  # Functions
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Overrides
+  
+  # ----------------------------------------------------------
+  # Instance methods
+ 
+  # ----------------------------------------------------------
+  # Class methods
+  
+  # Update the visit time for a question that belongs to a question.
   def self.update(attempt_id,question_id,time)
     if question_id
       visit = Visit.where(:attempt_id => attempt_id,:question_id=>question_id).last
       if visit
-  	    visit.end = time 
-  	    visit.save
+        visit.end = time 
+        visit.save
+      end
     end
-	end
-  end
+  end  
+
 end

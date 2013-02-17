@@ -1,16 +1,77 @@
+##
+# This class represents a SectionType.
+#
+# Currently implemented SectionType's are listed below.
+#
+# => Verbal
+# => Quant
+#
 class SectionType < ActiveRecord::Base
+  
+  ############################################################
+  # Basic setup
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Attributes
+  
   attr_accessible :instruction, :name
   
-  validates :name,:instruction,:slug,:presence => true
-  validates :name, :uniqueness => true
+  # ----------------------------------------------------------
+  # Validations
+  
+  validates :name, :slug, :instruction, :presence => true
+  validates :name, :slug, :uniqueness => true
+  
+  # ----------------------------------------------------------
+  # Before-After Callbacks
+  
   before_validation :generate_slug
+  
+  ############################################################
+  # Relations
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # belongs_to
+  
+  # ----------------------------------------------------------
+  # has_many
   
   has_many :categories
   has_many :topics
   
+  # ----------------------------------------------------------
+  # has_many :through
+  
+  ############################################################
+  # Scopes
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Direct scopes
+  
+  # ----------------------------------------------------------
+  # Lambda scopes
+  
+  ###########################################################
+  # Functions
+  ############################################################
+  
+  # ----------------------------------------------------------
+  # Overrides
+  
+  # ----------------------------------------------------------
+  # Instance methods
+ 
+  # ----------------------------------------------------------
+  # Class methods
+  
   def to_param
     slug
   end
+  
+  private
   
   def generate_slug
     self.slug = name.parameterize
