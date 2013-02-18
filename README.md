@@ -7,13 +7,13 @@ GRE web-app for mock/practice tests.
 
 The app has two deployed versions of the app on heroku.
 
-1. gre340-staging.herokuapp.com [ staging-version ]
+(1). gre340-staging.herokuapp.com [ staging-version ]
 
-2. gre340-production.herokuapp.com [ production-version ]
+    - "staging" branch on GitHub deploys to "staging-version" on Heroku.
 
-#### "staging" branch on GitHub deploys to "staging-version" on Heroku.
+(2). gre340-production.herokuapp.com [ production-version ]
 
-#### "master" branch on GitHub deploys to "production-version" on Heroku.
+    - "master" branch on GitHub deploys to "production-version" on Heroku.
 
 ## Amazon S3 support
 
