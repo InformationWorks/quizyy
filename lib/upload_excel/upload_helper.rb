@@ -325,22 +325,22 @@ module UploadExcel
       begin
         
         sequence_no = row[0].to_s.strip
-        question.sequence_no = (sequence_no == "") ? nil : sequence_no.to_i
+        question.sequence_no = (sequence_no == "" || sequence_no == "-") ? nil : sequence_no.to_i
         
         instruction = row[2].to_s.strip
-        question.instruction = (instruction == "") ? nil : instruction
+        question.instruction = (instruction == "" || instruction == "-") ? nil : instruction
         
         passage = row[3].to_s.strip
-        question.passage = (passage == "") ? nil : passage
+        question.passage = (passage == "" || passage == "-") ? nil : passage
         
         que_text = row[4].to_s.strip
-        question.que_text = (que_text == "") ? nil : que_text
+        question.que_text = (que_text == "" || que_text == "-") ? nil : que_text
         
         sol_text = row[5].to_s.strip
-        question.sol_text = (sol_text == "") ? nil : sol_text
+        question.sol_text = (sol_text == "" || sol_text == "-") ? nil : sol_text
         
         option_set_count = row[6].to_s.strip
-        question.option_set_count = (option_set_count == "") ? nil : row[6].to_i        
+        question.option_set_count = (option_set_count == "" || option_set_count == "-") ? nil : row[6].to_i        
 
         question.que_image = nil
         question.sol_image = nil
@@ -615,40 +615,42 @@ module UploadExcel
       begin
         
         sequence_no = row[0].to_s.strip
-        question.sequence_no = (sequence_no == "") ? nil : row[0].to_i
+        question.sequence_no = (sequence_no == "" || sequence_no == "-") ? nil : row[0].to_i
         
         di_location = row[2].to_s.strip
-        question.di_location = (di_location == "") ? nil : di_location
+        question.di_location = (di_location == "" || di_location == "-") ? nil : di_location
         
         instruction = row[4].to_s.strip
-        question.instruction = (instruction == "") ? nil : instruction
+        question.instruction = (instruction == "" || instruction == "-") ? nil : instruction
         
         passage = row[5].to_s.strip
-        question.passage = (passage == "") ? nil : passage
+        question.passage = (passage == "" || passage == "-") ? nil : passage
         
         que_text = row[6].to_s.strip
-        question.que_text = (que_text == "") ? nil : que_text
+        question.que_text = (que_text == "" || que_text == "-") ? nil : que_text
         
         que_image = row[7].to_s.strip
-        question.que_image = (que_image == "") ? nil : que_image
+        question.que_image = (que_image == "" || que_image == "-") ? nil : que_image
         
         sol_text = row[8].to_s.strip
-        question.sol_text = (sol_text == "") ? nil : sol_text
+        question.sol_text = (sol_text == "" || sol_text == "-") ? nil : sol_text
         
         sol_image = row[9].to_s.strip
-        question.sol_image = (sol_image == "") ? nil : sol_image
+        question.sol_image = (sol_image == "" || sol_image == "-") ? nil : sol_image
         
         quantity_a = row[10].to_s.strip
-        question.quantity_a = (quantity_a == "") ? nil : quantity_a
+        question.quantity_a = (quantity_a == "" || quantity_a == "-") ? nil : quantity_a
         
         quantity_b = row[11].to_s.strip
-        question.quantity_b = (quantity_b == "") ? nil : quantity_b
+        question.quantity_b = (quantity_b == "" || quantity_b == "-") ? nil : quantity_b
         
         option_set_count = row[12].to_s.strip
-        question.option_set_count = (option_set_count == "") ? nil : option_set_count.to_i
+        question.option_set_count = (option_set_count == "" || option_set_count == "-") ? nil : option_set_count.to_i
         
         # Question references.
-        question.topic_id = Topic.find_by_name(row[3].to_s).id
+        topic = row[3].to_s.strip
+        topic_id = (topic == "" || topic == "-") ? nil : Topic.find_by_name(topic).id
+        question.topic_id = topic_id
         question.type = Type.find_by_code(row[1].to_s)
       
         Rails.logger.info("curr_sheet_index = " + @curr_sheet_index.to_s + " row_index = " + row_index.to_s)
