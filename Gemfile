@@ -10,7 +10,7 @@ gem 'devise'
 gem 'cancan'
 gem 'execjs'
 gem 'therubyracer', :platforms => :ruby
-gem 'spreadsheet'
+gem 'spreadsheet', '0.7.9'
 gem 'carrierwave'
 gem "mini_magick"
 gem 'rmagick', '~> 2.13.2' 
