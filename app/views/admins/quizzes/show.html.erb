@@ -192,10 +192,10 @@
 				<div class="control-group">
 					<h3>Images</h3>
 					
-					<%= button_to "Delete all images", {:controller => 'quizzes', :action => 'delete_question_images', :id => @quiz.slug}, {:class => "btn btn-inverse",:confirm => "Are you sure you want to delete all images?" } %>	
+					<%= button_to "Delete all images", {:controller => 'quizzes', :action => 'question_images_delete_all', :id => @quiz.slug}, {:class => "btn btn-inverse",:confirm => "Are you sure you want to delete all images?" } %>	
 					
 					<div style="float: middle;height:118px;" class="table table-bordered">
-				    <%= form_for @quiz, :url => upload_question_images_admins_quiz_path(@quiz), :method => :post, :html => { :multipart => true } do |fe| %> 
+				    <%= form_for @quiz, :url => question_images_upload_admins_quiz_path(@quiz), :method => :post, :html => { :multipart => true } do |fe| %> 
 				    <%= fe.file_field :quiz_question_images,:class => "form_fields",:multiple => true %> <br /> <br />
 				    <%= fe.submit "Upload Images",:confirm => "Are you sure you want to add selected images ?", :method => :post, :data => { :confirm => 'This will delete current questions for this quiz. Are you sure you want to upload new questions?' },
 				                    :class => "btn btn-inverse",:style => "float:left;margin-left: 20px;margin-top:-5px" %> 
