@@ -1,17 +1,21 @@
 Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
   String.prototype.replaceImageTag = (question) ->
-    if /<image[^>]*>(.*?)<\/image>/.test(this)
+    if /image[^>]*>(.*?)<\/image>/gi.test(this)
       console.log 'image is found'
       img_regex = /<image[^>]*>(.*?)<\/image>/gi
       result = []
       img_names = {}
       while ( (result = img_regex.exec(this)) )
         img_names[result[1]]=result[0]
-      this.replace(new RegExp(image_tag,'g'),"<br/><img src="+question.get('base_image_url')+image_name+"><br/>") for image_name,image_tag of img_names
+      this.replace(new RegExp(image_tag,'g'),'<img class="center" src='+question.get('base_image_url')+image_name+'>') for image_name,image_tag of img_names
 
   String.prototype.replaceBlankTag = ->
     if /<BLANK-[A-Z]*>/gi.test(this)
       this.replace(/<BLANK-[A-Z]*>/gi,'<span class="blank"></span>')
+
+  String.prototype.unescapeHTML = ->
+    this.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&')
+
   Views.toggleMarkQuestion = (marked)->
     $('#marked').val(marked)
     if marked
@@ -126,8 +130,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       $('body').scrollTop(0)
       $('body').removeClass('fill')
     onRender:()->
-      @$('.question').html(@$('.question').text().replaceBlankTag())
-      @$('.question').html(@$('.question').text().replaceImageTag(@model))
+      @$('.question').html(@$('.question').html().unescapeHTML().replaceBlankTag())
+      @$('.question').html(@$('.question').html().unescapeHTML().replaceImageTag(@model))
 
       @optionsRegion.show(new Views.OptionsView(model: @model))
 
@@ -146,8 +150,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       $('body').scrollTop(0)
       $('body').addClass('fill')
     onRender:()->
-      @$('.question').html(@$('.question').text().replaceImageTag(@model))
-      @$('.passage').html(@$('.passage').text().replaceImageTag(@model))
+      @$('.question').html(@$('.question').html().unescapeHTML().replaceImageTag(@model))
+      @$('.passage').html(@$('.question').html().unescapeHTML().replaceImageTag(@model))
       if /SIP/i.test @model.get('type_code')
         @model.set('type','sip')  
         @attempt_details = new Backbone.Collection()
