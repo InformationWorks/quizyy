@@ -16,6 +16,9 @@
         </div>
     <% end %>
     <% if @quantity_a and @quantity_b :%>
+        <p>
+          <%= @que_text %>
+        </p>
         <div class="qc row-fluid">
             <div class="span6 align-center">
                 <h3>Quantity A</h3>
