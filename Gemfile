@@ -9,7 +9,7 @@ gem 'pg'
 gem 'devise'
 gem 'cancan'
 gem 'execjs'
-gem 'therubyracer'
+gem 'therubyracer', :platforms => :ruby
 gem 'spreadsheet'
 gem 'carrierwave'
 gem "mini_magick"
