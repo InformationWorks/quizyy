@@ -209,7 +209,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       event.preventDefault()
       console.log 'comes here'
       window.location.href = '/homes/index';
-    removeBackgroundFromActionBar: (event)->
+    removeBackgroundFromActionBar:(event)->
       $('.action-bar-wrapper').addClass('no-bk')
     addBackgroundToActionBar:(event) ->
       event.preventDefault()
@@ -234,10 +234,20 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       section_index: @section_index
     events:
       'click #btn-continue': 'startSection'
+      'click #btn-quit': 'quitQuiz'
+      'click #show-alert-quit-quiz': 'removeBackgroundFromActionBar'
+      'click .close-alert-quit-quiz': 'addBackgroundToActionBar'
     startSection:(event) ->
       event.preventDefault()
       Gre340.vent.trigger 'start:section'
-
+    quitQuiz:(event) ->
+      event.preventDefault()
+      window.location.href = '/homes/index';
+    removeBackgroundFromActionBar:(event) ->
+      $('.action-bar-wrapper').addClass('no-bk')
+    addBackgroundToActionBar:(event) ->
+      event.preventDefault()
+      $('.action-bar-wrapper').removeClass('no-bk')
   Views.SectionExitActionBarView = Marionette.ItemView.extend
     template: 'section-exit-actionbar'
     model:'Gre340.TestCenter.Data.Models.Quiz'

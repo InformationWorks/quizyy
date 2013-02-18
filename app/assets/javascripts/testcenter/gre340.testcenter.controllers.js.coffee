@@ -76,7 +76,6 @@
           @showActionBar()
           @startVisit(@currentQuestion.get('id'))
           qTypeCode = question.get('type_code')
-          questionIsDI = false
           questionToDisplayInTwoPane = _.find @typesToDiplayInTwoPane, (code) ->
             if(code==qTypeCode)
               true
@@ -117,13 +116,19 @@
       @section_quant = false
       if /quant/i.test(@currentSection.get('section_type_name'))
         @section_quant = true
+      #only create and load a new action bar if it does not exist
       unless @qActionBar?
         @qActionBar = new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber, question_number:@currentQuestion.get('sequence_no'),total_questions: @currentQuestionCollection.length, section_quant: @section_quant )
         Gre340.TestCenter.Layout.layout.actionbar.show(@qActionBar)
       @qActionBar.changeQuestionNumber(@currentQuestion.get('sequence_no'))
     showSectionActionBar: () ->
-      @qActionBar = null
+      #reset QuestionActionBar so that a new one will be created when we visit a question
+      @closeQuestionActionBar()
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
+    closeQuestionActionBar: ()->
+      if @qActionBar
+        @qActionBar.close()
+        @qActionBar = null
     startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
       @showLoading()
@@ -143,7 +148,7 @@
             @currentSection = section
             @sectionNumber = section.get('sequence_no')
             @currentQuestionCollection = section.get('questions')
-            #if we have recived a questionNumber than the user should see a question else we show section start information
+            #if we have recieved a questionNumber than the user should see a question else we show section start information
             if questionNumber?
               @currentQuestion = @currentQuestionCollection.where(sequence_no: parseInt(questionNumber))[0]
               Gre340.Routing.showRoute('test_center','section',@sectionNumber,'question',questionNumber)
@@ -199,6 +204,7 @@
     exitQuizCenter:()->
       Gre340.TestCenter.Layout.layout.content.show(new @Views.NoQuizInProgress())
     exitSection: () ->
+      @closeQuestionActionBar()
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionExitActionBarView(model: @quiz, section_index: @sectionNumber))
       Gre340.TestCenter.Layout.layout.content.show(new @Views.SectionExitView())
     showQuizError:()->
@@ -286,6 +292,7 @@
     checkTimeAvailable:() ->
       if @totalSeconds == 0 then false else true
     showReviewSection:()->
+      @closeQuestionActionBar()
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.ReviewActionBarView(model: @quiz, section_index: @sectionNumber))
       Gre340.TestCenter.Layout.layout.content.show(new @Views.ReviewView(section_id:@currentSection.get('id'),attempt_id:@attempt.get('id'),current_question_number: @currentQuestion.get('sequence_no')))
   #-----------------------Events Listening------------------------------

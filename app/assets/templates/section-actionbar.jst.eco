@@ -8,14 +8,27 @@
             <span class="win-commandimage win-commandring">&#xe059;</span>
             <span class="win-label">Continue</span>
         </button>
-        <button class="win-command">
-            <span class="win-commandimage win-commandring">&#xe03b;</span>
-            <span class="win-label">Quit Test</span>
+        <button id="show-alert-quit-quiz" href="#modal-quit-quiz" role="button" data-toggle="modal" class="win-command">
+          <span class="win-commandimage win-commandring">&#xe03b;</span>
+          <span class="win-label">Quit Test</span>
         </button>
-        <button class="win-command">
+        <button id="btn-help" class="win-command">
             <span class="win-commandimage win-commandring">&#xe128;</span>
             <span class="win-label">Help</span>
         </button>
     </div>
 </div>
 <hr>
+<div id="modal-quit-quiz" class="modal hide fade">
+  <div class="modal-header">
+    <button class="close close-alert-quit-quiz" data-dismiss="modal" aria-hidden="true"></button>
+    <h3>Quit Quiz?</h3>
+  </div>
+  <div class="modal-body">
+    <p>We have saved all your responsed. You will be able to resume from the current section.</p>
+  </div>
+  <div class="modal-footer">
+    <button data-dismiss="modal" class="close-alert-quit-quiz btn">Cancel</button>
+    <button id="btn-quit" class="btn btn-primary">Quit</button>
+  </div>
+</div>
