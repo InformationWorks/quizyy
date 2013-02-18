@@ -1,0 +1,18 @@
+<div class="row-fluid">
+  <div class="span12">
+    <div class="row-fluid">
+      <div class="span4">
+        <h3>Test Results for <%= @quiz.name %></h3>
+        <p>Topic -  <%= @quiz.topic.name %></p>
+        <p class="lead"> You got <span class=""><%= @full_report['total']['correct'] %></span> right out of <span class=""><%= @full_report['total']['questions'] %></span> questions</p>
+
+      </div>
+      <div class="span5">
+        <h1><%= @full_report['total_score'] %> % </h1>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <h2><a href="/reviews/<%= @quiz.slug %>" data-no-turbolink>View solution</a></h2>
+    </div>
+  </div>
+</div>

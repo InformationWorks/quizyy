@@ -23,6 +23,7 @@
       @connection = true
       @noInternetErrorShown = false
       @loadingView = new @Views.LoadingView()
+      @qActionBar = null
     start:() ->
       console.log 'start question controller called'
       @attempt.fetch
@@ -116,8 +117,12 @@
       @section_quant = false
       if /quant/i.test(@currentSection.get('section_type_name'))
         @section_quant = true
-      Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber, question_number:@currentQuestion.get('sequence_no'),total_questions: @currentQuestionCollection.length, section_quant: @section_quant ))
+      unless @qActionBar?
+        @qActionBar = new @Views.QuestionActionBarView(model: @quiz, section_index: @sectionNumber, question_number:@currentQuestion.get('sequence_no'),total_questions: @currentQuestionCollection.length, section_quant: @section_quant )
+        Gre340.TestCenter.Layout.layout.actionbar.show(@qActionBar)
+      @qActionBar.changeQuestionNumber(@currentQuestion.get('sequence_no'))
     showSectionActionBar: () ->
+      @qActionBar = null
       Gre340.TestCenter.Layout.layout.actionbar.show(new @Views.SectionActionBarView(model: @quiz, section_index: @sectionNumber))
     startSection: (section,questionNumber) ->
       #TODO show section view first and then show questions
@@ -163,8 +168,8 @@
     startNextSection: ()->
       @showLoading()
       @submitSection(@currentSection)
-      @resetTotalSeconds()
       if @currentSectionCollection.next(@currentSection)
+        @resetTotalSeconds()
         Gre340.Routing.showRouteWithTrigger('test_center','section',@currentSectionCollection.next(@currentSection).get('sequence_no'))
       else
         @submitSection(@currentSection)
@@ -228,7 +233,10 @@
       if (time < 10) then "0" + time else time
     tick:()=>
       if @totalSeconds > 0 && @connection
-        @totalSeconds -= 1
+        if @quiz.get('timed')
+          @totalSeconds -= 1
+        else
+          @totalSeconds += 1
         @updateTimer(@totalSeconds)
       else if !@connection
         #do nothing
@@ -265,7 +273,10 @@
     resetTotalSeconds:()->
       clearInterval(@timerInterval)
       @endVisit(@currentQuestion.get('id')) if @currentQuestion
-      @totalSeconds = 1800 #30mins      
+      if @quiz.get('timed')
+        @totalSeconds = parseInt(@currentSectionCollection.next(@currentSection).get('time')) * 60
+      else
+        @totalSeconds = 1
     handleErrors:(model,xhr)=>
       if xhr.status == 500
         console.log 'an error occured on the server'

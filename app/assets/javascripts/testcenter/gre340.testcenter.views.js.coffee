@@ -223,6 +223,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         @$(event.currentTarget).text('Hide Time')
       else
         @$(event.currentTarget).text('Show Time')
+    changeQuestionNumber:(questionNumber)->
+      $('#question_number').text(questionNumber)
   Views.SectionActionBarView = Marionette.ItemView.extend
     template: 'section-actionbar'
     model:'Gre340.TestCenter.Data.Models.Quiz'
@@ -335,4 +337,6 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
         cancel: '.cancel'
     removeFullHeight: ->
       $('body').scrollTop(0)
-      $('body').removeClass('fill') 
+      $('body').removeClass('fill')
+
+  Views.addInitializer ->

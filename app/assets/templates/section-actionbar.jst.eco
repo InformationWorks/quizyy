@@ -1,8 +1,7 @@
 <div class="row">
     <div class="span6 align-left">
         <h4><%= @name %></h4>
-
-        <h2>Section <%= @section_index %> of 4</h2>
+        <h2>Section <%= @section_index %> of <%= @sections.length %></h2>
     </div>
     <div class="span6 pull-right align-right">
         <button id="btn-continue" class="win-command">
