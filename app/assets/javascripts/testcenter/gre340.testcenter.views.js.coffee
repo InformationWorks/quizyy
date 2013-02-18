@@ -113,8 +113,9 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       $('body').scrollTop(0)
       $('body').removeClass('fill')
     onRender:()->
-      if /<BLANK-[A-Z]*>/gi.test @$('.question').text()
-        @$('.question').html(@$('.question').text().replace(/<BLANK-[A-Z]*>/gi,'<span class="blank"></span>'))
+      @$('.question').html(@$('.question').text().replaceBlankTag())
+      @$('.question').html(@$('.question').text().replaceImageTag())
+
       @optionsRegion.show(new Views.OptionsView(model: @model))
 
   Views.QuestionTwoPaneView = Marionette.Layout.extend
@@ -132,6 +133,8 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       $('body').scrollTop(0)
       $('body').addClass('fill')
     onRender:()->
+      @$('.question').html(@$('.question').text().replaceImageTag())
+      @$('.passage').html(@$('.passage').text().replaceImageTag())
       if /SIP/i.test @model.get('type_code')
         @model.set('type','sip')  
         @attempt_details = new Backbone.Collection()
