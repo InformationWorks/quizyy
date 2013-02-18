@@ -151,7 +151,7 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       $('body').addClass('fill')
     onRender:()->
       @$('.question').html(@$('.question').html().unescapeHTML().replaceImageTag(@model))
-      @$('.passage').html(@$('.question').html().unescapeHTML().replaceImageTag(@model))
+      @$('.passage').html(@$('.passage').html().unescapeHTML().replaceImageTag(@model))
       if /SIP/i.test @model.get('type_code')
         @model.set('type','sip')  
         @attempt_details = new Backbone.Collection()
