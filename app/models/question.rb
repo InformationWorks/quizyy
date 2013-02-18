@@ -72,7 +72,10 @@ class Question < ActiveRecord::Base
     
     "#{s3_base_url}/uploads/quiz/#{self.section.quiz.id}/quiz_question_images/#{self.que_image}"
   end
-  
+
+  def base_image_url
+    "#{s3_base_url}/uploads/quiz/#{self.section.quiz.id}/quiz_question_images/"
+  end
   # Builds the url of the solution image.
   #
   #  s3_base_url is used to build the Amazon s3 part of the url

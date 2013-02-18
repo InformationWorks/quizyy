@@ -43,7 +43,7 @@
           		  json.type_id question.type_id
           		  json.type_code question.type ? question.type.code : nil
           		  json.section_id question.section_id
-
+                  json.base_image_url question.base_image_url
           		  #### Options
           		  json.options question.options do |option|
           		    json.id option.id
