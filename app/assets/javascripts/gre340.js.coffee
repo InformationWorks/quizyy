@@ -9,9 +9,10 @@ Gre340.on "initialize:after", ->
   	Backbone.history.start(pushState:true)  if Backbone.history
   else
   	Backbone.history.start(pushState:false) if Backbone.history	
-$(document).ready ->	
-	Gre340.start()
-	if !history.pushState
-		$('#unsupported').modal('show')
+$(document).ready ->
+  if !history.pushState
+    $('#unsupported').modal('show')
+  Gre340.start()
+
 $(document).on('page:fetch', (event) -> $('#loading').show())
 $(document).on('page:change',(event) -> $('#loading').hide())
