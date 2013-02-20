@@ -1,0 +1,32 @@
+<form class="form-horizontal" style="background-color: transparent;border:none;">
+    <div class="control-group">
+        <div class="controls">
+            <% if @oneRightAnswer %>
+                <% for option in @options %>
+                    <label class="radio">
+                        <% if option.correct %>
+                            <input type="radio" name="option" value="<%= option.id %>" checked>
+                            <span class="metro-radio"><%= option.content %></span>
+                        <% else %>
+                            <input type="radio" name="option" value="<%= option.id %>">
+                            <span class="metro-radio"><%= option.content %></span>
+                        <% end %>
+                    </label>
+                <% end %>
+            <% else %>
+                <% for option in @options %>
+                    <label class="checkbox">
+                        <% if option.correct %>
+                            <input type="checkbox" name="option" value="<%= option.id %>" checked>
+                            <span class="metro-checkbox"><%= option.content %></span>
+                        <% else %>
+                            <input type="checkbox" name="option" value="<%= option.id %>">
+                            <span class="metro-checkbox"><%= option.content %></span>
+                        <% end %>
+                    </label>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+</form>
+<input type="hidden" name="marked" id="marked" value="false"/>

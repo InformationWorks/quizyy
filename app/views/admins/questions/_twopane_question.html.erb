@@ -1,0 +1,28 @@
+<div id="test-content" class="container">
+<div class="left-pane span6 scroll-y" style="top: 220px;margin-left: 150px ">
+    <section class="instruction">
+        <p>
+        <%= @question.instruction %>
+        </p>
+    </section>
+    <hr>
+    <section class="left-content">
+        <p class="passage">
+            <%= @question.passage %>
+        </p>
+    </section>
+    <% if @question.que_image %>
+        <img style="margin: 0 auto;" src="<%= @question.que_image %>" alt=""/>
+    <% end %>
+</div>
+<div class="right-pane span6 scroll-y" style="top: 220px;margin-left: 150px ">
+<section class="question">
+    <p>
+        <%= @question.que_text %>
+    </p>
+</section>
+<section id="options">
+	<%= render "/admins/questions/option" %>
+</section>
+</div>
+</div>

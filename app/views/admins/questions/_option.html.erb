@@ -1,0 +1,47 @@
+<!-- Set the options required for the question display. -->
+<% 
+	@options = @question.options
+	if @question.question_type.code == "Q-QC" ||
+	   @question.question_type.code == "V-TC-1" ||
+	   @question.question_type.code == "V-MCQ-1" ||
+	   @question.question_type.code == "Q-MCQ-1" ||
+	   @question.question_type.code == "Q-DI-MCQ-1"
+		@oneRightAnswer = true
+	else
+		@oneRightAnswer = false   
+	end
+%>
+
+<!-- Render template based on the type of question -->
+<%  
+	partial_view = "none"
+	if @question.question_type.code == "Q-QC" ||
+	   @question.question_type.code == "Q-MCQ-1" ||
+	   @question.question_type.code == "Q-MCQ-2" ||
+	   @question.question_type.code == "Q-DI-MCQ-1" ||
+	   @question.question_type.code == "Q-DI-MCQ-2" ||
+	   @question.question_type.code == "V-MCQ-1" ||
+	   @question.question_type.code == "V-MCQ-2" ||
+	   @question.question_type.code == "V-SE"
+	   partial_view = "mcq"	
+	elsif @question.question_type.code == "V-TC-1" ||
+		  @question.question_type.code == "V-TC-2" ||
+		  @question.question_type.code == "V-TC-3"
+	   partial_view = "tc"
+	elsif @question.question_type.code == "Q-NE-1" ||
+		  @question.question_type.code == "Q-NE-2" ||
+		  @question.question_type.code == "Q-DI-NE-1" ||
+		  @question.question_type.code == "Q-DI-NE-2"
+	   partial_view = "ne"	
+	end
+%>
+
+<% if partial_view == "mcq" %>
+  <%= render 'admins/questions/mcq_option' %>  
+<% elsif partial_view == "tc" %>
+  <%= render 'admins/questions/tc_option' %>
+<% elsif partial_view == "ne" %>
+  <%= render 'admins/questions/ne_option' %>
+<% else %>
+  <%= render 'admins/questions/none_option' %>
+<% end %>

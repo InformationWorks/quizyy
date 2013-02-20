@@ -1,0 +1,64 @@
+<form style="background-color: transparent;border:none;">
+    <% if @options.length <= 5 %>
+        <% first = @options %>
+    <% else %>
+        <% first = @options[0..2] %>
+    <% end %>
+    <% if @options.length >= 6 %>
+        <% second = @options[3..5] %>
+    <% end %>
+    <% if @options.length == 9 %>
+       <% third = @options[6..8] %>
+    <% end %>
+    <% if first.length == 3 %>
+    <div class="control-group pull-left" style="margin-right: 10px;">
+        <div class="controls">
+            <label>(i)</label>
+    <% else %>
+    <div class="control-group align-center">
+    <% end %>
+            <select name="option1" multiple="multiple" <% if first.length == 5 %> style="height: 130px;" <%end%> >
+                <% for option in first %>
+                    <% if option.correct %>
+                        <option value="<%=option.id%>" selected><%= option.content %></option>
+                    <% else %>
+                        <option value="<%=option.id%>"><%= option.content %></option>
+                    <% end %>
+                <% end %>
+            </select>
+        </div>
+    </div>
+    <% if second %>
+    <div class="control-group pull-left" style="margin-right: 10px;">
+        <div class="controls">
+            <label>(ii)</label>
+            <select name="option2" multiple="multiple">
+                <% for option in second %>
+                    <% if option.correct %>
+                        <option value="<%=option.id%>" selected><%= option.content %></option>
+                    <% else %>
+                        <option value="<%=option.id%>"><%= option.content %></option>
+                    <% end %>
+                <% end %>
+            </select>
+        </div>
+    </div>
+    <% end %>
+    <% if third %>
+        <div class="control-group pull-left" style="margin-right: 10px;">
+            <div class="controls">
+                <label>(iii)</label>
+                <select name="option3" multiple="multiple">
+                    <% for option in third %>
+                        <% if option.correct %>
+                            <option value="<%=option.id%>" selected><%= option.content %></option>
+                        <% else %>
+                            <option value="<%=option.id%>"><%= option.content %></option>
+                        <% end %>
+                    <% end %>
+                </select>
+            </div>
+        </div>
+    <% end %>
+</form>
+<input type="hidden" name="marked" id="marked" value="false"/>

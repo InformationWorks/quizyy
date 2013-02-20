@@ -1,0 +1,49 @@
+<div id="test-content" class="container">
+<div class="single" style="margin-left: 150px;margin-top: 70px;">
+	
+	<section class="instruction">
+    <p>
+        <%= @question.instruction %>
+    </p>
+</section>
+<hr>
+<section class="question">
+    <% if @question.passage and @question.passage != "-" %>
+        <p>
+            <%= @question.passage %>
+        </p>
+    <% end %>
+    <% if @question.que_image %>
+        <div class="center">
+            <img src="<%= @question.que_image %>" alt=""/>
+        </div>
+    <% end %>
+    <% if @question.quantity_a and @question.quantity_b and @question.quantity_a != "" and @question.quantity_b != ""  %>
+        <p>
+          <%= @question.que_text %>
+        </p>
+        <div class="qc row-fluid">
+            <div class="span6 align-center">
+                <h3>Quantity A</h3>
+                <p><%= @question.quantity_a %></p>
+            </div>
+            <div class="span6 align-center">
+                <h3>Quantity B</h3>
+                <p><%= @question.quantity_b %></p>
+            </div>
+        </div>
+    <% else %>
+        <p>
+            <%= @question.que_text %>
+        </p>
+    <% end %>
+
+</section>
+<section id="options">
+
+<%= render "/admins/questions/option" %>
+
+</section>
+	
+</div>
+</div>
