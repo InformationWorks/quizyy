@@ -170,6 +170,18 @@ class StoresController < ApplicationController
     redirect_to homes_index_path, notice: "Test added to your account."
     
   end
+  
+  def search
+    
+    @name = "Search results"
+    
+    # Query string should be empty in case find param is missing.
+    query_string = params[:search_text] ? params[:search_text] : ""
+    
+    @quizzes = Quiz.approved.scoped_for_user(current_user).where("name like ?","%#{query_string}%")  
+    
+    render "show_all_tests"
+  end
 
   private
   

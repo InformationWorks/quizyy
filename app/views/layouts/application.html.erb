@@ -49,9 +49,11 @@
 	        </div>
 	      </div>
 	      <div id="second-nav">
-	        <form class="navbar-search pull-left">
-	          <input type="text" class="search-query" placeholder="Search">
-	        </form>
+	        <%= form_tag search_path, :method => 'get', :class => "navbar-search pull-left" do %>
+			    <p>
+			    <%= text_field_tag :search_text, params[:search_text], :class => "search-query", :placeholder => "Search" %>
+			    </p>
+			<% end %>
 	      </div>
 	      
           <%= render :partial => "layouts/top_right_nav", :locals => { :demo => false } %>
