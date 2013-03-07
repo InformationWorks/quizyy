@@ -133,6 +133,36 @@ class StoresController < ApplicationController
       render 'show_test_detail'
     end  
   end
+  
+  # Process cart and redirect to available test.
+  def proceed_to_checkout
+    
+    order = Order.new
+    order.cart_id = @cart.id
+    order.responseCode = 100
+    order.responseDescription = "Tests added to your account."
+    order.save!
+    
+    cart = Cart.find(order.cart_id)
+        
+    # Add each cartitem to user's account.
+    cart.cart_items.each do | cart_item |
+      if cart_item.quiz_id != nil
+      # Add Quiz
+        quiz_user = QuizUser.new
+        quiz_user.quiz_id = cart_item.quiz_id
+        quiz_user.user_id = current_user.id
+        quiz_user.save!
+      end
+    end
+    
+    redirect_to homes_index_path, notice: "Test added to your account."
+  end
+  
+  # Add a test and take to available test.
+  def add_one_test
+    
+  end
 
   private
   

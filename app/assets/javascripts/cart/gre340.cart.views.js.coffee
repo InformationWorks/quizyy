@@ -29,7 +29,7 @@ Gre340.module "Cart.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
       if @collection.length == 0
         $('#proceed-checkout-btn')[0].remove() if $('#proceed-checkout-btn').length > 0
       else
-        $(@el).append('<a href="stores/cart" class="btn btn-success" id="proceed-checkout-btn">Proceed to checkout</a>') if $('#proceed-checkout-btn').length == 0
+        $(@el).append('<a href="store/proceed_to_checkout" class="btn btn-success" id="proceed-checkout-btn">Proceed to checkout</a>') if $('#proceed-checkout-btn').length == 0
     onRender:()->
       @collectionChanged()
     addItemToCart:(quiz_id,package_id,remove_btn_template,el)->
