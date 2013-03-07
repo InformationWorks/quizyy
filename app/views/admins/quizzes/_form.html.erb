@@ -44,20 +44,6 @@
 							<%= f.text_area :desc, :class => "input-xlarge" %>
 						</div>
 					</div>
-					
-					<div class="control-group">
-						<label class="control-label" for="input"><%= f.label :random %></label>
-						<div class="controls">
-							<%= f.check_box :random , :class => "input-xlarge" %>
-						</div>
-					</div>
-					
-					<div class="control-group">
-						<label class="control-label" for="input"><%= f.label :quiz_type %></label>
-						<div class="controls">
-							<%= f.collection_select :quiz_type_id, QuizType.all, :id, :name,  {}, {:id => 'quiz_type_select' } %>
-						</div>
-					</div>
 				  	
 				  	<div class="control-group" id="category_select">
 						<label class="control-label" for="input"><%= f.label :category %></label>
@@ -65,20 +51,6 @@
 							<%= f.collection_select :category_id, Category.all, :id, :name %>
 						</div>
 					</div>
-					
-					<div class="control-group" id="topic_select">
-						<label class="control-label" for="input"><%= f.label :topic %></label>
-						<div class="controls">
-							<%= f.collection_select :topic_id, Topic.all, :id, :name %>
-						</div>
-					</div>
-					
-					<div class="control-group" id="section_type_select">
-                        <label class="control-label" for="input"><%= f.label :section_type %></label>
-                        <div class="controls">
-                            <%= f.collection_select :section_type_id, SectionType.all, :id, :name %>
-                        </div>
-                    </div>
 				  	
 				  	<div class="form-actions">
 						<%= f.submit :class => "btn btn-info" %>

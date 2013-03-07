@@ -55,22 +55,9 @@ module Admins
     # POST /quizzes.json
     def create
       @quiz = Quiz.new(params[:quiz])
-      
-      if @quiz.quiz_type_id == QuizType.find_by_name("FullQuiz").id
-        @quiz.category_id = nil
-        @quiz.topic_id = nil
-        @quiz.section_type_id = nil
-      elsif @quiz.quiz_type_id == QuizType.find_by_name("CategoryQuiz").id
-        @quiz.topic_id = nil
-        @quiz.section_type_id = nil
-      elsif @quiz.quiz_type_id == QuizType.find_by_name("TopicQuiz").id
-        @quiz.category_id = nil
-        @quiz.section_type_id = nil
-      elsif @quiz.quiz_type_id == QuizType.find_by_name("SectionQuiz").id
-        @quiz.category_id = nil
-        @quiz.topic_id = nil
-      end
-  
+      @quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+      @quiz.topic_id = nil
+      @quiz.section_type_id = nil
       respond_to do |format|
         if @quiz.save
           format.html { redirect_to [:admins, @quiz], notice: 'Quiz was successfully created.' }
@@ -86,34 +73,11 @@ module Admins
     # PUT /quizzes/1.json
     def update
       
-      # If quiz type is "FullQuiz" then category_id & topic_id should be nil
-      # Step 1: Remove category_id & topic_id from params hash
-      # Step 2: Set category_id & topic_id as nil
-      if params[:quiz][:quiz_type_id] == QuizType.find_by_name("FullQuiz").id.to_s
-        params[:quiz].delete :category_id
-        params[:quiz].delete :topic_id
-        
-        @quiz.category_id = nil
-        @quiz.topic_id = nil
-      elsif params[:quiz][:quiz_type_id] == QuizType.find_by_name("CategoryQuiz").id
-        params[:quiz].delete :topic_id
-        params[:quiz].delete :section_type_id
-        
-        @quiz.topic_id = nil
-        @quiz.section_type_id = nil
-      elsif params[:quiz][:quiz_type_id] == QuizType.find_by_name("TopicQuiz").id
-        params[:quiz].delete :category_id
-        params[:quiz].delete :section_type_id
-        
-        @quiz.category_id = nil
-        @quiz.section_type_id = nil
-      elsif params[:quiz][:quiz_type_id] == QuizType.find_by_name("SectionQuiz").id
-        params[:quiz].delete :category_id
-        params[:quiz].delete :topic_id
-        
-        @quiz.category_id = nil
-        @quiz.topic_id = nil
-      end
+      # Handling only category quiz.
+      params[:quiz].delete :topic_id
+      params[:quiz].delete :section_type_id
+      @quiz.topic_id = nil
+      @quiz.section_type_id = nil
   
       respond_to do |format|
         if @quiz.update_attributes(params[:quiz])
