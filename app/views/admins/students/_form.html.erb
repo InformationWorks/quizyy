@@ -46,11 +46,16 @@
                     </div>
                     
                     <div class="control-group">
-                        <label class="control-label" for="input"><%= f.label :credits %></label>
+                        <label class="control-label" for="input"><%= f.label :password %></label>
                         <div class="controls">
-                            <%= select_tag(:credits_to_add, options_for_select(['0','1000',
-                                                                           '1500',
-                                                                           '2000'], '0')) %>
+                            <%= f.password_field :password, :class => "input-xlarge" %>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input"><%= f.label :password_confirmation %></label>
+                        <div class="controls">
+                            <%= f.password_field :password_confirmation, :class => "input-xlarge" %>
                         </div>
                     </div>
                     

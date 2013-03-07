@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,:confirmable
+         :recoverable, :rememberable, :trackable, :validatable
          
   mount_uploader :profile_image, ProfileImageUploader
   
@@ -242,9 +242,9 @@ class User < ActiveRecord::Base
   private
   
   # Devise password required override.
-  def password_required?
-    super if confirmed?
-  end
+  #def password_required?
+  #  super if confirmed?
+  #end
   
   # Devise confirmable password match.  
   def password_match?
