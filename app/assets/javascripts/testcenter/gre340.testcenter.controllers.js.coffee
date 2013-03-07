@@ -26,9 +26,11 @@
       @qActionBar = null
     start:() ->
       console.log 'start question controller called'
+      @showLoading()
       @attempt.fetch
         async: false
       @isStarted = true
+      @hideLoading()
     showLoading:() ->
       Gre340.TestCenter.Layout.layout.loading.show(@loadingView)
     hideLoading:() ->
@@ -45,11 +47,13 @@
       else
         false
     loadQuiz:()->
+      @showLoading()
       @quiz = Gre340.TestCenter.Data.currentQuiz
       @quiz.url = '/api/v1/quizzes/'+@attempt.get('quiz_id')+'.json'
       @quiz.fetch
         silent:false,
         async: false
+      @hideLoading()
     lostConnection:()->
       @connection = false
       $('.action-bar-wrapper').addClass('no-connection')
@@ -349,7 +353,7 @@
     qc.setCurrentQuestion(quiz.getCurrentQuestion())
     qc.setCurrentQuestionCollection(quiz.getCurrentQuestionCollection())
     qc.setCurrentSectionCollection(quiz.getCurrentSectionCollection())
-    
+
     if qc.getCurrentSection()?
       if qc.getCurrentQuestion()?
         qc.startSection(Controllers.questionController.getCurrentSection(),Controllers.questionController.getCurrentQuestion().get('sequence_no'))

@@ -208,7 +208,8 @@
   position: fixed;
   left: 50%;
   top: 40%;
-  background-image:image-url('loader.gif');
+  background: #fff;
+  background-image:image-url('iw-loading.gif');
   z-index: 3000;
   width:64px;
   height: 64px;
