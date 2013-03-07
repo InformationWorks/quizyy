@@ -22,10 +22,10 @@ class ApplicationController < ActionController::Base
       redirect_to admins_packages_url
     elsif @current_controller == "quiz_types"
       flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
-      redirect_to admins_quiz_types_url
+      redirect_to admins_home_url
     elsif @current_controller == "section_types"
       flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
-      redirect_to admins_section_types_url
+      redirect_to admins_home_url
     elsif @current_controller == "students"
       flash[:error] = "You are not authorized to do this  <span class='emo-tongue' data-original-title='.emo-tongue'></span>".html_safe 
       redirect_to admins_home_url

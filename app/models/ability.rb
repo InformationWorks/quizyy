@@ -15,13 +15,13 @@ class Ability
       can :create, :students
       can :add, :credits
       can :manage, [Quiz,Section,Question,Option]
-      can :read, [Category,Type,Topic,Package,QuizType,SectionType,Offer]
+      can :read, [Category,Type,Topic,Package,Offer]
     elsif user.role? :publisher
       # Roles for publishers to create & publish a quiz.
       # http://www.tonyamoyal.com/2010/07/28/rails-authentication-with-devise-and-cancan-customizing-devise-controllers/
       can :administer, :app
       can :manage, [Quiz,Section,Question,Option]
-      can :read, [Category,Type,Topic,Package,QuizType,SectionType]
+      can :read, [Category,Type,Topic,Package]
     elsif user.role? :student
       # Roles for Renaissance students.
       # Don't need to pay for buying Full-length tests.
