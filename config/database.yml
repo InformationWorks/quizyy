@@ -15,7 +15,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: gremasters-web_development
+  database: ashram_quizyy_dev
   pool: 5
   username: iwadmin
   password: password
@@ -41,7 +41,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: gremasters-web_test
+  database: ashram_quizyy_test
   pool: 5
   username: iwadmin
   password: password
@@ -49,7 +49,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: gremasters-web_production
+  database: ashram_quizyy_prd
   pool: 5
   username: iwadmin
   password: password
