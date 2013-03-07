@@ -332,6 +332,39 @@ module Admins
       
     end
     
+    # Upload category test.
+    def upload_excel
+      
+      logger.info("params = " + params.to_s)
+      
+      quiz = Quiz.find_by_slug!(params[:id])
+      
+      if params[:quiz][:dry_run] == "true"
+        dry_run = true
+      else
+        dry_run = false
+      end
+      
+      quiz_uploader = CategoryQuizUploader.new(getWorkbookFromParams(params),quiz,dry_run)
+      
+      if quiz_uploader.validate_excel_workbook
+        # Valid Excel
+        
+        if quiz_uploader.execute_excel_upload
+          # Excel upload executed successfully.
+          redirect_to  admins_quiz_path(quiz), :flash => { :success_messages => quiz_uploader.success_messages }
+        else
+          # Excel upload failed.
+          redirect_to  admins_quiz_path(quiz), :flash => { :error_messages => quiz_uploader.error_messages }
+        end
+        
+      else
+        # Invalid Excel
+        redirect_to  admins_quiz_path(quiz), :flash => { :error_messages => quiz_uploader.error_messages }
+      end
+      
+    end
+    
     private
     
     # Return the workbook object from the uploaded file and
@@ -352,11 +385,9 @@ module Admins
     
     def upload_excel_path
       if @quiz.quiz_type_id == QuizType.find_by_name("CategoryQuiz").id
-        if @quiz.category.section_type.name == "Verbal"
-          upload_path = upload_verbal_excel_admins_quiz_path(@quiz)
-        else
-          upload_path = upload_quant_excel_admins_quiz_path(@quiz)
-        end
+        
+        upload_path = upload_excel_admins_quiz_path(@quiz)
+        
       elsif @quiz.quiz_type_id == QuizType.find_by_name("TopicQuiz").id
         if @quiz.topic.section_type.name == "Verbal"
           upload_path = upload_verbal_excel_admins_quiz_path(@quiz)

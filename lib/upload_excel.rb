@@ -1,3 +1,5 @@
+require 'upload_excel/category_upload_helper'
+require 'upload_excel/category_quiz_uploader'
 require 'upload_excel/upload_helper'
 require 'upload_excel/verbal_quiz_uploader'
 require 'upload_excel/quant_quiz_uploader'

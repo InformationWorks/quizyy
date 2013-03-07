@@ -95,6 +95,7 @@ GremastersWeb::Application.routes.draw do
       member do
         post 'question_images_upload'
         post 'question_images_delete_all'
+        post 'upload_excel'
         post 'upload_full_excel'
         post 'upload_verbal_excel'
         post 'upload_quant_excel'
