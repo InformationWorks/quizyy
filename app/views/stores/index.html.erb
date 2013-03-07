@@ -3,32 +3,6 @@
 <% end %>
 
 <div class="span12">
-  
-  <!-- Show full-length pack selection if no full-length test is purchased. -->
-  <% if @purchased_full_quizzes_count == 0 %>
-    <div class="span12" style="margin-bottom: 35px;">
-      <%= render "full_quiz_pack_selection"%>
-    </div>
-  <% else %>
-    <div class="span8">
-      <%= render :partial => "full_quiz_group_block", :locals => { :quizzes => @full_length_quizzes } %>
-    </div>
-  <% end %>
-  
-  <!-- Show verbal section quizzes -->
-  <% if @verbal_section_quizzes.count > 0  %>
-      <div class="span8">
-        <%= render :partial => "section_quiz_group_block", :locals => { :section => "Verbal" } %>
-      </div>
-  <% end %>
-  
-  <!-- Show quant section quizzes -->
-  <% if @quant_section_quizzes.count > 0  %>
-      <div class="span8">
-        <%= render :partial => "section_quiz_group_block", :locals => { :section => "Quant" } %>
-      </div>
-  <% end %>
-  
   <!-- Show category-topic tests -->
   <div class="span8">
     <%= render :partial => "category_topic_quiz_group_block", :locals => { :store_entities => @store_entities } %>
@@ -39,5 +13,4 @@
     <%= content_tag "div", id: "cart-wrapper",class: "span3 well", data: { cart: @cart.cart_items.to_json(:include => [:quiz,:package]) } do%>
     <% end %>
   <% end %> 
-  
 </div>

@@ -5,29 +5,6 @@ class StoresController < ApplicationController
   # match 'store' => "stores#index", via: [:get], :as => "store"
   def index
     
-    # Get full-length quizzes.
-    @full_length_quizzes,@purchased_full_quizzes_count = Quiz.store_full_quizzes(current_user)
-    @full_length_quizzes = @full_length_quizzes.first(3)
-    load_words_for_quizzes(@full_length_quizzes)
-    
-    # Get verbal section quizzes.
-    @verbal_section_quizzes = Quiz.store_verbal_section_quizzes(current_user)
-    @verbal_section_quizzes = @verbal_section_quizzes.first(3)
-    load_words_for_quizzes(@verbal_section_quizzes)
-    
-    # Get quant section quizzes.
-    @quant_section_quizzes = Quiz.store_quant_section_quizzes(current_user)
-    @quant_section_quizzes = @quant_section_quizzes.first(3)
-    load_words_for_quizzes(@quant_section_quizzes)
-    
-    # Fetch packages if no full length quiz is purchased by the user.
-    if current_user == nil || @purchased_full_quizzes_count == 0
-      packages = Package.where("position = 1 or position = 2 or position = 3").order("position asc")
-      @package_1 = packages[0]
-      @package_2 = packages[1]
-      @package_3 = packages[2]
-    end
-    
     # generate store entities.
     @store_entities = generate_store_entities
     
@@ -165,12 +142,12 @@ class StoresController < ApplicationController
     # Get array of category & topic structures.
     # [ { entity => string, name => string, slug => string , quizzes => array_of_quizzes } ]
     store_category_entities = Quiz.store_entity_name_quizzes("Category",current_user)
-    store_topic_entities = Quiz.store_entity_name_quizzes("Topic",current_user)
+    #store_topic_entities = Quiz.store_entity_name_quizzes("Topic",current_user)
     
     # Combile category & topic array and sort them by name.
     store_entities = []
     store_entities += store_category_entities
-    store_entities += store_topic_entities
+    #store_entities += store_topic_entities
     store_entities.sort! { |a,b| a[:name].downcase <=> b[:name].downcase }
     
     return store_entities

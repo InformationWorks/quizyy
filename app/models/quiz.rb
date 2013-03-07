@@ -267,7 +267,7 @@ class Quiz < ActiveRecord::Base
     category_quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).category.specific_category(category).order('id ASC')
     
     if user != nil
-      category_quizzes += current_user.quizzes.category.specific_category(category)  
+      category_quizzes += user.quizzes.category.specific_category(category)  
     end
     
     return category_quizzes
@@ -287,7 +287,7 @@ class Quiz < ActiveRecord::Base
     topic_quizzes = Quiz.scoped_for_user(user).not_in_account_of_user(user).topic.specific_topic(topic).order('id ASC')
     
     if user != nil
-      topic_quizzes += current_user.quizzes.topic.specific_topic(topic)  
+      topic_quizzes += user.quizzes.topic.specific_topic(topic)  
     end
     
     return topic_quizzes
