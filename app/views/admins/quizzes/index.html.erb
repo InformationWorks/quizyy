@@ -14,43 +14,12 @@
 		<section class="tab-content">
 			<!-- Tab #static -->
 			<div class="tab-pane active" id="static">
-				<h3><span class="awe-edit"></span> Full Tests</h3>				
-				
-				<%= render :partial => "quiz_table", :locals => { :table_type => "full" }  %>
-				
-			</div>	
-		</section>
-		
-		<section class="tab-content">
-            <!-- Tab #static -->
-            <div class="tab-pane active" id="static">
-                <h3><span class="awe-edit"></span> Section Tests</h3>              
-                
-                <%= render :partial => "quiz_table", :locals => { :table_type => "section" }  %>
-                
-            </div>  
-        </section>
-		
-		<section class="tab-content">
-			<!-- Tab #static -->
-			<div class="tab-pane active" id="static">
-				<h3><span class="awe-edit"></span> Category Tests</h3>
 				<%= render :partial => "quiz_table", :locals => { :table_type => "category" }  %>
 			</div>	
 		</section>
-		
-		<section class="tab-content">
-			<!-- Tab #static -->
-			<div class="tab-pane active" id="static">
-				<h3><span class="awe-edit"></span> Topic Tests</h3>
-				<%= render :partial => "quiz_table", :locals => { :table_type => "topic" }  %>
-            </div>
-		</section>
-		
-		
 		<footer class="error">
-			<div class="alert alert-error">
-				<strong style="font-size: 15px;">DO NOT MODIFY CONTENT OF APPROVED QUIZ IF YOU DON'T KNOW WHAT YOU ARE DOING !</strong>
+			<div class="alert">
+				<strong style="font-size: 12px;">Be carefuly when modifying a approved quiz!</strong>
 			</div>
 		</footer>
 	</div>
