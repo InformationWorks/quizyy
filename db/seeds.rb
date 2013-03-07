@@ -47,23 +47,20 @@ student2_user.save!
 User.update_all ["confirmed_at = ?", Time.now]
 
 # Generate SectionTypes.  
-["Verbal", "Quant"].each do | section_type_name |
+["Main"].each do | section_type_name |
   SectionType.find_or_create_by_name_and_instruction(section_type_name,"Total Questions: 20 & Total Time: 30 minutes")
 end
 
-verbal_section_type = SectionType.find_by_name("Verbal")
-quant_section_type = SectionType.find_by_name("Quant")
+main_section_type = SectionType.find_by_name("Main")
 
 # Generate Categories.
-[ { :code => "RC", :name => "Reading Comprehension", :section_type_id => verbal_section_type.id}, 
-  { :code => "TC", :name => "Text Completion", :section_type_id => verbal_section_type.id},
-  { :code => "SE", :name => "Sentence Equivalence", :section_type_id => verbal_section_type.id},
-  { :code => "QC", :name => "Quantitative Comparison", :section_type_id => quant_section_type.id},
-  { :code => "MCQ", :name => "Multiple choice", :section_type_id => quant_section_type.id},
-  { :code => "NE", :name => "Numeric Entry", :section_type_id => quant_section_type.id},
-  { :code => "DI-MCQ", :name => "Data Interpretation-Multiple choice", :section_type_id => quant_section_type.id},
-  { :code => "DI-NE", :name => "Data Interpretation-Numeric Entry", :section_type_id => quant_section_type.id}].each do |category|
-  Category.find_or_create_by_code_and_name_and_section_type_id(category[:code],category[:name],category[:section_type_id])
+[ { :code => "Mathematics", :name => "Mathematics"}, 
+  { :code => "Science", :name => "Science"},
+  { :code => "English", :name => "English"},
+  { :code => "Social Studies", :name => "Social Studies"},
+  { :code => "Computer", :name => "Computer"},
+  { :code => "General Knowledge", :name => "General Knowledge"}].each do |category|
+  Category.find_or_create_by_code_and_name(category[:code],category[:name])
 end
 
 # Generate Topics.
@@ -97,35 +94,35 @@ end
   
   if(!topic)
     topic = Topic.create(:name => topic_name)
-    topic.section_type_id = quant_section_type.id
+    topic.section_type_id = nil
     topic.save!
   end
   
 end
 
 # Generate Types.
-[ { :code => "V-MCQ-1", :name => "Verbal - Select 1 of 5", :category => Category.find_by_code("RC") }, 
-  { :code => "V-MCQ-2", :name => "Verbal - Select all correct of 3", :category => Category.find_by_code("RC") },
-  { :code => "V-SIP",   :name => "Verbal - Select in passage", :category => Category.find_by_code("RC") },
-  { :code => "V-TC-1",  :name => "Verbal - Text completion [1 Blank,5 Options]", :category => Category.find_by_code("TC") },
-  { :code => "V-TC-2",  :name => "Verbal - Text completion [2 Blank,6 Options]", :category => Category.find_by_code("TC") },
-  { :code => "V-TC-3",  :name => "Verbal - Text completion [3 Blank,9 Options]", :category => Category.find_by_code("TC") },
-  { :code => "V-SE",    :name => "Verbal - Sentence Equivalance [1 Blank,6 Options]", :category => Category.find_by_code("SE") },
-  { :code => "Q-QC",    :name => "Quant - Compare A/B", :category => Category.find_by_code("QC") },
-  { :code => "Q-MCQ-1",    :name => "Quant - Select 1 of 5", :category => Category.find_by_code("MCQ") },
-  { :code => "Q-MCQ-2",    :name => "Quant - Select all correct", :category => Category.find_by_code("MCQ") },
-  { :code => "Q-NE-1",     :name => "Quant - NE [ 1 Textbox ]", :category => Category.find_by_code("NE") },
-  { :code => "Q-NE-2",     :name => "Quant - NE [ 2 Textboxes ]", :category => Category.find_by_code("NE") },
-  { :code => "Q-DI-MCQ-1", :name => "Quant - DI + MCQ1", :category => Category.find_by_code("DI-MCQ") },
-  { :code => "Q-DI-MCQ-2", :name => "Quant - DI + MCQ2", :category => Category.find_by_code("DI-MCQ") },
-  { :code => "Q-DI-NE-1",  :name => "Quant - DI + NE1", :category => Category.find_by_code("DI-NE") },
-  { :code => "Q-DI-NE-2",  :name => "Quant - DI + NE2", :category => Category.find_by_code("DI-NE") }].each do |type_hash|
+[ { :code => "V-MCQ-1", :name => "Verbal - Select 1 of 5", :category => nil }, 
+  { :code => "V-MCQ-2", :name => "Verbal - Select all correct of 3", :category => nil },
+  { :code => "V-SIP",   :name => "Verbal - Select in passage", :category => nil },
+  { :code => "V-TC-1",  :name => "Verbal - Text completion [1 Blank,5 Options]", :category => nil },
+  { :code => "V-TC-2",  :name => "Verbal - Text completion [2 Blank,6 Options]", :category => nil },
+  { :code => "V-TC-3",  :name => "Verbal - Text completion [3 Blank,9 Options]", :category => nil },
+  { :code => "V-SE",    :name => "Verbal - Sentence Equivalance [1 Blank,6 Options]", :category => nil },
+  { :code => "Q-QC",    :name => "Quant - Compare A/B", :category => nil },
+  { :code => "Q-MCQ-1",    :name => "Quant - Select 1 of 5", :category => nil },
+  { :code => "Q-MCQ-2",    :name => "Quant - Select all correct", :category => nil },
+  { :code => "Q-NE-1",     :name => "Quant - NE [ 1 Textbox ]", :category => nil },
+  { :code => "Q-NE-2",     :name => "Quant - NE [ 2 Textboxes ]", :category => nil },
+  { :code => "Q-DI-MCQ-1", :name => "Quant - DI + MCQ1", :category => nil },
+  { :code => "Q-DI-MCQ-2", :name => "Quant - DI + MCQ2", :category => nil },
+  { :code => "Q-DI-NE-1",  :name => "Quant - DI + NE1", :category => nil },
+  { :code => "Q-DI-NE-2",  :name => "Quant - DI + NE2", :category => nil }].each do |type_hash|
   
   type = Type.find_by_code(type_hash[:code]) 
   
   if(!type)
     type = Type.create(:code => type_hash[:code],:name => type_hash[:name])
-    type.category = type_hash[:category]
+    type.category = nil
     type.save!
   end
 
@@ -136,244 +133,25 @@ end
   QuizType.find_or_create_by_name(quiz_type_name)
 end
   
-full_quiz_type_id = QuizType.find_by_name("FullQuiz").id
-section_quiz_type_id = QuizType.find_by_name("SectionQuiz").id
+category_quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   
-# Create 10 FullLengthQuiz [ Timed + Paid ]
-(1..12).each do |index|
-  full_quiz = Quiz.new
-  full_quiz.name = "Full Length " + (index+100).to_s
-  full_quiz.desc = "Full Length " + (index+100).to_s + " desc"
-  full_quiz.random = false
-  full_quiz.quiz_type_id = full_quiz_type_id
-  
-  # 11 - 12 are free
-  if index == 11 || index == 12
-    full_quiz.price = 0
-  else
-    full_quiz.price = 99.0
-  end
-  
-  full_quiz.published = true  
-  full_quiz.publisher_id = publisher_user.id
-  full_quiz.published_at = DateTime.now
-  full_quiz.approved = true
-  full_quiz.approver_id = admin_user.id
-  full_quiz.approved_at = DateTime.now
-  full_quiz.save!
-end
-
-# Create 5 verbal section quizzes. 1 free
-(1..5).each do |index|
-  section_quiz = Quiz.new
-  section_quiz.name = "Verbal 10" + (index).to_s
-  section_quiz.desc = "Verbal 10" + (index).to_s + " desc"
-  section_quiz.random = false
-  section_quiz.quiz_type_id = section_quiz_type_id
-  section_quiz.section_type_id = verbal_section_type.id
-  section_quiz.price = 99.0
-  # First one is free
-  if index == 1
-    section_quiz.price = 0.0
-  end
-  
-  section_quiz.save!
-end
-
-# Create 5 verbal section quizzes. 1 free
-(1..5).each do |index|
-  section_quiz = Quiz.new
-  section_quiz.name = "Quant 10" + (index).to_s
-  section_quiz.desc = "Quant 10" + (index).to_s + " desc"
-  section_quiz.random = false
-  section_quiz.quiz_type_id = section_quiz_type_id
-  section_quiz.section_type_id = quant_section_type.id
-  section_quiz.price = 99.0
-  # First one is free
-  if index == 1
-    section_quiz.price = 0.0
-  end
-  
-  section_quiz.save!
-end
-
 # Create 5 Category-wise quiz for RC + Practice [ 1 Free + 4 Paid ]
-(1..5).each do |index|
-  rc_cat_quiz = Quiz.new
-  rc_cat_quiz.name = "RC 10" + (index).to_s
-  rc_cat_quiz.desc = "RC 10" + (index).to_s + " desc"
-  rc_cat_quiz.random = false
-  rc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  rc_cat_quiz.category_id = Category.find_by_code("RC").id
-  rc_cat_quiz.price = 99.0
-  # First one is free
-  if index == 1
-    rc_cat_quiz.price = 0.0
-  end
-  
-  rc_cat_quiz.save!
-end
 
-# Create 5 Category-wise quiz for TC + Practice [ 1 Free + 4 Paid ]
-(1..5).each do |index|
-  tc_cat_quiz = Quiz.new
-  tc_cat_quiz.name = "TC 10" + (index).to_s
-  tc_cat_quiz.desc = "TC 10" + (index).to_s + " desc"
-  tc_cat_quiz.random = false
-  tc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  tc_cat_quiz.category_id = Category.find_by_code("TC").id
-  tc_cat_quiz.price = 99.0
+Category.all.each do |category|
   
-  # First one is free
-  if index == 1
-    tc_cat_quiz.price = 0.0
+  (1..5).each do |index|
+    category_quiz = Quiz.new
+    category_quiz.name = "#{category.name} 10" + (index).to_s
+    category_quiz.desc = "#{category.name} 10" + (index).to_s + " description"
+    category_quiz.random = false
+    category_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+    category_quiz.category_id = category.id
+    category_quiz.published = true
+    category_quiz.approved = true
+    category_quiz.price = 0.0
+    category_quiz.save!
   end
   
-  tc_cat_quiz.save!
-end
-
-# Create 5 Category-wise quiz for SE + Practice [ 1 Free + 4 Paid ]
-(1..5).each do |index|
-  se_cat_quiz = Quiz.new
-  se_cat_quiz.name = "SE 10" + (index).to_s
-  se_cat_quiz.desc = "SE 10" + (index).to_s + " desc"
-  se_cat_quiz.random = false
-  se_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  se_cat_quiz.category_id = Category.find_by_code("SE").id
-  se_cat_quiz.price = 99.0
-  
-  # First one is free
-  if index == 1
-    se_cat_quiz.price = 0.0
-  end
-  
-  se_cat_quiz.save!
-end
-
-# Create 5 Category-wise quiz for QC + Practice [ 1 Free + 4 Paid ]
-(1..5).each do |index|
-  qc_cat_quiz = Quiz.new
-  qc_cat_quiz.name = "QC 10" + (index).to_s
-  qc_cat_quiz.desc = "QC 10" + (index).to_s + " desc"
-  qc_cat_quiz.random = false
-  qc_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  qc_cat_quiz.category_id = Category.find_by_code("QC").id
-  qc_cat_quiz.price = 99.0
-  
-  # First one is free
-  if index == 1
-    qc_cat_quiz.price = 0.0
-  end
-  
-  qc_cat_quiz.save!
-end
-
-# Create 5 Category-wise quiz for QC + Practice [ 1 Free + 4 Paid ]
-(1..5).each do |index|
-  ne_cat_quiz = Quiz.new
-  ne_cat_quiz.name = "NE 10" + (index).to_s
-  ne_cat_quiz.desc = "NE 10" + (index).to_s + " desc"
-  ne_cat_quiz.random = false
-  ne_cat_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-  ne_cat_quiz.category_id = Category.find_by_code("NE").id
-  ne_cat_quiz.price = 99.0
-  
-  # First one is free
-  if index == 1
-    ne_cat_quiz.price = 0.0
-  end
-  
-  ne_cat_quiz.save!
-end
-
-# Create 5 Topic-wise quiz for Integers + Practice [ 1 Free + 4 Paid ]
-(1..5).each do |index|
-  integers_quiz = Quiz.new
-  integers_quiz.name = "Integers 10" + (index).to_s
-  integers_quiz.desc = "Integers 10" + (index).to_s + " desc"
-  integers_quiz.random = false
-  integers_quiz.quiz_type = QuizType.find_by_name("TopicQuiz")
-  integers_quiz.topic_id = Topic.find_by_name("Integers").id
-  integers_quiz.price = 99.0
-  
-  # First one is free
-  if index == 1
-    integers_quiz.price = 0.0
-  end
-  
-  integers_quiz.save!
-end
-
-# Create 5 Topic-wise quiz for Integers + Practice [ 1 Free + 4 Paid ]
-(1..5).each do |index|
-  decimals_quiz = Quiz.new
-  decimals_quiz.name = "Decimals 10" + (index).to_s
-  decimals_quiz.desc = "Decimals 10" + (index).to_s + " desc"
-  decimals_quiz.random = false
-  decimals_quiz.quiz_type = QuizType.find_by_name("TopicQuiz")
-  decimals_quiz.topic_id = Topic.find_by_name("Decimals").id
-  decimals_quiz.price = 99.0
-  
-  # First one is free
-  if index == 1
-    decimals_quiz.price = 0.0
-  end
-  
-  decimals_quiz.save!
-end
-
-# Create 5 Topic-wise quiz for Fractions + Practice [ 1 Free + 4 Paid ]
-(1..5).each do |index|
-  fractions_quiz = Quiz.new
-  fractions_quiz.name = "Fractions 10" + (index).to_s
-  fractions_quiz.desc = "Fractions 10" + (index).to_s + " desc"
-  fractions_quiz.random = false
-  fractions_quiz.quiz_type = QuizType.find_by_name("TopicQuiz")
-  fractions_quiz.topic_id = Topic.find_by_name("Fractions").id
-  fractions_quiz.price = 99.0
-  
-  # First one is free
-  if index == 1
-    fractions_quiz.price = 0.0
-  end
-  
-  fractions_quiz.save!
-end
-
-# Create 5 Topic-wise quiz for Exp. & Sq. roots + Practice [ 1 Free + 4 Paid ]
-(1..5).each do |index|
-  exp_sq_quiz = Quiz.new
-  exp_sq_quiz.name = "Exp. & Sq. roots 10" + (index).to_s
-  exp_sq_quiz.desc = "Exp. & Sq. roots 10" + (index).to_s + " desc"
-  exp_sq_quiz.random = false
-  exp_sq_quiz.quiz_type = QuizType.find_by_name("TopicQuiz")
-  exp_sq_quiz.topic_id = Topic.find_by_name("Exponents and Square Roots").id
-  exp_sq_quiz.price = 99.0
-  
-  # First one is free
-  if index == 1
-    exp_sq_quiz.price = 0.0
-  end
-  
-  exp_sq_quiz.save!
-end
-
-# Create 5 Topic-wise quiz for Ordering & real number line + Practice [ 1 Free + 4 Paid ]
-(1..5).each do |index|
-  ord_re_quiz = Quiz.new
-  ord_re_quiz.name = "Ordering & real number line 10" + (index).to_s
-  ord_re_quiz.desc = "Ordering & real number line 10" + (index).to_s + " desc"
-  ord_re_quiz.random = false
-  ord_re_quiz.quiz_type = QuizType.find_by_name("TopicQuiz")
-  ord_re_quiz.topic_id = Topic.find_by_name("Ordering and the Real Number Line").id
-  ord_re_quiz.price = 99.0
-  
-  # First one is free
-  if index == 1
-    ord_re_quiz.price = 0.0
-  end
-  
-  ord_re_quiz.save!
 end
   
 # Add 3 packages for full-quiz section in store.
@@ -397,30 +175,6 @@ package_3.desc = "10 awesome full-length tests"
 package_3.price = 1099.00
 package_3.position = 3
 package_3.save!
-
-# Add first 5 full quizzes to package 1.
-(1..5).each do |index|
-  package_quiz = PackageQuiz.new
-  package_quiz.quiz_id = Quiz.find_by_name("Full Length " + (index+100).to_s).id
-  package_quiz.package_id = package_1.id
-  package_quiz.save!
-end
-
-# Add first 7 full quizzes to package 2.
-(1..7).each do |index|
-  package_quiz = PackageQuiz.new
-  package_quiz.quiz_id = Quiz.find_by_name("Full Length " + (index+100).to_s).id
-  package_quiz.package_id = package_2.id
-  package_quiz.save!
-end
-
-# Add first 10 full quizzes to package 3.
-(1..10).each do |index|
-  package_quiz = PackageQuiz.new
-  package_quiz.quiz_id = Quiz.find_by_name("Full Length " + (index+100).to_s).id
-  package_quiz.package_id = package_3.id
-  package_quiz.save!
-end
 
 (130..170).each do |index|
   scaled_score = ScaledScore.new

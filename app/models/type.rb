@@ -36,7 +36,7 @@ class Type < ActiveRecord::Base
   # ----------------------------------------------------------
   # Validations
   
-  validates :code, :slug, :name, :category_id, :presence => true
+  validates :code, :slug, :name, :presence => true
   validates :code, :slug, :name, :uniqueness => true
   
   # ----------------------------------------------------------
