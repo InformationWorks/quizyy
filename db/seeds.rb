@@ -47,7 +47,7 @@ student2_user.save!
 User.update_all ["confirmed_at = ?", Time.now]
 
 # Generate SectionTypes.  
-["Main"].each do | section_type_name |
+["Main","Verbal", "Quant"].each do | section_type_name |
   SectionType.find_or_create_by_name_and_instruction(section_type_name,"Total Questions: 20 & Total Time: 30 minutes")
 end
 
