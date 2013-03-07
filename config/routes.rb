@@ -130,7 +130,9 @@ GremastersWeb::Application.routes.draw do
   match "store/quant_tests/:quiz_slug" => "stores#show_quant_test", via: [:get], :as => "show_quant_test"
   match "store/categories/:category_slug/:quiz_slug" => "stores#show_category_test", via: [:get], :as => "show_category_test"
   match "store/topics/:topic_slug/:quiz_slug" => "stores#show_topic_test", via: [:get], :as => "show_topic_test"
+  
   match "store/proceed_to_checkout" => "stores#proceed_to_checkout", vid: [:get], :as => "proceed_to_checkout"
+  match "store/add_test_to_account/:quiz_id" => "stores#add_test_to_account", vid: [:get], :as => "add_test_to_account"
 
   get "landings/index"
 

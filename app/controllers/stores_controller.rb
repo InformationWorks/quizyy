@@ -160,7 +160,14 @@ class StoresController < ApplicationController
   end
   
   # Add a test and take to available test.
-  def add_one_test
+  def add_test_to_account
+    
+    quiz_user = QuizUser.new
+    quiz_user.quiz_id = params[:quiz_id]
+    quiz_user.user_id = current_user.id
+    quiz_user.save!
+    
+    redirect_to homes_index_path, notice: "Test added to your account."
     
   end
 
