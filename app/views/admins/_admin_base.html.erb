@@ -47,36 +47,41 @@
 							<span class="awe-folder-close"></span>Topics
 							<% end %>
 						</li>
-						<li <% if @current_controller == "quiz_types" %>class = "current"<% end %> >
-							<%= link_to(admins_quiz_types_path, :class => "no-submenu") do %>
-							<span class="awe-flag"></span>QuizTypes
-							<% end %>
-						</li>
-						<li <% if @current_controller == "section_types" %>class = "current"<% end %> >
-							<%= link_to(admins_section_types_path, :class => "no-submenu") do %>
-							<span class="awe-folder-open"></span>SectionTypes
-							<% end %>
-						</li>
 						<li <% if @current_controller == "students" %>class = "current"<% end %> >
                             <%= link_to(admins_students_path, :class => "no-submenu") do %>
                             <span class="awe-user"></span>Student Management
                             <% end %>
                         </li>
-						<li <% if @current_controller == "credits" %>class = "current"<% end %> >
-							<%= link_to(admins_credits_path, :class => "no-submenu") do %>
-							<span class="awe-money"></span>Credit Management
-							<% end %>
-						</li>
-						<li <% if @current_controller == "transactions" %>class = "current"<% end %> >
-							<%= link_to(admins_transactions_path, :class => "no-submenu") do %>
-							<span class="awe-credit-card"></span>Transaction Management
-							<% end %>
-						</li>
-						<li <% if @current_controller == "offers" %>class = "current"<% end %> >
-							<%= link_to(admins_offers_path, :class => "no-submenu") do %>
-							<span class="awe-gift"></span>Offers
-							<% end %>
-						</li>
+                        
+                        <% if current_user.role? :super_admin %>
+                        
+							<li <% if @current_controller == "quiz_types" %>class = "current"<% end %> >
+								<%= link_to(admins_quiz_types_path, :class => "no-submenu") do %>
+								<span class="awe-flag"></span>QuizTypes
+								<% end %>
+							</li>
+							<li <% if @current_controller == "section_types" %>class = "current"<% end %> >
+								<%= link_to(admins_section_types_path, :class => "no-submenu") do %>
+								<span class="awe-folder-open"></span>SectionTypes
+								<% end %>
+							</li>
+							
+							<li <% if @current_controller == "credits" %>class = "current"<% end %> >
+								<%= link_to(admins_credits_path, :class => "no-submenu") do %>
+								<span class="awe-money"></span>Credit Management
+								<% end %>
+							</li>
+							<li <% if @current_controller == "transactions" %>class = "current"<% end %> >
+								<%= link_to(admins_transactions_path, :class => "no-submenu") do %>
+								<span class="awe-credit-card"></span>Transaction Management
+								<% end %>
+							</li>
+							<li <% if @current_controller == "offers" %>class = "current"<% end %> >
+								<%= link_to(admins_offers_path, :class => "no-submenu") do %>
+								<span class="awe-gift"></span>Offers
+								<% end %>
+							</li>
+						<% end %>
 					</ul>
 				</nav>
 				<!-- /Main navigation -->
