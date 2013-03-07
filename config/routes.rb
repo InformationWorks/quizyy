@@ -115,24 +115,24 @@ GremastersWeb::Application.routes.draw do
   end
   
   # Store routes.
-  match 'store' => "stores#index", via: [:get], :as => "store"
+  match 'library' => "stores#index", via: [:get], :as => "store"
   
   ## Store route to show all tests for full/category/topic
   match "store/full_tests" => "stores#show_all_full_tests", via: [:get], :as => "show_all_full_tests"
   match "store/verbal_tests" => "stores#show_all_verbal_tests", via: [:get], :as => "show_all_verbal_tests"
   match "store/quant_tests" => "stores#show_all_quant_tests", via: [:get], :as => "show_all_quant_tests"
-  match "store/categories/:category_slug" => "stores#show_category_all_tests", via: [:get], :as => "show_category_all_tests"
+  match "library/categories/:category_slug" => "stores#show_category_all_tests", via: [:get], :as => "show_category_all_tests"
   match "store/topics/:topic_slug" => "stores#show_topic_all_tests", via: [:get], :as => "show_topic_all_tests"
   
   ## Store route to show detailed view for a quiz
   match "store/full_tests/:quiz_slug" => "stores#show_full_test", via: [:get], :as => "show_full_test"
   match "store/verbal_tests/:quiz_slug" => "stores#show_verbal_test", via: [:get], :as => "show_verbal_test"
   match "store/quant_tests/:quiz_slug" => "stores#show_quant_test", via: [:get], :as => "show_quant_test"
-  match "store/categories/:category_slug/:quiz_slug" => "stores#show_category_test", via: [:get], :as => "show_category_test"
+  match "library/categories/:category_slug/:quiz_slug" => "stores#show_category_test", via: [:get], :as => "show_category_test"
   match "store/topics/:topic_slug/:quiz_slug" => "stores#show_topic_test", via: [:get], :as => "show_topic_test"
   
-  match "store/proceed_to_checkout" => "stores#proceed_to_checkout", via: [:get], :as => "proceed_to_checkout"
-  match "store/add_test_to_account/:quiz_id" => "stores#add_test_to_account", via: [:get], :as => "add_test_to_account"
+  match "library/proceed_to_checkout" => "stores#proceed_to_checkout", via: [:get], :as => "proceed_to_checkout"
+  match "library/add_test_to_account/:quiz_id" => "stores#add_test_to_account", via: [:get], :as => "add_test_to_account"
   
   match "library/search" => "stores#search", via: [:get], :as => "search"
 

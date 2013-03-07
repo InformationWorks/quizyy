@@ -38,8 +38,7 @@
 				<ul class="dropdown-menu">
 					<li><%= link_to "Test Hub",homes_index_path,:"data-no-turbolink" => true %></li>
                     <li><%= link_to "Reports", reports_path,:"data-no-turbolink" => true %></li>
-	                <li><%= link_to "Store", store_path,:"data-no-turbolink" => true %></li>
-	                <li><%= link_to "Orders", orders_path,:"data-no-turbolink" => true %></li>
+	                <li><%= link_to "Library", store_path,:"data-no-turbolink" => true %></li>
 					<% if current_user.can? :administer, :app %>
 	                	<li><%= link_to "Admin", admins_home_path,:"data-no-turbolink"=>true%></li>
 	            	<% end %>
