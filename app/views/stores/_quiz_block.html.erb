@@ -7,7 +7,6 @@
           <%= link_to quiz.name, quiz.test_detail_path %>
       </h3>
       <p><%= quiz.desc %></p>
-      <p><%= (quiz.price == 0) ? "Free" : "\u20B9 " + quiz.price.to_s %></p>
       <p>
           <% if quiz.approved == false %>
             <% if quiz.published == false %>
@@ -26,15 +25,15 @@
         </div>
       <% else %>
         <div class="actions hide btn-group">
-            <%= link_to( "Buy"  , add_test_to_account_path(:quiz_id => quiz.id) ,
+            <%= link_to( "Take"  , add_test_to_account_path(:quiz_id => quiz.id) ,
                     :method => "get", :disable_with => 'adding to account...', :disabled => current_user.has_purchased_quiz?(quiz.id),:class=>'btn btn-primary') %>
             <% cart_item_id = current_user.get_cart_item_id_for_quiz(quiz.id) %>
             <% if cart_item_id != -1 %>
-                <a href="#" rel="tooltip" class="btn remove-cart-btn" title="Remove from Cart" data-item-type="quiz" data-disabled-with="removing.." data-value="<%=quiz.id%>" data-id="<%= cart_item_id %>">
+                <a href="#" rel="tooltip" class="btn remove-cart-btn" title="Remove from My Cart" data-item-type="quiz" data-disabled-with="removing.." data-value="<%=quiz.id%>" data-id="<%= cart_item_id %>">
                   <span class="icon-remove"></span>
                 </a>
             <% else %>
-                <a href="#" rel="tooltip" class="btn add-cart-btn" title="Add to Cart" data-disabled-with="adding.." data-item-type="quiz" data-value="<%=quiz.id%>">
+                <a href="#" rel="tooltip" class="btn add-cart-btn" title="Add to My Cart" data-disabled-with="adding.." data-item-type="quiz" data-value="<%=quiz.id%>">
                   <span class="icon-plus"></span>
                 </a>
             <% end %>

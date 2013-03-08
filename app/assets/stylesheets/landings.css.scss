@@ -3,9 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 $light-grey:#f7f7f7;
+$theme:#0F6534;
 .main-unit {
   background-image: url(image_path('noisy-texture.png'));
-  background-color: #4398F2;
+  background-color: $theme;
   background-position: 50% 50%;
   background-repeat: repeat repeat;
   .container{

@@ -15,7 +15,7 @@
  *= require bootstrap-responsive
  *= require bootmetro
  *= require bootmetro-tiles
- *= require metro-ui-light
+ *= require metro-ui-custom
  *= require icomoon
  *= require style
  *= require_tree .

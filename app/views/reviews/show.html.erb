@@ -73,7 +73,11 @@
               <div class="question">
                 <p class="lead">Question</p>
                 <p>
-                <%= raw question.que_text.gsub!(/<BLANK-[A-Z]*>/i,'<span class="blank"></span>') %>
+                 <% if question.que_text.match(/<BLANK-[A-Z]*>/i) %>
+                    <%= raw question.que_text.gsub!(/<BLANK-[A-Z]*>/i,'<span class="blank"></span>') %>
+                 <% else %>
+                      <%= raw question.que_text %>
+                 <%end%>
                 </p>
               </div>
               <form>

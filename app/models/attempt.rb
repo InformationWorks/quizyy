@@ -60,9 +60,9 @@ class Attempt < ActiveRecord::Base
     quiz = Quiz.includes(:category,:topic).find(self.quiz_id)
     attempt_details = AttemptDetail.find_all_by_attempt_id(self.id)
     sections = Section.with_all_association_data.find_all_by_quiz_id(self.quiz_id)
-    types = Type.includes(:category).all()
+    #types = Type.includes(:category).all()
     section_report ={}
-    type_report = Hash[ types.map{|t| [t.code,Hash['correct'=>0,'total'=>0,'category_code'=> t.category.code, 'category_name' => t.category.name]]}]
+    #type_report = Hash[ types.map{|t| [t.code,Hash['correct'=>0,'total'=>0,'category_code'=> t.category.code, 'category_name' => t.category.name]]}]
     questions_have_no_options = %w(V-SIP Q-NE-1 Q-NE-2 Q-DI-NE-1 Q-DI-NE-2)
     section_types = SectionType.all()
     main_section_report = Hash[section_types.map{|t| [t.name, Hash['correct' => 0,'total' =>0 ]]}]
@@ -81,9 +81,9 @@ class Attempt < ActiveRecord::Base
         if user_answers!="" and correct_answers == user_answers
           correct +=1
           total_correct+=1
-          type_report[question.type.code]['correct'] += 1
+          #type_report[question.type.code]['correct'] += 1
         end
-        type_report[question.type.code]['total'] += 1
+        #type_report[question.type.code]['total'] += 1
         total_question += 1
       end
       main_section_report[section.section_type.name]['correct'] += correct
@@ -92,8 +92,8 @@ class Attempt < ActiveRecord::Base
     end
 
     main_section_report.delete_if { |k,v| v['total']==0}
-    type_report.delete_if { |k,v| v['total']==0 }
-    self.report = Hash['main_section_report' => main_section_report,'section_report' => section_report, 'type_report'=> type_report, 'total'=> {'correct' => total_correct,'questions' => total_question}]
+    #type_report.delete_if { |k,v| v['total']==0 }
+    self.report = Hash['main_section_report' => main_section_report,'section_report' => section_report, 'type_report'=> {}, 'total'=> {'correct' => total_correct,'questions' => total_question}]
     self.score = 0
     if quiz.quiz_type.name == "FullQuiz" or quiz.quiz_type.name == "SectionQuiz"
       main_section_report.each do |key,value|

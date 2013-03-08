@@ -47,57 +47,14 @@
           </div>
           <% end %>
           -->
-          <div class="span4">
 
-            <div class="row-fluid">
-              <h2>Verbal</h2>
-
-              <div class="span3">
-                <em class="lead"><%= current_user == nil ? 145 : current_user.verbal_highest %></em>
-                <small>highest</small>
-              </div>
-              <div class="span3">
-                <em class="lead"><%= current_user == nil ? 165 : current_user.verbal_average %></em>
-                <small>average</small>
-              </div>
-            </div>
-            <div class="row-fluid">
-              <h2>Quant</h2>
-
-              <div class="span3">
-                <em class="lead"><%= current_user == nil ? 160 :  current_user.quant_highest %></em>
-                <small>highest</small>
-              </div>
-              <div class="span3">
-                <em class="lead"><%= current_user == nil ? 155 :  current_user.quant_average %></em>
-                <small>average</small>
-              </div>
-            </div>
-
-          </div>
-          <div class="span3">
-            <div class="row-fluid">
-              <h1><%= current_user == nil ? 320 : current_user.overall_highest %></h1>
-              <small>highest</small><span> / 340</span>
-            </div>
-            <div class="row-fluid">
-              <h1><%= current_user == nil ? 300 : current_user.overall_average %></h1>
-              <small>average</small><span> / 340</span>
-            </div>
-            <div class="row">
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-      <div id="section2" class="metro-section tile-span-2">
+      <div id="section2" class="metro-section tile-span-2 pull-right">
         <div class="row">
           <%= link_to store_path, :class=>"tile app bg-color-green", :"data-no-turbolink" => true do%>
               <div class="image-wrapper">
-                <span class="icon icon-cart"></span>
+                <span class="icon icon-book"></span>
               </div>
-              <div class="app-label">Store</div>
+              <div class="app-label">Library</div>
           <% end %>
           <%= link_to reports_path, :class=>"tile app" do%>
             <div class="image-wrapper">
@@ -121,7 +78,7 @@
 
 <div>
   <section id="available-tests">
-  <header class="title"><h2>Available Tests</h2></header>
+  <header class="title"><h2>My Tests</h2></header>
   <hr class="soften">
   <div class="tab-content">
     
@@ -159,7 +116,7 @@
            <%= link_to(user_quiz.test_detail_path, :style => "color:black") do %>     
             <li class= "<%= li_class %>">
               <small><%= status %></small>
-              <div class="mediumListIconTextItem-Detail">
+              <div class="mediumListIconTextItem-Detail" style="width:140px;">
                 <h4><%= user_quiz.name %></h4>
                 <h6><%= user_quiz.desc %></h6>
               </div>

@@ -9,7 +9,7 @@
 <div id="admin-content" style="width:100%">
 	<div class="pull-left">
 		<!-- Left (navigation) side -->
-			<div class="navigation-block affix-top">
+			<div class="span3 affix-top">
 				<!-- Main navigation -->
 				<nav class="main-navigation" role="navigation">
 					<ul>
@@ -29,7 +29,7 @@
 								  @current_controller == "options" %>class = "current"<% end %> >
 							<%= link_to(admins_quizzes_path, :class => "no-submenu") do %>
 							<span class="awe-tasks"></span>Quizzes
-							<span class="badge">7</span>
+
 							<% end %>
 						</li>
 						<li <% if @current_controller == "categories" %>class = "current"<% end %> >
@@ -88,7 +88,7 @@
 	</div>
 </div>
 <div style="float:left;margin-left: 20px;">
-    <div class="span10">
+    <div class="span9">
       <%= yield(:admin_content) %>
     </div>
 
