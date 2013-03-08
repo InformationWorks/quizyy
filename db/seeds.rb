@@ -28,19 +28,19 @@ super_admin_user = User.create!(:full_name => 'Harshal Bhakta', :email => 'harsh
 super_admin_user.roles << super_admin_role
 super_admin_user.save!
 
-admin_user = User.create!(:full_name => 'Admin', :email => 'admin@gre340.com', :password => 'password', :password_confirmation => 'password')
+admin_user = User.create!(:full_name => 'Admin', :email => 'admin@greenashram.org', :password => 'password', :password_confirmation => 'password')
 admin_user.roles << admin_role
 admin_user.save!
 
-publisher_user = User.create!(:full_name => 'Publisher', :email => 'publisher@gre340.com', :password => 'password', :password_confirmation => 'password')
+publisher_user = User.create!(:full_name => 'Publisher', :email => 'publisher@greenashram.org', :password => 'password', :password_confirmation => 'password')
 publisher_user.roles << publisher_role
 publisher_user.save!
 
-student1_user = User.create!(:full_name => 'Student One', :email => 'student1@gre340.com', :password => 'password', :password_confirmation => 'password')
+student1_user = User.create!(:full_name => 'Student One', :email => 'student1@greenashram.org', :password => 'password', :password_confirmation => 'password')
 student1_user.roles << student_role
 student1_user.save!
 
-student2_user = User.create!(:full_name => 'Student Two', :email => 'student2@gre340.com', :password => 'password', :password_confirmation => 'password')
+student2_user = User.create!(:full_name => 'Student Two', :email => 'student2@greenashram.org', :password => 'password', :password_confirmation => 'password')
 student2_user.roles << student_role
 student2_user.save!
 
@@ -137,22 +137,22 @@ category_quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
   
 # Create 5 Category-wise quiz for RC + Practice [ 1 Free + 4 Paid ]
 
-Category.all.each do |category|
+# Category.all.each do |category|
   
-  (1..5).each do |index|
-    category_quiz = Quiz.new
-    category_quiz.name = "#{category.name} 10" + (index).to_s
-    category_quiz.desc = "#{category.name} 10" + (index).to_s + " description"
-    category_quiz.random = false
-    category_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
-    category_quiz.category_id = category.id
-    category_quiz.published = true
-    category_quiz.approved = true
-    category_quiz.price = 0.0
-    category_quiz.save!
-  end
+#   (1..5).each do |index|
+#     category_quiz = Quiz.new
+#     category_quiz.name = "#{category.name} 10" + (index).to_s
+#     category_quiz.desc = "#{category.name} 10" + (index).to_s + " description"
+#     category_quiz.random = false
+#     category_quiz.quiz_type_id = QuizType.find_by_name("CategoryQuiz").id
+#     category_quiz.category_id = category.id
+#     category_quiz.published = true
+#     category_quiz.approved = true
+#     category_quiz.price = 0.0
+#     category_quiz.save!
+#   end
   
-end
+# end
   
 # Add 3 packages for full-quiz section in store.
 package_1 = Package.new
