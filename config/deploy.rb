@@ -1,6 +1,6 @@
 require "bundler/capistrano"
 
-server "#{ENV['IW_HOST']}", :web, :app, :db, primary: true
+server "27.54.176.206", :web, :app, :db, primary: true
 
 set :application, "ashram-quizyy"
 set :user, "deployer"
