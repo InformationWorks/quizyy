@@ -2,7 +2,7 @@
     <div class="span4 pull-left align-left">
         <h4><%= @name %></h4>
 
-        <h2>Section <%= @section_index %> of 4</h2>
+        <h2>Section <%= @section_index %> of <%= @sections.length %></h2>
     </div>
     <div class="pull-right align-right">
         <button id="show-alert-quit-quiz" href="#modal-quit-quiz" role="button" data-toggle="modal" class="win-command">
