@@ -45,8 +45,14 @@ module Admins
     
     def upload_via_excel
       
-      students_uploader = StudentsUploader.new(getWorkbookFromParams(params))
-      
+      students_uploader = StudentsUploader.new(getWorkbookFromParams(params),dry_run)
+     
+			if params[:students][:dry_run] == "true"
+        dry_run = true
+      else
+        dry_run = false
+      end
+ 
       if students_uploader.validate_excel_workbook
         # Valid Excel
         if students_uploader.execute_excel_upload

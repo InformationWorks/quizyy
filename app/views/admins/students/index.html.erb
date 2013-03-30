@@ -12,7 +12,21 @@
             </ul>
         </header>
         <section class="tab-content">
-            
+           
+					<div class="row-fluid">
+					<div class="span12 hero-unit">
+						<h2>Validate students excel</h2>
+						<small>Test to see if the file will upload correctly or not. This won't create user records.</small>
+						<br>
+						<%= form_for "", :url => admins_upload_students_via_excel_path,:method => :post, :html => { :multipart => true } do |fe| %>
+						<%= fe.hidden_field :dry_run , :value=> "true" %> 
+						<%= fe.file_field :students_excel,:class => "form_fields" %>
+						<br>
+						<%= fe.submit "Validate Quiz", :method => :post %> 
+						<% end %>
+					</div>
+				</div>	
+ 
             <div class="control-group">
                 <h3>Upload Students</h3>
                     <div style="float: middle;height:118px;" class="table table-bordered">
