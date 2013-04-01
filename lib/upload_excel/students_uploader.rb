@@ -64,7 +64,10 @@ module UploadExcel
         @students.each_with_index do |student,index|
   	      if !student.save
 				    @error_messages << "Failed to save student with email:" + student.email
-					  roll_back_created_students(index)
+						student.errors.full_messages.each do |message|
+							@error_messages << "#{message}"
+						end						
+						roll_back_created_students(index)
 				    return false
 				  end 
         end
