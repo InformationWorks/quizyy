@@ -73,6 +73,8 @@ module UploadExcel
         end
       end
 
+			
+			@success_messages << "#{@students.count} students created successfully."
       return true
       
     end
@@ -118,6 +120,8 @@ module UploadExcel
     # Criteria 3: Should have a "$$" sign in the first column to indicate end of file. 
     def worksheet_has_valid_students_and_does_end?
       
+			student_role = Role.find_by_name("Student")
+
 			1.upto @sheet.last_row_index do |index|
   			# Get current row
   			row = @sheet.row(index)
@@ -132,6 +136,7 @@ module UploadExcel
   			student.email = row[1].to_s.strip
 				student.password = row[2].to_s.strip
 				student.password_confirmation = row[2].to_s.strip
+				student.roles << student_role 
 				
 				if !student.valid?
           @error_messages << "Invaid user [row: #{index.to_s}, email: #{student.email.to_s}, reason: #{student.errors.full_messages.to_s}]"
