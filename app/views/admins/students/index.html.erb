@@ -12,7 +12,35 @@
             </ul>
         </header>
         <section class="tab-content">
-           
+            
+			  <% if flash[:success_messages] %>	
+    			  <div class="alert alert-error">
+                    <button class="close" data-dismiss="alert"></button>
+                    <strong>Students created successfully.</strong>
+                    <br />
+                    <br /> 
+                    <ul>
+			  	<% flash[:success_messages].each do |err| %>
+                     <li><%= err %></li>
+                <% end %>
+                    </ul>
+                  </div>
+              <% end %>
+              
+              <% if flash[:error_messages] %> 
+                  <div class="alert alert-error">
+                    <button class="close" data-dismiss="alert"></button>
+                    <strong>Error creating students.</strong>
+                    <br />
+                    <br /> 
+                    <ul>
+                <% flash[:error_messages].each do |err| %>
+                     <li><%= err %></li>
+                <% end %>
+                    </ul>
+                  </div>
+              <% end %>
+			  	
 					<div class="row-fluid">
 					<div class="span12 hero-unit">
 						<h2>Validate students excel</h2>

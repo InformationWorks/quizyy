@@ -20,5 +20,8 @@ rerun.txt
 pickle-email-*.html
 *.DS_Store
 
+# vim swap files
+*.swp
+
 # InformationWorks' script files.
 *.iw.sh

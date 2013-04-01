@@ -56,15 +56,18 @@ module UploadExcel
     # return false if there us any error.
     def execute_excel_upload
      
-			if !@dry_run 
-       # Iterate through all students and save them.
-       @students.each_with_index do |student,index|
-  	     if !student.save
-				   @error_messages << "Failed to save student with email:" + student.email
-					 roll_back_created_students(index)
-				   return false
-				 end 
-       end
+			if @dry_run
+			  @success_messages << "File passed all validations."
+			  @success_messages << "#{@students.count} students will be created."
+			else 
+        # Iterate through all students and save them.
+        @students.each_with_index do |student,index|
+  	      if !student.save
+				    @error_messages << "Failed to save student with email:" + student.email
+					  roll_back_created_students(index)
+				    return false
+				  end 
+        end
       end
 
       return true
@@ -112,9 +115,9 @@ module UploadExcel
     # Criteria 3: Should have a "$$" sign in the first column to indicate end of file. 
     def worksheet_has_valid_students_and_does_end?
       
-			0.upto @worksheet.last_row_index do |index|
+			1.upto @sheet.last_row_index do |index|
   			# Get current row
-  			row = @worksheet.row(index)
+  			row = @sheet.row(index)
 			 
  				full_name = row[0].to_s.strip	
 				if full_name == "" || full_name == "##"

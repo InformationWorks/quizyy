@@ -44,38 +44,31 @@ module Admins
     end
     
     def upload_via_excel
-      
-      students_uploader = StudentsUploader.new(getWorkbookFromParams(params),dry_run)
-     
-			if params[:students][:dry_run] == "true"
+       
+		  logger.info("dry run = #{params[:dry_run]}")	
+
+			if params[:dry_run] == "true"
         dry_run = true
       else
         dry_run = false
       end
  
+      students_uploader = StudentsUploader.new(getWorkbookFromParams(params),dry_run)
+
       if students_uploader.validate_excel_workbook
         # Valid Excel
         if students_uploader.execute_excel_upload
-          # Students array populated with user models.
-          # Valid? returned true for each model in execute_excel_upload.
-          students = students_uploader.students
-          if students != nil && students != []
-            students.each do |student|
-              student.roles << Role.find_by_name("Student")
-              student.save!
-            end
-            redirect_to admins_students_path, notice: "Students created successfully."
-          else
-            redirect_to admins_students_path, notice: "Error creating students."
-          end
-        else
-          redirect_to admins_students_path, notice: "Error uploading users. Error = " + students_uploader.error_messages.to_s
+          # Excel upload executed successfully.
+					redirect_to admins_students_path, :flash => { :success_messages => students_uploader.success_messages }       
+				else
+					# Excel upoload failed.
+					redirect_to admins_students_path, :flash => { :error_messages => students_uploader.error_messages }
         end
         
       else
         # Invalid Excel
-        render :json => { :message => "InValid",:error => students_uploader.error_messages.to_s }
-      end
+        redirect_to admins_students_path, :flash => { :error_messages => students_uploader.error_messages }
+			end
       
     end
     
