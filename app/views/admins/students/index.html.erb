@@ -68,14 +68,51 @@
 						<% end %>
 					</div>
 				</div>	
- 
-            
-            <!-- Tab #static -->
+						
+						 
+         <% if current_user.role? :super_admin %>   
+            <!-- Non student users  Tab #static -->
             <div class="tab-pane active" id="static">
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Email</th>
+														<th>Role</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <% @users.each do |user| %>
+                          <tr>
+                            <td>
+                                <%= user.full_name %>
+                            </td>
+                            <td>
+                                <%= user.email %>
+                            </td>
+														<td>
+                                <%= user.roles.pluck(:name).join(",") %>
+                            </td>
+                            <td class="toolbar">
+						    	<%= link_to('Delete', { :action => "delete", :user_id => user.id } , :confirm => 'Are you sure you want to delete this user?',
+          							:method => "delete", :remote => false, :disable_with => 'deleting...') %>
+          					<% end %>
+						    </td>
+                          </tr>
+                    </tbody>
+                </table>
+    				 </div>
+           <% end %>
+            
+
+							<!-- Tab #static -->
+            <div class="tab-pane active" id="static">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
                             <th>Email</th>
                             <th></th>
                         </tr>
@@ -100,9 +137,8 @@
                         <% end %>
                     </tbody>
                 </table>
-        </section>
-        
-    </div>
+    				 </div>
+        </section>   
 </article>
 <!-- /Data block -->
 

@@ -40,7 +40,8 @@ module Admins
     end
     
     def index
-      @students = Role.find_by_name("Student").users
+			@users = User.non_students
+      @students = User.students
     end
     
     def upload_via_excel
