@@ -15,7 +15,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: ashram_quizyy_dev
+  database: quizyy_dev
   host: localhost
   pool: 5
   username: iwadmin
@@ -42,7 +42,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: ashram_quizyy_test
+  database: quizyy_test
   host: localhost
   pool: 5
   username: iwadmin
@@ -51,7 +51,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: ashram_quizyy_prd
+  database: quizyy_prd
   host: localhost
   pool: 5
   username: iwadmin
