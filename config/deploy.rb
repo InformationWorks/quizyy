@@ -2,6 +2,7 @@ require "bundler/capistrano"
 
 server "27.54.176.206", :web, :app, :db, primary: true
 
+set :repo, "quizyy"
 set :application, "ashram-quizyy"
 set :user, "deployer"
 set :deploy_to, "/home/#{user}/apps/#{application}"
@@ -9,7 +10,7 @@ set :deploy_via, :remote_cache
 set :use_sudo, false
 
 set :scm, "git"
-set :repository, "git@github.com:iwadmin/#{application}.git"
+set :repository, "git@github.com:iwadmin/#{repo}.git"
 set :branch, "ashram"
 
 default_run_options[:pty] = true
