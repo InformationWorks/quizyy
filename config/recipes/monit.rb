@@ -7,7 +7,10 @@ namespace :monit do
 
   desc "Setup all Monit configuration"
   task :setup do
-    monit_config "nginx"
+    monit_config "monitrc", "/etc/monit/monitrc"
+    nginx
+    postgresql
+    unicorn
     syntax
     reload
   end
@@ -32,4 +35,3 @@ def monit_config(name, destination = nil)
   run "#{sudo} chown root #{destination}"
   run "#{sudo} chmod 600 #{destination}"
 end
-
