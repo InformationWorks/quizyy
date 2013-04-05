@@ -1,5 +1,6 @@
 require "bundler/capistrano"
 
+load "config/recipes/base"
 load "config/recipes/monit"
 
 server "27.54.176.206", :web, :app, :db, primary: true
