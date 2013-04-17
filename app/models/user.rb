@@ -60,9 +60,9 @@ class User < ActiveRecord::Base
   
   # ----------------------------------------------------------
   # Direct scopes
-	
-  scope :non_students,:include => :roles ,:conditions => ["roles.id <> ?",Role.find_by_name("Student")] 
-	scope :students, :include => :roles, :conditions => { "roles.id" => Role.find_by_name("Student") }
+	# The following scopes are not correct they cause issues in mirgation
+  # scope :non_students,:include => :roles ,:conditions => ["roles.id <> ?",Role.find_by_name("Student")] 
+	# scope :students, :include => :roles, :conditions => { "roles.id" => Role.find_by_name("Student") }
 
   # ----------------------------------------------------------
   # Lambda scopes
