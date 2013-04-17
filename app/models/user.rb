@@ -60,9 +60,13 @@ class User < ActiveRecord::Base
   
   # ----------------------------------------------------------
   # Direct scopes
-	# The following scopes are not correct they cause issues in mirgation
-  # scope :non_students,:include => :roles ,:conditions => ["roles.id <> ?",Role.find_by_name("Student")] 
+
+
+	# Warning: Never write scope like this always use lamba's othewise it might cause migrations to fail 
 	# scope :students, :include => :roles, :conditions => { "roles.id" => Role.find_by_name("Student") }
+
+  scope :non_students, lambda { includes(:roles).where("roles.id <> ?",Role.find_by_name("Student"))}
+  scope :students, lambda { includes(:roles).where("roles.id = ?",Role.find_by_name("Student"))}
 
   # ----------------------------------------------------------
   # Lambda scopes
