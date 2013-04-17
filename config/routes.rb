@@ -1,4 +1,4 @@
-GremastersWeb::Application.routes.draw do
+Quizyy::Application.routes.draw do
   
   get "progress_report/index"
 

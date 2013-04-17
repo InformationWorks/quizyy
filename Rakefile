@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-GremastersWeb::Application.load_tasks
+Quizyy::Application.load_tasks
