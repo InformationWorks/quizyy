@@ -58,4 +58,5 @@ namespace :deploy do
     end
   end
   before "deploy", "deploy:check_revision"
+  after "deploy", "assets:precompile"
 end
