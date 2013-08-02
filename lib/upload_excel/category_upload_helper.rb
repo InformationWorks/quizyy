@@ -234,7 +234,18 @@ module UploadExcel
       
       curr_options = []
       
-      if question.type == Type.find_by_code("Q-QC")
+      if question.type == Type.find_by_code("MCQ")
+        
+        number_of_options = row[12].to_s.strip.to_i
+        number_of_options.times do |i|
+          option = row[14+i].to_s.strip
+          curr_options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => i+1) unless (option == '-' || option == '')
+        end
+        
+        # set correct option 
+        curr_options[row[13].to_i-1].correct = true
+        
+      elsif question.type == Type.find_by_code("Q-QC")
         
         option = row[14].to_s.strip
         curr_options << (Option.new :content => (option == "" ? nil : option),:correct => false,:sequence_no => 1)

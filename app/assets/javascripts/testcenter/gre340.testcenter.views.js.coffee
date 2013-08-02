@@ -26,7 +26,9 @@ Gre340.module "TestCenter.Views", (Views, Gre340, Backbone, Marionette, $, _) ->
     initialize:(options)->
       question_type = @model.get('type_code')
       @singleRight = false
-      if /QC|TC-1|[A-Z]*-MCQ-1/i.test(question_type)
+      if question_type == 'MCQ'
+        @oneRightAnswer = true
+      else if /QC|TC-1|[A-Z]*-MCQ-1/i.test(question_type)
         @oneRightAnswer = true
       @attempt_details = new Backbone.Collection()
       @attempt_details.url =  '/api/v1/attempt_details'
