@@ -111,7 +111,7 @@ class Attempt < ActiveRecord::Base
   end
 
   #to search attempts of a quiz based on the date of attempt
-  def search_by_date_and_quiz_id(date,quiz_id)
-    Attempt.where('created_at >= ? and quiz_id = ?', date, quiz_id)
+  def self.search_by_date_and_quiz_id(date,quiz_id)
+    Attempt.where('DATE(created_at) = DATE(?) and quiz_id = ?', date, quiz_id)
   end
 end
