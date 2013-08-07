@@ -106,6 +106,9 @@ Quizyy::Application.routes.draw do
         post 'reject'
       end
     end
+
+    #reports route
+    match "reports" => "reports#index", via: [:get]
   end
 
   resources :reports, :only=>[:index,:show] do
