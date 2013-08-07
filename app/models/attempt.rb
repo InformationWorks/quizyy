@@ -110,4 +110,8 @@ class Attempt < ActiveRecord::Base
     Attempt.joins(:quiz).where('quizzes.quiz_type_id=? and attempts.quiz_id=? and score IS NOT NULL',self.quiz.quiz_type_id,self.quiz_id).order('score  DESC').first()
   end
 
+  #to search attempts of a quiz based on the date of attempt
+  def search_by_date_and_quiz_id(date,quiz_id)
+    Attempt.where('created_at >= ? and quiz_id = ?', date, quiz_id)
+  end
 end

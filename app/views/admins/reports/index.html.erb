@@ -1,0 +1,25 @@
+<% content_for :nav_menu_header do %>
+    Reports
+<% end %>
+<div>
+<h2>List of Completed Quizzes</h2>
+<table class="table span6">
+  <thead>
+    <tr>
+      <td>Quiz</td>
+      <td>Score</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @attempts.each do |attempt| %>
+      <tr>
+      <td><%= attempt.quiz.name %></td>
+      <td><%= attempt[:report]['total']['correct'].to_s %> / <%= attempt[:report]['total']['questions'].to_s %></td>
+      <td><a href="/reports/<%=attempt.quiz.slug%>" data-no-turbolink>show report</a></td>
+      <td><a href="/reviews/<%=attempt.quiz.slug%>" data-no-turbolink>view solution</a></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
