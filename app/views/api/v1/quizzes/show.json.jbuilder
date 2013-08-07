@@ -7,7 +7,7 @@
   json.quiz_type_id @quiz.quiz_type_id
   json.quiz_type_name @quiz.quiz_type ? @quiz.quiz_type.name : nil
   json.category_id @quiz.category_id
-  json.category_name @quiz.category ? @quiz.category.name : nil
+  json.category_name @quiz.category ? @quiz.category.name.downcase : nil
   json.topic_id @quiz.topic_id
   json.topic_name @quiz.topic ? @quiz.topic.name : nil
   json.random @quiz.random

@@ -66,14 +66,13 @@ module UploadExcel
     # Save all the objects to db.
     # Roll back if any of the object fails to save.
     def save_objects_to_db
-      
       section = Section.new
       section.name = "Normal"
       section.section_type_id = SectionType.find_by_name("Main")
       section.quiz_id = @quiz.id
       section.sequence_no = 1
       section.save!
-      
+
       @questions.each_with_index do |question,question_index|
         
         question.section_id = section.id
@@ -81,7 +80,7 @@ module UploadExcel
           roll_back_created_objects
           return false
         end
-      
+
         @options[question_index].each_with_index do |option,option_index|
           
           option.question_id = question.id
@@ -94,7 +93,7 @@ module UploadExcel
         end
         
       end
-      
+
       return true
     end
     

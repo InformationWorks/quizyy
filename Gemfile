@@ -19,7 +19,6 @@ gem 'turbolinks'
 gem 'fog', '~> 1.3.1'
 gem 'jbuilder'
 gem 'activerecord-postgres-hstore'
-
 # Use unicorn as the app server
 gem 'unicorn'
 

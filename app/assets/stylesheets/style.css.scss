@@ -10,6 +10,16 @@
   $light-grey:#f7f7f7;
   $grey: #d3d3d3;
   $style: solid;
+
+  @font-face {
+    font-family: hindi;
+    src: url('/assets/DevanagariMT.ttf');
+  }
+  @font-face {
+    font-family: gujarati;
+    src: url("/assets/GujaratiMT.ttf") format("truetype");
+    font-weight:normal;
+  }
   /** resets **/
   body{
     background: white;
@@ -44,7 +54,6 @@
   label.checkbox input[type="checkbox"] ~ span.metro-checkbox::after {
     font-family: none;
   }
-
   .center {
     display: table;
     margin: 30px auto;
@@ -712,3 +721,21 @@ footer {
     width: 550px;
   }
 }
+
+  .gujarati {
+    font-family: "gujarati", "Roboto","Open Sans", Helvetica, Arial, sans-serif;;
+    font-size: 16px;
+    p{
+      font-family: "gujarati";
+      font-size: 16px;
+    }
+  }
+
+  .hindi {
+    font-family: "hindi","Roboto","Open Sans", Helvetica, Arial, sans-serif;;
+    font-size: 16px;
+    p{
+      font-family: "hindi";
+      font-size: 16px;
+    }
+  }

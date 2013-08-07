@@ -681,7 +681,8 @@ CREATE TABLE quizzes (
     approver_id integer,
     approved_at timestamp without time zone,
     slug character varying(255),
-    section_type_id integer
+    section_type_id integer,
+    lang character varying(255)
 );
 
 
@@ -1965,3 +1966,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130209182543');
 INSERT INTO schema_migrations (version) VALUES ('20130211224518');
 
 INSERT INTO schema_migrations (version) VALUES ('20130213084138');
+
+INSERT INTO schema_migrations (version) VALUES ('20130807164425');

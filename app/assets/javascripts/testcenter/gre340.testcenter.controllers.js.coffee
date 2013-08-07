@@ -349,6 +349,7 @@
     qc = Controllers.questionController
     qc.quiz = quiz
     console.log('quiz changed')
+    $('#test-content').addClass(quiz.get('category_name'))
     qc.setCurrentSection(quiz.getCurrentSection())
     qc.setCurrentQuestion(quiz.getCurrentQuestion())
     qc.setCurrentQuestionCollection(quiz.getCurrentQuestionCollection())
