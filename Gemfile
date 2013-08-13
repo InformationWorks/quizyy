@@ -37,6 +37,8 @@ group :assets do
   gem 'jquery-turbolinks'
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-fileupload-rails'
+  gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails',
+      :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
 end
 
 # Gems required for testing go here.

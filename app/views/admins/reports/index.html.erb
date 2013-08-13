@@ -1,35 +1,35 @@
 <% content_for :nav_menu_header do %>
     Reports
 <% end %>
-<div>
-<h2>List of Completed Quizzes</h2>
-  <%= form_tag admins_reports_path, :method => 'get' do %>
-      <div>
-        <%= label_tag "Select Quiz" %>
-        <%= select_tag 'quiz_id', options_for_select(@quizzes.collect{ |q| [q.name, q.id] }),:include_blank => true %>
-        <%= date_select("attempt", "created_on") %>
-        <%= submit_tag "Get Reports", :name => nil %>
-      </div>
-  <% end %>
+<%= form_tag admins_reports_path, :method => 'get',:class=>'form-search well' do %>
+
+    <%= collection_select(:quiz, :id, @quizzes, :id, :name,:selected => params[:quiz]?params[:quiz][:id]:'',:prompt => 'Please select the quiz') %>
+    <%= label_tag(nil,'conducted on', :titleize => false) %>
+    <%= text_field_tag :attempt_date, (params[:attempt_date] or DateTime.now.strftime('%d/%m/%Y')), :class => 'datepicker'%>
+    <%= submit_tag 'Get Reports', :name => nil, :class => 'btn' %>
+<% end %>
 <% if @attempts %>
-<table class="table span6">
-  <thead>
+<% unless @attempts.empty? %>
+<div class="span8">
+    <table class="table">
+    <thead>
     <tr>
-      <td>Quiz</td>
+      <td>Student</td>
       <td>Score</td>
       <td></td>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     <% @attempts.each do |attempt| %>
-      <tr>
-      <td><%= attempt.quiz.name %></td>
-      <td><%= attempt[:report]['total']['correct'].to_s %> / <%= attempt[:report]['total']['questions'].to_s %></td>
-      <td><a href="/reports/<%=attempt.quiz.slug%>" data-no-turbolink>show report</a></td>
-      <td><a href="/reviews/<%=attempt.quiz.slug%>" data-no-turbolink>view solution</a></td>
-      </tr>
+        <tr>
+          <td><%= attempt.user.full_name %></td>
+          <td><%= attempt[:report]['total']['correct'].to_s %> / <%= attempt[:report]['total']['questions'].to_s %></td>
+        </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+    </table>
 </div>
+<% else %>
+<p>No reports found for the <em><%=@quiz.name %></em> on <em><%= @date_of_attempt %></em></p>
 <% end %>
+<%end%>

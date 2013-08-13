@@ -31,7 +31,7 @@
 	            <% if content_for?(:nav_menu_header) %>
 	  			  <%= yield(:nav_menu_header) %>
 	  			<% else %>
-	  			  Test Hub
+	  			  <%= params[:controller]? params[:controller].capitalize : 'Test Hub' %>
 				<% end %>
 	            <b class="caret"></b>
 	          </a>

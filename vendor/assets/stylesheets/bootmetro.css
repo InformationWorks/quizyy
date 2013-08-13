@@ -999,6 +999,7 @@ Rating control.
 
 /*
 DatePicker control.
+*/
 .win-datepicker {
     display: -ms-inline-flexbox;
    height: auto;
@@ -1014,7 +1015,6 @@ DatePicker control.
 .win-datepicker .win-datepicker-year.win-order0 {
    margin-right: 20px;
 }
-*/
 
 /*
 TimePicker control.

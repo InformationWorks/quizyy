@@ -13,6 +13,7 @@
  *= require jquery.calculator.alt
  *= require bootstrap
  *= require bootstrap-responsive
+ *= require bootstrap-datepicker
  *= require bootmetro
  *= require bootmetro-tiles
  *= require metro-ui-custom

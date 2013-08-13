@@ -1,5 +1,4 @@
 <% content_for :head_top do %>
-    <%= stylesheet_link_tag "huraga-blue.css" %>
 <% end %>
 
 <% content_for :nav_menu_header do %>
@@ -13,16 +12,6 @@
 				<!-- Main navigation -->
 				<nav class="main-navigation" role="navigation">
 					<ul>
-						<li <% if @current_controller == "admins" && @current_action == "home" %>class = "current"<% end %> >
-							<%= link_to(admins_home_path, :class => "no-submenu") do %>
-							<span class="awe-home"></span>Dashboard
-							<% end %>
-						</li>
-						<li <% if @current_controller == "packages" %>class = "current"<% end %> >
-							<%= link_to(admins_packages_path, :class => "no-submenu") do %>
-							<span class="awe-th-large"></span>Packages
-							<% end %>
-						</li>
 						<li <% if @current_controller == "quizzes" || 
 								  @current_controller == "sections" || 
 								  @current_controller == "questions" || 
@@ -49,12 +38,21 @@
 						</li>
 						<li <% if @current_controller == "students" %>class = "current"<% end %> >
                             <%= link_to(admins_students_path, :class => "no-submenu") do %>
-                            <span class="awe-user"></span>Student Management
+                            <span class="awe-user"></span>Students
                             <% end %>
                         </li>
                         
                         <% if current_user.role? :super_admin %>
-                        
+                          <li <% if @current_controller == "admins" && @current_action == "home" %>class = "current"<% end %> >
+                            <%= link_to(admins_home_path, :class => "no-submenu") do %>
+                                <span class="awe-home"></span>Dashboard
+                            <% end %>
+                          </li>
+                          <li <% if @current_controller == "packages" %>class = "current"<% end %> >
+                            <%= link_to(admins_packages_path, :class => "no-submenu") do %>
+                                <span class="awe-th-large"></span>Packages
+                            <% end %>
+                          </li>
 							<li <% if @current_controller == "quiz_types" %>class = "current"<% end %> >
 								<%= link_to(admins_quiz_types_path, :class => "no-submenu") do %>
 								<span class="awe-flag"></span>QuizTypes

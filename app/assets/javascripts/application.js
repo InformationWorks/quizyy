@@ -18,6 +18,7 @@
 //= require libs/modernizr.custom
 //= require libs/d3.min
 //= require bootstrap
+//= require bootstrap-datepicker
 //= require backbone/json2
 //= require backbone/underscore
 //= require backbone/backbone

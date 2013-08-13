@@ -48,7 +48,7 @@ class Attempt < ActiveRecord::Base
     section_scores
   end
   def set_attempt_as_current
-    Attempt.where("user_id = ?",self.user.id).each do |attempt|
+    Attempt.where('user_id = ?',self.user.id).each do |attempt|
       attempt.is_current = false
       attempt.save
     end
@@ -95,7 +95,7 @@ class Attempt < ActiveRecord::Base
     #type_report.delete_if { |k,v| v['total']==0 }
     self.report = Hash['main_section_report' => main_section_report,'section_report' => section_report, 'type_report'=> {}, 'total'=> {'correct' => total_correct,'questions' => total_question}]
     self.score = 0
-    if quiz.quiz_type.name == "FullQuiz" or quiz.quiz_type.name == "SectionQuiz"
+    if quiz.quiz_type.name == 'FullQuiz' or quiz.quiz_type.name == 'SectionQuiz'
       main_section_report.each do |key,value|
           self.score +=  value['total'] != 0 ? ScaledScore.convert(key.downcase.to_sym,value['correct']*100/value['total']) : 0
       end
