@@ -4,7 +4,6 @@
 <article class="data-block">
 	<div class="data-container">
 		<header>
-			<h2>Categories</h2>
 			<ul class="data-header-actions">
 				<%= link_to(new_admins_category_path,:class => "btn btn-primary") do %>
 				 Create New Category
@@ -33,28 +32,21 @@
 						    <td><%= category.name %></td>
 						    <td><%= category.section_type ? category.section_type.name : "N/A" %></td>
 						    <td><%= category.slug %></td>
-						    <td class="toolbar">
-						      <div class="btn-group">
-						    	<%= link_to(admins_category_path(category), :class => "btn") do %>
-						    	  <span class="awe-eye-open"></span>
-						    	<% end %>
-						    	<%= link_to(edit_admins_category_path(category), :class => "btn") do %>
-						    	  <span class="awe-wrench"></span>
-						    	<% end %>
+						    <td>
+						    	<%= link_to 'Show', admins_category_path(category) %>
+						    	<%= link_to 'Edit', edit_admins_category_path(category) %>
 						    	<%= link_to(admins_category_path(category), method: :delete, data: { confirm: 'Are you sure you want to delete this category?' }, :class => "btn") do %>
-						    	  <span class="awe-remove"></span>
+						    	  Delete
 						    	<% end %>
-						      </div>
 						    </td>
 						  </tr>
 						<% end %>
 					</tbody>
 				</table>
+            </div>
 		</section>
 		<footer class="error">
-			<div class="alert alert-error">
-				<strong style="font-size: 15px;">DO NOT DELETE OR RENAME CODE IF YOU DON'T KNOW WHAT YOU ARE DOING !</strong>
-			</div>
+
 		</footer>
 	</div>
 </article>

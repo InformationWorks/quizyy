@@ -1,35 +1,33 @@
-<% content_for :nav_menu_header do %>
-    Reports
-<% end %>
-<%= form_tag admins_reports_path, :method => 'get',:class=>'form-search well' do %>
-
-    <%= collection_select(:quiz, :id, @quizzes, :id, :name,:selected => params[:quiz]?params[:quiz][:id]:'',:prompt => 'Please select the quiz') %>
-    <%= label_tag(nil,'conducted on', :titleize => false) %>
-    <%= text_field_tag :attempt_date, (params[:attempt_date] or DateTime.now.strftime('%d/%m/%Y')), :class => 'datepicker'%>
-    <%= submit_tag 'Get Reports', :name => nil, :class => 'btn' %>
-<% end %>
-<% if @attempts %>
-<% unless @attempts.empty? %>
-<div class="span8">
-    <table class="table">
-    <thead>
-    <tr>
-      <td>Student</td>
-      <td>Score</td>
-      <td></td>
-    </tr>
-    </thead>
-    <tbody>
-    <% @attempts.each do |attempt| %>
-        <tr>
-          <td><%= attempt.user.full_name %></td>
-          <td><%= attempt[:report]['total']['correct'].to_s %> / <%= attempt[:report]['total']['questions'].to_s %></td>
-        </tr>
+<% content_for :admin_content do %>
+    <%= form_tag admins_reports_path, :method => 'get',:class=>'form-search well' do %>
+        <%= collection_select(:quiz, :id, @quizzes, :id, :name,:selected => params[:quiz]?params[:quiz][:id]:'',:prompt => 'Please select the quiz') %>
+        <%= label_tag(nil,'conducted on', :titleize => false) %>
+        <%= text_field_tag :attempt_date, (params[:attempt_date] or DateTime.now.strftime('%d/%m/%Y')), :class => 'datepicker'%>
+        <%= submit_tag 'Get Reports', :name => nil, :class => 'btn' %>
     <% end %>
-    </tbody>
-    </table>
-</div>
-<% else %>
-<p>No reports found for the <em><%=@quiz.name %></em> on <em><%= @date_of_attempt %></em></p>
-<% end %>
+    <% if @attempts %>
+        <% unless @attempts.empty? %>
+            <div class="span8">
+                <table class="table">
+                <thead>
+                <tr>
+                  <td>Student</td>
+                  <td>Score</td>
+                  <td></td>
+                </tr>
+                </thead>
+                <tbody>
+                <% @attempts.each do |attempt| %>
+                    <tr>
+                      <td><%= attempt.user.full_name %></td>
+                      <td><%= attempt[:report]['total']['correct'].to_s %> / <%= attempt[:report]['total']['questions'].to_s %></td>
+                    </tr>
+                <% end %>
+                </tbody>
+                </table>
+            </div>
+        <% else %>
+            <p>No reports found for the <em><%=@quiz.name %></em> on <em><%= @date_of_attempt %></em></p>
+        <% end %>
+    <%end%>
 <%end%>

@@ -15,6 +15,10 @@ module Admins
       end
     end
     
+    def edit
+      @student = User.find(params[:id]) 
+    end
+
     def create
       @student = User.new(params[:user])
       @student.credits = params[:credits_to_add]

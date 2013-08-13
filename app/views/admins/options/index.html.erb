@@ -17,7 +17,7 @@
     <td><%= option.question ? option.question.sequence_no : "N/A" %></td>
     <td><%= link_to 'Show', quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option) %></td>
     <td><%= link_to 'Edit', edit_quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option) %></td>
-    <td><%= link_to 'Destroy', quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Delete', quiz_section_question_option_path(option.question.section.quiz,option.question.section,option.question,option), method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

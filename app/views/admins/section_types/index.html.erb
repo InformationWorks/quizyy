@@ -4,7 +4,6 @@
 <article class="data-block">
 	<div class="data-container">
 		<header>
-			<h2>SectionTypes</h2>
 			<ul class="data-header-actions">
 				<%= link_to(new_admins_section_type_path,:class => "btn btn-primary") do %>
 				 Create New Section Type
@@ -29,28 +28,19 @@
 						  <tr>
 						    <td><%= section_type.name %></td>
 						    <td><%= section_type.slug %></td>
-						    <td class="toolbar">
-						      <div class="btn-group">
-						    	<%= link_to(admins_section_type_path(section_type), :class => "btn") do %>
-						    	  <span class="awe-eye-open"></span>
-						    	<% end %>
-						    	<%= link_to(edit_admins_section_type_path(section_type), :class => "btn") do %>
-						    	  <span class="awe-wrench"></span>
-						    	<% end %>
+						    <td>
+						    	<%= link_to 'Show', admins_section_type_path(section_type)%>
+						    	<%= link_to 'Edit', edit_admins_section_type_path(section_type)%>
 						    	<%= link_to(admins_section_type_path(section_type), method: :delete, data: { confirm: 'Are you sure you want to delete this section type?' }, :class => "btn") do %>
-						    	  <span class="awe-remove"></span>
+						    	  Delete
 						    	<% end %>
-						      </div>
-						    </td>
 						  </tr>
 						<% end %>
 					</tbody>
 				</table>
+            </div>
 		</section>
 		<footer class="error">
-			<div class="alert alert-error">
-				<strong style="font-size: 15px;">DO NOT DELETE OR RENAME SECTION TYPE IF YOU DON'T KNOW WHAT YOU ARE DOING !</strong>
-			</div>
 		</footer>
 	</div>
 </article>

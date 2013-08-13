@@ -64,7 +64,7 @@ Quizyy::Application.routes.draw do
     resources :section_types
     
     # Students routes.
-    resources :students, :only => [:index,:new,:create]
+    resources :students
     match '/students/upload_via_excel' => "students#upload_via_excel", via: [:post], :as => "upload_students_via_excel"
     match "/students/:user_id/reconfirm" => "students#reconfirm", via: [:post], :as => "reconfirm_user"
     match "/students/:user_id/delete" => "students#delete", via: [:delete], :as => "delete_user"

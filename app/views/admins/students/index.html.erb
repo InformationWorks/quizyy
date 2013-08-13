@@ -4,7 +4,6 @@
 <article class="data-block">
     <div class="data-container">
         <header>
-            <h2><span class="awe-tasks"></span> Students</h2>
             <ul class="data-header-actions">
                 <%= link_to(new_admins_student_path,:class => "btn btn-primary") do %>
                  Add Student
@@ -95,12 +94,12 @@
 														<td>
                                 <%= user.roles.pluck(:name).join(",") %>
                             </td>
-                            <td class="toolbar">
-						    	<%= link_to('Delete', { :action => "delete", :user_id => user.id } , :confirm => 'Are you sure you want to delete this user?',
-          							:method => "delete", :remote => false, :disable_with => 'deleting...') %>
-          					<% end %>
-						    </td>
-                          </tr>
+                            <td>
+                              <%= link_to 'Edit', edit_admins_student_path(user) %>
+            						    	<%= link_to('Delete', { :action => "delete", :user_id => user.id } , :confirm => 'Are you sure you want to delete this user?',:method => "delete", :remote => false, :disable_with => 'deleting...') %>
+                      			</td>
+                            </tr>
+                    <% end %>    
                     </tbody>
                 </table>
     				 </div>
@@ -127,18 +126,20 @@
                             <td>
                                 <%= student.email %>
                             </td>
-                            <td class="toolbar">
+                            <td>
                             <% if current_user.role? :super_admin %>
-						    	<%= link_to('Delete', { :action => "delete", :user_id => student.id } , :confirm => 'Are you sure you want to delete this user?',
-          							:method => "delete", :remote => false, :disable_with => 'deleting...') %>
-          					<% end %>
-						    </td>
+                            <%= link_to 'Edit', edit_admins_student_path(student) %>
+          						    	<%= link_to('Delete', { :action => "delete", :user_id => student.id } , :confirm => 'Are you sure you want to delete this user?',
+                    							:method => "delete", :remote => false, :disable_with => 'deleting...') %>
+                    				<% end %>	
+            						    </td>
                           </tr>
                         <% end %>
                     </tbody>
                 </table>
-    				 </div>
-        </section>   
+    		</div>
+        </section>
+    </div>
 </article>
 <!-- /Data block -->
 
