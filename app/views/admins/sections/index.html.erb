@@ -22,7 +22,7 @@
     <td><%= section.section_type.name %></td>
     <td><%= link_to 'Show', quiz_section_path(section.quiz,section) %></td>
     <td><%= link_to 'Edit', edit_quiz_section_path(section.quiz,section) %></td>
-    <td><%= link_to 'Destroy', quiz_section_path(section.quiz,section), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Delete', quiz_section_path(section.quiz,section), method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

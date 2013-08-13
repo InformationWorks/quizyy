@@ -5,11 +5,9 @@
 	<div class="data-container">
 		<header>
 			<% if current_user.role? :super_admin %>
-			<ul class="data-header-actions">
 				<%= link_to(admins_credits_activity_log_path,:class => "btn btn-primary") do %>
 				 Activity Log
 				<% end %>
-			</ul>
 			<% end %>
 		</header>
 		<section class="tab-content">

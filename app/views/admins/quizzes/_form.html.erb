@@ -3,19 +3,11 @@
 <!-- Data block -->
 <article class="data-block">
 	<div class="data-container">
-		<header>
-			<h2><%= yield :quiz_form_title %></h2>
-			<ul class="data-header-actions">
-				<%= link_to(admins_quizzes_path,:class => "btn btn-alt btn-danger", :data => { :confirm => "Are you sure about canceling the form?" } ) do %>
-				 Cancel
-				<% end %>	
-			</ul>
-		</header>
 		<section class="tab-content">
-			
 			<!-- Form starts here -->
 			<div class="span11" style="margin-left: 15px;">
 				  <%= form_for([:admins, @quiz]) do |f| %>
+				  <legend><%= yield :quiz_form_title %></legend>
 				  <% if @quiz.errors.any? %>
 				  
 				  	<div class="alert alert-error">
@@ -53,6 +45,9 @@
 					</div>
 				  	
 				  	<div class="form-actions">
+				  		<%= link_to(admins_quizzes_path,:class => "btn" ) do %>
+						 Cancel
+						<% end %>
 						<%= f.submit :class => "btn btn-info" %>
 					</div>
 				<% end %>

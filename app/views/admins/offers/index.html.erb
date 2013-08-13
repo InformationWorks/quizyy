@@ -4,11 +4,9 @@
 <article class="data-block">
     <div class="data-container">
         <header>
-            <ul class="data-header-actions">
                 <%= link_to(new_admins_offer_code_path,:class => "btn btn-primary") do %>
                  New Offer Code
-                <% end %>   
-            </ul>
+                <% end %>
         </header>
         <section class="tab-content">
         
@@ -32,7 +30,7 @@
                               <div class="btn-group">
                                 <%= link_to 'Show', admins_offer_code_path(offer_code)%>
                                 <%= link_to 'Edit', edit_admins_offer_code_path(offer_code)%>
-                                <%= link_to(admins_offer_code_path(offer_code), method: :delete, data: { confirm: 'Are you sure you want to delete this offer code?' }, :class => "btn") do %>
+                                <%= link_to(admins_offer_code_path(offer_code), method: :delete, data: { confirm: 'Are you sure you want to delete this offer code?' }) do %>
                                   Delete
                                 <% end %>
                               </div>
@@ -52,11 +50,9 @@
     <div class="data-container">
         <header>
             <h2>Offers</h2>
-            <ul class="data-header-actions">
-                <%= link_to(new_admins_offer_path,:class => "btn btn-primary") do %>
-                 New Offer
-                <% end %>   
-            </ul>
+            <%= link_to(new_admins_offer_path,:class => "btn btn-primary") do %>
+             New Offer
+            <% end %>
         </header>
         <section class="tab-content">
         

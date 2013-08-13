@@ -4,12 +4,11 @@
 <article class="data-block">
     <div class="data-container">
         <header>
-            <ul class="data-header-actions">
                 <%= link_to(new_admins_student_path,:class => "btn btn-primary") do %>
                  Add Student
                 <% end %>
-            </ul>
         </header>
+        <br>
         <section class="tab-content">
             
 			  <% if flash[:success_messages] %>	

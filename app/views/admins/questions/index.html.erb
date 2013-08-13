@@ -39,7 +39,7 @@
     <td><%= question.section ? question.section.name : "N/A" %></td>
     <td><%= link_to 'Show', quiz_section_question_path(question.section.quiz,question.section,question) %></td>
     <td><%= link_to 'Edit', edit_quiz_section_question_path(question.section.quiz,question.section,question) %></td>
-    <td><%= link_to 'Destroy', quiz_section_question_path(question.section.quiz,question.section,question), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Delete', quiz_section_question_path(question.section.quiz,question.section,question), method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

@@ -2,12 +2,12 @@
 <% 
 
 if table_type == "paid"
-  @title = "Paid In-Store Tests"
+  @title = "Paid In-Library Tests"
   @full_quizzes = @full_paid_quizzes
   @category_quizzes = @category_paid_quizzes
   @topic_quizzes = @topic_paid_quizzes
 elsif table_type == "free"
-  @title = "Free In-Store Tests"
+  @title = "Free In-Library Tests"
   @full_quizzes = @full_free_quizzes
   @category_quizzes = @category_free_quizzes
   @topic_quizzes = @topic_free_quizzes
@@ -29,7 +29,7 @@ end
 				<thead>
 					<tr>
 						<th>Test Type</th>
-						<th>In-Store</th>
+						<th>In-Library</th>
 						<th>Users</th>
 						<th>Purchases</th>
 						<% if table_type == "paid" %>

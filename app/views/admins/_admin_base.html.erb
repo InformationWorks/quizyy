@@ -15,6 +15,11 @@
 
             <% end %>
         </li>
+        <li <% if @current_controller == "students" %>class = "active"<% end %> >
+            <%= link_to(admins_students_path, :class => "no-submenu") do %>
+            Students
+            <% end %>
+        </li>
         <li <% if @current_controller == "categories" %>class = "active"<% end %> >
             <%= link_to(admins_categories_path, :class => "no-submenu") do %>
             Categories
@@ -30,11 +35,7 @@
             Topics
             <% end %>
         </li>
-        <li <% if @current_controller == "students" %>class = "active"<% end %> >
-            <%= link_to(admins_students_path, :class => "no-submenu") do %>
-            Students
-            <% end %>
-        </li>
+        
 
         <% if current_user.role? :super_admin %>
           <li <% if @current_controller == "admins" && @current_action == "home" %>class = "active"<% end %> >

@@ -5,7 +5,7 @@ class AdminsController < ApplicationController
   
   def home
     
-    # Paid/Free In-Store Quizzes count.
+    # Paid/Free In-Library Quizzes count.
     if current_user.role? :super_admin
       @full_paid_quizzes = Quiz.full.paid.approved
       @full_free_quizzes = Quiz.full.free.approved

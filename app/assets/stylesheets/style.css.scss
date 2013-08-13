@@ -58,6 +58,18 @@
     display: table;
     margin: 30px auto;
   }
+
+  h5, legend {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  form.button_to{
+    margin: 0;
+    display: inline;
+  }
+
   /** navbar styles **/
   body{
     header{

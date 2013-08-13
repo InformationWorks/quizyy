@@ -4,11 +4,9 @@
 <article class="data-block">
 	<div class="data-container">
 		<header>
-			<ul class="data-header-actions">
 				<%= link_to(new_admins_package_path,:class => "btn btn-primary") do %>
 				 Create New Package
-				<% end %>	
-			</ul>
+				<% end %>
 		</header>
 		<section class="tab-content">
 		
@@ -37,7 +35,7 @@
 						    <td>
 						    	<%= link_to 'Show',admins_package_path(package)%>
 						    	<%= link_to 'Edit',edit_admins_package_path(package)%>
-						    	<%= link_to(admins_package_path(package), method: :delete, data: { confirm: 'Are you sure you want to delete this package?' }, :class => "btn") do %>
+						    	<%= link_to(admins_package_path(package), method: :delete, data: { confirm: 'Are you sure you want to delete this package?' }) do %>
 						    	  Delete
 						    	<% end %>
 						    </td>
@@ -47,9 +45,6 @@
 				</table>
                 </div>
 		</section>
-		<footer class="warning">
-			<p>Package position is used to sort the packages in the store.</p>
-		</footer>
 	</div>
 </article>
 <!-- /Data block -->
