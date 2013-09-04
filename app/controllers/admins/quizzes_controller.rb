@@ -210,7 +210,7 @@ module Admins
           file.store!(quiz_question_image)
         end
       rescue Exception => e
-        redirect_to [:admins, @quiz], notice: "Image upload failed."
+        redirect_to [:admins, @quiz], notice: "Image upload failed." + e.to_s
         return
       end
       
