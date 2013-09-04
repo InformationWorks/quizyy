@@ -1,7 +1,7 @@
 module ApplicationHelper
   
   def s3_base_url
-    return ENV["GRE340_S3_BUCKET_URL"]
+    return ENV["ASHRAM_QUIZYY_AWS_S3_BUCKET_URL"]
   end
   
   def resource_name

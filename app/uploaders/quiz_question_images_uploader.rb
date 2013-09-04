@@ -18,17 +18,12 @@ class QuizQuestionImagesUploader < CarrierWave::Uploader::Base
   # CAUTION: We are going over all the files here.
   # TODO: We need to optimize this sometime in future.
   def delete_all_images
-    
     fog_storage = Fog::Storage.new( :provider => 'AWS',
-                        :aws_access_key_id => ENV["GRE340_AWS_ACCESS_KEY_ID"], 
-                        :aws_secret_access_key => ENV["GRE340_AWS_SECRET_ACCESS_KEY"],
+                        :aws_access_key_id => ENV["ASHRAM_QUIZYY_AWS_ACCESS_KEY_ID"], 
+                        :aws_secret_access_key => ENV["ASHRAM_QUIZYY_AWS_SECRET_ACCESS_KEY"],
                         :region => "us-east-1" )
     
-    if Rails.env.development?
-      bucket = "greapp-dev"
-    else
-      bucket = ENV["GRE340_AWS_S3_BUCKET"]
-    end
+    bucket = ENV["ASHRAM_QUIZYY_AWS_S3_BUCKET"]
     
     directory = fog_storage.directories.get(bucket)
                
@@ -50,15 +45,11 @@ class QuizQuestionImagesUploader < CarrierWave::Uploader::Base
   # TODO: We need to optimize this sometime in future.
   def uploaded_images_count
     fog_storage = Fog::Storage.new( :provider => 'AWS',
-                        :aws_access_key_id => ENV["GRE340_AWS_ACCESS_KEY_ID"], 
-                        :aws_secret_access_key => ENV["GRE340_AWS_SECRET_ACCESS_KEY"],
+                        :aws_access_key_id => ENV["ASHRAM_QUIZYY_AWS_ACCESS_KEY_ID"], 
+                        :aws_secret_access_key => ENV["ASHRAM_QUIZYY_AWS_SECRET_ACCESS_KEY"],
                         :region => "us-east-1" )
     
-    if Rails.env.development?
-      bucket = "greapp-dev"
-    else
-      bucket = ENV["GRE340_AWS_S3_BUCKET"]
-    end
+    bucket = ENV["ASHRAM_QUIZYY_AWS_S3_BUCKET"]
     
     directory = fog_storage.directories.get(bucket)
                

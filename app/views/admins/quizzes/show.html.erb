@@ -190,7 +190,7 @@
 				<div class="control-group">
 					<h2>Images</h2>
 					<br>
-					<%= button_to "Delete all images", {:controller => 'quizzes', :action => 'question_images_delete_all', :id => @quiz.slug}, {:class => "btn btn-inverse",:confirm => "Are you sure you want to delete all images?" } %>	
+					<%= button_to "Delete all images.", {:controller => 'quizzes', :action => 'question_images_delete_all', :id => @quiz.slug}, {:class => "btn btn-inverse",:confirm => "Are you sure you want to delete all images?" } %>	
 					
 					
 						<%= form_for @quiz, :url => question_images_upload_admins_quiz_path(@quiz), :method => :post, :html => { :multipart => true } do |fe| %> 
