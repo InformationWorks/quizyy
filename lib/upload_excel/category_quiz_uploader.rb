@@ -68,7 +68,7 @@ module UploadExcel
     def save_objects_to_db
       section = Section.new
       section.name = "Normal"
-      section.section_type_id = SectionType.find_by_name("Main")
+      section.section_type_id = SectionType.find_by_name("Main").id
       section.quiz_id = @quiz.id
       section.sequence_no = 1
       section.save!
