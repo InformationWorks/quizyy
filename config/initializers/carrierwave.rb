@@ -17,19 +17,19 @@ CarrierWave.configure do | config |
     config.storage = :fog
     config.fog_credentials = {
       provider: "AWS",
-      aws_access_key_id: ENV["ASHRAM_QUIZYY_AWS_ACCESS_KEY_ID"],
-      aws_secret_access_key: ENV["ASHRAM_QUIZYY_AWS_SECRET_ACCESS_KEY"]
+      aws_access_key_id: CONFIG[:aws_access_key_id],
+      aws_secret_access_key: CONFIG[:aws_access_key]
     }
-    config.fog_directory = ENV["ASHRAM_QUIZYY_AWS_S3_BUCKET"]
+    config.fog_directory = CONFIG[:aws_s3_bucket]
   else
   # Config for staging and production.
     config.storage = :fog 
     config.fog_credentials = {
       provider: "AWS",
-      aws_access_key_id: ENV["ASHRAM_QUIZYY_AWS_ACCESS_KEY_ID"],
-      aws_secret_access_key: ENV["ASHRAM_QUIZYY_AWS_SECRET_ACCESS_KEY"]
+      aws_access_key_id: CONFIG[:aws_access_key_id],
+      aws_secret_access_key: CONFIG[:aws_access_key]
     }
-    config.fog_directory = ENV["ASHRAM_QUIZYY_AWS_S3_BUCKET"]
+    config.fog_directory = CONFIG[:aws_s3_bucket]
   end
 
 end

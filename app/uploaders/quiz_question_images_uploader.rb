@@ -18,12 +18,8 @@ class QuizQuestionImagesUploader < CarrierWave::Uploader::Base
   # CAUTION: We are going over all the files here.
   # TODO: We need to optimize this sometime in future.
   def delete_all_images
-    fog_storage = Fog::Storage.new( :provider => 'AWS',
-                        :aws_access_key_id => ENV["ASHRAM_QUIZYY_AWS_ACCESS_KEY_ID"], 
-                        :aws_secret_access_key => ENV["ASHRAM_QUIZYY_AWS_SECRET_ACCESS_KEY"],
-                        :region => "us-east-1" )
-    
-    bucket = ENV["ASHRAM_QUIZYY_AWS_S3_BUCKET"]
+    fog_storage = get_fog_storage
+    bucket = get_bucket
     
     directory = fog_storage.directories.get(bucket)
                
@@ -44,12 +40,8 @@ class QuizQuestionImagesUploader < CarrierWave::Uploader::Base
   # CAUTION: We are going over all the files here.
   # TODO: We need to optimize this sometime in future.
   def uploaded_images_count
-    fog_storage = Fog::Storage.new( :provider => 'AWS',
-                        :aws_access_key_id => ENV["ASHRAM_QUIZYY_AWS_ACCESS_KEY_ID"], 
-                        :aws_secret_access_key => ENV["ASHRAM_QUIZYY_AWS_SECRET_ACCESS_KEY"],
-                        :region => "us-east-1" )
-    
-    bucket = ENV["ASHRAM_QUIZYY_AWS_S3_BUCKET"]
+    fog_storage = get_fog_storage
+    bucket = get_bucket
     
     directory = fog_storage.directories.get(bucket)
                
@@ -87,5 +79,16 @@ class QuizQuestionImagesUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+  
+  def get_fog_storage
+    return Fog::Storage.new( :provider => 'AWS',
+                        :aws_access_key_id => CONFIG[:aws_access_key_id], 
+                        :aws_secret_access_key => CONFIG[:aws_access_key],
+                        :region => "us-east-1" )
+  end
+  
+  def get_bucket
+    return CONFIG[:aws_s3_bucket]
+  end
 
 end

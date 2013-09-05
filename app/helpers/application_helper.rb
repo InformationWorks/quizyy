@@ -1,7 +1,7 @@
 module ApplicationHelper
   
   def s3_base_url
-    return ENV["ASHRAM_QUIZYY_AWS_S3_BUCKET_URL"]
+    return CONFIG[:aws_s3_bucket_url]
   end
   
   def resource_name
