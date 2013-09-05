@@ -25,3 +25,6 @@ pickle-email-*.html
 
 # InformationWorks' script files.
 *.iw.sh
+
+# Ignore application configuration
+/config/application.yml
